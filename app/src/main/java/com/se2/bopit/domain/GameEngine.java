@@ -3,20 +3,52 @@ package com.se2.bopit.domain;
 import android.os.CountDownTimer;
 import android.util.Log;
 
-import com.se2.bopit.domain.games.ColorButtonMinigame;
+import com.se2.bopit.domain.miniGames.ColorButtonMinigame;
+import com.se2.bopit.domain.interfaces.GameEngineListener;
+import com.se2.bopit.domain.interfaces.GameListener;
+import com.se2.bopit.domain.interfaces.MiniGame;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Random;
 
 public class GameEngine {
     private CountDownTimer timer;
-    private MiniGame minigame;
     private GameEngineListener listener;
+
     private int score = 0;
+    private boolean isOverTime = false;
+    private boolean miniGameLost = false;
+
+    private ArrayList<Class<?>> miniGames;
 
     public GameEngine() {
         listener = null;
+
+        //Add MiniGame Classes here like ColorButtonMinigame.class
+        miniGames = new ArrayList<>(
+                Arrays.asList(
+                        ColorButtonMinigame.class
+                )
+        );
     }
 
+    /**
+     * Starts a new Minigame
+     * Initialises the Time e^(-score*0.08+7)+1000
+     * This time will be used for the countdown:
+     * Game 1   Time: 2096 ms
+     * Game 10  Time: 1500 ms
+     * Game 20  Time: 1221 ms
+     * Game 30  Time: 1100 ms
+     * Game 50  Time: 1020 ms
+     * Game 100 Time: 1000 ms
+     *
+     * Calls the MainActivity onGameStart Listener to display the Fragment
+     * Sets the GameListener for the Minigame
+     */
     public void startNewGame() {
-        minigame = new ColorButtonMinigame();
+        MiniGame minigame = getMiniGame();
         long time = (long) (Math.exp(-this.score*0.08+7)+1000);
         timer = startCountDown(time);
         if(this.listener != null){
@@ -25,6 +57,21 @@ public class GameEngine {
         minigame.setGameListener(onGameResult);
     }
 
+    private MiniGame getMiniGame(){
+        Random rand = new Random();
+        try {
+             return (MiniGame) miniGames.get(rand.nextInt(miniGames.size())).newInstance();
+        }catch(Exception e){
+            Log.e("GameEngine", "Fatal Error creating Instance of Minigame, check if GameArray is correct!");
+        }
+        return null;
+    }
+
+    /**
+     * @param time - countdown time in ms
+     * Starts a new countdown
+     * Calls the MainActivity onTimeTick, onFinish listener to display the time
+     */
     private CountDownTimer startCountDown(long time){
         return new CountDownTimer(time, 5) {
             public void onTick(long millisUntilFinished) {
@@ -33,23 +80,29 @@ public class GameEngine {
             }
 
             public void onFinish() {
+                isOverTime = true;
                 if(listener != null)
-                    listener.onTimeEnd();
+                    listener.onGameEnd(score);
             }
         }.start();
     }
 
+    /**
+     * Listener for Minigames, updates scores on event call and resets timer
+     * Calls the onScoreUpdate, onGameEnd Listener to display the Score
+     */
     private final GameListener onGameResult = new GameListener() {
         @Override
         public void onGameResult(boolean result) {
             timer.cancel();
             if(listener != null) {
-                if(result) {
+                if(result && !isOverTime && !miniGameLost) {
                     score++;
                     listener.onScoreUpdate(score);
                     startNewGame();
                 }
                 else {
+                    miniGameLost = true;
                     listener.onGameEnd(score);
                 }
             }
@@ -57,6 +110,10 @@ public class GameEngine {
         }
     };
 
+    /**
+     * @param listener - Listener to add to the Engine
+     * Adds a Listener to the engine
+     */
     public void setGameEngineListener(GameEngineListener listener){
         if(listener != null)
             this.listener = listener;
