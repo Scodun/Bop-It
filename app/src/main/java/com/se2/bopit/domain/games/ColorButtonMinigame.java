@@ -1,4 +1,4 @@
-package com.se2.bopit.domain.miniGames;
+package com.se2.bopit.domain.games;
 
 import android.os.Bundle;
 import android.view.View;

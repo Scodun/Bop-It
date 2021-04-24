@@ -3,7 +3,7 @@ package com.se2.bopit.domain;
 import android.os.CountDownTimer;
 import android.util.Log;
 
-import com.se2.bopit.domain.miniGames.ColorButtonMinigame;
+import com.se2.bopit.domain.games.ColorButtonMinigame;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
@@ -19,6 +19,7 @@ public class GameEngine {
     private int score = 0;
     private boolean isOverTime = false;
     private boolean miniGameLost = false;
+    private Random rand;
 
     private ArrayList<Class<?>> miniGames;
 
@@ -58,13 +59,14 @@ public class GameEngine {
     }
 
     private MiniGame getMiniGame(){
-        Random rand = new Random();
+        rand = new Random();
         try {
-             return (MiniGame) miniGames.get(rand.nextInt(miniGames.size())).newInstance();
+             return (MiniGame) miniGames.get(rand.nextInt(miniGames.size())).getDeclaredConstructor().newInstance();
         }catch(Exception e){
             Log.e("GameEngine", "Fatal Error creating Instance of Minigame, check if GameArray is correct!");
         }
-        return null;
+        //Use Basic game if creating Instance randomly fails
+        return new ColorButtonMinigame();
     }
 
     /**
