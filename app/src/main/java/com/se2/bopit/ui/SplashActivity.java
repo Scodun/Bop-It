@@ -3,12 +3,11 @@ package com.se2.bopit.ui;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
-import android.os.Handler;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import com.se2.bopit.MainActivity;
 import com.se2.bopit.R;
 
 import java.util.Timer;
@@ -18,6 +17,7 @@ public class SplashActivity extends AppCompatActivity {
     private ProgressBar progressBar;
     private int i = 0;
     private TextView textLoad;
+    //private String loadingText;
     private Timer timer;
 
     @Override
@@ -27,7 +27,7 @@ public class SplashActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progressBar);
         progressBar.setProgress(0);
         textLoad = findViewById(R.id.textViewLoading);
-        textLoad.setText("");
+
 
         final int period = 100;
         timer = new Timer();
@@ -35,11 +35,9 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 if (i < 100) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            textLoad.setText("Loading " + i + " %");
-                        }
+                    runOnUiThread(() -> {
+                        String loadingText = String.format(getResources().getString(R.string.loading), String.valueOf(i));
+                        textLoad.setText(loadingText);
                     });
                     progressBar.setProgress(i);
                     i++;
