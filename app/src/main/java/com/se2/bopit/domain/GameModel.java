@@ -5,15 +5,20 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-public class GameModel<R extends ResponseModel> {
-    public final String challenge;
+public class GameModel<M extends ResponseModel> {
+    public String challenge;
 
-    public final List<R> responses;
+    public List<M> responses;
 
-    public GameModel(String challenge, R correctResponse, R... wrongResponses) {
+    @SafeVarargs
+    public GameModel(String challenge, M correctResponse, M... wrongResponses) {
+        this(challenge, correctResponse, Arrays.asList(wrongResponses));
+    }
+
+    public GameModel(String challenge, M correctResponse, List<M> wrongResponses) {
         this.challenge = challenge;
-        this.responses = new ArrayList<>(wrongResponses.length + 1);
-        responses.addAll(Arrays.asList(wrongResponses));
+        this.responses = new ArrayList<>();
+        responses.addAll(wrongResponses);
         correctResponse.isCorrect = true;
         responses.add(correctResponse);
         Collections.shuffle(responses);

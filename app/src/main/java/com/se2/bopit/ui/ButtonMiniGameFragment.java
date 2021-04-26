@@ -1,9 +1,7 @@
 package com.se2.bopit.ui;
 
 import android.content.Context;
-import android.graphics.PorterDuff;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.ButtonColor;
 import com.se2.bopit.domain.ButtonModel;
 import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
@@ -48,15 +47,13 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
         messageText.setText(gameModel.challenge);
 
         LinearLayout layout = view.findViewById(R.id.buttonsRegion);
-        Context ctx = layout.getContext();
 
         for(ButtonModel model : gameModel.responses) {
-            //layout.setLayoutParams(new ViewGroup.LayoutParams());
-            Button button = new Button(ctx);
-            if(model.label != null)
+            Button button = (Button) inflater.inflate(
+                    getButtonTemplate(model), layout, false);
+
+            if(model.label != null) {
                 button.setText(model.label);
-            if(model.color != 0) {
-                button.setBackgroundColor(model.color);
             }
             // TODO dirty solution. consider responding with model and letting game engine decide
             button.setOnClickListener(model.isCorrect
@@ -68,6 +65,19 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
         Log.d(TAG, "view created");
 
         return view;
+    }
+
+    int getButtonTemplate(ButtonModel model) {
+        switch (model.color != null ? model.color : ButtonColor.DEFAULT) {
+            case RED:
+                return R.layout.button_red_template;
+            case GREEN:
+                return R.layout.button_green_template;
+            case BLUE:
+                return R.layout.button_blue_template;
+            default:
+                return R.layout.button_template;
+        }
     }
 
     void handleWrongResponse(View view) {
