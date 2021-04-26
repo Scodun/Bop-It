@@ -7,6 +7,8 @@ import com.se2.bopit.domain.games.ColorButtonMinigame;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.ui.games.ColorButtonMiniGame;
+import com.se2.bopit.ui.games.TextButtonMiniGame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +31,9 @@ public class GameEngine {
         //Add MiniGame Classes here like ColorButtonMinigame.class
         miniGames = new ArrayList<>(
                 Arrays.asList(
-                        ColorButtonMinigame.class
+                        ColorButtonMiniGame.class,
+                        TextButtonMiniGame.class
+                        //ColorButtonMinigame.class
                 )
         );
     }
