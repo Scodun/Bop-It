@@ -34,8 +34,8 @@ public class GameEngine {
                 Arrays.asList(
                         ColorButtonMiniGame.class,
                         SimpleTextButtonMiniGame.class,
-                        WeirdTextButtonMiniGame.class
-                        //ColorButtonMinigame.class
+                        WeirdTextButtonMiniGame.class,
+                        ColorButtonMinigame.class
                 )
         );
     }
