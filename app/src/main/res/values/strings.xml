@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Bop It</string>
     <string name="loading">Loading %1$s %%</string>
+    <string name="logo">Logo Bop It</string>
 </resources>
