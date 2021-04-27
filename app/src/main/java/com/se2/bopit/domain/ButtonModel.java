@@ -16,4 +16,9 @@ public class ButtonModel extends ResponseModel {
         this.color = color;
         this.label = label;
     }
+    
+    @Override
+    public ButtonModel clone() {
+        return new ButtonModel(color, label);
+    }
 }

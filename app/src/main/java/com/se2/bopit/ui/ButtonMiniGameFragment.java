@@ -121,13 +121,19 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
      * @return GameModel with 1 correct response and possibleAnswers-1 incorrect responses
      */
     protected static GameModel<ButtonModel> createGameModel(List<ButtonModel> possibleAnswers, int numberAnswers) {
-        Collections.shuffle(possibleAnswers);
 
-        ButtonModel correctResponse = possibleAnswers.get(0);
+        ArrayList<ButtonModel> possibleAnswersCopy = new ArrayList<>();
+        for (ButtonModel buttonModel : possibleAnswers) {
+            possibleAnswersCopy.add(buttonModel.clone());
+        }
+
+        Collections.shuffle(possibleAnswersCopy);
+
+        ButtonModel correctResponse = possibleAnswersCopy.get(0);
 
         ArrayList<ButtonModel> wrongResponses = new ArrayList<>();
         for (int i = 1; i < numberAnswers; i++) {
-            ButtonModel wrongResponse = possibleAnswers.get(i);
+            ButtonModel wrongResponse = possibleAnswersCopy.get(i);
             wrongResponse.isCorrect = false;
             wrongResponses.add(wrongResponse);
         }
