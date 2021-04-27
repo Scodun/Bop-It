@@ -1,7 +1,6 @@
 package com.se2.bopit.ui;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,6 +23,9 @@ import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 public abstract class ButtonMiniGameFragment extends Fragment implements MiniGame {
@@ -110,10 +112,38 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
         }
     }
 
+    /**
+     * Randomly picks a number of answers from a list of possible answers to create the GameModel
+     *
+     * @param possibleAnswers List of possible answers
+     * @param numberAnswers Number of answers to randomly choose from the list.
+     *                      One of them will be correct.
+     * @return GameModel with 1 correct response and possibleAnswers-1 incorrect responses
+     */
+    protected static GameModel<ButtonModel> createGameModel(List<ButtonModel> possibleAnswers, int numberAnswers) {
+        Collections.shuffle(possibleAnswers);
+
+        ButtonModel correctResponse = possibleAnswers.get(0);
+
+        ArrayList<ButtonModel> wrongResponses = new ArrayList<>();
+        for (int i = 1; i < numberAnswers; i++) {
+            ButtonModel wrongResponse = possibleAnswers.get(i);
+            wrongResponse.isCorrect = false;
+            wrongResponses.add(wrongResponse);
+        }
+
+        return new GameModel<>(
+                String.format("Select %s!", correctResponse.label),
+                correctResponse,
+                wrongResponses
+        );
+    }
+
     void handleWrongResponse(View view) {
         Log.d(TAG, "wrong response!");
         gameListener.onGameResult(false);
     }
+
     void handleCorrectResponse(View view) {
         Log.d(TAG, "correct response!");
         gameListener.onGameResult(true);
