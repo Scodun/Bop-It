@@ -9,7 +9,7 @@ public class ButtonModel extends ResponseModel {
     }
 
     public ButtonModel(String label) {
-        this(null, label);
+        this(ButtonColor.DEFAULT, label);
     }
 
     public ButtonModel(ButtonColor color, String label) {
