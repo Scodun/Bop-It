@@ -1,6 +1,8 @@
 package com.se2.bopit.ui;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.graphics.drawable.DrawableCompat;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
@@ -50,11 +53,14 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
 
         for(ButtonModel model : gameModel.responses) {
             Button button = (Button) inflater.inflate(
-                    getButtonTemplate(model), layout, false);
+                    R.layout.button_template, layout, false);
 
             if(model.label != null) {
                 button.setText(model.label);
             }
+
+            setButtonColor(model,button);
+
             // TODO dirty solution. consider responding with model and letting game engine decide
             button.setOnClickListener(model.isCorrect
                     ? this::handleCorrectResponse
@@ -67,17 +73,33 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
         return view;
     }
 
-    int getButtonTemplate(ButtonModel model) {
+    void setButtonColor(ButtonModel model, Button button) {
+        Drawable buttonDrawable = button.getBackground();
+        buttonDrawable = DrawableCompat.wrap(buttonDrawable);
         switch (model.color != null ? model.color : ButtonColor.DEFAULT) {
             case RED:
-                return R.layout.button_red_template;
+                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.red));
+                break;
             case GREEN:
-                return R.layout.button_green_template;
+                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.green));
+                break;
             case BLUE:
-                return R.layout.button_blue_template;
-            default:
-                return R.layout.button_template;
+                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.blue));
+                break;
+            case PURPLE:
+                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.purple));
+                break;
+            case YELLOW:
+                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.yellow));
+                break;
+            case ORANGE:
+                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.orange));
+                break;
+            case PINK:
+                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.pink));
+                break;
         }
+        button.setBackground(buttonDrawable);
     }
 
     void handleWrongResponse(View view) {

@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Button xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginTop="2dp"
     android:layout_weight=".20"
-    android:textColor="@color/design_default_color_on_secondary"
     android:textSize="64sp"
     android:textStyle="bold"
-    app:backgroundTint="#C0C0C0"
-
 />
 <!--    app:layout_constraintEnd_toEndOf="parent"-->
 <!--    app:layout_constraintStart_toStartOf="parent"-->
