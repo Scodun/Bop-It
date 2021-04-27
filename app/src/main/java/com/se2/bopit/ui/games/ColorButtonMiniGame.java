@@ -23,14 +23,18 @@ public class ColorButtonMiniGame extends ButtonMiniGameFragment {
     private static GameModel<ButtonModel> createGameModel() {
         Collections.shuffle(buttonModels);
 
+        ButtonModel correctResponse = buttonModels.get(0);
+
         ArrayList<ButtonModel> wrongResponses = new ArrayList<>();
         for (int i=1; i<numberButtons; i++) {
-            wrongResponses.add(buttonModels.get(i));
+            ButtonModel wrongResponse = buttonModels.get(i);
+            wrongResponse.isCorrect = false;
+            wrongResponses.add(wrongResponse);
         }
 
         return new GameModel<>(
-                String.format("Select %s!", buttonModels.get(0).color.name()),
-                buttonModels.get(0),
+                String.format("Select %s!", correctResponse.label),
+                correctResponse,
                 wrongResponses
         );
     }
