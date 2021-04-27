@@ -3,10 +3,12 @@ package com.se2.bopit.domain;
 import android.os.CountDownTimer;
 import android.util.Log;
 
-import com.se2.bopit.domain.games.ColorButtonMinigame;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.ui.games.ColorButtonMiniGame;
+import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
+import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +31,9 @@ public class GameEngine {
         //Add MiniGame Classes here like ColorButtonMinigame.class
         miniGames = new ArrayList<>(
                 Arrays.asList(
-                        ColorButtonMinigame.class
+                        ColorButtonMiniGame.class,
+                        SimpleTextButtonMiniGame.class,
+                        WeirdTextButtonMiniGame.class
                 )
         );
     }
@@ -66,7 +70,7 @@ public class GameEngine {
             Log.e("GameEngine", "Fatal Error creating Instance of Minigame, check if GameArray is correct!");
         }
         //Use Basic game if creating Instance randomly fails
-        return new ColorButtonMinigame();
+        return new ColorButtonMiniGame();
     }
 
     /**
