@@ -5,7 +5,7 @@ public class ButtonModel extends ResponseModel {
     public final String label;
 
     public ButtonModel(ButtonColor color) {
-        this(color, null);
+        this(color, color.name());
     }
 
     public ButtonModel(String label) {

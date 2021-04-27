@@ -1,16 +1,47 @@
 package com.se2.bopit.ui.games;
 
+import com.se2.bopit.domain.ButtonColor;
 import com.se2.bopit.domain.ButtonModel;
 import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.ui.ButtonMiniGameFragment;
 
+import java.util.ArrayList;
+import java.util.Collections;
+
 import static com.se2.bopit.domain.ButtonColor.*;
 
 public class ColorButtonMiniGame extends ButtonMiniGameFragment {
+
+    private static final ArrayList<ButtonModel> buttonModels = initializeButtonModels();
+
+    private static int numberButtons = 3;
+
     public ColorButtonMiniGame() {
-        super(new GameModel<>("Select RED !",
-                new ButtonModel(RED, "Red"),
-                new ButtonModel(GREEN, "Green"),
-                new ButtonModel(BLUE, "Blue")));
+        super(createGameModel());
+    }
+
+    private static GameModel<ButtonModel> createGameModel() {
+        Collections.shuffle(buttonModels);
+
+        ArrayList<ButtonModel> wrongResponses = new ArrayList<>();
+        for (int i=1; i<numberButtons; i++) {
+            wrongResponses.add(buttonModels.get(i));
+        }
+
+        return new GameModel<>(
+                String.format("Select %s!", buttonModels.get(0).color.name()),
+                buttonModels.get(0),
+                wrongResponses
+        );
+    }
+
+    private static ArrayList<ButtonModel> initializeButtonModels() {
+        ArrayList<ButtonModel> buttonModelsTmp = new ArrayList<>();
+        for (ButtonColor buttonColor : ButtonColor.values()) {
+            if (!buttonColor.equals(RANDOM) && !buttonColor.equals(DEFAULT)) {
+                buttonModelsTmp.add(new ButtonModel(buttonColor));
+            }
+        }
+        return buttonModelsTmp;
     }
 }
