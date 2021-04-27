@@ -1,5 +1,6 @@
 package com.se2.bopit.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -55,6 +56,9 @@ public class GameActivity extends AppCompatActivity {
         public void onGameEnd(int score) {
             //TODO: Move Text to Finish Activity
             scoreView.setText("Final Score: "+ score);
+            Intent intent =  new Intent(getBaseContext(),WinLossActivity.class);
+            intent.putExtra("score", score);
+            startActivity(intent);
         }
 
         @Override
