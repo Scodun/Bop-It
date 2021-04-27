@@ -105,7 +105,7 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
                 return getTintFromButtonColor(ButtonColor.values()[new Random().nextInt(ButtonColor.values().length - 1)]);
             case DEFAULT:
             default:
-                return getResources().getColor(R.color.yellow);
+                return getResources().getColor(R.color.primary);
 
         }
     }
