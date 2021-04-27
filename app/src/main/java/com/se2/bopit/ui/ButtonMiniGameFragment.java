@@ -24,6 +24,8 @@ import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
+import java.util.Random;
+
 public abstract class ButtonMiniGameFragment extends Fragment implements MiniGame {
     final String TAG = getClass().getSimpleName();
 
@@ -76,30 +78,36 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
     void setButtonColor(ButtonModel model, Button button) {
         Drawable buttonDrawable = button.getBackground();
         buttonDrawable = DrawableCompat.wrap(buttonDrawable);
-        switch (model.color) {
-            case RED:
-                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.red));
-                break;
-            case GREEN:
-                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.green));
-                break;
-            case BLUE:
-                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.blue));
-                break;
-            case PURPLE:
-                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.purple));
-                break;
-            case YELLOW:
-                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.yellow));
-                break;
-            case ORANGE:
-                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.orange));
-                break;
-            case PINK:
-                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.pink));
-                break;
-        }
+        DrawableCompat.setTint(buttonDrawable, getTintFromButtonColor(model.color));
         button.setBackground(buttonDrawable);
+    }
+
+    private int getTintFromButtonColor(ButtonColor buttonColor) {
+        switch (buttonColor) {
+            case RED:
+                return getResources().getColor(R.color.red);
+            case GREEN:
+                return getResources().getColor(R.color.green);
+            case BLUE:
+                return getResources().getColor(R.color.blue);
+            case PURPLE:
+                return getResources().getColor(R.color.purple);
+            case YELLOW:
+                return getResources().getColor(R.color.yellow);
+            case ORANGE:
+                return getResources().getColor(R.color.orange);
+            case PINK:
+                return getResources().getColor(R.color.pink);
+            case BLACK:
+                return getResources().getColor(R.color.black);
+            case RANDOM:
+                // Chooses a random Element from the Enum except the last which is Random so this will not run forever
+                return getTintFromButtonColor(ButtonColor.values()[new Random().nextInt(ButtonColor.values().length - 1)]);
+            case DEFAULT:
+            default:
+                return getResources().getColor(R.color.yellow);
+
+        }
     }
 
     void handleWrongResponse(View view) {
