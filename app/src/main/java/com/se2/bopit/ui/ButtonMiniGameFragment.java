@@ -76,7 +76,7 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
     void setButtonColor(ButtonModel model, Button button) {
         Drawable buttonDrawable = button.getBackground();
         buttonDrawable = DrawableCompat.wrap(buttonDrawable);
-        switch (model.color != null ? model.color : ButtonColor.DEFAULT) {
+        switch (model.color) {
             case RED:
                 DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.red));
                 break;
