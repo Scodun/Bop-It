@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.se2.bopit.ui.GameActivity;
+import com.se2.bopit.ui.GamemodeSelectActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -14,7 +14,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Intent intent = new Intent(this, GameActivity.class);
-        startActivity(intent);
+        startActivity(new Intent(this, GamemodeSelectActivity.class));
     }
 }

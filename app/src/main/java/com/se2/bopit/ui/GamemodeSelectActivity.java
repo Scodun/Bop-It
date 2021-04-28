@@ -1,5 +1,6 @@
 package com.se2.bopit.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -34,6 +35,7 @@ public class GamemodeSelectActivity extends AppCompatActivity {
 
     private void initializeListeners() {
         singleplayerButton.setOnClickListener(v -> {
+            startActivity(new Intent(this, GameActivity.class));
         });
 
         localMultiplayerButton.setOnClickListener(v -> {

@@ -1,7 +1,6 @@
 package com.se2.bopit.ui;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,6 +22,11 @@ import com.se2.bopit.domain.ButtonModel;
 import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 public abstract class ButtonMiniGameFragment extends Fragment implements MiniGame {
     final String TAG = getClass().getSimpleName();
@@ -76,36 +80,76 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
     void setButtonColor(ButtonModel model, Button button) {
         Drawable buttonDrawable = button.getBackground();
         buttonDrawable = DrawableCompat.wrap(buttonDrawable);
-        switch (model.color != null ? model.color : ButtonColor.DEFAULT) {
-            case RED:
-                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.red));
-                break;
-            case GREEN:
-                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.green));
-                break;
-            case BLUE:
-                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.blue));
-                break;
-            case PURPLE:
-                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.purple));
-                break;
-            case YELLOW:
-                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.yellow));
-                break;
-            case ORANGE:
-                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.orange));
-                break;
-            case PINK:
-                DrawableCompat.setTint(buttonDrawable, getResources().getColor(R.color.pink));
-                break;
-        }
+        DrawableCompat.setTint(buttonDrawable, getTintFromButtonColor(model.color));
         button.setBackground(buttonDrawable);
+    }
+
+    private int getTintFromButtonColor(ButtonColor buttonColor) {
+        switch (buttonColor) {
+            case RED:
+                return getResources().getColor(R.color.red);
+            case GREEN:
+                return getResources().getColor(R.color.green);
+            case BLUE:
+                return getResources().getColor(R.color.blue);
+            case PURPLE:
+                return getResources().getColor(R.color.purple);
+            case YELLOW:
+                return getResources().getColor(R.color.yellow);
+            case ORANGE:
+                return getResources().getColor(R.color.orange);
+            case PINK:
+                return getResources().getColor(R.color.pink);
+            case BLACK:
+                return getResources().getColor(R.color.black);
+            case RANDOM:
+                // Chooses a random Element from the Enum except the last which is Random so this will not run forever
+                return getTintFromButtonColor(ButtonColor.values()[new Random().nextInt(ButtonColor.values().length - 1)]);
+            case DEFAULT:
+            default:
+                return getResources().getColor(R.color.primary);
+
+        }
+    }
+
+    /**
+     * Randomly picks a number of answers from a list of possible answers to create the GameModel
+     *
+     * @param possibleAnswers List of possible answers
+     * @param numberAnswers Number of answers to randomly choose from the list.
+     *                      One of them will be correct.
+     * @return GameModel with 1 correct response and possibleAnswers-1 incorrect responses
+     */
+    protected static GameModel<ButtonModel> createGameModel(List<ButtonModel> possibleAnswers, int numberAnswers) {
+
+        ArrayList<ButtonModel> possibleAnswersCopy = new ArrayList<>();
+        for (ButtonModel buttonModel : possibleAnswers) {
+            possibleAnswersCopy.add(buttonModel.clone());
+        }
+
+        Collections.shuffle(possibleAnswersCopy);
+
+        ButtonModel correctResponse = possibleAnswersCopy.get(0);
+
+        ArrayList<ButtonModel> wrongResponses = new ArrayList<>();
+        for (int i = 1; i < numberAnswers; i++) {
+            ButtonModel wrongResponse = possibleAnswersCopy.get(i);
+            wrongResponse.isCorrect = false;
+            wrongResponses.add(wrongResponse);
+        }
+
+        return new GameModel<>(
+                String.format("Select %s!", correctResponse.label),
+                correctResponse,
+                wrongResponses
+        );
     }
 
     void handleWrongResponse(View view) {
         Log.d(TAG, "wrong response!");
         gameListener.onGameResult(false);
     }
+
     void handleCorrectResponse(View view) {
         Log.d(TAG, "correct response!");
         gameListener.onGameResult(true);
