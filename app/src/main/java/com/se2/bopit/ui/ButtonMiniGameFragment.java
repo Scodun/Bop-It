@@ -124,7 +124,7 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
 
         ArrayList<ButtonModel> possibleAnswersCopy = new ArrayList<>();
         for (ButtonModel buttonModel : possibleAnswers) {
-            possibleAnswersCopy.add(buttonModel.clone());
+            possibleAnswersCopy.add(new ButtonModel(buttonModel));
         }
 
         Collections.shuffle(possibleAnswersCopy);
