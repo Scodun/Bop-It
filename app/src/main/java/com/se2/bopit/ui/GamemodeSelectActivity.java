@@ -44,9 +44,7 @@ public class GamemodeSelectActivity extends AppCompatActivity {
         onlineMultiplayerButton.setOnClickListener(v -> {
         });
 
-        settingsButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, SettingsActivity.class));
-        });
+        settingsButton.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
     }
 
 }
