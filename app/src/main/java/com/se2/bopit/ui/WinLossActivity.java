@@ -7,10 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import com.se2.bopit.R;
-
-import org.w3c.dom.Text;
 
 public class WinLossActivity extends AppCompatActivity {
     private Button bu_return;
@@ -26,7 +23,6 @@ public class WinLossActivity extends AppCompatActivity {
         initializeButtons();
         initializeListeners();
         initializeFields();
-        //showScore(intent.getIntExtra("score",0));
         showScore();
     }
 
@@ -47,21 +43,21 @@ public class WinLossActivity extends AppCompatActivity {
     }
 
     private void showScore() {
-        TextView tv_score =(TextView) findViewById(R.id.tv_score);
+        tv_score =(TextView) findViewById(R.id.tv_score);
         tv_score.setText("Score: " + score);
     }
 
     private View.OnClickListener onShare = v ->{
-        Intent intent = new Intent(Intent.ACTION_SEND);
-        intent.setType("text/plain");
-        intent.putExtra(Intent.EXTRA_SUBJECT, "Share your Bop-It Score");
-        intent.putExtra(Intent.EXTRA_TEXT, "Hey everyone, my Bop-It score is "+ score + "! Can you beat it?" );
-        startActivity(Intent.createChooser(intent,"Share score"));
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Share your Bop-It Score");
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Hey everyone, my Bop-It score is "+ score + "! Can you beat it?" );
+        startActivity(Intent.createChooser(shareIntent,"Share score"));
     };
 
     private View.OnClickListener onReturnToGameSelectMode = v -> {
-        Intent intent = new Intent(getBaseContext(),GamemodeSelectActivity.class);
-        startActivity(intent);
+        Intent gmSelectActivityIntent = new Intent(getBaseContext(),GamemodeSelectActivity.class);
+        startActivity(gmSelectActivityIntent);
     };
 
 
