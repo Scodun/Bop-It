@@ -35,7 +35,7 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
 
     GameModel<ButtonModel> gameModel;
 
-    public ButtonMiniGameFragment(GameModel<ButtonModel> gameModel) {
+    protected ButtonMiniGameFragment(GameModel<ButtonModel> gameModel) {
         super();
         this.gameModel = gameModel;
     }
