@@ -1,26 +1,29 @@
 package com.se2.bopit.ui.games;
 
 import com.se2.bopit.domain.ButtonModel;
-import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.ui.ButtonMiniGameFragment;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class WeirdTextButtonMiniGame extends ButtonMiniGameFragment {
 
+    private static final ArrayList<ButtonModel> possibleAnswers = initializeButtonModels();
+
+    private static int numberAnswers = 3;
+
     public WeirdTextButtonMiniGame() {
-        super(createGameModel("BOP"));
+        super(createGameModel(possibleAnswers, numberAnswers));
     }
 
-    static GameModel<ButtonModel> createGameModel(String answer) {
+    private static ArrayList<ButtonModel> initializeButtonModels() {
+        String answer = "BOP";
         char first = answer.charAt(0);
         char last = answer.charAt(answer.length() - 1);
         String middle = answer.substring(1, answer.length() - 1);
-        return new GameModel<>("Hit " + answer + "!",
-                new ButtonModel(answer),
-                new ButtonModel(first + middle + first),
-                new ButtonModel(last + middle + first),
-                new ButtonModel(last + middle + last) );
+        ArrayList<ButtonModel> buttonModelsTmp = new ArrayList<>();
+        buttonModelsTmp.add(new ButtonModel(first + middle + first));
+        buttonModelsTmp.add(new ButtonModel(last + middle + first));
+        buttonModelsTmp.add(new ButtonModel(last + middle + last));
+        return buttonModelsTmp;
     }
 }
