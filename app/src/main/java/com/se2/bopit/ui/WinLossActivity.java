@@ -13,47 +13,57 @@ import com.se2.bopit.R;
 import org.w3c.dom.Text;
 
 public class WinLossActivity extends AppCompatActivity {
-    Button bu_return;
-    Button bu_share;
-    TextView tv_score;
-    int score;
+    private Button bu_return;
+    private Button bu_share;
+    private TextView tv_score;
+    private Intent intent;
+    private int score;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win_loss);
-        //region Control bindings
+        
+        initializeButtons();
+        initializeListeners();
+        initializeFields();
+        //showScore(intent.getIntExtra("score",0));
+        showScore();
+    }
+
+    private void initializeFields() {
+        intent = getIntent();
+        score = intent.getIntExtra("score",0);
+    }
+
+    private void initializeListeners() {
+        bu_share.setOnClickListener(onShare);
+        bu_return.setOnClickListener(onReturnToGameSelectMode);
+    }
+
+    private void initializeButtons() {
         bu_return = (Button) findViewById(R.id.bu_return);
         bu_share = (Button) findViewById(R.id.bu_share);
         tv_score =(TextView) findViewById(R.id.tv_score);
-        //endregion
-        //region Event listeners
-        bu_share.setOnClickListener(onShare);
-        //endregion
-        Intent intent = getIntent();
-        showScore(intent.getIntExtra("score",0));
     }
 
-    private void showScore(int score) {
+    private void showScore() {
         TextView tv_score =(TextView) findViewById(R.id.tv_score);
         tv_score.setText("Score: " + score);
     }
 
-    private View.OnClickListener onShare = new View.OnClickListener(){
-
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(Intent.ACTION_SEND);
-                intent.setType("text/plain");
-                intent.putExtra(Intent.EXTRA_TEXT, score );
-                startActivity(Intent.createChooser(intent,"Share score"));
-
-            }
-
+    private View.OnClickListener onShare = v ->{
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.setType("text/plain");
+        intent.putExtra(Intent.EXTRA_SUBJECT, "Share your Bop-It Score");
+        intent.putExtra(Intent.EXTRA_TEXT, "Hey everyone, my Bop-It score is "+ score + "! Can you beat it?" );
+        startActivity(Intent.createChooser(intent,"Share score"));
     };
 
-    private void onShare(Button bu_share, int score){
+    private View.OnClickListener onReturnToGameSelectMode = v -> {
+        Intent intent = new Intent(getBaseContext(),GamemodeSelectActivity.class);
+        startActivity(intent);
+    };
 
 
-    }
 
 }
