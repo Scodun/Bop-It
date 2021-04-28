@@ -7,6 +7,7 @@ import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
+import com.se2.bopit.ui.games.ImageButtonMinigame;
 import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
@@ -33,7 +34,8 @@ public class GameEngine {
                 Arrays.asList(
                         ColorButtonMiniGame.class,
                         SimpleTextButtonMiniGame.class,
-                        WeirdTextButtonMiniGame.class
+                        WeirdTextButtonMiniGame.class,
+                        ImageButtonMinigame.class
                 )
         );
     }
