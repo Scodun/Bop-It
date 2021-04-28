@@ -9,5 +9,6 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
     GameListener listener;
     @Override
     public void setGameListener(GameListener listener) {
+
     }
 }
