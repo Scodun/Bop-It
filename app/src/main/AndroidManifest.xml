@@ -17,11 +17,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.GamemodeSelectActivity">
-        </activity>
-        <activity android:name=".MainActivity">
-
-        </activity>
+        <activity android:name=".ui.GamemodeSelectActivity"></activity>
+        <activity android:name=".ui.WinLossActivity"></activity>
+        <activity android:name=".MainActivity"></activity>
         <activity
             android:name=".ui.GameActivity"
             android:parentActivityName=".MainActivity"></activity>
