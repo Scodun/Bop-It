@@ -3,4 +3,10 @@
     <string name="loading">LOADING</string>
     <string name="logo">Logo Bop It</string>
     <string name="wave_bg">Waves Image</string>
+
+    <string name="toolbar_setting_title">Settings</string>
+    <string name="setting_player_name">Player name</string>
+    <string name="player_name_title">Please enter your player name</string>
+    <string name="game_setting">Game Settings</string>
+    <string name="sound_title">Enable sound</string>
 </resources>

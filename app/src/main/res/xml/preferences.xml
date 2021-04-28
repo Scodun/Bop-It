@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <EditTextPreference
+        android:layout_height="match_parent"
+        android:defaultValue=""
+        android:dialogTitle="@string/player_name_title"
+        android:key="playername"
+        android:summary="This is your player name"
+        android:title="@string/setting_player_name" />
+    <PreferenceCategory android:title="@string/game_setting">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="soundOn"
+            android:title="@string/sound_title" />
+    </PreferenceCategory>
+</PreferenceScreen>

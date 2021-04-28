@@ -45,6 +45,8 @@ public class GamemodeSelectActivity extends AppCompatActivity {
         });
 
         settingsButton.setOnClickListener(v -> {
+            Intent i = new Intent(GamemodeSelectActivity.this, SettingsActivity.class);
+            startActivity(i);
         });
     }
 
