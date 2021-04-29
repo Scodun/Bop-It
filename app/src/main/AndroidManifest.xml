@@ -11,7 +11,7 @@
         android:theme="@style/Theme.BopIt">
         <activity
             android:name=".ui.SettingsActivity"
-            android:label="@string/title_activity_settings"></activity>
+            android:label="@string/title_activity_settings" />
         <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,10 +21,7 @@
         </activity>
         <activity android:name=".ui.GamemodeSelectActivity" />
         <activity android:name=".ui.WinLossActivity" />
-        <activity android:name=".MainActivity" />
-        <activity
-            android:name=".ui.GameActivity"
-            android:parentActivityName=".MainActivity" />
+        <activity android:name=".ui.GameActivity" />
     </application>
 
 </manifest>

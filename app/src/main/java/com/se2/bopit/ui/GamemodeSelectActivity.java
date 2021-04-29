@@ -47,4 +47,11 @@ public class GamemodeSelectActivity extends AppCompatActivity {
         settingsButton.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
     }
 
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        this.finishAffinity();
+    }
+
 }
