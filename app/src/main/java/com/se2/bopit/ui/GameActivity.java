@@ -32,8 +32,8 @@ public class GameActivity extends AppCompatActivity {
         setContentView(R.layout.activity_game);
 
         //get Views
-        timeBar = (ProgressBar) findViewById(R.id.timeBar);
-        scoreView = (TextView) findViewById(R.id.scoreView);
+        timeBar = findViewById(R.id.timeBar);
+        scoreView = findViewById(R.id.scoreView);
 
         //start game Engine and register listeners
         GameEngine engine = new GameEngine();
@@ -54,8 +54,6 @@ public class GameActivity extends AppCompatActivity {
     private final GameEngineListener gameEngineListener = new GameEngineListener() {
         @Override
         public void onGameEnd(int score) {
-            //TODO: Move Text to Finish Activity
-            scoreView.setText("Final Score: "+ score);
             Intent intent =  new Intent(getBaseContext(),WinLossActivity.class);
             intent.putExtra("score", score);
             startActivity(intent);
@@ -81,5 +79,13 @@ public class GameActivity extends AppCompatActivity {
             timeBar.setProgress((int) time);
         }
     };
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(this, GamemodeSelectActivity.class));
+        finish();
+    }
 
 }

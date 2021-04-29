@@ -60,6 +60,12 @@ public class WinLossActivity extends AppCompatActivity {
         startActivity(gmSelectActivityIntent);
     };
 
-
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(this, GamemodeSelectActivity.class));
+        finish();
+    }
 
 }
