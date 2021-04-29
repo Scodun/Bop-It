@@ -3,4 +3,22 @@
     <string name="loading">LOADING</string>
     <string name="logo">Logo Bop It</string>
     <string name="wave_bg">Waves Image</string>
+    <string name="title_activity_settings">Settings</string>
+
+    <!-- Preference Titles -->
+    <string name="settings_header_personal">Personal settings</string>
+    <string name="settings_title_sound">Sound settings</string>
+
+    <!-- Personal Preferences -->
+    <string name="setting_player_name">Your player name</string>
+
+    <!-- Sound Preferences -->
+    <string name="setting_title_sound">Sound</string>
+    <string name="settings_title_effect">Effects</string>
+    <string name="sound_summary_on">on
+    </string>
+    <string name="sound_summary_off">off</string>
+    <string name="effect_summary_on">on
+    </string>
+    <string name="effect_summary_off">off</string>
 </resources>
