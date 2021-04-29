@@ -22,7 +22,11 @@ android:
     - tools
     - platform-tools
     - android-30
+    - android-22
     - build-tools-30.0.3
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
     - extra
     - sys-img-armeabi-v7a-android-22
 
