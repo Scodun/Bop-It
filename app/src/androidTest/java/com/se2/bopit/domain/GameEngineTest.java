@@ -1,15 +1,21 @@
 package com.se2.bopit.domain;
 
+
+import androidx.test.ext.junit.runners.AndroidJUnit4;
+import androidx.test.filters.SmallTest;
+
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
+import static org.junit.Assert.*;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
-import static org.junit.Assert.*;
 
-
-public class GameEngineTest {
+@RunWith(AndroidJUnit4.class)
+@SmallTest
+public class GameEngineTest  {
 
     @Test
     public void startNewGame() {
