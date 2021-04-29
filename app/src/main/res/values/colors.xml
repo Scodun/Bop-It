@@ -7,4 +7,12 @@
     <color name="secondary_variant_2">#3A86FF</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="blue">#3A86FF</color>
+    <color name="yellow">#FFBE0B</color>
+    <color name="purple">#8338EC</color>
+    <color name="orange">#FB5607</color>
+    <color name="pink">#FF006E</color>
+    <color name="red">#ff002b</color>
+    <color name="green">#089404</color>
+    <color name="grey">#808080</color>
 </resources>
