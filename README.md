@@ -14,6 +14,7 @@ Job           | Main          | Backup
 ------------- | ------------- | -------------
 Architekt     | Ramiz         | Raphael
 Developer     | Raphael       | Michi
-Tester        | Michi         | Markus, Ramiz
-UI            | Claudia       | Markus, Merlin
+Tester        | Michi         | Ramiz
+UI            | Claudia       | Markus
 Dokumentation | Merlin        | Claudia
+Teamleiter    | Markus        | Merlin
