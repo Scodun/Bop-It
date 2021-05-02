@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'jacoco'
+    id "org.sonarqube" version "3.1.1"
 }
 
 android {
@@ -83,4 +84,12 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest','creat
             "jacoco/testDebugUnitTest.exec",
             "outputs/code_coverage/debugAndroidTest/connected/**/*.ec"
     ])
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "Scodun_Bop-It"
+        property "sonar.organization", "scodun-se2"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
 }
