@@ -91,6 +91,6 @@ sonarqube {
         property "sonar.projectKey", "Scodun_Bop-It"
         property "sonar.organization", "scodun-se2"
         property "sonar.host.url", "https://sonarcloud.io"
-        properts "sonar.coverage.jacoco.xmlReportPaths", "/build/reports/coverage/debug/report.xml"
+        property "sonar.coverage.jacoco.xmlReportPaths", "/build/reports/coverage/debug/report.xml"
     }
 }
