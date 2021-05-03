@@ -1,5 +1,6 @@
 package com.se2.bopit.ui;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -18,14 +19,15 @@ public class SettingsActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .replace(R.id.toolbar_settings, new SettingsFragment())
+                    .replace(R.id.fragment_setting, new SettingsFragment())
                     .commit();
         }
-        Toolbar toolbar =findViewById(R.id.toolbar_settings);
+       Toolbar toolbar =findViewById(R.id.toolbar_settings);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(getString(R.string.title_activity_settings));
         }
     }
 
@@ -37,6 +39,4 @@ public class SettingsActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }
