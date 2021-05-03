@@ -16,7 +16,6 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class GameEngine {
-    private CountDownTimer timer;
     private GameEngineListener listener;
 
     private int score = 0;
@@ -57,7 +56,7 @@ public class GameEngine {
     public void startNewGame() {
         MiniGame minigame = getMiniGame();
         long time = (long) (Math.exp(-this.score*0.08+7)+1000);
-        timer = startCountDown(time);
+        CountDownTimer timer = startCountDown(time);
         if(this.listener != null){
             listener.onGameStart(minigame, time);
         }
