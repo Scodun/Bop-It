@@ -61,10 +61,25 @@ public class GameEngine {
         if(this.listener != null){
             listener.onGameStart(minigame, time);
         }
-        minigame.setGameListener(onGameResult);
+
+        minigame.setGameListener(result -> {
+            timer.cancel();
+            if(listener != null) {
+                if(result && !isOverTime && !miniGameLost) {
+                    score++;
+                    listener.onScoreUpdate(score);
+                    startNewGame();
+                }
+                else {
+                    miniGameLost = true;
+                    listener.onGameEnd(score);
+                }
+            }
+
+        });
     }
 
-    private MiniGame getMiniGame(){
+        private MiniGame getMiniGame(){
         rand = new Random();
         try {
              return (MiniGame) miniGames.get(rand.nextInt(miniGames.size())).getDeclaredConstructor().newInstance();
@@ -95,28 +110,6 @@ public class GameEngine {
         }.start();
     }
 
-    /**
-     * Listener for Minigames, updates scores on event call and resets timer
-     * Calls the onScoreUpdate, onGameEnd Listener to display the Score
-     */
-    private final GameListener onGameResult = new GameListener() {
-        @Override
-        public void onGameResult(boolean result) {
-            timer.cancel();
-            if(listener != null) {
-                if(result && !isOverTime && !miniGameLost) {
-                    score++;
-                    listener.onScoreUpdate(score);
-                    startNewGame();
-                }
-                else {
-                    miniGameLost = true;
-                    listener.onGameEnd(score);
-                }
-            }
-
-        }
-    };
 
     /**
      * @param listener - Listener to add to the Engine
