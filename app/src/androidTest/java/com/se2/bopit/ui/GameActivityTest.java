@@ -14,6 +14,7 @@ import org.junit.runner.RunWith;
 
 import static androidx.test.espresso.intent.Intents.intended;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasComponent;
+import static org.junit.Assert.assertNotNull;
 
 
 @RunWith(AndroidJUnit4.class)
@@ -35,6 +36,7 @@ public class GameActivityTest {
 
     @Test
     public void onBackPressed() {
+        assertNotNull(activityRule);
         Espresso.pressBack();
         intended(hasComponent(GamemodeSelectActivity.class.getName()));
     }

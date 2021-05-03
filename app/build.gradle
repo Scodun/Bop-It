@@ -55,6 +55,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestImplementation "com.android.support.test.espresso:espresso-intents:3.3.0"
+    androidTestImplementation 'org.awaitility:awaitility:4.0.3'
 
     // https://mvnrepository.com/artifact/com.esotericsoftware/kryonet
     implementation 'com.esotericsoftware:kryonet:2.22.0-RC1'
@@ -92,5 +93,11 @@ sonarqube {
         property "sonar.organization", "scodun-se2"
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.coverage.jacoco.xmlReportPaths", "${buildDir}/reports/coverage/debug/report.xml"
+    }
+}
+
+configurations.all {
+    resolutionStrategy.dependencySubstitution {
+        substitute module('org.hamcrest:hamcrest:2.1') with module('junit:junit:4.13.2')
     }
 }
