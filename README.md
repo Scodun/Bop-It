@@ -1,6 +1,6 @@
 # Bop-It
 
-[![Build Status](https://github.com/Scodun/Bop-It/actions/workflows/build.yml/badge.svg)
+![Build Status](https://github.com/Scodun/Bop-It/actions/workflows/build.yml/badge.svg)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=Scodun_Bop-It&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=Scodun_Bop-It)
 [![Bugs](https://sonarcloud.io/api/project_badges/measure?project=Scodun_Bop-It&metric=bugs)](https://sonarcloud.io/dashboard?id=Scodun_Bop-It)
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Scodun_Bop-It&metric=code_smells)](https://sonarcloud.io/dashboard?id=Scodun_Bop-It)
