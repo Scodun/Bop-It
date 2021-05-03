@@ -5,19 +5,19 @@ on:
     types: [opened, synchronize, reopened]
 jobs:
   test:
-    runs-on: ubuntu-latest
+    runs-on: macOS-latest
     steps:
       - name: checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - name: run connectedAndroid tests
-        uses: reactivecircus/android-emulator-runner@v1
+        uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
           script: ./gradlew connectedAndroidTest
       - name: run jacoco tests
-        uses: reactivecircus/android-emulator-runner@v1
+        uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
           script: ./gradlew clean jacocoTestReport
