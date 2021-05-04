@@ -9,6 +9,7 @@ import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
 import com.se2.bopit.domain.mock.MiniGameMock;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -24,6 +25,8 @@ public class GameEngineUnitTest {
     GameEngineListener listenerMock;
     PlatformFeaturesProvider platformProviderMock;
     CountDownTimer timerMock;
+
+    MiniGameMock gameMock;
 
     LongConsumer mockTimerOnTickHandler;
     Runnable mockTimerOnFinishHandler;
@@ -55,21 +58,26 @@ public class GameEngineUnitTest {
                     return timerMock;
                 });
 
+        gameMock = new MiniGameMock();
+        when(miniGamesProviderMock.createRandomMiniGame())
+                .thenReturn(gameMock);
+
         gameEngine = new GameEngine(miniGamesProviderMock, platformProviderMock, listenerMock);
+    }
+
+    @After
+    public void tearDown() {
+        reset(miniGamesProviderMock, listenerMock, platformProviderMock, timerMock);
     }
 
     @Test
     public void startNewGame() {
-        MiniGameMock gameMock = new MiniGameMock();
-        when(miniGamesProviderMock.createRandomMiniGame())
-                .thenReturn(gameMock);
 
         // mock GameActivity
         doAnswer(i -> {
            MiniGame game = i.getArgument(0);
            long time = i.getArgument(1);
            // simulate run game
-
            return null;
         }).when(listenerMock).onGameStart(any(), anyLong());
 
@@ -119,4 +127,65 @@ public class GameEngineUnitTest {
         assertTrue(gameEngine.isOverTime);
         assertEquals(10, gameEngine.score);
     }
+
+    // TODO this test checks status quo. Reconsider if game engine without listener should work at all
+    @Test
+    public void startNewGameWithoutListener() {
+        gameEngine = new GameEngine(miniGamesProviderMock, platformProviderMock, null);
+
+        gameEngine.startNewGame();
+
+        mockTimerOnTickHandler.accept(1000);
+
+        gameMock.listener.onGameResult(false);
+
+        mockTimerOnFinishHandler.run();
+        //assertThrows(NullPointerException.class, gameEngine::startNewGame);
+    }
+
+    @Test
+    public void shouldFailWithoutGamesProvider() {
+        gameEngine = new GameEngine(null, platformProviderMock, listenerMock);
+
+        assertThrows(NullPointerException.class, gameEngine::startNewGame);
+    }
+
+    @Test
+    public void shouldFailWithoutPlatformProvider() {
+        gameEngine = new GameEngine(miniGamesProviderMock, null, listenerMock);
+
+        assertThrows(NullPointerException.class, gameEngine::startNewGame);
+    }
+
+    @Test
+    public void newGameEndsWithWrongAnswer() {
+        MiniGameMock gameMock = new MiniGameMock();
+        when(miniGamesProviderMock.createRandomMiniGame())
+                .thenReturn(gameMock);
+
+        // mock GameActivity
+        doAnswer(i -> {
+            MiniGame game = i.getArgument(0);
+            long time = i.getArgument(1);
+            // simulate run game
+            return null;
+        }).when(listenerMock).onGameStart(any(), anyLong());
+
+        // check initial state
+        assertEquals(0, gameEngine.score);
+        assertFalse(gameEngine.isOverTime);
+        assertFalse(gameEngine.miniGameLost);
+        assertFalse(timerRunning);
+
+        gameEngine.startNewGame();
+
+        assertTrue(timerRunning);
+
+        gameMock.listener.onGameResult(false);
+
+        assertFalse(gameEngine.isOverTime);
+        assertTrue(gameEngine.miniGameLost);
+        assertEquals(0, gameEngine.score);
+    }
+
 }
