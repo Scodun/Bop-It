@@ -1,4 +1,4 @@
-package com.se2.bopit.domain.interfaces;
+package com.se2.bopit.domain.providers;
 
 import android.os.CountDownTimer;
 

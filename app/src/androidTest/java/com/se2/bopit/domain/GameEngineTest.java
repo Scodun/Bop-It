@@ -7,7 +7,7 @@ import androidx.test.filters.SmallTest;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
-import com.se2.bopit.ui.MiniGamesRegistry;
+import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;

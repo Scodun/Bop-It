@@ -4,8 +4,8 @@ import android.os.CountDownTimer;
 
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
-import com.se2.bopit.domain.interfaces.MiniGamesProvider;
-import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
+import com.se2.bopit.domain.providers.MiniGamesProvider;
+import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 
 
 public class GameEngine {

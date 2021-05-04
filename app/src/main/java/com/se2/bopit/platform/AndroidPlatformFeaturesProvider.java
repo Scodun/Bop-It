@@ -1,11 +1,8 @@
 package com.se2.bopit.platform;
 
-import android.os.Build;
 import android.os.CountDownTimer;
 
-import androidx.annotation.RequiresApi;
-
-import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
+import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 
 import java.util.function.LongConsumer;
 

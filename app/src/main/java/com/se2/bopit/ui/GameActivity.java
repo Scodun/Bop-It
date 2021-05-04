@@ -14,6 +14,7 @@ import com.se2.bopit.domain.GameEngine;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
+import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
 import java.util.ArrayList;
 import java.util.Arrays;

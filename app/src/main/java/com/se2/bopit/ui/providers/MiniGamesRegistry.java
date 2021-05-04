@@ -1,15 +1,14 @@
-package com.se2.bopit.ui;
+package com.se2.bopit.ui.providers;
 
 import android.util.Log;
 
 import com.se2.bopit.domain.interfaces.MiniGame;
-import com.se2.bopit.domain.interfaces.MiniGamesProvider;
+import com.se2.bopit.domain.providers.MiniGamesProvider;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
 import com.se2.bopit.ui.games.ImageButtonMinigame;
 import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 public class MiniGamesRegistry implements MiniGamesProvider {
@@ -21,7 +20,8 @@ public class MiniGamesRegistry implements MiniGamesProvider {
             ColorButtonMiniGame.class,
             SimpleTextButtonMiniGame.class,
             WeirdTextButtonMiniGame.class,
-            ImageButtonMinigame.class};
+            ImageButtonMinigame.class
+    };
 
     @Override
     public MiniGame createRandomMiniGame() {
@@ -30,7 +30,6 @@ public class MiniGamesRegistry implements MiniGamesProvider {
                     .getDeclaredConstructor()
                     .newInstance();
         } catch (Exception e) {
-            e.printStackTrace();
             Log.e(TAG, "Error creating minigame.", e);
         }
 
