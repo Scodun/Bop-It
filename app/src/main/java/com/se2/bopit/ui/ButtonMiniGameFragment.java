@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
 import com.se2.bopit.domain.ButtonColor;
+import com.se2.bopit.domain.ButtonMiniGameModel;
 import com.se2.bopit.domain.ButtonModel;
 import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
@@ -31,11 +32,9 @@ import java.util.Random;
 public abstract class ButtonMiniGameFragment extends Fragment implements MiniGame {
     final String TAG = getClass().getSimpleName();
 
-    GameListener gameListener;
+    ButtonMiniGameModel gameModel;
 
-    GameModel<ButtonModel> gameModel;
-
-    protected ButtonMiniGameFragment(GameModel<ButtonModel> gameModel) {
+    protected ButtonMiniGameFragment(ButtonMiniGameModel gameModel) {
         super();
         this.gameModel = gameModel;
     }
@@ -65,10 +64,7 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
 
             setButtonColor(model,button);
 
-            // TODO dirty solution. consider responding with model and letting game engine decide
-            button.setOnClickListener(model.isCorrect
-                    ? this::handleCorrectResponse
-                    : this::handleWrongResponse);
+            button.setOnClickListener(v -> gameModel.handleResponse(model));
             layout.addView(button);
         }
 
@@ -112,56 +108,8 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
         }
     }
 
-    /**
-     * Randomly picks a number of answers from a list of possible answers to create the GameModel
-     *
-     * @param possibleAnswers List of possible answers
-     * @param numberAnswers Number of answers to randomly choose from the list.
-     *                      One of them will be correct.
-     * @return GameModel with 1 correct response and possibleAnswers-1 incorrect responses
-     */
-    protected static GameModel<ButtonModel> createGameModel(List<ButtonModel> possibleAnswers, int numberAnswers) {
-
-        ArrayList<ButtonModel> possibleAnswersCopy = new ArrayList<>();
-        for (ButtonModel buttonModel : possibleAnswers) {
-            possibleAnswersCopy.add(new ButtonModel(buttonModel));
-        }
-
-        Collections.shuffle(possibleAnswersCopy);
-
-        ButtonModel correctResponse = possibleAnswersCopy.get(0);
-
-        ArrayList<ButtonModel> wrongResponses = new ArrayList<>();
-        for (int i = 1; i < numberAnswers; i++) {
-            ButtonModel wrongResponse = possibleAnswersCopy.get(i);
-            wrongResponse.isCorrect = false;
-            wrongResponses.add(wrongResponse);
-        }
-
-        return new GameModel<>(
-                String.format("Select %s!", correctResponse.label),
-                correctResponse,
-                wrongResponses
-        );
-    }
-
-    void handleWrongResponse(View view) {
-        Log.d(TAG, "wrong response!");
-        gameListener.onGameResult(false);
-    }
-
-    void handleCorrectResponse(View view) {
-        Log.d(TAG, "correct response!");
-        gameListener.onGameResult(true);
-    }
-
-
-    public GameListener getGameListener() {
-        return gameListener;
-    }
-
     public void setGameListener(GameListener listener) {
-        this.gameListener = listener;
+        gameModel.setGameListener(listener);
     }
 }
 
