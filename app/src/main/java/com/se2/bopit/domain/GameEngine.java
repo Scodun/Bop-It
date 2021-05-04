@@ -6,6 +6,8 @@ import android.util.Log;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.domain.interfaces.MiniGamesProvider;
+import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
 import com.se2.bopit.ui.games.ImageButtonMinigame;
 import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
@@ -16,15 +18,18 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class GameEngine {
-    private GameEngineListener listener;
+    GameEngineListener listener;
 
-    private int score = 0;
-    private boolean isOverTime = false;
-    private boolean miniGameLost = false;
+    int score = 0;
+    boolean isOverTime = false;
+    boolean miniGameLost = false;
     private Random rand;
 
     private ArrayList<Class<?>> miniGames;
+    MiniGamesProvider miniGamesProvider;
+    PlatformFeaturesProvider platformFeaturesProvider;
 
+    @Deprecated
     public GameEngine() {
         listener = null;
 
@@ -37,6 +42,14 @@ public class GameEngine {
                         ImageButtonMinigame.class
                 )
         );
+    }
+
+    public GameEngine(MiniGamesProvider miniGamesProvider,
+                      PlatformFeaturesProvider platformFeaturesProvider,
+                      GameEngineListener listener) {
+        this.miniGamesProvider = miniGamesProvider;
+        this.platformFeaturesProvider = platformFeaturesProvider;
+        this.listener = listener;
     }
 
     /**
@@ -79,6 +92,8 @@ public class GameEngine {
     }
 
         private MiniGame getMiniGame(){
+        if(miniGamesProvider != null)
+            return miniGamesProvider.createRandomMiniGame();
         rand = new Random();
         try {
              return (MiniGame) miniGames.get(rand.nextInt(miniGames.size())).getDeclaredConstructor().newInstance();
@@ -94,8 +109,12 @@ public class GameEngine {
      * Starts a new countdown
      * Calls the MainActivity onTimeTick, onFinish listener to display the time
      */
-    private CountDownTimer startCountDown(long time){
-        return new CountDownTimer(time, 5) {
+    private CountDownTimer startCountDown(long time) {
+        return platformFeaturesProvider.createCountDownTimer(
+                time, 5, this::onTick, this::onFinish)
+                .start();
+    }
+
             public void onTick(long millisUntilFinished) {
                 if(listener != null)
                     listener.onTimeTick(millisUntilFinished);
@@ -106,8 +125,6 @@ public class GameEngine {
                 if(listener != null)
                     listener.onGameEnd(score);
             }
-        }.start();
-    }
 
 
     /**
