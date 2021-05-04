@@ -1,21 +1,12 @@
 package com.se2.bopit.domain;
 
 import android.os.CountDownTimer;
-import android.util.Log;
 
 import com.se2.bopit.domain.interfaces.GameEngineListener;
-import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.interfaces.MiniGamesProvider;
 import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
-import com.se2.bopit.ui.games.ColorButtonMiniGame;
-import com.se2.bopit.ui.games.ImageButtonMinigame;
-import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
-import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
 
 public class GameEngine {
     GameEngineListener listener;
@@ -23,26 +14,9 @@ public class GameEngine {
     int score = 0;
     boolean isOverTime = false;
     boolean miniGameLost = false;
-    private Random rand;
 
-    private ArrayList<Class<?>> miniGames;
     MiniGamesProvider miniGamesProvider;
     PlatformFeaturesProvider platformFeaturesProvider;
-
-    @Deprecated
-    public GameEngine() {
-        listener = null;
-
-        //Add MiniGame Classes here like ColorButtonMinigame.class
-        miniGames = new ArrayList<>(
-                Arrays.asList(
-                        ColorButtonMiniGame.class,
-                        SimpleTextButtonMiniGame.class,
-                        WeirdTextButtonMiniGame.class,
-                        ImageButtonMinigame.class
-                )
-        );
-    }
 
     public GameEngine(MiniGamesProvider miniGamesProvider,
                       PlatformFeaturesProvider platformFeaturesProvider,
@@ -92,16 +66,7 @@ public class GameEngine {
     }
 
         private MiniGame getMiniGame(){
-        if(miniGamesProvider != null)
             return miniGamesProvider.createRandomMiniGame();
-        rand = new Random();
-        try {
-             return (MiniGame) miniGames.get(rand.nextInt(miniGames.size())).getDeclaredConstructor().newInstance();
-        }catch(Exception e){
-            Log.e("GameEngine", "Fatal Error creating Instance of Minigame, check if GameArray is correct!");
-        }
-        //Use Basic game if creating Instance randomly fails
-        return new ColorButtonMiniGame();
     }
 
     /**
@@ -125,15 +90,4 @@ public class GameEngine {
                 if(listener != null)
                     listener.onGameEnd(score);
             }
-
-
-    /**
-     * @param listener - Listener to add to the Engine
-     * Adds a Listener to the engine
-     */
-    public void setGameEngineListener(GameEngineListener listener){
-        if(listener != null)
-            this.listener = listener;
-    }
-
 }
