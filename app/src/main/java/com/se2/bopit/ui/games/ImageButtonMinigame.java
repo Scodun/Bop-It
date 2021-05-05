@@ -85,8 +85,23 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
         @SuppressLint("UseCompatLoadingForDrawables")
         @Override
         public void onClick(View v) {
-            listener.onGameResult(v.getId() == R.id.imageButton);
-            one.setBackground(one.getResources().getDrawable(R.drawable.pressed_button_green));
+            TextView textView = getView().findViewById(R.id.textView);
+            String textInTextView = textView.getText().toString();
+
+            switch (textInTextView){
+                case "Select the Cat":
+                    listener.onGameResult(v.getId() == R.id.imageButton);
+                    one.setBackground(one.getResources().getDrawable(R.drawable.pressed_button_green));
+                    break;
+                case "Select the Dog":
+                    listener.onGameResult(v.getId() == R.id.imageButton2);
+                    two.setBackground(two.getResources().getDrawable(R.drawable.pressed_button_green));
+                    break;
+                case "Select the Elephant":
+                    listener.onGameResult(v.getId() == R.id.imageButton3);
+                    three.setBackground(three.getResources().getDrawable(R.drawable.pressed_button_green));
+                    break;
+            }
         }
     };
 }
