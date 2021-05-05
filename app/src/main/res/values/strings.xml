@@ -11,14 +11,12 @@
 
     <!-- Personal Preferences -->
     <string name="setting_player_name">Your player name</string>
+    <string name="yourName">Put in your player name</string>
 
     <!-- Sound Preferences -->
     <string name="setting_title_sound">Sound</string>
     <string name="settings_title_effect">Effects</string>
-    <string name="sound_summary_on">on
-    </string>
-    <string name="sound_summary_off">off</string>
-    <string name="effect_summary_on">on
-    </string>
-    <string name="effect_summary_off">off</string>
+    <string name="summary_on">on</string>
+    <string name="summary_off">off</string>
+
 </resources>

@@ -12,7 +12,7 @@ import com.se2.bopit.R;
 public class SettingsFragment extends PreferenceFragmentCompat {
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
-        addPreferencesFromResource(R.xml.root_preferences);
+        setPreferencesFromResource(R.xml.root_preferences,rootKey);
     }
 }
 
