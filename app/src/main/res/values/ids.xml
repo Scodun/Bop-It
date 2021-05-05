@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--Google Play game services IDs. Save this file as res/values/games-ids.xml in your project.-->
+<resources>
+    <!--app_id-->
+    <string name="app_id">324785078100</string>
+    <!--package_name-->
+    <string name="package_name" >com.se2.bopit</string>
+    <!--leaderboard Highscore-->
+    <string name="leaderboard_highscore">CgkI1P7L9bkJEAIQAA</string>
+
+</resources>

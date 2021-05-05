@@ -11,39 +11,33 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.ImageView;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.se2.bopit.R;
 
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 public class SplashActivity extends AppCompatActivity {
-    private int i = 0;
-    private Timer timer;
     private ImageView waveView;
+    private GoogleSignInClient mGoogleSignInClient;
+    private static final int RC_SIGN_IN = 9001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         waveView=findViewById(R.id.waveView);
-        final int period = 100;
 
         startLoadingAnimation(waveView);
 
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (i < 100) {
-                    i++;
-                } else {
-                    timer.cancel();
-                    startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
-                    finish();
+        mGoogleSignInClient = GoogleSignIn.getClient(this,
+                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).requestId().requestProfile().build());
 
-                }
-            }
-        }, 0, period);
+        startActivityForResult(mGoogleSignInClient.getSignInIntent(), RC_SIGN_IN);
+
     }
 
     private void startLoadingAnimation(View view){
@@ -72,5 +66,27 @@ public class SplashActivity extends AppCompatActivity {
         a.setRepeatCount(Animation.INFINITE);
 
         view.startAnimation(a);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        signInSilently();
+    }
+
+    private void signInSilently() {
+        mGoogleSignInClient.silentSignIn();
+    }
+
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RC_SIGN_IN) {
+            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
+            if (result!=null && result.isSuccess()) {
+                startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
+                finish();
+            }
+        }
     }
 }

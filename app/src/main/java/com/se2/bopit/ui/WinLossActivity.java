@@ -7,7 +7,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.games.Games;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.se2.bopit.R;
+
+import java.util.Objects;
 
 public class WinLossActivity extends AppCompatActivity {
     private Button bu_return;
@@ -24,6 +30,12 @@ public class WinLossActivity extends AppCompatActivity {
         initializeListeners();
         initializeFields();
         showScore();
+        updateHighscore();
+    }
+
+    private void updateHighscore(){
+        Games.getLeaderboardsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                .submitScore(getString(R.string.leaderboard_highscore), score);
     }
 
     private void initializeFields() {
@@ -66,6 +78,12 @@ public class WinLossActivity extends AppCompatActivity {
         super.onBackPressed();
         startActivity(new Intent(this, GamemodeSelectActivity.class));
         finish();
+    }
+
+    public void showLeaderboard(View view) {
+        Games.getLeaderboardsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                .getLeaderboardIntent(getString(R.string.leaderboard_highscore))
+                .addOnSuccessListener(intent -> startActivityForResult(intent, 9004));
     }
 
 }
