@@ -2,6 +2,8 @@ package com.se2.bopit.ui;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,12 +27,23 @@ public class SettingsActivity extends AppCompatActivity {
     private ImageView iconEffect;
     private SwitchCompat switchEffect;
     private TextView summaryEffect;
+    private Button buttonReset;
+    private Button buttonSave;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
         initializeView();
+
+        setSupportActionBar(toolbar);
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+            actionBar.setTitle(getString(R.string.title_activity_settings));
+        }
+        // set onCheckedChangeListener for switches
         switchSound.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -51,12 +64,21 @@ public class SettingsActivity extends AppCompatActivity {
                 }
             }
         });
-        setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-            actionBar.setTitle(getString(R.string.title_activity_settings));
-        }
+
+        //set onClickListener for buttons
+        buttonReset.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO reset to default
+            }
+        });
+
+        buttonSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO save to SharedPreferences
+            }
+        });
     }
 
     private void initializeView() {
@@ -72,6 +94,8 @@ public class SettingsActivity extends AppCompatActivity {
         iconEffect.setImageResource(R.drawable.ic_effect);
         switchEffect = findViewById(R.id.switchEffect);
         summaryEffect = findViewById(R.id.summaryEffect);
+        buttonReset = findViewById(R.id.buttonReset);
+        buttonSave = findViewById(R.id.buttonSave);
     }
 
     @Override
