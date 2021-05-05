@@ -20,11 +20,11 @@ import java.util.List;
 
 public class ImageButtonMinigame extends Fragment implements MiniGame {
 
-    GameListener listener;
+    private GameListener listener;
 
-    ImageButton one;
-    ImageButton two;
-    ImageButton three;
+    private ImageButton one;
+    private ImageButton two;
+    private ImageButton three;
 
     public ImageButtonMinigame(){
         super(R.layout.fragment_image_button_game);
