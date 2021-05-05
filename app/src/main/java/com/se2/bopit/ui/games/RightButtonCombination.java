@@ -25,12 +25,12 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     RightButtonCombination(){
         super(R.layout.fragment_right_button_combination_game);
+        this.listener = null;
     }
 
     @Override
     public void setGameListener(GameListener listener) {
         this.listener = listener;
-        this.listener = null;
     }
 
     @Override
@@ -56,7 +56,7 @@ public class RightButtonCombination extends Fragment implements MiniGame {
         Collections.shuffle(partOne);
         Collections.shuffle(partTwo);
 
-        n = partOne.get(1)+" "+partTwo.get(0);
+        n = partOne.get(0)+", "+partTwo.get(0);
 
         TextView textView = getView().findViewById(R.id.textView2);
         textView.setText(n);
