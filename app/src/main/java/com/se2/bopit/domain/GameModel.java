@@ -15,7 +15,7 @@ public class GameModel<M extends ResponseModel> implements MiniGame {
 
     public List<M> responses;
 
-    GameListener listener;
+    protected GameListener listener;
 
     @SafeVarargs
     public GameModel(String challenge, M correctResponse, M... wrongResponses) {
@@ -39,6 +39,10 @@ public class GameModel<M extends ResponseModel> implements MiniGame {
     public void handleResponse(M response) {
         listener.onGameResult(
                 checkResponse(response));
+    }
+
+    public GameListener getGameListener() {
+        return listener;
     }
 
     @Override

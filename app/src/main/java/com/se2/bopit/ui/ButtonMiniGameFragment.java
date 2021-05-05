@@ -1,6 +1,5 @@
 package com.se2.bopit.ui;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -20,28 +19,19 @@ import com.se2.bopit.R;
 import com.se2.bopit.domain.ButtonColor;
 import com.se2.bopit.domain.ButtonMiniGameModel;
 import com.se2.bopit.domain.ButtonModel;
-import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 public abstract class ButtonMiniGameFragment extends Fragment implements MiniGame {
-    final String TAG = getClass().getSimpleName();
+    protected final String tag = getClass().getSimpleName();
 
     ButtonMiniGameModel gameModel;
 
     protected ButtonMiniGameFragment(ButtonMiniGameModel gameModel) {
         super();
         this.gameModel = gameModel;
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
     }
 
     @Nullable
@@ -55,22 +45,26 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
         LinearLayout layout = view.findViewById(R.id.buttonsRegion);
 
         for(ButtonModel model : gameModel.responses) {
-            Button button = (Button) inflater.inflate(
-                    R.layout.button_template, layout, false);
-
-            if(model.label != null) {
-                button.setText(model.label);
-            }
-
-            setButtonColor(model,button);
-
-            button.setOnClickListener(v -> gameModel.handleResponse(model));
-            layout.addView(button);
+            layout.addView(applyButtonModel(model,
+                    inflater.inflate(R.layout.button_template, layout, false)));
         }
 
-        Log.d(TAG, "view created");
+        Log.d(tag, "view created");
 
         return view;
+    }
+
+    Button applyButtonModel(ButtonModel model, View buttonView) {
+        Button button = (Button) buttonView;
+        if(model.label != null) {
+            button.setText(model.label);
+        }
+
+        setButtonColor(model, button);
+
+        button.setOnClickListener(v -> gameModel.handleResponse(model));
+
+        return button;
     }
 
     void setButtonColor(ButtonModel model, Button button) {
