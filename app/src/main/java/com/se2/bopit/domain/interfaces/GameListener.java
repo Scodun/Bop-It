@@ -6,4 +6,6 @@ public interface GameListener {
      * @param result - game result (true - won, false - lost)
      */
     void onGameResult(boolean result);
+
+    void onGameResult(boolean result1, boolean result2);
 }
