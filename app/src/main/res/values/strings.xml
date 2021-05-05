@@ -3,4 +3,8 @@
     <string name="loading">LOADING</string>
     <string name="logo">Logo Bop It</string>
     <string name="wave_bg">Waves Image</string>
+    <string name="up">UP</string>
+    <string name="down">DOWN</string>
+    <string name="right">RIGHT</string>
+    <string name="left">LEFT</string>
 </resources>
