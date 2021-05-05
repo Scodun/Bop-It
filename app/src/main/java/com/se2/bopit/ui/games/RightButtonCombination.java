@@ -48,10 +48,10 @@ public class RightButtonCombination extends Fragment implements MiniGame {
         partOne.add("DOWN");
         partOne.add("UP");
         List<String> partTwo = new ArrayList<>();
-        partOne.add("RIGHT");
-        partOne.add("LEFT");
-        partOne.add("DOWN");
-        partOne.add("UP");
+        partTwo.add("RIGHT");
+        partTwo.add("LEFT");
+        partTwo.add("DOWN");
+        partTwo.add("UP");
 
         Collections.shuffle(partOne);
         Collections.shuffle(partTwo);
