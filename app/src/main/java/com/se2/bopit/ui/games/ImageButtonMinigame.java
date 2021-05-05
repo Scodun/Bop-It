@@ -55,13 +55,11 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
 
         Collections.shuffle(imageButtonList);
 
-        layout.removeView(getView().findViewById(R.id.imageButton));
-        layout.removeView(getView().findViewById(R.id.imageButton2));
-        layout.removeView(getView().findViewById(R.id.imageButton3));
+        layout.removeAllViewsInLayout();
 
-        layout.addView(imageButtonList.get(0));
-        layout.addView(imageButtonList.get(1));
-        layout.addView(imageButtonList.get(2));
+        for(ImageButton imageButton : imageButtonList){
+            layout.addView(imageButton);
+        }
     }
 
     private final View.OnClickListener clickHandler = new View.OnClickListener() {
