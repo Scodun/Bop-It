@@ -1,6 +1,9 @@
 package com.se2.bopit.ui;
 
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -16,7 +19,10 @@ import androidx.appcompat.widget.Toolbar;
 import com.google.android.material.textfield.TextInputLayout;
 import com.se2.bopit.R;
 
+import java.util.Timer;
+
 public class SettingsActivity extends AppCompatActivity {
+    final static String MYPREF = "myCustomSharedPref";
     private Toolbar toolbar;
     private TextView headerPersSet;
     private TextInputLayout textInputName;
@@ -29,13 +35,18 @@ public class SettingsActivity extends AppCompatActivity {
     private TextView summaryEffect;
     private Button buttonReset;
     private Button buttonSave;
-
+    SharedPreferences customSharedPreferences;
+    private Timer timer;
+    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
+        handler = new Handler();
+        customSharedPreferences = getSharedPreferences(MYPREF, Activity.MODE_PRIVATE);
         initializeView();
+        setPrefValues();
 
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
@@ -49,7 +60,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     summarySound.setText(getString(R.string.summary_on));
-                }else{
+                } else {
                     summarySound.setText(getString(R.string.summary_off));
                 }
             }
@@ -59,7 +70,7 @@ public class SettingsActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
                     summaryEffect.setText(getString(R.string.summary_on));
-                }else{
+                } else {
                     summaryEffect.setText(getString(R.string.summary_off));
                 }
             }
@@ -69,16 +80,31 @@ public class SettingsActivity extends AppCompatActivity {
         buttonReset.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO reset to default
+                resetSharedPreferences();
             }
         });
 
         buttonSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO save to SharedPreferences
+                saveSharedPreferences();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                }, 300);
             }
         });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            onBackPressed();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void initializeView() {
@@ -98,12 +124,32 @@ public class SettingsActivity extends AppCompatActivity {
         buttonSave = findViewById(R.id.buttonSave);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == android.R.id.home) {
-            onBackPressed();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    private void setPrefValues() {
+        textInputName.getEditText().setText(customSharedPreferences.getString("name", ""));
+        switchSound.setChecked(customSharedPreferences.getBoolean("sound", true));
+        switchEffect.setChecked(customSharedPreferences.getBoolean("effect", true));
     }
+
+
+    private void resetSharedPreferences() {
+        customSharedPreferences = getSharedPreferences(MYPREF, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = customSharedPreferences.edit();
+        editor.putString("name", "");
+        editor.putBoolean("sound", true);
+        editor.putBoolean("effect", true);
+        editor.commit();
+        setPrefValues();
+    }
+
+
+    private void saveSharedPreferences() {
+        customSharedPreferences = getSharedPreferences(MYPREF, Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = customSharedPreferences.edit();
+        editor.putString("name", textInputName.getEditText().getText().toString());
+        editor.putBoolean("sound", switchSound.isChecked());
+        editor.putBoolean("effect", switchEffect.isChecked());
+        editor.commit();
+    }
+
+
 }

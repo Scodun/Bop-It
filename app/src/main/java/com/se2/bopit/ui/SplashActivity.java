@@ -26,7 +26,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         waveView=findViewById(R.id.waveView);
-        final int period = 10;
+        final int period = 100;
 
         startLoadingAnimation(waveView);
 
