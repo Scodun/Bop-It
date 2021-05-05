@@ -68,6 +68,8 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
         randomAnimal.add(1);
         randomAnimal.add(2);
 
+        Collections.shuffle(randomAnimal);
+
         if(imageButtonList.get(randomAnimal.get(0)).getId() == R.id.imageButton){
             end = "Cat";
         }
