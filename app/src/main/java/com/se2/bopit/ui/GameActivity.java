@@ -13,6 +13,8 @@ import com.se2.bopit.R;
 import com.se2.bopit.domain.GameEngine;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
+import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,6 +28,10 @@ public class GameActivity extends AppCompatActivity {
     private Random rand;
     private ArrayList<Integer> colors;
 
+    // providers
+    MiniGamesRegistry miniGamesProvider = new MiniGamesRegistry();
+    AndroidPlatformFeaturesProvider platformFeaturesProvider = new AndroidPlatformFeaturesProvider();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +42,8 @@ public class GameActivity extends AppCompatActivity {
         scoreView = findViewById(R.id.scoreView);
 
         //start game Engine and register listeners
-        GameEngine engine = new GameEngine();
-        engine.setGameEngineListener(gameEngineListener);
+        GameEngine engine = new GameEngine(miniGamesProvider, platformFeaturesProvider, gameEngineListener);
+
         engine.startNewGame();
 
         rand = new Random();
