@@ -69,7 +69,7 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
         @Override
         public void onClick(View v) {
             listener.onGameResult(v.getId() == R.id.imageButton);
-            one.setBackground(one.getResources().getDrawable(R.drawable.pressed_button_true));
+            one.setBackground(one.getResources().getDrawable(R.drawable.pressed_button_green));
         }
     };
 }
