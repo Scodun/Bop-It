@@ -8,6 +8,7 @@ import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
 import com.se2.bopit.ui.games.ImageButtonMinigame;
+import com.se2.bopit.ui.games.RightButtonCombination;
 import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
@@ -35,7 +36,8 @@ public class GameEngine {
                         ColorButtonMiniGame.class,
                         SimpleTextButtonMiniGame.class,
                         WeirdTextButtonMiniGame.class,
-                        ImageButtonMinigame.class
+                        ImageButtonMinigame.class,
+                        RightButtonCombination.class
                 )
         );
     }
@@ -115,6 +117,22 @@ public class GameEngine {
                 }
             }
 
+        }
+
+        @Override
+        public void onGameResult(boolean result, boolean result2) {
+            timer.cancel();
+            if(listener != null) {
+                if(result && result2 && !isOverTime && !miniGameLost) {
+                    score++;
+                    listener.onScoreUpdate(score);
+                    startNewGame();
+                }
+                else {
+                    miniGameLost = true;
+                    listener.onGameEnd(score);
+                }
+            }
         }
     };
 
