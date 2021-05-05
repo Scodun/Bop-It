@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,7 +36,6 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
     public void setGameListener(GameListener listener) {
         this.listener = listener;
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         getView().findViewById(R.id.imageButton).setOnClickListener(clickHandler);
@@ -60,6 +60,25 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
         for(ImageButton imageButton : imageButtonList){
             layout.addView(imageButton);
         }
+        String begin = "Select the ";
+        String end = "";
+
+        List<Integer> randomAnimal = new ArrayList<>();
+        randomAnimal.add(0);
+        randomAnimal.add(1);
+        randomAnimal.add(2);
+
+        if(imageButtonList.get(randomAnimal.get(0)).getId() == R.id.imageButton){
+            end = "Cat";
+        }
+        else if(imageButtonList.get(randomAnimal.get(0)).getId() == R.id.imageButton2){
+            end = "Dog";
+        }
+        else if(imageButtonList.get(randomAnimal.get(0)).getId() == R.id.imageButton3){
+            end = "Elephant";
+        }
+        TextView textView = getView().findViewById(R.id.textView);
+        textView.setText(begin.concat(end));
     }
 
     private final View.OnClickListener clickHandler = new View.OnClickListener() {
