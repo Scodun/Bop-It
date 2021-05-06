@@ -13,6 +13,8 @@ import com.se2.bopit.R;
 import com.se2.bopit.domain.GameEngine;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
+import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -26,18 +28,22 @@ public class GameActivity extends AppCompatActivity {
     private Random rand;
     private ArrayList<Integer> colors;
 
+    // providers
+    MiniGamesRegistry miniGamesProvider = new MiniGamesRegistry();
+    AndroidPlatformFeaturesProvider platformFeaturesProvider = new AndroidPlatformFeaturesProvider();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
         //get Views
-        timeBar = (ProgressBar) findViewById(R.id.timeBar);
-        scoreView = (TextView) findViewById(R.id.scoreView);
+        timeBar = findViewById(R.id.timeBar);
+        scoreView = findViewById(R.id.scoreView);
 
         //start game Engine and register listeners
-        GameEngine engine = new GameEngine();
-        engine.setGameEngineListener(gameEngineListener);
+        GameEngine engine = new GameEngine(miniGamesProvider, platformFeaturesProvider, gameEngineListener);
+
         engine.startNewGame();
 
         rand = new Random();
@@ -54,8 +60,6 @@ public class GameActivity extends AppCompatActivity {
     private final GameEngineListener gameEngineListener = new GameEngineListener() {
         @Override
         public void onGameEnd(int score) {
-            //TODO: Move Text to Finish Activity
-            scoreView.setText("Final Score: "+ score);
             Intent intent =  new Intent(getBaseContext(),WinLossActivity.class);
             intent.putExtra("score", score);
             startActivity(intent);
@@ -81,5 +85,13 @@ public class GameActivity extends AppCompatActivity {
             timeBar.setProgress((int) time);
         }
     };
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        startActivity(new Intent(this, GamemodeSelectActivity.class));
+        finish();
+    }
 
 }

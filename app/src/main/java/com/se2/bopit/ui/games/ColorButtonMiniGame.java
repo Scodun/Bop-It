@@ -1,6 +1,7 @@
 package com.se2.bopit.ui.games;
 
 import com.se2.bopit.domain.ButtonColor;
+import com.se2.bopit.domain.ButtonMiniGameModel;
 import com.se2.bopit.domain.ButtonModel;
 import com.se2.bopit.ui.ButtonMiniGameFragment;
 
@@ -10,12 +11,12 @@ import static com.se2.bopit.domain.ButtonColor.*;
 
 public class ColorButtonMiniGame extends ButtonMiniGameFragment {
 
-    private static final ArrayList<ButtonModel> possibleAnswers = initializeButtonModels();
+    static final ArrayList<ButtonModel> possibleAnswers = initializeButtonModels();
 
-    private static int numberAnswers = 3;
+    static final int numberAnswers = 3;
 
     public ColorButtonMiniGame() {
-        super(createGameModel(possibleAnswers, numberAnswers));
+        super(ButtonMiniGameModel.createRandomGameModel(possibleAnswers, numberAnswers));
     }
 
     private static ArrayList<ButtonModel> initializeButtonModels() {

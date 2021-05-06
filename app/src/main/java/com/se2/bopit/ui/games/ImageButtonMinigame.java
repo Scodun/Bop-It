@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,11 +21,11 @@ import java.util.List;
 
 public class ImageButtonMinigame extends Fragment implements MiniGame {
 
-    GameListener listener;
+    private GameListener listener;
 
-    ImageButton one;
-    ImageButton two;
-    ImageButton three;
+    private ImageButton one;
+    private ImageButton two;
+    private ImageButton three;
 
     public ImageButtonMinigame(){
         super(R.layout.fragment_image_button_game);
@@ -35,7 +36,6 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
     public void setGameListener(GameListener listener) {
         this.listener = listener;
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         getView().findViewById(R.id.imageButton).setOnClickListener(clickHandler);
@@ -55,21 +55,55 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
 
         Collections.shuffle(imageButtonList);
 
-        layout.removeView(getView().findViewById(R.id.imageButton));
-        layout.removeView(getView().findViewById(R.id.imageButton2));
-        layout.removeView(getView().findViewById(R.id.imageButton3));
+        layout.removeAllViewsInLayout();
 
-        layout.addView(imageButtonList.get(0));
-        layout.addView(imageButtonList.get(1));
-        layout.addView(imageButtonList.get(2));
+        for(ImageButton imageButton : imageButtonList){
+            layout.addView(imageButton);
+        }
+        String begin = "Select the ";
+        String end = "";
+
+        List<Integer> randomAnimal = new ArrayList<>();
+        randomAnimal.add(0);
+        randomAnimal.add(1);
+        randomAnimal.add(2);
+
+        Collections.shuffle(randomAnimal);
+
+        if(imageButtonList.get(randomAnimal.get(0)).getId() == R.id.imageButton){
+            end = "Cat";
+        }
+        else if(imageButtonList.get(randomAnimal.get(0)).getId() == R.id.imageButton2){
+            end = "Dog";
+        }
+        else if(imageButtonList.get(randomAnimal.get(0)).getId() == R.id.imageButton3){
+            end = "Elephant";
+        }
+        TextView textView = getView().findViewById(R.id.textView);
+        textView.setText(begin.concat(end));
     }
 
     private final View.OnClickListener clickHandler = new View.OnClickListener() {
         @SuppressLint("UseCompatLoadingForDrawables")
         @Override
         public void onClick(View v) {
-            listener.onGameResult(v.getId() == R.id.imageButton);
-            one.setBackground(one.getResources().getDrawable(R.drawable.pressed_button_true));
+            TextView textView = getView().findViewById(R.id.textView);
+            String textInTextView = textView.getText().toString();
+
+            switch (textInTextView){
+                case "Select the Cat":
+                    listener.onGameResult(v.getId() == R.id.imageButton);
+                    one.setBackground(one.getResources().getDrawable(R.drawable.pressed_button_green));
+                    break;
+                case "Select the Dog":
+                    listener.onGameResult(v.getId() == R.id.imageButton2);
+                    two.setBackground(two.getResources().getDrawable(R.drawable.pressed_button_green));
+                    break;
+                case "Select the Elephant":
+                    listener.onGameResult(v.getId() == R.id.imageButton3);
+                    three.setBackground(three.getResources().getDrawable(R.drawable.pressed_button_green));
+                    break;
+            }
         }
     };
 }

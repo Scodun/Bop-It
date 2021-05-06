@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_settings"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+    <TextView
+        android:id="@+id/textViewHeaderPersonalSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/setting_margin"
+        android:layout_marginTop="20dp"
+        android:text="@string/settings_header_personal"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/purple"
+        android:textSize="@dimen/setting_header_size" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textFieldName"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/setting_margin"
+        android:layout_marginTop="20dp"
+        android:hint="@string/setting_player_name"
+        app:boxStrokeColor="@color/purple"
+        app:hintTextColor="@color/purple">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textViewTitleNameSettings"
+            android:layout_alignParentLeft="true"
+            android:ems="10"
+            android:hint="@string/yourName"
+            android:textColor="@color/secondary"
+            android:textCursorDrawable="@drawable/cursor_settings"></com.google.android.material.textfield.TextInputEditText>
+
+        <requestFocus />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/primary"
+        android:layout_marginHorizontal="@dimen/setting_margin_divider"
+        android:layout_marginTop="20dp"/>
+
+    <TextView
+        android:id="@+id/textViewHeaderSoundSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/setting_margin"
+        android:layout_marginTop="20dp"
+        android:text="@string/settings_title_sound"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/purple"
+        android:textSize="@dimen/setting_header_size" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:layout_marginHorizontal="@dimen/setting_margin"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/iconSound"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            tools:src="@drawable/ic_sound"
+            android:layout_marginRight="16dp" />
+
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchSound"
+            android:checked="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/setting_title_sound"
+            android:textColor="@color/purple"
+            android:layout_toRightOf="@id/iconSound"
+            />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/summarySound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/summary_on"
+        android:layout_marginLeft="110dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false"
+        android:layout_marginHorizontal="@dimen/setting_margin"
+        android:layout_marginTop="20dp">
+
+        <ImageView
+            android:id="@+id/iconEffect"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            tools:src="@drawable/ic_effect"
+            android:layout_marginRight="16dp" />
+
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/switchEffect"
+            android:checked="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_title_effect"
+            android:textColor="@color/purple"
+            android:layout_toRightOf="@id/iconEffect"
+            />
+
+    </RelativeLayout>
+    <TextView
+        android:id="@+id/summaryEffect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/summary_on"
+        android:layout_marginLeft="110dp"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:paddingTop="110dp"
+        >
+    <Button
+        android:id="@+id/buttonReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/resetButton"
+        android:layout_marginRight="70dp"/>
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/saveButton"
+        android:layout_toRightOf="@id/buttonReset"/>
+    </RelativeLayout>
+</LinearLayout>

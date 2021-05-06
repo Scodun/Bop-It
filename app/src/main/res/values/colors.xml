@@ -15,4 +15,5 @@
     <color name="red">#ff002b</color>
     <color name="green">#089404</color>
     <color name="grey">#808080</color>
+    <color name="colorAccent">@color/secondary</color>
 </resources>
