@@ -19,11 +19,11 @@ import java.util.Collections;
 
 public class DrawingMinigame extends Fragment implements MiniGame {
 
-    private final int ERROR = 100;
+    private static final int ERROR = 100;
 
     private static final ArrayList<Integer> possibleAnswersResourceIds = initializeResourceIds();
 
-    private GameListener listener;
+    private static GameListener listener;
     private static Bitmap solution;
 
     public DrawingMinigame() {
@@ -32,7 +32,7 @@ public class DrawingMinigame extends Fragment implements MiniGame {
 
     @Override
     public void setGameListener(GameListener listener) {
-        this.listener = listener;
+        DrawingMinigame.listener = listener;
     }
 
     @Override
@@ -44,12 +44,12 @@ public class DrawingMinigame extends Fragment implements MiniGame {
 
         solution = BitmapFactory.decodeResource(getResources(), possibleAnswersResourceIds.get(0));
 
-        layout.addView(new DrawLineCanvas(getContext(), this, solution));
+        layout.addView(new DrawLineCanvas(getContext(), solution));
 
         return view;
     }
 
-    public void checkShape(Path touchPath) {
+    public static void checkShape(Path touchPath) {
         //TODO find a better way to this
         RectF bounds = new RectF();
         touchPath.computeBounds(bounds, false);

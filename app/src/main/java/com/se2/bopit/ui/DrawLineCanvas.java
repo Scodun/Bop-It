@@ -15,13 +15,11 @@ public class DrawLineCanvas extends View {
     private Bitmap background;
 
     private final Bitmap solution;
-    private final DrawingMinigame minigame;
 
-    public DrawLineCanvas(Context context, DrawingMinigame minigame, Bitmap solution) {
+    public DrawLineCanvas(Context context, Bitmap solution) {
         super(context);
 
         this.solution = solution;
-        this.minigame = minigame;
 
         touchPath = new Path();
 
@@ -57,7 +55,7 @@ public class DrawLineCanvas extends View {
                 break;
             case MotionEvent.ACTION_UP:
                 touchPath.lineTo(touchX, touchY);
-                minigame.checkShape(touchPath);
+                DrawingMinigame.checkShape(touchPath);
                 touchPath = new Path();
                 break;
             default:
