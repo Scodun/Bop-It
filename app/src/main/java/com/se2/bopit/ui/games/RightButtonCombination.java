@@ -20,8 +20,9 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     GameListener listener;
 
+    boolean firstClick = false;
+    boolean secondClick = false;
     boolean result = false;
-    boolean result2 = false;
 
     RightButtonCombination(){
         super(R.layout.fragment_right_button_combination_game);
@@ -70,165 +71,188 @@ public class RightButtonCombination extends Fragment implements MiniGame {
             String textFromTextView = textView.getText().toString();
 
             if(textFromTextView.equals("RIGHT, RIGHT")){
-                result = v.getId() == R.id.pressRight;
+                firstClick = v.getId() == R.id.pressRight;
                 getView().findViewById(R.id.pressRight).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        result2 = v.getId() == R.id.pressRight;
-                        listener.onGameResult(result,result2);
+                        secondClick = v.getId() == R.id.pressRight;
+                        result = checkClick(firstClick,secondClick);
+                        listener.onGameResult(result);
                     }
                 });
             }
             if(textFromTextView.equals("RIGHT, LEFT")){
-                result = v.getId() == R.id.pressRight;
+                firstClick = v.getId() == R.id.pressRight;
                 getView().findViewById(R.id.pressLeft).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        result2 = v.getId() == R.id.pressLeft;
-                        listener.onGameResult(result,result2);
+                        secondClick = v.getId() == R.id.pressLeft;
+                        result = checkClick(firstClick,secondClick);
+                        listener.onGameResult(result);
                     }
                 });
             }
             if(textFromTextView.equals("RIGHT, UP")){
-                result = v.getId() == R.id.pressRight;
+                firstClick = v.getId() == R.id.pressRight;
                 getView().findViewById(R.id.pressUp).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        result2 = v.getId() == R.id.pressUp;
-                        listener.onGameResult(result,result2);
+                        secondClick = v.getId() == R.id.pressUp;
+                        result = checkClick(firstClick,secondClick);
+                        listener.onGameResult(result);
                     }
                 });
             }
             if(textFromTextView.equals("RIGHT, DOWN")){
-                result = v.getId() == R.id.pressRight;
+                firstClick = v.getId() == R.id.pressRight;
                 getView().findViewById(R.id.pressDown).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        result2 = v.getId() == R.id.pressDown;
-                        listener.onGameResult(result,result2);
+                        secondClick = v.getId() == R.id.pressDown;
+                        result = checkClick(firstClick,secondClick);
+                        listener.onGameResult(result);
                     }
                 });
             }
             if(textFromTextView.equals("LEFT, RIGHT")){
-                result = v.getId() == R.id.pressLeft;
+                firstClick = v.getId() == R.id.pressLeft;
                 getView().findViewById(R.id.pressRight).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        result2 = v.getId() == R.id.pressRight;
-                        listener.onGameResult(result,result2);
+                        secondClick = v.getId() == R.id.pressRight;
+                        result = checkClick(firstClick,secondClick);
+                        listener.onGameResult(result);
                     }
                 });
             }
             if(textFromTextView.equals("LEFT, LEFT")){
-                result = v.getId() == R.id.pressLeft;
+                firstClick = v.getId() == R.id.pressLeft;
                 getView().findViewById(R.id.pressLeft).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        result2 = v.getId() == R.id.pressLeft;
-                        listener.onGameResult(result,result2);
+                        secondClick = v.getId() == R.id.pressLeft;
+                        result = checkClick(firstClick,secondClick);
+                        listener.onGameResult(result);
                     }
                 });
             }
             if(textFromTextView.equals("LEFT, UP")){
-                result = v.getId() == R.id.pressLeft;
+                firstClick = v.getId() == R.id.pressLeft;
                 getView().findViewById(R.id.pressUp).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        result2 = v.getId() == R.id.pressUp;
-                        listener.onGameResult(result,result2);
+                        secondClick = v.getId() == R.id.pressUp;
+                        result = checkClick(firstClick,secondClick);
+                        listener.onGameResult(result);
                     }
                 });
             }
             if(textFromTextView.equals("LEFT, DOWN")){
-                result = v.getId() == R.id.pressLeft;
+                firstClick = v.getId() == R.id.pressLeft;
                 getView().findViewById(R.id.pressDown).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        result2 = v.getId() == R.id.pressDown;
-                        listener.onGameResult(result,result2);
+                        secondClick = v.getId() == R.id.pressDown;
+                        result = checkClick(firstClick,secondClick);
+                        listener.onGameResult(result);
                     }
                 });
             }
             if(textFromTextView.equals("UP, RIGHT")){
-                result = v.getId() == R.id.pressUp;
+                firstClick = v.getId() == R.id.pressUp;
                 getView().findViewById(R.id.pressRight).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        result2 = v.getId() == R.id.pressRight;
-                        listener.onGameResult(result,result2);
+                        secondClick = v.getId() == R.id.pressRight;
+                        result = checkClick(firstClick,secondClick);
+                        listener.onGameResult(result);
                     }
                 });
             }
             if(textFromTextView.equals("UP, LEFT")){
-                result = v.getId() == R.id.pressUp;
+                firstClick = v.getId() == R.id.pressUp;
                 getView().findViewById(R.id.pressLeft).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        result2 = v.getId() == R.id.pressLeft;
-                        listener.onGameResult(result,result2);
+                        secondClick = v.getId() == R.id.pressLeft;
+                        result = checkClick(firstClick,secondClick);
+                        listener.onGameResult(result);
                     }
                 });
             }
             if(textFromTextView.equals("UP, UP")){
-                result = v.getId() == R.id.pressUp;
+                firstClick = v.getId() == R.id.pressUp;
                 getView().findViewById(R.id.pressUp).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        result2 = v.getId() == R.id.pressUp;
-                        listener.onGameResult(result,result2);
+                        secondClick = v.getId() == R.id.pressUp;
+                        result = checkClick(firstClick,secondClick);
+                        listener.onGameResult(result);
                     }
                 });
             }
             if(textFromTextView.equals("UP, DOWN")){
-                result = v.getId() == R.id.pressUp;
+                firstClick = v.getId() == R.id.pressUp;
                 getView().findViewById(R.id.pressDown).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        result2 = v.getId() == R.id.pressDown;
-                        listener.onGameResult(result,result2);
+                        secondClick = v.getId() == R.id.pressDown;
+                        result = checkClick(firstClick,secondClick);
+                        listener.onGameResult(result);
                     }
                 });
             }
             if(textFromTextView.equals("DOWN, RIGHT")){
-                result = v.getId() == R.id.pressDown;
+                firstClick = v.getId() == R.id.pressDown;
                 getView().findViewById(R.id.pressRight).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        result2 = v.getId() == R.id.pressRight;
-                        listener.onGameResult(result,result2);
+                        secondClick = v.getId() == R.id.pressRight;
+                        result = checkClick(firstClick,secondClick);
+                        listener.onGameResult(result);
                     }
                 });
             }
             if(textFromTextView.equals("DOWN, LEFT")){
-                result = v.getId() == R.id.pressDown;
+                firstClick = v.getId() == R.id.pressDown;
                 getView().findViewById(R.id.pressLeft).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        result2 = v.getId() == R.id.pressLeft;
-                        listener.onGameResult(result,result2);
+                        secondClick = v.getId() == R.id.pressLeft;
+                        result = checkClick(firstClick,secondClick);
+                        listener.onGameResult(result);
                     }
                 });
             }
             if(textFromTextView.equals("DOWN, UP")){
-                result = v.getId() == R.id.pressDown;
+                firstClick = v.getId() == R.id.pressDown;
                 getView().findViewById(R.id.pressUp).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        result2 = v.getId() == R.id.pressUp;
-                        listener.onGameResult(result,result2);
+                        secondClick = v.getId() == R.id.pressUp;
+                        result = checkClick(firstClick,secondClick);
+                        listener.onGameResult(result);
                     }
                 });
             }
             if(textFromTextView.equals("DOWN, DOWN")){
-                result = v.getId() == R.id.pressDown;
+                firstClick = v.getId() == R.id.pressDown;
                 getView().findViewById(R.id.pressDown).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        result2 = v.getId() == R.id.pressDown;
-                        listener.onGameResult(result,result2);
+                        secondClick = v.getId() == R.id.pressDown;
+                        result = checkClick(firstClick,secondClick);
+                        listener.onGameResult(result);
                     }
                 });
             }
         }
     };
+    public boolean checkClick(boolean click1, boolean click2){
+        if(click1 && click2) {
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
