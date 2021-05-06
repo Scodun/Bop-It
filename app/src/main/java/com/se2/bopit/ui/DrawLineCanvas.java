@@ -40,8 +40,8 @@ public class DrawLineCanvas extends View {
         // Draw the middle of the solution in the middle of the new space
         canvas.drawBitmap(
                 solution,
-                (float) (newWidth/2-solution.getWidth()/2),
-                (float) (newHeight/2-solution.getHeight()/2),
+                (float) ((double)newWidth/2 - (double)solution.getWidth()/2),
+                (float) ((double)newHeight/2 - (double)solution.getHeight()/2),
                 null
         );
     }
