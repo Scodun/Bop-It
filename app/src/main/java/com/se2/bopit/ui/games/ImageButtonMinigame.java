@@ -1,6 +1,5 @@
 package com.se2.bopit.ui.games;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
@@ -9,6 +8,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
@@ -84,7 +84,6 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
     }
 
     private final View.OnClickListener clickHandler = new View.OnClickListener() {
-        @SuppressLint("UseCompatLoadingForDrawables")
         @Override
         public void onClick(View v) {
             TextView textView = getView().findViewById(R.id.textView);
@@ -93,15 +92,17 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
             switch (textInTextView){
                 case "Select the Cat":
                     listener.onGameResult(v.getId() == R.id.imageButton);
-                    one.setBackground(one.getResources().getDrawable(R.drawable.pressed_button_green));
+                    one.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.pressed_button_green,null));
                     break;
                 case "Select the Dog":
                     listener.onGameResult(v.getId() == R.id.imageButton2);
-                    two.setBackground(two.getResources().getDrawable(R.drawable.pressed_button_green));
+                    two.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.pressed_button_green,null));
                     break;
                 case "Select the Elephant":
                     listener.onGameResult(v.getId() == R.id.imageButton3);
-                    three.setBackground(three.getResources().getDrawable(R.drawable.pressed_button_green));
+                    three.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.pressed_button_green,null));
+                    break;
+                default:
                     break;
             }
         }
