@@ -38,7 +38,7 @@ public class DrawLineCanvas extends View {
         Canvas canvas = new Canvas(background);
 
         // Draw the middle of the solution in the middle of the new space
-        canvas.drawBitmap(solution,newWidth/2-solution.getWidth()/2, newHeight/2-solution.getHeight()/2, getShapePaint());
+        canvas.drawBitmap(solution,newWidth/2-solution.getWidth()/2, newHeight/2-solution.getHeight()/2, null);
     }
 
     @Override
@@ -72,16 +72,5 @@ public class DrawLineCanvas extends View {
 
         canvas.drawBitmap(background, 0, 0, null);
         canvas.drawPath(touchPath, pathLinePaint);
-    }
-
-    private Paint getShapePaint() {
-        Paint shapePaint = new Paint();
-
-        shapePaint.setColor(Color.BLACK);
-        shapePaint.setAntiAlias(true);
-        shapePaint.setStyle(Paint.Style.STROKE);
-        shapePaint.setStrokeWidth(30);
-
-        return shapePaint;
     }
 }
