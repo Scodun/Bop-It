@@ -1,5 +1,6 @@
 package com.se2.bopit.ui.games;
 
+import com.se2.bopit.domain.ButtonMiniGameModel;
 import com.se2.bopit.domain.ButtonModel;
 import com.se2.bopit.ui.ButtonMiniGameFragment;
 
@@ -12,7 +13,7 @@ public class WeirdTextButtonMiniGame extends ButtonMiniGameFragment {
     private static int numberAnswers = 3;
 
     public WeirdTextButtonMiniGame() {
-        super(createGameModel(possibleAnswers, numberAnswers));
+        super(ButtonMiniGameModel.createRandomGameModel(possibleAnswers, numberAnswers));
     }
 
     private static ArrayList<ButtonModel> initializeButtonModels() {

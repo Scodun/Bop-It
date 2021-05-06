@@ -1,6 +1,5 @@
 package com.se2.bopit.ui;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,31 +17,21 @@ import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
 import com.se2.bopit.domain.ButtonColor;
+import com.se2.bopit.domain.ButtonMiniGameModel;
 import com.se2.bopit.domain.ButtonModel;
-import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Random;
 
 public abstract class ButtonMiniGameFragment extends Fragment implements MiniGame {
-    final String TAG = getClass().getSimpleName();
+    protected final String tag = getClass().getSimpleName();
 
-    GameListener gameListener;
+    ButtonMiniGameModel gameModel;
 
-    GameModel<ButtonModel> gameModel;
-
-    public ButtonMiniGameFragment(GameModel<ButtonModel> gameModel) {
+    protected ButtonMiniGameFragment(ButtonMiniGameModel gameModel) {
         super();
         this.gameModel = gameModel;
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
     }
 
     @Nullable
@@ -56,25 +45,26 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
         LinearLayout layout = view.findViewById(R.id.buttonsRegion);
 
         for(ButtonModel model : gameModel.responses) {
-            Button button = (Button) inflater.inflate(
-                    R.layout.button_template, layout, false);
-
-            if(model.label != null) {
-                button.setText(model.label);
-            }
-
-            setButtonColor(model,button);
-
-            // TODO dirty solution. consider responding with model and letting game engine decide
-            button.setOnClickListener(model.isCorrect
-                    ? this::handleCorrectResponse
-                    : this::handleWrongResponse);
-            layout.addView(button);
+            layout.addView(applyButtonModel(model,
+                    inflater.inflate(R.layout.button_template, layout, false)));
         }
 
-        Log.d(TAG, "view created");
+        Log.d(tag, "view created");
 
         return view;
+    }
+
+    Button applyButtonModel(ButtonModel model, View buttonView) {
+        Button button = (Button) buttonView;
+        if(model.label != null) {
+            button.setText(model.label);
+        }
+
+        setButtonColor(model, button);
+
+        button.setOnClickListener(v -> gameModel.handleResponse(model));
+
+        return button;
     }
 
     void setButtonColor(ButtonModel model, Button button) {
@@ -112,56 +102,8 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
         }
     }
 
-    /**
-     * Randomly picks a number of answers from a list of possible answers to create the GameModel
-     *
-     * @param possibleAnswers List of possible answers
-     * @param numberAnswers Number of answers to randomly choose from the list.
-     *                      One of them will be correct.
-     * @return GameModel with 1 correct response and possibleAnswers-1 incorrect responses
-     */
-    protected static GameModel<ButtonModel> createGameModel(List<ButtonModel> possibleAnswers, int numberAnswers) {
-
-        ArrayList<ButtonModel> possibleAnswersCopy = new ArrayList<>();
-        for (ButtonModel buttonModel : possibleAnswers) {
-            possibleAnswersCopy.add(buttonModel.clone());
-        }
-
-        Collections.shuffle(possibleAnswersCopy);
-
-        ButtonModel correctResponse = possibleAnswersCopy.get(0);
-
-        ArrayList<ButtonModel> wrongResponses = new ArrayList<>();
-        for (int i = 1; i < numberAnswers; i++) {
-            ButtonModel wrongResponse = possibleAnswersCopy.get(i);
-            wrongResponse.isCorrect = false;
-            wrongResponses.add(wrongResponse);
-        }
-
-        return new GameModel<>(
-                String.format("Select %s!", correctResponse.label),
-                correctResponse,
-                wrongResponses
-        );
-    }
-
-    void handleWrongResponse(View view) {
-        Log.d(TAG, "wrong response!");
-        gameListener.onGameResult(false);
-    }
-
-    void handleCorrectResponse(View view) {
-        Log.d(TAG, "correct response!");
-        gameListener.onGameResult(true);
-    }
-
-
-    public GameListener getGameListener() {
-        return gameListener;
-    }
-
     public void setGameListener(GameListener listener) {
-        this.gameListener = listener;
+        gameModel.setGameListener(listener);
     }
 }
 

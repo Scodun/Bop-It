@@ -1,43 +1,29 @@
 package com.se2.bopit.domain;
 
 import android.os.CountDownTimer;
-import android.util.Log;
 
 import com.se2.bopit.domain.interfaces.GameEngineListener;
-import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
-import com.se2.bopit.ui.games.ColorButtonMiniGame;
-import com.se2.bopit.ui.games.ImageButtonMinigame;
-import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
-import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
+import com.se2.bopit.domain.providers.MiniGamesProvider;
+import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
 
 public class GameEngine {
-    private CountDownTimer timer;
-    private GameEngineListener listener;
+    GameEngineListener listener;
 
-    private int score = 0;
-    private boolean isOverTime = false;
-    private boolean miniGameLost = false;
-    private Random rand;
+    int score = 0;
+    boolean isOverTime = false;
+    boolean miniGameLost = false;
 
-    private ArrayList<Class<?>> miniGames;
+    MiniGamesProvider miniGamesProvider;
+    PlatformFeaturesProvider platformFeaturesProvider;
 
-    public GameEngine() {
-        listener = null;
-
-        //Add MiniGame Classes here like ColorButtonMinigame.class
-        miniGames = new ArrayList<>(
-                Arrays.asList(
-                        ColorButtonMiniGame.class,
-                        SimpleTextButtonMiniGame.class,
-                        WeirdTextButtonMiniGame.class,
-                        ImageButtonMinigame.class
-                )
-        );
+    public GameEngine(MiniGamesProvider miniGamesProvider,
+                      PlatformFeaturesProvider platformFeaturesProvider,
+                      GameEngineListener listener) {
+        this.miniGamesProvider = miniGamesProvider;
+        this.platformFeaturesProvider = platformFeaturesProvider;
+        this.listener = listener;
     }
 
     /**
@@ -57,51 +43,12 @@ public class GameEngine {
     public void startNewGame() {
         MiniGame minigame = getMiniGame();
         long time = (long) (Math.exp(-this.score*0.08+7)+1000);
-        timer = startCountDown(time);
+        CountDownTimer timer = startCountDown(time);
         if(this.listener != null){
             listener.onGameStart(minigame, time);
         }
-        minigame.setGameListener(onGameResult);
-    }
 
-    private MiniGame getMiniGame(){
-        rand = new Random();
-        try {
-             return (MiniGame) miniGames.get(rand.nextInt(miniGames.size())).getDeclaredConstructor().newInstance();
-        }catch(Exception e){
-            Log.e("GameEngine", "Fatal Error creating Instance of Minigame, check if GameArray is correct!");
-        }
-        //Use Basic game if creating Instance randomly fails
-        return new ColorButtonMiniGame();
-    }
-
-    /**
-     * @param time - countdown time in ms
-     * Starts a new countdown
-     * Calls the MainActivity onTimeTick, onFinish listener to display the time
-     */
-    private CountDownTimer startCountDown(long time){
-        return new CountDownTimer(time, 5) {
-            public void onTick(long millisUntilFinished) {
-                if(listener != null)
-                    listener.onTimeTick(millisUntilFinished);
-            }
-
-            public void onFinish() {
-                isOverTime = true;
-                if(listener != null)
-                    listener.onGameEnd(score);
-            }
-        }.start();
-    }
-
-    /**
-     * Listener for Minigames, updates scores on event call and resets timer
-     * Calls the onScoreUpdate, onGameEnd Listener to display the Score
-     */
-    private final GameListener onGameResult = new GameListener() {
-        @Override
-        public void onGameResult(boolean result) {
+        minigame.setGameListener(result -> {
             timer.cancel();
             if(listener != null) {
                 if(result && !isOverTime && !miniGameLost) {
@@ -115,16 +62,32 @@ public class GameEngine {
                 }
             }
 
-        }
-    };
-
-    /**
-     * @param listener - Listener to add to the Engine
-     * Adds a Listener to the engine
-     */
-    public void setGameEngineListener(GameEngineListener listener){
-        if(listener != null)
-            this.listener = listener;
+        });
     }
 
+        private MiniGame getMiniGame(){
+            return miniGamesProvider.createRandomMiniGame();
+    }
+
+    /**
+     * @param time - countdown time in ms
+     * Starts a new countdown
+     * Calls the MainActivity onTimeTick, onFinish listener to display the time
+     */
+    private CountDownTimer startCountDown(long time) {
+        return platformFeaturesProvider.createCountDownTimer(
+                time, 5, this::onTick, this::onFinish)
+                .start();
+    }
+
+            public void onTick(long millisUntilFinished) {
+                if(listener != null)
+                    listener.onTimeTick(millisUntilFinished);
+            }
+
+            public void onFinish() {
+                isOverTime = true;
+                if(listener != null)
+                    listener.onGameEnd(score);
+            }
 }

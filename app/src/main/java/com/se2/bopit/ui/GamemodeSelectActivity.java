@@ -44,8 +44,14 @@ public class GamemodeSelectActivity extends AppCompatActivity {
         onlineMultiplayerButton.setOnClickListener(v -> {
         });
 
-        settingsButton.setOnClickListener(v -> {
-        });
+        settingsButton.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        this.finishAffinity();
     }
 
 }
