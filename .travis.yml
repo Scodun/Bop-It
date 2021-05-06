@@ -20,28 +20,32 @@ cache:
 android:
   components:
     - tools
-    - tools
     - platform-tools
     - android-30
+    - android-22
     - build-tools-30.0.3
+    - extra-google-google_play_services
+    - extra-google-m2repository
+    - extra-android-m2repository
     - extra
-  #    - sys-img-armeabi-v7a-android-22
+    - sys-img-armeabi-v7a-android-22
 
-  ## uncomment android emulator if android integration tests are needed
-  #before_script:
-  #  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a
-  #  - emulator -avd test -no-audio -no-window &
-  #  - android-wait-for-emulator
-  #  - adb shell input keyevent 82 &
+
+before_script:
+  - echo no | android create avd --force -n test -t android-22 --abi armeabi-v7a -c 32M
+  - emulator -avd test -no-audio -no-window &
+  - android-wait-for-emulator
+  - sleep 180
+  - adb devices
+  - adb shell input keyevent 82 &
 
 script:
   - jdk_switcher use oraclejdk8             # use java 8 which is the last that is supported by android
   - yes | sdkmanager "platforms;android-30" # accept licenses
   - yes | sdkmanager "build-tools;30.0.3"   # accept licenses
-  - chmod +x gradlew                        # make executable 
+  - chmod +x gradlew                        # make executable
   - ./gradlew test jacocoTestReport
-  ## uncomment test exec if android integration tests are needed
-  #  - ./gradlew connectedAndroidTest
+  - ./gradlew connectedAndroidTest
   - ./gradlew lint
 
   - export JAVA_HOME=$HOME/openjdk11        # use java 11 which is needed for sonar

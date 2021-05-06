@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Settings dimen. -->
+    <dimen name="setting_margin">70dp</dimen>
+    <dimen name="setting_margin_divider">50dp</dimen>
+    <dimen name="setting_header_size">18sp</dimen>
+    <dimen name="setting_title_size">16sp</dimen>
+</resources>
