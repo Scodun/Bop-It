@@ -22,4 +22,8 @@
     <!-- Button Preferences -->
     <string name="saveButton">Save</string>
     <string name="resetButton">Reset</string>
+    <string name="up">UP</string>
+    <string name="left">LEFT</string>
+    <string name="right">RIGHT</string>
+    <string name="down">DOWN</string>
 </resources>
