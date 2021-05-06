@@ -24,7 +24,9 @@ public class RightButtonCombination extends Fragment implements MiniGame {
     boolean secondClick = false;
     boolean result = false;
 
-    RightButtonCombination(){
+    public RightButtonCombination(){
+
+
         super(R.layout.fragment_right_button_combination_game);
         this.listener = null;
     }
