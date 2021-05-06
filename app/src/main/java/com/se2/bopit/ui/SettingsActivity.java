@@ -84,9 +84,7 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void initializeView() {
         toolbar = findViewById(R.id.toolbar_settings);
-        TextView headerPersSet = findViewById(R.id.textViewHeaderPersonalSettings);
         textInputName = findViewById(R.id.textFieldName);
-        TextView headerSoundSet = findViewById(R.id.textViewHeaderSoundSettings);
         ImageView iconSound = findViewById(R.id.iconSound);
         iconSound.setImageResource(R.drawable.ic_sound);
         switchSound = findViewById(R.id.switchSound);
