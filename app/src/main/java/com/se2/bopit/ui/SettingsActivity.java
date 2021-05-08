@@ -24,6 +24,9 @@ import com.se2.bopit.domain.services.BackgroundSoundService;
 
 public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String MYPREF = "myCustomSharedPref";
+    private static final String PrefKeySound = "sound";
+    private static final String PrefKeyEffect = "effect";
+    private static final String PrefKeyName = "name";
     private Toolbar toolbar;
     private TextInputLayout textInputName;
     private SwitchCompat switchSound;
@@ -39,7 +42,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
-        customSharedPreferences = getSharedPreferences(MYPREF, Activity.MODE_PRIVATE);
+        customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         customSharedPreferences.registerOnSharedPreferenceChangeListener(this);
         initializeView();
         setPrefValues();
@@ -102,9 +105,9 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
     private void setPrefValues() throws NullPointerException {
         try {
-            textInputName.getEditText().setText(customSharedPreferences.getString("name", ""));
-            switchSound.setChecked(customSharedPreferences.getBoolean("sound", true));
-            switchEffect.setChecked(customSharedPreferences.getBoolean("effect", true));
+            textInputName.getEditText().setText(customSharedPreferences.getString(PrefKeyName, ""));
+            switchSound.setChecked(customSharedPreferences.getBoolean(PrefKeySound, true));
+            switchEffect.setChecked(customSharedPreferences.getBoolean(PrefKeyEffect, true));
         } catch (NullPointerException e) {
             Log.e("SettingsActivity", "Set Name failed: " + e);
         }
@@ -115,9 +118,9 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     private void resetSharedPreferences() {
         customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = customSharedPreferences.edit();
-        editor.putString("name", "");
-        editor.putBoolean("sound", true);
-        editor.putBoolean("effect", true);
+        editor.putString(PrefKeyName, "");
+        editor.putBoolean(PrefKeySound, true);
+        editor.putBoolean(PrefKeyEffect, true);
         editor.apply();
         setPrefValues();
     }
@@ -127,9 +130,9 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = customSharedPreferences.edit();
         try {
-            editor.putString("name", textInputName.getEditText().getText().toString());
-            editor.putBoolean("sound", switchSound.isChecked());
-            editor.putBoolean("effect", switchEffect.isChecked());
+            editor.putString(PrefKeyName, textInputName.getEditText().getText().toString());
+            editor.putBoolean(PrefKeySound, switchSound.isChecked());
+            editor.putBoolean(PrefKeyEffect, switchEffect.isChecked());
             editor.apply();
         } catch (NullPointerException e) {
             Log.e("SettingsActivity", "Get Name failed: " + e);
