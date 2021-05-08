@@ -12,12 +12,9 @@ import androidx.annotation.Nullable;
 import com.se2.bopit.R;
 
 public class BackgroundSoundService extends Service {
-    private final static String MYPREF = "myCustomSharedPref";
-    private Intent intent;
+    private static final String MYPREF = "myCustomSharedPref";
     private MediaPlayer mediaplayer;
     private SharedPreferences customSharedPreferences;
-    private boolean backgroundMusic;
-    private int length = 0;
 
     @Nullable
     @Override
@@ -34,8 +31,9 @@ public class BackgroundSoundService extends Service {
         mediaplayer.setVolume(100, 100);
     }
 
+    @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        backgroundMusic = customSharedPreferences.getBoolean("sound", false);
+        boolean backgroundMusic = customSharedPreferences.getBoolean("sound", false);
         if (backgroundMusic) {
             mediaplayer.start();
         } else {
@@ -43,7 +41,6 @@ public class BackgroundSoundService extends Service {
         }
         return Service.START_STICKY;
     }
-
 
     @Override
     public void onDestroy() {
@@ -53,7 +50,6 @@ public class BackgroundSoundService extends Service {
             mediaplayer.release();
         }
     }
-
 }
 
 

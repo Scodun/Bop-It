@@ -2,6 +2,7 @@ package com.se2.bopit.ui;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -18,9 +19,10 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.se2.bopit.R;
+import com.se2.bopit.domain.services.BackgroundSoundService;
 
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String MYPREF = "myCustomSharedPref";
     private Toolbar toolbar;
     private TextInputLayout textInputName;
@@ -38,6 +40,7 @@ public class SettingsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
         customSharedPreferences = getSharedPreferences(MYPREF, Activity.MODE_PRIVATE);
+        customSharedPreferences.registerOnSharedPreferenceChangeListener(this);
         initializeView();
         setPrefValues();
 
@@ -131,6 +134,32 @@ public class SettingsActivity extends AppCompatActivity {
         } catch (NullPointerException e) {
             Log.e("SettingsActivity", "Get Name failed: " + e);
 
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        customSharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        customSharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        customSharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals("sound")) {
+            stopService(new Intent(this, BackgroundSoundService.class));
+            startService(new Intent(this, BackgroundSoundService.class));
         }
     }
 }
