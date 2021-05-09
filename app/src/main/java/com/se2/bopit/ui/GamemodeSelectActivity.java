@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import com.se2.bopit.R;
+import com.se2.bopit.domain.services.BackgroundSoundService;
 
 public class GamemodeSelectActivity extends AppCompatActivity {
 
@@ -20,6 +21,8 @@ public class GamemodeSelectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gamemode_select);
+
+        startService(new Intent(this, BackgroundSoundService.class));
 
         initializeButtons();
         initializeListeners();

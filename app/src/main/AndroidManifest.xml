@@ -22,6 +22,7 @@
         <activity android:name=".ui.GamemodeSelectActivity" />
         <activity android:name=".ui.WinLossActivity" />
         <activity android:name=".ui.GameActivity" />
+        <service android:enabled="true" android:name=".domain.services.BackgroundSoundService" />
     </application>
 
 </manifest>

@@ -12,6 +12,7 @@ import android.view.animation.Transformation;
 import android.widget.ImageView;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.services.BackgroundSoundService;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -27,6 +28,8 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         waveView=findViewById(R.id.waveView);
         final int period = 100;
+
+        startService(new Intent(this, BackgroundSoundService.class));
 
         startLoadingAnimation(waveView);
 
@@ -73,4 +76,5 @@ public class SplashActivity extends AppCompatActivity {
 
         view.startAnimation(a);
     }
+
 }
