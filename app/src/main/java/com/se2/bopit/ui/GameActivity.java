@@ -23,12 +23,12 @@ import java.util.Random;
 public class GameActivity extends AppCompatActivity {
 
     //views
-    private ProgressBar timeBar;
-    private TextView scoreView;
-    private Random rand;
-    private ArrayList<Integer> colors;
-    private GameEngine engine;
-    private boolean gameEnd=false;
+    ProgressBar timeBar;
+    TextView scoreView;
+    Random rand;
+    ArrayList<Integer> colors;
+    GameEngine engine;
+    boolean gameEnd=false;
 
     // providers
     MiniGamesRegistry miniGamesProvider = new MiniGamesRegistry();

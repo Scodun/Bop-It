@@ -12,11 +12,11 @@ public class GameEngine {
     GameEngineListener listener;
 
 
-    private int score = 0;
-    private boolean isOverTime = false;
-    private boolean miniGameLost = false;
-    private boolean lifecycleCancel = false;
-    private CountDownTimer timer;
+    int score = 0;
+    boolean isOverTime = false;
+    boolean miniGameLost = false;
+    boolean lifecycleCancel = false;
+    CountDownTimer timer;
 
     MiniGamesProvider miniGamesProvider;
     PlatformFeaturesProvider platformFeaturesProvider;
