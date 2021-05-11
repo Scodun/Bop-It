@@ -22,7 +22,17 @@
         <activity android:name=".ui.GamemodeSelectActivity" />
         <activity android:name=".ui.WinLossActivity" />
         <activity android:name=".ui.GameActivity" />
-        <service android:enabled="true" android:name=".domain.services.BackgroundSoundService" />
+
+        <service
+            android:name=".domain.services.BackgroundSoundService"
+            android:enabled="true" />
+        <service
+            android:name=".domain.services.BackgroundServiceAccelerometer"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="com.se2.bopit.ui.games.SHAKE" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
