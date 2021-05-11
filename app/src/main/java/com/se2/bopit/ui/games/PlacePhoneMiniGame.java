@@ -22,16 +22,17 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
-import com.se2.bopit.domain.SensorModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
-import com.se2.bopit.ui.DrawLineCanvas;
-import com.se2.bopit.ui.SensorMiniGameFragment;
-
-import java.util.ArrayList;
-import java.util.Collections;
 
 
+/**
+ * Minigame
+ *
+ * Goal: Place Phone on a flat surface.
+ * Calls the MainActivity onGameStart Listener to display the Fragment
+ * Sets the GameListener for the Minigame
+ */
 public class PlacePhoneMiniGame extends Fragment implements SensorEventListener, MiniGame {
     private SensorManager sensorManager;
     private Sensor accelerometer;
@@ -59,43 +60,59 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
 
         return view;
     }
-
+    /**
+     * gets called as soon as the accelerator sensor changes
+     * This method calls isFlat, and if isFlat returns true, we call the GameListener
+     * and tell it that the Minigame was completed successfully
+     * unregisters listener on game completion
+     */
     @Override
     public void onSensorChanged(SensorEvent event) {
 
         try{
-            float[] g = new float[3];
-            g = event.values.clone();
-
-            double norm_Of_g = Math.sqrt(g[0] * g[0] + g[1] * g[1] + g[2] * g[2]);
-
-// Normalize the accelerometer vector
-            g[0] = (float) (g[0] / norm_Of_g);
-            g[1] = (float) (g[1] / norm_Of_g);
-            g[2] = (float) (g[2] / norm_Of_g);
-
-            int inclination = (int) Math.round(Math.toDegrees(Math.acos(g[2])));
-
-            if (inclination < 15 || inclination > 155)
-            {
+            if(isFlat(event.values.clone())){
                 listener.onGameResult(true);
                 sensorManager.unregisterListener(this);
             }
-            else
-            {
-                System.out.println("notflat");
-            }
         }
         catch (Exception ex){
-            System.out.println("asdf");
-
+            System.out.println(ex.getMessage());
         }
 
 
     }
 
+    /**
+     * Needed for implementing SensorEventListener
+     * This specific method is not used.
+     */
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-        System.out.println("asdf");
+
+    }
+    /**
+     * @param vals - values received from sensor
+     * Checks if phone is placed flat
+     * There is a realtive generous error margin calculated in, to account for Camera bumps.
+     */
+    private boolean isFlat(float[] vals){
+        //Source for calculation: https://stackoverflow.com/questions/11175599/how-to-measure-the-tilt-of-the-phone-in-xy-plane-using-accelerometer-in-android/15149421#15149421
+        double norm_Of_g = Math.sqrt(vals[0] * vals[0] + vals[1] * vals[1] + vals[2] * vals[2]);
+
+        // Normalize the accelerometer vector
+        vals[0] = (float) (vals[0] / norm_Of_g);
+        vals[1] = (float) (vals[1] / norm_Of_g);
+        vals[2] = (float) (vals[2] / norm_Of_g);
+
+        int inclination = (int) Math.round(Math.toDegrees(Math.acos(vals[2])));
+
+        if (inclination < 15 || inclination > 155)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 }
