@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -44,9 +45,10 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_button_component, container, false);
-        LinearLayout layout = view.findViewById(R.id.buttonsRegion);
-        TextView messageText = view.findViewById(R.id.messageText);
+        View view = inflater.inflate(R.layout.fragment_action_component, container, false);
+        ImageView imageView = view.findViewById(R.id.actionImage);
+        imageView.setImageResource(R.drawable.phone_flat);
+        TextView messageText = view.findViewById(R.id.actionText);
         messageText.setText("Place your phone on a flat surface");
         sensorManager = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
