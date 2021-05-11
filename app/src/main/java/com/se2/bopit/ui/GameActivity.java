@@ -25,6 +25,8 @@ public class GameActivity extends AppCompatActivity {
     private TextView scoreView;
     private Random rand;
     private ArrayList<Integer> colors;
+    private GameEngine engine;
+    private boolean gameEnd=false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,7 @@ public class GameActivity extends AppCompatActivity {
         scoreView = findViewById(R.id.scoreView);
 
         //start game Engine and register listeners
-        GameEngine engine = new GameEngine();
+        engine = new GameEngine();
         engine.setGameEngineListener(gameEngineListener);
         engine.startNewGame();
 
@@ -54,9 +56,12 @@ public class GameActivity extends AppCompatActivity {
     private final GameEngineListener gameEngineListener = new GameEngineListener() {
         @Override
         public void onGameEnd(int score) {
-            Intent intent =  new Intent(getBaseContext(),WinLossActivity.class);
-            intent.putExtra("score", score);
-            startActivity(intent);
+            if(!gameEnd) {
+                gameEnd=true;
+                Intent intent = new Intent(getBaseContext(), WinLossActivity.class);
+                intent.putExtra("score", score);
+                startActivity(intent);
+            }
         }
 
         @Override
@@ -83,9 +88,13 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
+        engine.stopCurrentGame();
         super.onBackPressed();
-        startActivity(new Intent(this, GamemodeSelectActivity.class));
-        finish();
     }
 
+    @Override
+    public void onStop() {
+        engine.stopCurrentGame();
+        super.onStop();
+    }
 }

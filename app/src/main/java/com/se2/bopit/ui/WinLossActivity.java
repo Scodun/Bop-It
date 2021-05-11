@@ -1,5 +1,7 @@
 package com.se2.bopit.ui;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -10,7 +12,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.games.Games;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.se2.bopit.R;
 
 import java.util.Objects;
@@ -18,8 +19,9 @@ import java.util.Objects;
 public class WinLossActivity extends AppCompatActivity {
     private Button bu_return;
     private Button bu_share;
+    private Button bu_leaderboard;
     private TextView tv_score;
-    private Intent intent;
+    private ActivityResultLauncher<Intent> activityResultLauncher;
     private int score;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +31,7 @@ public class WinLossActivity extends AppCompatActivity {
         initializeButtons();
         initializeListeners();
         initializeFields();
+        initActivityLauncher();
         showScore();
         updateHighscore();
     }
@@ -41,27 +44,29 @@ public class WinLossActivity extends AppCompatActivity {
     }
 
     private void initializeFields() {
-        intent = getIntent();
+        Intent intent = getIntent();
         score = intent.getIntExtra("score",0);
     }
 
     private void initializeListeners() {
         bu_share.setOnClickListener(onShare);
         bu_return.setOnClickListener(onReturnToGameSelectMode);
+        bu_leaderboard.setOnClickListener(onLeaderboardSelect);
     }
 
     private void initializeButtons() {
-        bu_return = (Button) findViewById(R.id.bu_return);
-        bu_share = (Button) findViewById(R.id.bu_share);
-        tv_score =(TextView) findViewById(R.id.tv_score);
+        bu_return = findViewById(R.id.bu_return);
+        bu_share = findViewById(R.id.bu_share);
+        tv_score = findViewById(R.id.tv_score);
+        bu_leaderboard = findViewById(R.id.leaderboardButton);
     }
 
     private void showScore() {
-        tv_score =(TextView) findViewById(R.id.tv_score);
+        tv_score = findViewById(R.id.tv_score);
         tv_score.setText("Score: " + score);
     }
 
-    private View.OnClickListener onShare = v ->{
+    private final View.OnClickListener onShare = v ->{
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.setType("text/plain");
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Share your Bop-It Score");
@@ -69,10 +74,23 @@ public class WinLossActivity extends AppCompatActivity {
         startActivity(Intent.createChooser(shareIntent,"Share score"));
     };
 
-    private View.OnClickListener onReturnToGameSelectMode = v -> {
+    private final View.OnClickListener onReturnToGameSelectMode = v -> {
         Intent gmSelectActivityIntent = new Intent(getBaseContext(),GamemodeSelectActivity.class);
         startActivity(gmSelectActivityIntent);
     };
+
+    private final View.OnClickListener onLeaderboardSelect = v -> {
+        Games.getLeaderboardsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                .getLeaderboardIntent(getString(R.string.leaderboard_highscore))
+                .addOnSuccessListener(intent -> activityResultLauncher.launch(intent));
+    };
+
+    private void initActivityLauncher(){
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                });
+    }
 
     @Override
     public void onBackPressed()
@@ -82,10 +100,5 @@ public class WinLossActivity extends AppCompatActivity {
         finish();
     }
 
-    public void showLeaderboard(View view) {
-        Games.getLeaderboardsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
-                .getLeaderboardIntent(getString(R.string.leaderboard_highscore))
-                .addOnSuccessListener(intent -> startActivityForResult(intent, 9004));
-    }
 
 }

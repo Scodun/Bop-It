@@ -4,7 +4,6 @@ import android.os.CountDownTimer;
 import android.util.Log;
 
 import com.se2.bopit.domain.interfaces.GameEngineListener;
-import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
 import com.se2.bopit.ui.games.ImageButtonMinigame;
@@ -21,7 +20,9 @@ public class GameEngine {
     private int score = 0;
     private boolean isOverTime = false;
     private boolean miniGameLost = false;
+    private boolean lifecycleCancel = false;
     private Random rand;
+    CountDownTimer timer;
 
     private ArrayList<Class<?>> miniGames;
 
@@ -56,7 +57,7 @@ public class GameEngine {
     public void startNewGame() {
         MiniGame minigame = getMiniGame();
         long time = (long) (Math.exp(-this.score*0.08+7)+1000);
-        CountDownTimer timer = startCountDown(time);
+        timer = startCountDown(time);
         if(this.listener != null){
             listener.onGameStart(minigame, time);
         }
@@ -69,7 +70,7 @@ public class GameEngine {
                     listener.onScoreUpdate(score);
                     startNewGame();
                 }
-                else {
+                else if(!lifecycleCancel){
                     miniGameLost = true;
                     listener.onGameEnd(score);
                 }
@@ -117,6 +118,15 @@ public class GameEngine {
     public void setGameEngineListener(GameEngineListener listener){
         if(listener != null)
             this.listener = listener;
+    }
+
+    public void stopCurrentGame(){
+        if(!lifecycleCancel && !miniGameLost) {
+            lifecycleCancel = true;
+            timer.cancel();
+            miniGameLost = true;
+            listener.onGameEnd(score);
+        }
     }
 
 }

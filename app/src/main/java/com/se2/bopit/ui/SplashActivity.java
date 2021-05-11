@@ -37,7 +37,7 @@ public class SplashActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this,
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).requestId().requestProfile().build());
 
-        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                         GoogleSignInResult signInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(result.getData());
@@ -47,7 +47,7 @@ public class SplashActivity extends AppCompatActivity {
                         }
                 });
 
-        someActivityResultLauncher.launch(mGoogleSignInClient.getSignInIntent());
+        activityResultLauncher.launch(mGoogleSignInClient.getSignInIntent());
     }
 
     private void startLoadingAnimation(View view){
