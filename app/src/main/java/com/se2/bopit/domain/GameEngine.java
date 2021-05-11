@@ -16,7 +16,6 @@ public class GameEngine {
     private boolean isOverTime = false;
     private boolean miniGameLost = false;
     private boolean lifecycleCancel = false;
-    private Random rand;
     private CountDownTimer timer;
 
     MiniGamesProvider miniGamesProvider;
@@ -95,14 +94,6 @@ public class GameEngine {
             listener.onGameEnd(score);
     }
 
-    /**
-     * @param listener - Listener to add to the Engine
-     * Adds a Listener to the engine
-     */
-    public void setGameEngineListener(GameEngineListener listener){
-        if(listener != null)
-            this.listener = listener;
-    }
 
     public void stopCurrentGame(){
         if(!lifecycleCancel && !miniGameLost) {
