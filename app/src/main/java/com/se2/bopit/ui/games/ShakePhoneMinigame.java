@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -41,7 +42,6 @@ public class ShakePhoneMinigame extends Fragment implements MiniGame {
     @Override
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
-
         broadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
@@ -78,8 +78,11 @@ public class ShakePhoneMinigame extends Fragment implements MiniGame {
     }
 
     private void updateData(Intent intent) {
-        isShaked = intent.getBooleanExtra(BackgroundServiceAccelerometer.SHAKED,false);
-        Log.d("Logging", String.valueOf(isShaked));
+            isShaked = intent.getBooleanExtra(BackgroundServiceAccelerometer.SHAKED, false);
+            if (isShaked == true) {
+                LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
+                listener.onGameResult(true);
+        }
     }
 
 }

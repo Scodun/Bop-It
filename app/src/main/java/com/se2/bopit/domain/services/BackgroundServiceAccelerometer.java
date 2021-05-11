@@ -45,10 +45,11 @@ public class BackgroundServiceAccelerometer extends Service implements SensorEve
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensorAccelerometer,
-                SensorManager.SENSOR_DELAY_UI, new Handler());
+                SensorManager.SENSOR_DELAY_GAME, new Handler());
 
         return START_STICKY;
     }
+
 
     @Override
     public void onSensorChanged(SensorEvent event) {
@@ -59,9 +60,10 @@ public class BackgroundServiceAccelerometer extends Service implements SensorEve
 
             mAccel = (x * x + y * y + z * z) / (GRAVITY_EARTH * GRAVITY_EARTH);
 
-            Intent intent = new Intent(SHAKE_ACTION);
+            intent = new Intent(SHAKE_ACTION);
             if (mAccel > 2) {
                 intent.putExtra(SHAKED, true);
+                sensorManager = null;
             } else {
                 intent.putExtra(SHAKED, false);
             }
