@@ -84,19 +84,16 @@ public class GameEngine {
                 .start();
     }
 
-            public void onTick(long millisUntilFinished) {
-                if(listener != null)
-                    listener.onTimeTick(millisUntilFinished);
-            }
-
-            public void onFinish() {
-                isOverTime = true;
-                if(listener != null)
-                    listener.onGameEnd(score);
-            }
-        }.start();
+    public void onTick(long millisUntilFinished) {
+        if(listener != null)
+            listener.onTimeTick(millisUntilFinished);
     }
 
+    public void onFinish() {
+        isOverTime = true;
+        if(listener != null)
+            listener.onGameEnd(score);
+    }
 
     /**
      * @param listener - Listener to add to the Engine
