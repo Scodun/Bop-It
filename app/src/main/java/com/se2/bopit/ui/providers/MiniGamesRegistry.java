@@ -22,7 +22,6 @@ public class MiniGamesRegistry implements MiniGamesProvider {
             ColorButtonMiniGame.class,
             SimpleTextButtonMiniGame.class,
             WeirdTextButtonMiniGame.class,
-
             ImageButtonMinigame.class,
             RightButtonCombination.class,
             PlacePhoneMiniGame.class
@@ -40,7 +39,6 @@ public class MiniGamesRegistry implements MiniGamesProvider {
 
         // fallback
 
-        //return new ColorButtonMiniGame();
-        return new PlacePhoneMiniGame();
+        return new ColorButtonMiniGame();
     }
 }
