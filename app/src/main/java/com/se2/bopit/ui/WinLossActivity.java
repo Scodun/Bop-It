@@ -34,8 +34,10 @@ public class WinLossActivity extends AppCompatActivity {
     }
 
     private void updateHighscore(){
-        Games.getLeaderboardsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
-                .submitScore(getString(R.string.leaderboard_highscore), score);
+        if(GoogleSignIn.getLastSignedInAccount(this)!=null) {
+            Games.getLeaderboardsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                    .submitScore(getString(R.string.leaderboard_highscore), score);
+        }
     }
 
     private void initializeFields() {
