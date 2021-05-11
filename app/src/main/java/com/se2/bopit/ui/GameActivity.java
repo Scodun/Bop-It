@@ -45,7 +45,7 @@ public class GameActivity extends AppCompatActivity {
 
         //start game Engine and register listeners
 
-        GameEngine engine = new GameEngine(miniGamesProvider, platformFeaturesProvider, gameEngineListener);
+        engine = new GameEngine(miniGamesProvider, platformFeaturesProvider, gameEngineListener);
 
         engine.startNewGame();
 
