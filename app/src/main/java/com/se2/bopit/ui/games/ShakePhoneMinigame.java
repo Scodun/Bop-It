@@ -5,11 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
@@ -24,19 +22,16 @@ import com.se2.bopit.domain.services.BackgroundServiceAccelerometer;
 
 public class ShakePhoneMinigame extends Fragment implements MiniGame {
     private static GameListener listener;
-    private ImageView shakeImage;
     private BroadcastReceiver broadcastReceiver;
     private Intent intent;
-    private boolean isShaked;
 
     public ShakePhoneMinigame() {
         super(R.layout.fragment_shake_phone_game);
-        listener = null;
     }
 
     @Override
     public void setGameListener(GameListener listener) {
-        this.listener = listener;
+        ShakePhoneMinigame.listener = listener;
     }
 
     @Override
@@ -73,13 +68,13 @@ public class ShakePhoneMinigame extends Fragment implements MiniGame {
 
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        shakeImage = getView().findViewById(R.id.imageShake);
+        ImageView shakeImage = getView().findViewById(R.id.imageShake);
         shakeImage.setImageResource(R.drawable.ic_cocktailshaker);
     }
 
     private void updateData(Intent intent) {
-            isShaked = intent.getBooleanExtra(BackgroundServiceAccelerometer.SHAKED, false);
-            if (isShaked == true) {
+            boolean isShaked = intent.getBooleanExtra(BackgroundServiceAccelerometer.SHAKED, false);
+            if (isShaked) {
                 LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
                 listener.onGameResult(true);
         }

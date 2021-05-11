@@ -13,16 +13,10 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
-import com.se2.bopit.R;
-
 
 public class BackgroundServiceAccelerometer extends Service implements SensorEventListener {
     private static final float GRAVITY_EARTH = SensorManager.GRAVITY_EARTH;
     private SensorManager sensorManager;
-    private Sensor sensorAccelerometer;
-    private float mAccel;
-    private Intent intent;
-    private final Handler handler = new Handler();
     private LocalBroadcastManager broadcastManager;
 
     public static final String SHAKE_ACTION = "com.se2.bopit.ui.games.SHAKE";
@@ -43,9 +37,9 @@ public class BackgroundServiceAccelerometer extends Service implements SensorEve
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        Sensor sensorAccelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, sensorAccelerometer,
-                SensorManager.SENSOR_DELAY_GAME, new Handler());
+                SensorManager.SENSOR_DELAY_GAME);
 
         return START_STICKY;
     }
@@ -58,9 +52,9 @@ public class BackgroundServiceAccelerometer extends Service implements SensorEve
             float y = event.values[1];
             float z = event.values[2];
 
-            mAccel = (x * x + y * y + z * z) / (GRAVITY_EARTH * GRAVITY_EARTH);
+            float mAccel = (x * x + y * y + z * z) / (GRAVITY_EARTH * GRAVITY_EARTH);
 
-            intent = new Intent(SHAKE_ACTION);
+            Intent intent = new Intent(SHAKE_ACTION);
             if (mAccel > 2) {
                 intent.putExtra(SHAKED, true);
                 sensorManager = null;
@@ -73,5 +67,6 @@ public class BackgroundServiceAccelerometer extends Service implements SensorEve
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
+        //no need
     }
 }
