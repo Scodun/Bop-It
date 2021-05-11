@@ -19,12 +19,12 @@ public class MiniGamesRegistry implements MiniGamesProvider {
     static final Random RND = new Random();
 
     static Class<?>[] GAME_TYPES = {
-            //ColorButtonMiniGame.class,
-            //SimpleTextButtonMiniGame.class,
-            //WeirdTextButtonMiniGame.class,
+            ColorButtonMiniGame.class,
+            SimpleTextButtonMiniGame.class,
+            WeirdTextButtonMiniGame.class,
 
-            //ImageButtonMinigame.class,
-            //RightButtonCombination.class,
+            ImageButtonMinigame.class,
+            RightButtonCombination.class,
             PlacePhoneMiniGame.class
     };
 
