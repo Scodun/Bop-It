@@ -1,5 +1,7 @@
 package com.se2.bopit.ui;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -23,7 +25,6 @@ import com.se2.bopit.R;
 public class SplashActivity extends AppCompatActivity {
     private ImageView waveView;
     private GoogleSignInClient mGoogleSignInClient;
-    private static final int RC_SIGN_IN = 9001;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,17 @@ public class SplashActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this,
                 new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).requestId().requestProfile().build());
 
-        startActivityForResult(mGoogleSignInClient.getSignInIntent(), RC_SIGN_IN);
+        ActivityResultLauncher<Intent> someActivityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                        GoogleSignInResult signInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(result.getData());
+                        if (signInResult!=null && signInResult.isSuccess()) {
+                            startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
+                            finish();
+                        }
+                });
 
+        someActivityResultLauncher.launch(mGoogleSignInClient.getSignInIntent());
     }
 
     private void startLoadingAnimation(View view){
@@ -71,22 +81,10 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
         signInSilently();
     }
 
     private void signInSilently() {
         mGoogleSignInClient.silentSignIn();
-    }
-
-    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if (result!=null && result.isSuccess()) {
-                startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
-                finish();
-            }
-        }
     }
 }
