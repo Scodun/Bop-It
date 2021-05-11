@@ -19,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.se2.bopit.R;
+import com.se2.bopit.domain.services.BackgroundSoundService;
 
 
 
@@ -31,6 +32,8 @@ public class SplashActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         waveView=findViewById(R.id.waveView);
+
+        startService(new Intent(this, BackgroundSoundService.class));
 
         startLoadingAnimation(waveView);
 
