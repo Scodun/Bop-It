@@ -66,6 +66,7 @@ public class DrawingMinigame extends Fragment implements MiniGame {
 
         resourceIds.add(R.drawable.circle);
         resourceIds.add(R.drawable.square);
+        resourceIds.add(R.drawable.triangle);
 
         return resourceIds;
     }
