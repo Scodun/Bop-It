@@ -21,7 +21,7 @@ import com.se2.bopit.domain.services.BackgroundServiceAccelerometer;
 
 
 public class ShakePhoneMinigame extends Fragment implements MiniGame {
-    private static GameListener listener;
+    private GameListener listener;
     private BroadcastReceiver broadcastReceiver;
     private Intent intent;
 
@@ -31,7 +31,7 @@ public class ShakePhoneMinigame extends Fragment implements MiniGame {
 
     @Override
     public void setGameListener(GameListener listener) {
-        ShakePhoneMinigame.listener = listener;
+        this.listener = listener;
     }
 
     @Override
