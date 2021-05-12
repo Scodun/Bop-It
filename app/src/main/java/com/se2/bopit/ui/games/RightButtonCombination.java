@@ -38,10 +38,8 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        getView().findViewById(R.id.pressDown).setOnClickListener(clickHandler);
-        getView().findViewById(R.id.pressRight).setOnClickListener(clickHandler);
-        getView().findViewById(R.id.pressLeft).setOnClickListener(clickHandler);
-        getView().findViewById(R.id.pressUp).setOnClickListener(clickHandler);
+
+        initializeButtons();
 
         String n = "";
 
@@ -64,6 +62,12 @@ public class RightButtonCombination extends Fragment implements MiniGame {
         TextView textView = getView().findViewById(R.id.textView2);
         textView.setText(n);
 
+    }
+    public void initializeButtons(){
+        getView().findViewById(R.id.pressDown).setOnClickListener(clickHandler);
+        getView().findViewById(R.id.pressRight).setOnClickListener(clickHandler);
+        getView().findViewById(R.id.pressLeft).setOnClickListener(clickHandler);
+        getView().findViewById(R.id.pressUp).setOnClickListener(clickHandler);
     }
 
     public final View.OnClickListener clickHandler = new View.OnClickListener() {
