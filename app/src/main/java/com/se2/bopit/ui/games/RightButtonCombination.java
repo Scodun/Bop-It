@@ -17,10 +17,6 @@ import com.se2.bopit.domain.RightButtonCombinationModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 public class RightButtonCombination extends Fragment implements MiniGame {
 
     RightButtonCombinationModel rightButtonCombinationModel;
