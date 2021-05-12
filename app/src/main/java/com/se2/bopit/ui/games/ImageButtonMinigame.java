@@ -1,6 +1,7 @@
 package com.se2.bopit.ui.games;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -30,6 +31,9 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
     private ImageButton two;
     private ImageButton three;
 
+    String end;
+    String begin;
+
     public ImageButtonMinigame(){
         super(R.layout.fragment_image_button_game);
         listener = null;
@@ -55,8 +59,8 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
         for(ImageButton imageButton : imageButtonList){
             layout.addView(imageButton);
         }
-        String begin = "Select the ";
-        String end = "";
+        begin = "Select the ";
+        end = "";
 
         List<Integer> randomAnimal = new ArrayList<>();
         randomAnimal.add(0);
@@ -118,5 +122,17 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
                 .setBackground(ResourcesCompat.getDrawable(getResources(),
                         R.drawable.pressed_button_green,null));
     }
-
+    public int findRightButton(){
+        switch(end){
+            case "Cat":
+                return R.id.imageButton;
+            case "Dog":
+                return R.id.imageButton2;
+            case "Elephant":
+                return R.id.imageButton3;
+            default:
+                Log.e("ImageButtonMinigame","Unknown Image");
+                return 0;
+        }
+    }
 }
