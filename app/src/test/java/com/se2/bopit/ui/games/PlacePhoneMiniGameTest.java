@@ -5,19 +5,13 @@ import android.hardware.SensorEvent;
 import android.util.Log;
 
 import com.se2.bopit.domain.interfaces.GameListener;
-import com.se2.bopit.domain.interfaces.MiniGame;
-import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
-import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 public class PlacePhoneMiniGameTest {
@@ -37,18 +31,32 @@ public class PlacePhoneMiniGameTest {
 
         float[] currentPhonePosition = {10,10,10};
         try{
-            SensorEvent event = getSensorEvent(currentPhonePosition);
+            GameListener listener = r -> {};
             game.setGameListener(listener);
-
+            SensorEvent event = getSensorEvent(currentPhonePosition);
             game.onSensorChanged(event);
+            Assert.assertFalse(game.getIsFlat());
 
         }
         catch (Exception ex){
             Log.e(TAG, ex.getMessage());
         }
+    }
+    @Test
+    public void phoneFlatTEST() {
 
+        float[] currentPhonePosition = {0,0,100};
+        try{
+            GameListener listener = r -> {};
+            game.setGameListener(listener);
+            SensorEvent event = getSensorEvent(currentPhonePosition);
+            game.onSensorChanged(event);
+            Assert.assertTrue(game.getIsFlat());
 
-
+        }
+        catch (Exception ex){
+            Log.e(TAG, ex.getMessage());
+        }
     }
 
     private SensorEvent getSensorEvent(float[] values) throws Exception{

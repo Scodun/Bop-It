@@ -33,6 +33,7 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
     private SensorManager sensorManager;
     private GameListener listener;
     private static final String TAG = "PlacePhoneMiniGame";
+    private boolean isFlat = false;
 
 
     public PlacePhoneMiniGame() {
@@ -70,7 +71,10 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
         try{
             if(isFlat(event.values.clone())){
                 listener.onGameResult(true);
-                sensorManager.unregisterListener(this);
+                isFlat = true;
+                if(sensorManager != null){
+                    sensorManager.unregisterListener(this);
+                }
             }
         }
         catch (Exception ex){
@@ -103,5 +107,8 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
         int inclination = (int) Math.round(Math.toDegrees(Math.acos(vals[2])));
 
         return inclination < 15 || inclination > 155;
+    }
+    public boolean getIsFlat(){
+        return isFlat;
     }
 }
