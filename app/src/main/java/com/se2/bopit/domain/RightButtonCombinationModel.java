@@ -49,4 +49,7 @@ public class RightButtonCombinationModel extends GameModel<RightButtonModel> {
                 wrongResponses
         );
     }
+    public String getChallenge(){
+        return challenge;
+    }
 }
