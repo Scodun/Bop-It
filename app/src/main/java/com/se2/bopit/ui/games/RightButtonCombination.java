@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.RightButton;
 import com.se2.bopit.domain.RightButtonCombinationModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
@@ -71,34 +72,18 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     };
     int findButton(){
-        if(count == 0){
-            switch(rightButtonCombinationModel.correctResponse.rightButton){
-                case RIGHT:
-                    return R.id.pressRight;
-                case LEFT:
-                    return R.id.pressLeft;
-                case UP:
-                    return R.id.pressUp;
-                case DOWN:
-                    return R.id.pressDown;
-                default:
-                    Log.e("RightButtonCombination", "Unknown Button");
-                    return 0;
-            }
-        }else{
-            switch(rightButtonCombinationModel.secondCorrectResponse.rightButton){
-                case RIGHT:
-                    return R.id.pressRight;
-                case LEFT:
-                    return R.id.pressLeft;
-                case UP:
-                    return R.id.pressUp;
-                case DOWN:
-                    return R.id.pressDown;
-                default:
-                    Log.e("RightButtonCombination", "Unknown Button");
-                    return 0;
-            }
+        switch(chooseRightButton()){
+            case RIGHT:
+                return R.id.pressRight;
+            case LEFT:
+                return R.id.pressLeft;
+            case UP:
+                return R.id.pressUp;
+            case DOWN:
+                return R.id.pressDown;
+            default:
+                Log.e("RightButtonCombination", "Unknown Button");
+                return 0;
         }
     }
 
@@ -119,5 +104,12 @@ public class RightButtonCombination extends Fragment implements MiniGame {
             result = checkClick(firstClick,secondClick);
             rightButtonCombinationModel.getGameListener().onGameResult(result);
         });
+    }
+    RightButton chooseRightButton(){
+        if(count == 0){
+            return rightButtonCombinationModel.correctResponse.rightButton;
+        }else{
+            return rightButtonCombinationModel.secondCorrectResponse.rightButton;
+        }
     }
 }
