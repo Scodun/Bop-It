@@ -48,15 +48,6 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
 
         imageButtonList = initializeImageButtonList();
 
-        /*one = getView().findViewById(R.id.imageButton);
-        two = getView().findViewById(R.id.imageButton2);
-        three = getView().findViewById(R.id.imageButton3);
-
-        List<ImageButton> imageButtonList = new ArrayList<>();
-        imageButtonList.add(one);
-        imageButtonList.add(two);
-        imageButtonList.add(three);
-
         Collections.shuffle(imageButtonList);
 
         layout.removeAllViewsInLayout();
@@ -84,7 +75,7 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
             end = "Elephant";
         }
         TextView textView = getView().findViewById(R.id.textView);
-        textView.setText(begin.concat(end));*/
+        textView.setText(begin.concat(end));
     }
 
     public void initializeButtons(){
@@ -110,19 +101,22 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
             switch (textInTextView){
                 case "Select the Cat":
                     listener.onGameResult(v.getId() == R.id.imageButton);
-                    one.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.pressed_button_green,null));
                     break;
                 case "Select the Dog":
                     listener.onGameResult(v.getId() == R.id.imageButton2);
-                    two.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.pressed_button_green,null));
                     break;
                 case "Select the Elephant":
                     listener.onGameResult(v.getId() == R.id.imageButton3);
-                    three.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.pressed_button_green,null));
                     break;
                 default:
                     break;
             }
         }
     };
+    void setBackground(int buttonToSetBackground){
+        getView().findViewById(buttonToSetBackground)
+                .setBackground(ResourcesCompat.getDrawable(getResources(),
+                        R.drawable.pressed_button_green,null));
+    }
+
 }
