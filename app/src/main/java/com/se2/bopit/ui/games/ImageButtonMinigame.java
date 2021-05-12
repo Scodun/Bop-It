@@ -19,8 +19,6 @@ import com.se2.bopit.domain.ImageButtonMinigameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -30,8 +28,6 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
     ImageButtonMinigameModel imageButtonMinigameModel;
 
     List<ImageButton> imageButtonList;
-
-    String end;
 
     String text;
     TextView textView;
