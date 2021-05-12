@@ -29,7 +29,7 @@ public class ImageButtonMinigameModel extends GameModel<ImageButtonModel>{
         List<ImageButtonModel> wrongAnswers = possibleAnswers.subList(1,possibleAnswers.size());
 
         return new ImageButtonMinigameModel(
-                String.format("Select the %s", correctResponse),
+                String.format("Select the %s", correctResponse.label),
                 correctResponse,
                 wrongAnswers
         );
