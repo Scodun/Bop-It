@@ -14,7 +14,7 @@ public class DrawTouchPathCanvas extends View {
 
     private Bitmap background;
 
-    private final Bitmap solution;
+    private Bitmap solution;
     private final DrawingMinigame minigame;
 
     public DrawTouchPathCanvas(Context context, Bitmap solution, DrawingMinigame minigame) {
@@ -34,13 +34,19 @@ public class DrawTouchPathCanvas extends View {
         background = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(background);
 
+        float drawAtX = (float) ((double) newWidth/2 - (double) solution.getWidth()/2);
+        float drawAtY = (float) ((double) newHeight/2 - (double) solution.getHeight()/2);
+
+        canvas.save();
+
+        int randomAngle =(int)((Math.random() * 8) + 1) * 45;
+
+        canvas.rotate(randomAngle, newWidth/2, newHeight/2);
+
         // Draw the middle of the solution in the middle of the new space
-        canvas.drawBitmap(
-                solution,
-                (float) ((double) newWidth/2 - (double) solution.getWidth()/2),
-                (float) ((double) newHeight/2 - (double) solution.getHeight()/2),
-                null
-        );
+        canvas.drawBitmap(solution, drawAtX, drawAtY, null);
+
+        canvas.restore();
     }
 
     @Override
