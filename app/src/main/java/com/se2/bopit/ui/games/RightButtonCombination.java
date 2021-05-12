@@ -101,4 +101,11 @@ public class RightButtonCombination extends Fragment implements MiniGame {
     public boolean checkClick(boolean click1, boolean click2){
         return click1 && click2;
     }
+    void setSecondOnClickListener(){
+        getView().findViewById(findButton()).setOnClickListener(clickedButton -> {
+            secondClick = clickedButton.getId() == findButton();
+            result = checkClick(firstClick,secondClick);
+            rightButtonCombinationModel.getGameListener().onGameResult(result);
+        });
+    }
 }
