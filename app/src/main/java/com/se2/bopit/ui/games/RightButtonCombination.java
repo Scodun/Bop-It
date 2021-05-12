@@ -71,6 +71,12 @@ public class RightButtonCombination extends Fragment implements MiniGame {
         }
 
     };
+
+    /**
+     * Finds the ImageButton which should be clicked as first or as second, depending on the result of chooseRightButton()
+     *
+     * @return - id of the right Button
+     */
     int findButton(){
         switch(chooseRightButton()){
             case RIGHT:
@@ -86,6 +92,10 @@ public class RightButtonCombination extends Fragment implements MiniGame {
                 return 0;
         }
     }
+    /**
+     * Checks if the first click were true or false
+     *
+     */
 
     void checkFirstClick(){
         if(!firstClick){
@@ -95,9 +105,19 @@ public class RightButtonCombination extends Fragment implements MiniGame {
         }
     }
 
+    /**
+     * Checks if both clicks were right
+     *
+     * @param click1 - true -> first click was right
+     * @param click2 - true -> second click was right, false -> second click was false
+     * @return true -> if both clicks were right, false -> if the second click was false
+     */
+
     public boolean checkClick(boolean click1, boolean click2){
         return click1 && click2;
     }
+
+
     void setSecondOnClickListener(){
         getView().findViewById(findButton()).setOnClickListener(clickedButton -> {
             secondClick = clickedButton.getId() == findButton();
@@ -105,6 +125,12 @@ public class RightButtonCombination extends Fragment implements MiniGame {
             rightButtonCombinationModel.getGameListener().onGameResult(result);
         });
     }
+
+    /**
+     * Chooses the RightButton depending on the value of count (either firstCorrectResponse or secondCorrectResponse)
+     *
+     * @return the right RightImage Object
+     */
     RightButton chooseRightButton(){
         if(count == 0){
             return rightButtonCombinationModel.correctResponse.rightButton;
