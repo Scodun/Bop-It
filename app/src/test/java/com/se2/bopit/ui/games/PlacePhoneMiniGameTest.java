@@ -18,7 +18,6 @@ import static org.mockito.Mockito.when;
 public class PlacePhoneMiniGameTest {
 
     private static final String TAG = "PlacePhoneMiniGameTEST";
-    private GameListener listener;
 
     PlacePhoneMiniGame game;
 
