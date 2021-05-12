@@ -34,4 +34,7 @@ public class ImageButtonMinigameModel extends GameModel<ImageButtonModel>{
                 wrongAnswers
         );
     }
+    public String getChallenge(){
+        return challenge;
+    }
 }
