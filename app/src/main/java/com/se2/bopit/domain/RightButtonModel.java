@@ -1,6 +1,6 @@
 package com.se2.bopit.domain;
 
-public class RightButtonModel {
+public class RightButtonModel extends ResponseModel{
 
     public RightButton rightButton;
     public String label;
