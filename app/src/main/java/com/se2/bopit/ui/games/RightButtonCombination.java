@@ -98,6 +98,14 @@ public class RightButtonCombination extends Fragment implements MiniGame {
         }
     }
 
+    void checkFirstClick(){
+        if(!firstClick){
+            rightButtonCombinationModel.getGameListener().onGameResult(result);
+        }else{
+            setSecondOnClickListener();
+        }
+    }
+
     public boolean checkClick(boolean click1, boolean click2){
         return click1 && click2;
     }
