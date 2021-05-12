@@ -82,12 +82,13 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
         return imageButtonList;
     }
 
-    private final View.OnClickListener clickHandler = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            TextView textView = getView().findViewById(R.id.textView);
-            String textInTextView = textView.getText().toString();
-        }
+    private final View.OnClickListener clickHandler = pressedButton -> {
+
+            if(textView.getText().toString().equals(text)){
+                imageButtonMinigameModel.getGameListener()
+                        .onGameResult(pressedButton.getId() == findRightButton());
+                setBackground(findRightButton());
+            }
     };
     void setBackground(int buttonToSetBackground){
         getView().findViewById(buttonToSetBackground)
