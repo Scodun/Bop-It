@@ -95,12 +95,12 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
                         R.drawable.pressed_button_green,null));
     }
     public int findRightButton(){
-        switch(end){
-            case "Cat":
+        switch(imageButtonMinigameModel.correctResponse.image){
+            case CAT:
                 return R.id.imageButton;
-            case "Dog":
+            case DOG:
                 return R.id.imageButton2;
-            case "Elephant":
+            case ELEPHANT:
                 return R.id.imageButton3;
             default:
                 Log.e("ImageButtonMinigame","Unknown Image");
