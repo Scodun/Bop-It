@@ -17,6 +17,7 @@ public class ImageButtonModelTest {
 
     @After
     public void tearDown() throws Exception {
+        imageButtonModel = null;
     }
 
     @Test

@@ -17,6 +17,7 @@ public class RightButtonModelTest {
 
     @After
     public void tearDown() throws Exception {
+        rightButtonModel = null;
     }
 
     @Test
