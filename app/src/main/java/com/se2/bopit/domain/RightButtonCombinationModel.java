@@ -19,7 +19,11 @@ public class RightButtonCombinationModel extends GameModel<RightButtonModel> {
         super(challenge, correctResponse, wrongAnswers);
         this.secondCorrectResponse = secondCorrectResponse;
     }
-
+    /**
+     * Randomly picks two answers from a list of possible answers to initialize the first and the second correct response
+     *
+     * @return GameModel with two correct responses and a List with the wrong answers
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static RightButtonCombinationModel createRandomModel(){
 
