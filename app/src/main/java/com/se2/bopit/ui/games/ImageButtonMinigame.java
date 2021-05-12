@@ -12,6 +12,7 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.ImageButtonMinigameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
@@ -22,6 +23,8 @@ import java.util.List;
 public class ImageButtonMinigame extends Fragment implements MiniGame {
 
     private GameListener listener;
+
+    List<ImageButton> imageButtonList;
 
     private ImageButton one;
     private ImageButton two;
@@ -39,9 +42,13 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
+        initializeButtons();
+
         LinearLayout layout = getView().findViewById(R.id.linearLayout);
 
-        one = getView().findViewById(R.id.imageButton);
+        imageButtonList = initializeImageButtonList();
+
+        /*one = getView().findViewById(R.id.imageButton);
         two = getView().findViewById(R.id.imageButton2);
         three = getView().findViewById(R.id.imageButton3);
 
@@ -77,13 +84,21 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
             end = "Elephant";
         }
         TextView textView = getView().findViewById(R.id.textView);
-        textView.setText(begin.concat(end));
+        textView.setText(begin.concat(end));*/
     }
 
     public void initializeButtons(){
         getView().findViewById(R.id.imageButton).setOnClickListener(clickHandler);
         getView().findViewById(R.id.imageButton2).setOnClickListener(clickHandler);
         getView().findViewById(R.id.imageButton3).setOnClickListener(clickHandler);
+    }
+
+    public List<ImageButton> initializeImageButtonList(){
+        List<ImageButton> imageButtonList = new ArrayList<>();
+        imageButtonList.add(getView().findViewById(R.id.imageButton));
+        imageButtonList.add(getView().findViewById(R.id.imageButton2));
+        imageButtonList.add(getView().findViewById(R.id.imageButton3));
+        return imageButtonList;
     }
 
     private final View.OnClickListener clickHandler = new View.OnClickListener() {
