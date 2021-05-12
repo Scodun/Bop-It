@@ -38,9 +38,6 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        getView().findViewById(R.id.imageButton).setOnClickListener(clickHandler);
-        getView().findViewById(R.id.imageButton2).setOnClickListener(clickHandler);
-        getView().findViewById(R.id.imageButton3).setOnClickListener(clickHandler);
 
         LinearLayout layout = getView().findViewById(R.id.linearLayout);
 
@@ -81,6 +78,12 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
         }
         TextView textView = getView().findViewById(R.id.textView);
         textView.setText(begin.concat(end));
+    }
+
+    public void initializeButtons(){
+        getView().findViewById(R.id.imageButton).setOnClickListener(clickHandler);
+        getView().findViewById(R.id.imageButton2).setOnClickListener(clickHandler);
+        getView().findViewById(R.id.imageButton3).setOnClickListener(clickHandler);
     }
 
     private final View.OnClickListener clickHandler = new View.OnClickListener() {
