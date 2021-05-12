@@ -84,7 +84,7 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
      */
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
-
+        // needed for SensorEventListener. Is empty on purpose
     }
     /**
      * @param vals - values received from sensor
