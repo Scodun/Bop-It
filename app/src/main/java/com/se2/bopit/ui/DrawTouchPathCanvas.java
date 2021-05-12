@@ -9,6 +9,8 @@ import com.se2.bopit.ui.games.DrawingMinigame;
 
 public class DrawTouchPathCanvas extends View {
 
+    private final double SCALING_FACTOR = 0.55;
+
     private Paint pathLinePaint;
     private Path drawnPath;
 
@@ -33,6 +35,13 @@ public class DrawTouchPathCanvas extends View {
 
         background = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(background);
+
+        solution = Bitmap.createScaledBitmap(
+                solution,
+                (int) (newWidth*SCALING_FACTOR),
+                (int) (newWidth*SCALING_FACTOR),
+                false
+        );
 
         float drawAtX = (float) ((double) newWidth/2 - (double) solution.getWidth()/2);
         float drawAtY = (float) ((double) newHeight/2 - (double) solution.getHeight()/2);
