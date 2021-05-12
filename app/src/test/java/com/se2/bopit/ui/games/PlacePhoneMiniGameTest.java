@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.se2.bopit.domain.interfaces.GameListener;
 
+import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -57,6 +58,28 @@ public class PlacePhoneMiniGameTest {
         catch (Exception ex){
             Log.e(TAG, ex.getMessage());
         }
+    }
+
+    @Test
+    public void sensorExceptionTEST() {
+
+        float[] currentPhonePosition = {0,0,100};
+        try{
+            GameListener listener = r -> {};
+            game.setGameListener(null);
+
+            SensorEvent event = getSensorEvent(currentPhonePosition);
+            Exception ex = Assert.assertThrows(RuntimeException.class, () -> game.onSensorChanged(event));
+
+
+        }
+        catch (Exception ex){
+            Log.e(TAG, ex.getMessage());
+        }
+    }
+    @After
+    public void teardown(){
+        game = null;
     }
 
     private SensorEvent getSensorEvent(float[] values) throws Exception{
