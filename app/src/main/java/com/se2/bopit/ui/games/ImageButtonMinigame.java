@@ -1,5 +1,6 @@
 package com.se2.bopit.ui.games;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
@@ -17,13 +19,15 @@ import com.se2.bopit.domain.ImageButtonMinigameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class ImageButtonMinigame extends Fragment implements MiniGame {
 
-    private GameListener listener;
+    ImageButtonMinigameModel imageButtonMinigameModel;
 
     List<ImageButton> imageButtonList;
 
@@ -34,14 +38,18 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
     String end;
     String begin;
 
+    String text;
+    TextView textView;
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public ImageButtonMinigame(){
         super(R.layout.fragment_image_button_game);
-        listener = null;
+        imageButtonMinigameModel = ImageButtonMinigameModel.createRandomModel();
     }
 
     @Override
     public void setGameListener(GameListener listener) {
-        this.listener = listener;
+        imageButtonMinigameModel.setGameListener(listener);
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -59,27 +67,10 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
         for(ImageButton imageButton : imageButtonList){
             layout.addView(imageButton);
         }
-        begin = "Select the ";
-        end = "";
 
-        List<Integer> randomAnimal = new ArrayList<>();
-        randomAnimal.add(0);
-        randomAnimal.add(1);
-        randomAnimal.add(2);
-
-        Collections.shuffle(randomAnimal);
-
-        if(imageButtonList.get(randomAnimal.get(0)).getId() == R.id.imageButton){
-            end = "Cat";
-        }
-        else if(imageButtonList.get(randomAnimal.get(0)).getId() == R.id.imageButton2){
-            end = "Dog";
-        }
-        else if(imageButtonList.get(randomAnimal.get(0)).getId() == R.id.imageButton3){
-            end = "Elephant";
-        }
-        TextView textView = getView().findViewById(R.id.textView);
-        textView.setText(begin.concat(end));
+        text = imageButtonMinigameModel.challenge;
+        textView = getView().findViewById(R.id.textView);
+        textView.setText(text);
     }
 
     public void initializeButtons(){
@@ -101,20 +92,6 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
         public void onClick(View v) {
             TextView textView = getView().findViewById(R.id.textView);
             String textInTextView = textView.getText().toString();
-
-            switch (textInTextView){
-                case "Select the Cat":
-                    listener.onGameResult(v.getId() == R.id.imageButton);
-                    break;
-                case "Select the Dog":
-                    listener.onGameResult(v.getId() == R.id.imageButton2);
-                    break;
-                case "Select the Elephant":
-                    listener.onGameResult(v.getId() == R.id.imageButton3);
-                    break;
-                default:
-                    break;
-            }
         }
     };
     void setBackground(int buttonToSetBackground){
