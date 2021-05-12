@@ -9,8 +9,6 @@ import com.se2.bopit.ui.games.DrawingMinigame;
 
 public class DrawTouchPathCanvas extends View {
 
-    private final double SCALING_FACTOR = 0.55;
-
     private Paint pathLinePaint;
     private Path drawnPath;
 
@@ -36,26 +34,14 @@ public class DrawTouchPathCanvas extends View {
         background = Bitmap.createBitmap(newWidth, newHeight, Bitmap.Config.ARGB_8888);
         Canvas canvas = new Canvas(background);
 
-        solution = Bitmap.createScaledBitmap(
-                solution,
-                (int) (newWidth*SCALING_FACTOR),
-                (int) (newWidth*SCALING_FACTOR),
-                false
-        );
+        scaleSolution(newWidth);
 
-        float drawAtX = (float) ((double) newWidth/2 - (double) solution.getWidth()/2);
-        float drawAtY = (float) ((double) newHeight/2 - (double) solution.getHeight()/2);
+        canvas.rotate(getRandomAngle(), newWidth/2f, newHeight/2f);
 
-        canvas.save();
+        float drawAtX = newWidth/2f - solution.getWidth()/2f;
+        float drawAtY = newHeight/2f - solution.getHeight()/2f;
 
-        int randomAngle =(int)((Math.random() * 8) + 1) * 45;
-
-        canvas.rotate(randomAngle, newWidth/2, newHeight/2);
-
-        // Draw the middle of the solution in the middle of the new space
         canvas.drawBitmap(solution, drawAtX, drawAtY, null);
-
-        canvas.restore();
     }
 
     @Override
@@ -96,6 +82,20 @@ public class DrawTouchPathCanvas extends View {
         pathLinePaint.setColor(getResources().getColor(R.color.primary));
         pathLinePaint.setAntiAlias(true);
         pathLinePaint.setStyle(Paint.Style.STROKE);
-        pathLinePaint.setStrokeWidth(20);
+        pathLinePaint.setStrokeWidth(25);
+    }
+
+    private int getRandomAngle() {
+        return (int) ((Math.random() * 8) + 1) * 45;
+    }
+
+    private void scaleSolution(int width) {
+        double scalingFactor = 0.55;
+        solution = Bitmap.createScaledBitmap(
+                solution,
+                (int) (width * scalingFactor),
+                (int) (width * scalingFactor),
+                false
+        );
     }
 }
