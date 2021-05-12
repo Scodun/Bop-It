@@ -23,6 +23,9 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     RightButtonCombinationModel rightButtonCombinationModel;
 
+    String text;
+    TextView textView;
+
     boolean firstClick = false;
     boolean secondClick = false;
     boolean result = false;
@@ -44,6 +47,10 @@ public class RightButtonCombination extends Fragment implements MiniGame {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
         initializeButtons();
+
+        text = rightButtonCombinationModel.challenge;
+        textView = getView().findViewById(R.id.textView2);
+        textView.setText(text);
 
     }
     public void initializeButtons(){
