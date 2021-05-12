@@ -31,12 +31,7 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
 
     List<ImageButton> imageButtonList;
 
-    private ImageButton one;
-    private ImageButton two;
-    private ImageButton three;
-
     String end;
-    String begin;
 
     String text;
     TextView textView;
