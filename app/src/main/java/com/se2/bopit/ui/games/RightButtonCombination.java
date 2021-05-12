@@ -2,6 +2,7 @@ package com.se2.bopit.ui.games;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -65,11 +66,39 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
 
     };
-    public boolean checkClick(boolean click1, boolean click2){
-        if(click1 && click2) {
-            return true;
+    int findButton(){
+        if(count == 0){
+            switch(rightButtonCombinationModel.correctResponse.rightButton){
+                case RIGHT:
+                    return R.id.pressRight;
+                case LEFT:
+                    return R.id.pressLeft;
+                case UP:
+                    return R.id.pressUp;
+                case DOWN:
+                    return R.id.pressDown;
+                default:
+                    Log.e("RightButtonCombination", "Unknown Button");
+                    return 0;
+            }
         }else{
-            return false;
+            switch(rightButtonCombinationModel.secondCorrectResponse.rightButton){
+                case RIGHT:
+                    return R.id.pressRight;
+                case LEFT:
+                    return R.id.pressLeft;
+                case UP:
+                    return R.id.pressUp;
+                case DOWN:
+                    return R.id.pressDown;
+                default:
+                    Log.e("RightButtonCombination", "Unknown Button");
+                    return 0;
+            }
         }
+    }
+
+    public boolean checkClick(boolean click1, boolean click2){
+        return click1 && click2;
     }
 }
