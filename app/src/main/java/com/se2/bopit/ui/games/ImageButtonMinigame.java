@@ -70,6 +70,11 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
         getView().findViewById(R.id.imageButton3).setOnClickListener(clickHandler);
     }
 
+    /**
+     * Adds all ImageButtons to a List
+     *
+     * @return List with all ImageButtons
+     */
     public List<ImageButton> initializeImageButtonList(){
         List<ImageButton> imageButtonList = new ArrayList<>();
         imageButtonList.add(getView().findViewById(R.id.imageButton));
@@ -86,11 +91,23 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
                 setBackground(findRightButton());
             }
     };
+
+    /**
+     * Changes the Background of the right ImageButton green
+     *
+     * @param buttonToSetBackground - id of the ImageButton from which the background should be changed
+     */
     void setBackground(int buttonToSetBackground){
         getView().findViewById(buttonToSetBackground)
                 .setBackground(ResourcesCompat.getDrawable(getResources(),
                         R.drawable.pressed_button_green,null));
     }
+
+    /**
+     * Finds the right id of the ImageButton which should be clicked
+     *
+     * @return id of an ImageButton
+     */
     public int findRightButton(){
         switch(imageButtonMinigameModel.correctResponse.image){
             case CAT:
