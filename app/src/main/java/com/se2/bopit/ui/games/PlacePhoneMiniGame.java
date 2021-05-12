@@ -6,11 +6,11 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,8 +31,9 @@ import com.se2.bopit.domain.interfaces.MiniGame;
  */
 public class PlacePhoneMiniGame extends Fragment implements SensorEventListener, MiniGame {
     private SensorManager sensorManager;
-    private Sensor accelerometer;
-    private static GameListener listener;
+    private GameListener listener;
+    private static final String TAG = "PlacePhoneMiniGame";
+
 
     public PlacePhoneMiniGame() {
         super(R.layout.fragment_button_component);
@@ -51,8 +52,8 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
         TextView messageText = view.findViewById(R.id.actionText);
         messageText.setText("Place your phone on a flat surface");
         sensorManager = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
-        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this,accelerometer,SensorManager.SENSOR_DELAY_NORMAL);
+        Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        sensorManager.registerListener(this, accelerometer,SensorManager.SENSOR_DELAY_NORMAL);
 
 
         return view;
@@ -73,7 +74,7 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
             }
         }
         catch (Exception ex){
-            System.out.println(ex.getMessage());
+            Log.e(TAG,ex.getMessage());
         }
     }
 
