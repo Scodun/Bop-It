@@ -63,7 +63,11 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     public final View.OnClickListener clickHandler = firstClickedButton -> {
 
-
+        if(text.equals(rightButtonCombinationModel.challenge)){
+            firstClick = firstClickedButton.getId() == findButton();
+            count++;
+            checkFirstClick();
+        }
 
     };
     int findButton(){
