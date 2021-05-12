@@ -76,11 +76,11 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
      * @return List with all ImageButtons
      */
     public List<ImageButton> initializeImageButtonList(){
-        List<ImageButton> imageButtonList = new ArrayList<>();
+        List<ImageButton> initializedList = new ArrayList<>();
         imageButtonList.add(getView().findViewById(R.id.imageButton));
         imageButtonList.add(getView().findViewById(R.id.imageButton2));
         imageButtonList.add(getView().findViewById(R.id.imageButton3));
-        return imageButtonList;
+        return initializedList;
     }
 
     private final View.OnClickListener clickHandler = pressedButton -> {
