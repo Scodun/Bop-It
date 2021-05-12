@@ -14,7 +14,11 @@ public class ImageButtonMinigameModel extends GameModel<ImageButtonModel>{
     public ImageButtonMinigameModel(String challenge, ImageButtonModel correctResponse, List<ImageButtonModel> wrongResponses) {
         super(challenge, correctResponse, wrongResponses);
     }
-
+    /**
+     * Randomly an answer from a list of possible answers to initialize the correct answer
+     *
+     * @return GameModel with 1 correct answer and possibleAnswers-1 wrong answers
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static ImageButtonMinigameModel createRandomModel(){
 
