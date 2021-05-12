@@ -53,19 +53,6 @@ public class ImageButtonMinigameTest {
     }
 
     @Test
-    public void initializeButtons() {
-    }
-
-    @Test
-    public void initializeImageButtonList() {
-    }
-
-    @Test
-    public void setBackground() {
-
-    }
-
-    @Test
     public void rightButtonIsImageButton() {
         gameModelTest = new ImageButtonMinigameModel("Select the CAT",rightImage,wrongAnswers);
 

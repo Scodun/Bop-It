@@ -43,10 +43,6 @@ public class RightButtonCombinationTest {
     }
 
     @Test
-    public void initializeButtons() {
-    }
-
-    @Test
     public void firstButtonToClickIsRIGHT() {
         rightButton = new RightButtonModel(RightButton.RIGHT);
         secondRightButton = new RightButtonModel(RightButton.LEFT);
@@ -139,14 +135,8 @@ public class RightButtonCombinationTest {
 
     }
     @Test
-    public void checkFirstClick() {
-    }
-    @Test
     public void checkClickTrue() {
         assertTrue(rightButtonCombination.checkClick(true,true));
-    }
-    @Test
-    public void setSecondOnClickListener() {
     }
     @Test
     public void setGameListener(){
