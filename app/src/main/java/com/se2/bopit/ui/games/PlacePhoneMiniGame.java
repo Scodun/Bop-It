@@ -93,22 +93,15 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
      */
     private boolean isFlat(float[] vals){
         //Source for calculation: https://stackoverflow.com/questions/11175599/how-to-measure-the-tilt-of-the-phone-in-xy-plane-using-accelerometer-in-android/15149421#15149421
-        double norm_Of_g = Math.sqrt(vals[0] * vals[0] + vals[1] * vals[1] + vals[2] * vals[2]);
+        double gNorm = Math.sqrt(vals[0] * vals[0] + vals[1] * vals[1] + vals[2] * vals[2]);
 
         // Normalize the accelerometer vector
-        vals[0] = (float) (vals[0] / norm_Of_g);
-        vals[1] = (float) (vals[1] / norm_Of_g);
-        vals[2] = (float) (vals[2] / norm_Of_g);
+        vals[0] = (float) (vals[0] / gNorm);
+        vals[1] = (float) (vals[1] / gNorm);
+        vals[2] = (float) (vals[2] / gNorm);
 
         int inclination = (int) Math.round(Math.toDegrees(Math.acos(vals[2])));
 
-        if (inclination < 15 || inclination > 155)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return inclination < 15 || inclination > 155;
     }
 }
