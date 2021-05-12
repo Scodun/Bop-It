@@ -13,19 +13,17 @@ import androidx.fragment.app.Fragment;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
-import com.se2.bopit.ui.DrawLineCanvas;
+import com.se2.bopit.ui.DrawTouchPathCanvas;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class DrawingMinigame extends Fragment implements MiniGame {
 
-    private static final int ERROR = 150;
-
     private static final ArrayList<Integer> possibleAnswersResourceIds = initializeResourceIds();
 
-    private static GameListener listener;
-    private static Bitmap solution;
+    private GameListener listener;
+    private static final int ERROR = 150;
 
     public DrawingMinigame() {
         super(R.layout.fragment_button_component);
@@ -33,29 +31,28 @@ public class DrawingMinigame extends Fragment implements MiniGame {
 
     @Override
     public void setGameListener(GameListener listener) {
-        DrawingMinigame.listener = listener;
+        this.listener = listener;
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_button_component, container, false);
         LinearLayout layout = view.findViewById(R.id.buttonsRegion);
+
         TextView messageText = view.findViewById(R.id.messageText);
         messageText.setText("Trace the Shape");
 
         Collections.shuffle(possibleAnswersResourceIds);
 
-        solution = BitmapFactory.decodeResource(getResources(), possibleAnswersResourceIds.get(0));
-
-        layout.addView(new DrawLineCanvas(getContext(), solution));
+        Bitmap solution = BitmapFactory.decodeResource(getResources(), possibleAnswersResourceIds.get(0));
+        layout.addView(new DrawTouchPathCanvas(getContext(), solution, this));
 
         return view;
     }
 
-    public static void checkShape(Path touchPath) {
-        //TODO find a better way to this
+    public void checkShape(Bitmap solution, Path drawnPath) {
         RectF bounds = new RectF();
-        touchPath.computeBounds(bounds, false);
+        drawnPath.computeBounds(bounds, false);
 
         float heightDifference = solution.getHeight() - (bounds.bottom - bounds.top);
         float widthDifference = solution.getWidth() - (bounds.right - bounds.left);

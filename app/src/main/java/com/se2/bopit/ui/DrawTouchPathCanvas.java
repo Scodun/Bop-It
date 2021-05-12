@@ -7,27 +7,24 @@ import android.view.View;
 import com.se2.bopit.R;
 import com.se2.bopit.ui.games.DrawingMinigame;
 
-public class DrawLineCanvas extends View {
+public class DrawTouchPathCanvas extends View {
 
-    private final Paint pathLinePaint;
-    private Path touchPath;
+    private Paint pathLinePaint;
+    private Path drawnPath;
 
     private Bitmap background;
 
     private final Bitmap solution;
+    private final DrawingMinigame minigame;
 
-    public DrawLineCanvas(Context context, Bitmap solution) {
+    public DrawTouchPathCanvas(Context context, Bitmap solution, DrawingMinigame minigame) {
         super(context);
 
         this.solution = solution;
+        this.minigame = minigame;
+        drawnPath = new Path();
 
-        touchPath = new Path();
-
-        pathLinePaint = new Paint();
-        pathLinePaint.setColor(getResources().getColor(R.color.primary));
-        pathLinePaint.setAntiAlias(true);
-        pathLinePaint.setStyle(Paint.Style.STROKE);
-        pathLinePaint.setStrokeWidth(20);
+        initializePathLinePaint();
     }
 
     @Override
@@ -40,8 +37,8 @@ public class DrawLineCanvas extends View {
         // Draw the middle of the solution in the middle of the new space
         canvas.drawBitmap(
                 solution,
-                (float) ((double)newWidth/2 - (double)solution.getWidth()/2),
-                (float) ((double)newHeight/2 - (double)solution.getHeight()/2),
+                (float) ((double) newWidth/2 - (double) solution.getWidth()/2),
+                (float) ((double) newHeight/2 - (double) solution.getHeight()/2),
                 null
         );
     }
@@ -53,15 +50,15 @@ public class DrawLineCanvas extends View {
 
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN:
-                touchPath.moveTo(touchX, touchY);
+                drawnPath.moveTo(touchX, touchY);
                 break;
             case MotionEvent.ACTION_MOVE:
-                touchPath.lineTo(touchX, touchY);
+                drawnPath.lineTo(touchX, touchY);
                 break;
             case MotionEvent.ACTION_UP:
-                touchPath.lineTo(touchX, touchY);
-                DrawingMinigame.checkShape(touchPath);
-                touchPath = new Path();
+                drawnPath.lineTo(touchX, touchY);
+                minigame.checkShape(solution, drawnPath);
+                drawnPath = new Path();
                 break;
             default:
                 return false;
@@ -76,6 +73,14 @@ public class DrawLineCanvas extends View {
         super.onDraw(canvas);
 
         canvas.drawBitmap(background, 0, 0, null);
-        canvas.drawPath(touchPath, pathLinePaint);
+        canvas.drawPath(drawnPath, pathLinePaint);
+    }
+
+    private void initializePathLinePaint() {
+        pathLinePaint = new Paint();
+        pathLinePaint.setColor(getResources().getColor(R.color.primary));
+        pathLinePaint.setAntiAlias(true);
+        pathLinePaint.setStyle(Paint.Style.STROKE);
+        pathLinePaint.setStrokeWidth(20);
     }
 }
