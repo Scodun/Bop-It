@@ -1,11 +1,15 @@
 package com.se2.bopit.domain;
 
 import android.os.CountDownTimer;
+import android.os.Handler;
 
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 public class GameEngine {
@@ -57,7 +61,15 @@ public class GameEngine {
                 if(result && !isOverTime && !miniGameLost) {
                     score++;
                     listener.onScoreUpdate(score);
-                    startNewGame();
+                    //Delay to start new game for playing points up sound
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            startNewGame();
+
+                        }
+                    },200);
                 }
                 else if(!lifecycleCancel){
                     miniGameLost = true;

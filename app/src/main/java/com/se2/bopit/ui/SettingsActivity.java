@@ -74,6 +74,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
         buttonSave.setOnClickListener(v -> {
             saveSharedPreferences();
+            handler = new Handler();
             handler.postDelayed(this::finish, 300);
         });
     }
