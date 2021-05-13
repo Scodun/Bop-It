@@ -22,7 +22,8 @@ public class MiniGamesRegistry implements MiniGamesProvider {
 
     static final Random RND = new Random();
 
-    static Class<?>[] GAME_TYPES = {
+    static final Class<?>[] GAME_TYPES = {
+            // add new class here, no matter in which order
             ColorButtonMiniGame.class,
             SimpleTextButtonMiniGame.class,
             WeirdTextButtonMiniGame.class,
