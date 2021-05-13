@@ -63,12 +63,16 @@ public class CustomizeGameRulesActivity extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(this::menuItemOnClick);
     }
 
+    SwitchCompat createSwitchControl(SwitchCompat template) {
+        return new SwitchCompat(template.getContext());
+    }
+
     @SuppressLint("NewApi")
     void createSwitchListFromGameModel(SwitchCompat template) {
         uiModelsMap.clear();
         for (GameRuleItemModel item : model.getItems()) {
 
-            SwitchCompat sw = new SwitchCompat(template.getContext());
+            SwitchCompat sw = createSwitchControl(template);
 
             sw.setText(item.name);
             sw.setChecked(item.enabled);
