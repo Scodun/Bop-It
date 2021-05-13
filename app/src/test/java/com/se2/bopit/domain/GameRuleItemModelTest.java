@@ -43,4 +43,21 @@ public class GameRuleItemModelTest {
         assertEquals("Image Button", GameRuleItemModel.extractTypeName(ImageButtonMinigame.class));
     }
 
+    @Test
+    public void removeSuffixes() {
+        assertEquals("Test", GameRuleItemModel.removeSuffixes("TestMinigame"));
+        assertEquals("Unchanged", GameRuleItemModel.removeSuffixes("Unchanged"));
+    }
+
+    @Test
+    public void removePrefixes() {
+        assertEquals("Test", GameRuleItemModel.removePrefixes("MinigameTest"));
+        assertEquals("Unchanged", GameRuleItemModel.removePrefixes("Unchanged"));
+    }
+
+    @Test
+    public void splitCamelCase() {
+        assertEquals("My Test", GameRuleItemModel.splitCamelCase("MyTest"));
+        assertEquals("ABC", GameRuleItemModel.splitCamelCase("ABC"));
+    }
 }
