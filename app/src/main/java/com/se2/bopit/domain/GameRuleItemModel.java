@@ -34,28 +34,44 @@ public class GameRuleItemModel {
         // process default name
         if(name == null) {
             name = type.getSimpleName();
-            for (String stopword : TYPE_NAME_IGNORE_SUFFIX) {
-                int nameLength = name.length();
-                int stopwordLength = stopword.length();
-                if (nameLength <= stopwordLength) {
-                    continue;
-                }
-                if (name.toLowerCase().endsWith(stopword)) {
-                    name = name.substring(0, nameLength - stopwordLength);
-                }
-            }
-            for (String stopword : TYPE_NAME_IGNORE_PREFIX) {
-                int nameLength = name.length();
-                int stopwordLength = stopword.length();
-                if (nameLength <= stopwordLength) {
-                    continue;
-                }
-                if (name.toLowerCase().startsWith(stopword)) {
-                    name = name.substring(stopwordLength);
-                }
-            }
-            name = name.replaceAll("([a-z])([A-Z])", "$1 $2");
+            name = removeSuffixes(name);
+            name = removePrefixes(name);
+            name = splitCamelCase(name);
         }
         return name;
+    }
+
+    static String removeSuffixes(String src) {
+        String name = src;
+        for (String stopword : TYPE_NAME_IGNORE_SUFFIX) {
+            int nameLength = name.length();
+            int stopwordLength = stopword.length();
+            if (nameLength <= stopwordLength) {
+                continue;
+            }
+            if (name.toLowerCase().endsWith(stopword)) {
+                name = name.substring(0, nameLength - stopwordLength);
+            }
+        }
+        return name;
+    }
+
+    static String removePrefixes(String src) {
+        String name = src;
+        for (String stopword : TYPE_NAME_IGNORE_PREFIX) {
+            int nameLength = name.length();
+            int stopwordLength = stopword.length();
+            if (nameLength <= stopwordLength) {
+                continue;
+            }
+            if (name.toLowerCase().startsWith(stopword)) {
+                name = name.substring(stopwordLength);
+            }
+        }
+        return name;
+    }
+
+    static String splitCamelCase(String src) {
+        return src.replaceAll("([a-z])([A-Z][a-z])", "$1 $2");
     }
 }
