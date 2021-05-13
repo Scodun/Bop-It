@@ -1,12 +1,10 @@
 package com.se2.bopit.ui;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -26,9 +24,9 @@ import java.util.Objects;
 
 public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String MYPREF = "myCustomSharedPref";
-    private static final String PrefKeySound = "sound";
-    private static final String PrefKeyEffect = "effect";
-    private static final String PrefKeyName = "name";
+    private static final String PREF_KEY_SOUND = "sound";
+    private static final String PREF_KEY_EFFECT = "effect";
+    private static final String PREF_KEY_NAME = "name";
     private Toolbar toolbar;
     private TextInputLayout textInputName;
     private SwitchCompat switchSound;
@@ -76,7 +74,6 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
         buttonSave.setOnClickListener(v -> {
             saveSharedPreferences();
-            handler = new Handler();
             handler.postDelayed(this::finish, 300);
         });
     }
@@ -106,18 +103,18 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     }
 
     private void setPrefValues() {
-        Objects.requireNonNull(textInputName.getEditText()).setText(customSharedPreferences.getString(PrefKeyName, ""));
-        switchSound.setChecked(customSharedPreferences.getBoolean(PrefKeySound, true));
-        switchEffect.setChecked(customSharedPreferences.getBoolean(PrefKeyEffect, true));
+        Objects.requireNonNull(textInputName.getEditText()).setText(customSharedPreferences.getString(PREF_KEY_NAME, ""));
+        switchSound.setChecked(customSharedPreferences.getBoolean(PREF_KEY_SOUND, true));
+        switchEffect.setChecked(customSharedPreferences.getBoolean(PREF_KEY_EFFECT, true));
     }
 
 
     private void resetSharedPreferences() {
         customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = customSharedPreferences.edit();
-        editor.putString(PrefKeyName, "");
-        editor.putBoolean(PrefKeySound, true);
-        editor.putBoolean(PrefKeyEffect, true);
+        editor.putString(PREF_KEY_NAME, "");
+        editor.putBoolean(PREF_KEY_SOUND, true);
+        editor.putBoolean(PREF_KEY_EFFECT, true);
         editor.apply();
         setPrefValues();
     }
@@ -125,9 +122,9 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     private void saveSharedPreferences() {
         customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = customSharedPreferences.edit();
-        editor.putString(PrefKeyName, Objects.requireNonNull(textInputName.getEditText()).getText().toString());
-        editor.putBoolean(PrefKeySound, switchSound.isChecked());
-        editor.putBoolean(PrefKeyEffect, switchEffect.isChecked());
+        editor.putString(PREF_KEY_NAME, Objects.requireNonNull(textInputName.getEditText()).getText().toString());
+        editor.putBoolean(PREF_KEY_SOUND, switchSound.isChecked());
+        editor.putBoolean(PREF_KEY_EFFECT, switchEffect.isChecked());
         editor.apply();
     }
 
@@ -151,7 +148,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        if (key.equals("sound")) {
+        if (key.equals(PREF_KEY_SOUND)) {
             stopService(new Intent(this, BackgroundSoundService.class));
             startService(new Intent(this, BackgroundSoundService.class));
         }
