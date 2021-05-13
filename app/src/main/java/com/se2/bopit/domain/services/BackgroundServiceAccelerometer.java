@@ -21,6 +21,7 @@ public class BackgroundServiceAccelerometer extends Service implements SensorEve
     public static final String SHAKE_ACTION = "com.se2.bopit.ui.games.SHAKE";
     public static final String SHAKED = "isShaking";
 
+
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {

@@ -21,6 +21,8 @@ import com.google.android.material.textfield.TextInputLayout;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.services.BackgroundSoundService;
 
+import java.util.Objects;
+
 
 public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String MYPREF = "myCustomSharedPref";
@@ -103,15 +105,10 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         buttonSave = findViewById(R.id.buttonSave);
     }
 
-    private void setPrefValues() throws NullPointerException {
-        try {
-            textInputName.getEditText().setText(customSharedPreferences.getString(PrefKeyName, ""));
-            switchSound.setChecked(customSharedPreferences.getBoolean(PrefKeySound, true));
-            switchEffect.setChecked(customSharedPreferences.getBoolean(PrefKeyEffect, true));
-        } catch (NullPointerException e) {
-            Log.e("SettingsActivity", "Set Name failed: " + e);
-        }
-
+    private void setPrefValues() {
+        Objects.requireNonNull(textInputName.getEditText()).setText(customSharedPreferences.getString(PrefKeyName, ""));
+        switchSound.setChecked(customSharedPreferences.getBoolean(PrefKeySound, true));
+        switchEffect.setChecked(customSharedPreferences.getBoolean(PrefKeyEffect, true));
     }
 
 
@@ -125,19 +122,13 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         setPrefValues();
     }
 
-
-    private void saveSharedPreferences() throws NullPointerException {
+    private void saveSharedPreferences() {
         customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = customSharedPreferences.edit();
-        try {
-            editor.putString(PrefKeyName, textInputName.getEditText().getText().toString());
-            editor.putBoolean(PrefKeySound, switchSound.isChecked());
-            editor.putBoolean(PrefKeyEffect, switchEffect.isChecked());
-            editor.apply();
-        } catch (NullPointerException e) {
-            Log.e("SettingsActivity", "Get Name failed: " + e);
-
-        }
+        editor.putString(PrefKeyName, Objects.requireNonNull(textInputName.getEditText()).getText().toString());
+        editor.putBoolean(PrefKeySound, switchSound.isChecked());
+        editor.putBoolean(PrefKeyEffect, switchEffect.isChecked());
+        editor.apply();
     }
 
     @Override
