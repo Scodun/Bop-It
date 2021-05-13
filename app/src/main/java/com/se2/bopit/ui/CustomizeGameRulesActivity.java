@@ -1,12 +1,15 @@
 package com.se2.bopit.ui;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
@@ -20,6 +23,7 @@ import java.util.Comparator;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
+@RequiresApi(api = Build.VERSION_CODES.R)
 public class CustomizeGameRulesActivity extends AppCompatActivity {
 
     private static final String TAG = CustomizeGameRulesActivity.class.getSimpleName();
@@ -32,7 +36,6 @@ public class CustomizeGameRulesActivity extends AppCompatActivity {
 
     SwitchCompat switchAvoidRepeatingTypes;
 
-    @SuppressLint("NewApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,7 +70,6 @@ public class CustomizeGameRulesActivity extends AppCompatActivity {
         return new SwitchCompat(template.getContext());
     }
 
-    @SuppressLint("NewApi")
     void createSwitchListFromGameModel(SwitchCompat template) {
         uiModelsMap.clear();
         for (GameRuleItemModel item : model.getItems()) {
@@ -77,7 +79,7 @@ public class CustomizeGameRulesActivity extends AppCompatActivity {
             sw.setText(item.name);
             sw.setChecked(item.enabled);
             sw.setTypeface(template.getTypeface());
-            sw.setTextSize(template.getTextSizeUnit(), template.getTextSize());
+            sw.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             sw.setFontFeatureSettings(template.getFontFeatureSettings());
             sw.setFontVariationSettings(template.getFontVariationSettings());
 
@@ -107,7 +109,6 @@ public class CustomizeGameRulesActivity extends AppCompatActivity {
         applyModel();
     }
 
-    @SuppressLint("NewApi")
     void applyModel() {
         switchAvoidRepeatingTypes.setSelected(model.avoidRepeatingGameTypes);
         uiModelsMap.forEach((k,v) -> k.setChecked(v.enabled));
