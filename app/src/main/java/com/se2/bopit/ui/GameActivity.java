@@ -31,7 +31,7 @@ public class GameActivity extends AppCompatActivity {
     boolean gameEnd=false;
 
     // providers
-    MiniGamesRegistry miniGamesProvider = new MiniGamesRegistry();
+    MiniGamesRegistry miniGamesProvider = MiniGamesRegistry.getInstance();
     AndroidPlatformFeaturesProvider platformFeaturesProvider = new AndroidPlatformFeaturesProvider();
 
     @Override

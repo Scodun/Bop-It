@@ -15,6 +15,7 @@ public class GamemodeSelectActivity extends AppCompatActivity {
             localMultiplayerButton,
             onlineMultiplayerButton;
     private ImageButton settingsButton;
+    private ImageButton customRulesButton;
 
 
     @Override
@@ -34,6 +35,7 @@ public class GamemodeSelectActivity extends AppCompatActivity {
         localMultiplayerButton = findViewById(R.id.localMultiplayerButton);
         onlineMultiplayerButton = findViewById(R.id.onlineMultiplayerButton);
         settingsButton = findViewById(R.id.settingsButton);
+        customRulesButton = findViewById(R.id.customRulesButton);
     }
 
     private void initializeListeners() {
@@ -48,6 +50,8 @@ public class GamemodeSelectActivity extends AppCompatActivity {
         });
 
         settingsButton.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
+
+        customRulesButton.setOnClickListener(v -> startActivity(new Intent(this, CustomizeGameRulesActivity.class)));
     }
 
     @Override
