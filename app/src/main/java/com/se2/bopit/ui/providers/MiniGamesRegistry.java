@@ -10,6 +10,7 @@ import com.se2.bopit.ui.games.RightButtonCombination;
 import com.se2.bopit.ui.games.ShakePhoneMinigame;
 import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
+import com.se2.bopit.ui.games.PlacePhoneMiniGame;
 
 import java.util.Random;
 
@@ -24,7 +25,8 @@ public class MiniGamesRegistry implements MiniGamesProvider {
             WeirdTextButtonMiniGame.class,
             ImageButtonMinigame.class,
             RightButtonCombination.class,
-            ShakePhoneMinigame.class
+            ShakePhoneMinigame.class,
+            PlacePhoneMiniGame.class
     };
 
     @Override
@@ -38,6 +40,7 @@ public class MiniGamesRegistry implements MiniGamesProvider {
         }
 
         // fallback
+
         return new ColorButtonMiniGame();
     }
 }
