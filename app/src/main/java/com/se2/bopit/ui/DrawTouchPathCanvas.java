@@ -1,13 +1,20 @@
 package com.se2.bopit.ui;
 
 import android.content.Context;
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.Path;
 import android.view.MotionEvent;
 import android.view.View;
 import com.se2.bopit.R;
 import com.se2.bopit.ui.games.DrawingMinigame;
 
+import java.util.Random;
+
 public class DrawTouchPathCanvas extends View {
+
+    private static final Random random = new Random();
 
     private Paint pathLinePaint;
     private Path drawnPath;
@@ -86,7 +93,7 @@ public class DrawTouchPathCanvas extends View {
     }
 
     private int getRandomAngle() {
-        return (int) ((Math.random() * 8) + 1) * 45;
+        return (random.nextInt(8) + 1) * 45;
     }
 
     private void scaleSolution(int width) {
