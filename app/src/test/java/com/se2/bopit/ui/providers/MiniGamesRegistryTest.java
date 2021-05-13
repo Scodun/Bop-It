@@ -18,7 +18,7 @@ public class MiniGamesRegistryTest {
 
     @Before
     public void setUp() {
-        registry = new MiniGamesRegistry();
+        registry = MiniGamesRegistry.getInstance();
     }
 
     @Test
