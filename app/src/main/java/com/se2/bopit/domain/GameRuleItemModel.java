@@ -74,4 +74,13 @@ public class GameRuleItemModel {
     static String splitCamelCase(String src) {
         return src.replaceAll("([a-z])([A-Z][a-z])", "$1 $2");
     }
+
+    @Override
+    public String toString() {
+        return "GameRuleItemModel{" +
+                "type=" + type +
+                ", name='" + name + '\'' +
+                ", enabled=" + enabled +
+                '}';
+    }
 }
