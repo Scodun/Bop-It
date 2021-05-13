@@ -9,8 +9,10 @@ import com.se2.bopit.domain.providers.MiniGamesProvider;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
 import com.se2.bopit.ui.games.ImageButtonMinigame;
 import com.se2.bopit.ui.games.RightButtonCombination;
+import com.se2.bopit.ui.games.ShakePhoneMinigame;
 import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
+import com.se2.bopit.ui.games.PlacePhoneMiniGame;
 
 import java.util.List;
 import java.util.Random;
@@ -25,7 +27,9 @@ public class MiniGamesRegistry implements MiniGamesProvider {
             SimpleTextButtonMiniGame.class,
             WeirdTextButtonMiniGame.class,
             ImageButtonMinigame.class,
-            RightButtonCombination.class
+            RightButtonCombination.class,
+            ShakePhoneMinigame.class,
+            PlacePhoneMiniGame.class
     };
 
     static MiniGamesRegistry instance;

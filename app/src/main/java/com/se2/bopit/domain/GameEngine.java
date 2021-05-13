@@ -11,9 +11,12 @@ import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 public class GameEngine {
     GameEngineListener listener;
 
+
     int score = 0;
     boolean isOverTime = false;
     boolean miniGameLost = false;
+    boolean lifecycleCancel = false;
+    CountDownTimer timer;
 
     MiniGamesProvider miniGamesProvider;
     PlatformFeaturesProvider platformFeaturesProvider;
@@ -43,7 +46,7 @@ public class GameEngine {
     public void startNewGame() {
         MiniGame minigame = getMiniGame();
         long time = (long) (Math.exp(-this.score*0.08+7)+1000);
-        CountDownTimer timer = startCountDown(time);
+        timer = startCountDown(time);
         if(this.listener != null){
             listener.onGameStart(minigame, time);
         }
@@ -56,7 +59,7 @@ public class GameEngine {
                     listener.onScoreUpdate(score);
                     startNewGame();
                 }
-                else {
+                else if(!lifecycleCancel){
                     miniGameLost = true;
                     listener.onGameEnd(score);
                 }
@@ -80,14 +83,25 @@ public class GameEngine {
                 .start();
     }
 
-            public void onTick(long millisUntilFinished) {
-                if(listener != null)
-                    listener.onTimeTick(millisUntilFinished);
-            }
+    public void onTick(long millisUntilFinished) {
+        if(listener != null)
+            listener.onTimeTick(millisUntilFinished);
+    }
 
-            public void onFinish() {
-                isOverTime = true;
-                if(listener != null)
-                    listener.onGameEnd(score);
-            }
+    public void onFinish() {
+        isOverTime = true;
+        if(listener != null)
+            listener.onGameEnd(score);
+    }
+
+
+    public void stopCurrentGame(){
+        if(!lifecycleCancel && !miniGameLost) {
+            lifecycleCancel = true;
+            timer.cancel();
+            miniGameLost = true;
+            listener.onGameEnd(score);
+        }
+    }
+
 }
