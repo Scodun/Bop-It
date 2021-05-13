@@ -108,13 +108,4 @@ public class CustomizeGameRulesActivity extends AppCompatActivity {
         switchAvoidRepeatingTypes.setSelected(model.avoidRepeatingGameTypes);
         uiModelsMap.forEach((k,v) -> k.setChecked(v.enabled));
     }
-
-    @Override
-    public void onBackPressed() {
-        // sync changes
-
-        // and exit
-        super.onBackPressed();
-    }
-
 }
