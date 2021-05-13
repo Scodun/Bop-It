@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.RightButton;
 import com.se2.bopit.domain.RightButtonCombinationModel;
+import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
@@ -49,7 +50,8 @@ public class RightButtonCombination extends Fragment implements MiniGame {
         text = rightButtonCombinationModel.challenge;
         textView = getView().findViewById(R.id.textView2);
         textView.setText(text);
-
+        new TextToSpeech().sayText(text.split(" ")[0],this.getContext());
+        new TextToSpeech().sayText(text.split(" ")[1],this.getContext());
     }
     public void initializeButtons(){
         getView().findViewById(R.id.pressDown).setOnClickListener(clickHandler);

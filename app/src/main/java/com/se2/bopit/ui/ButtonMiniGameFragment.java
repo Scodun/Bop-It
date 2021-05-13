@@ -18,6 +18,7 @@ import com.se2.bopit.R;
 import com.se2.bopit.domain.ButtonColor;
 import com.se2.bopit.domain.ButtonMiniGameModel;
 import com.se2.bopit.domain.ButtonModel;
+import com.se2.bopit.domain.TextToSpeech;
 
 import java.util.Random;
 
@@ -33,6 +34,7 @@ public abstract class ButtonMiniGameFragment extends MiniGameFragment<ButtonMini
 
         TextView messageText = view.findViewById(R.id.messageText);
         messageText.setText(gameModel.challenge);
+        new TextToSpeech().sayText(gameModel.challenge.split(" ")[1],this.getContext());
 
         LinearLayout layout = view.findViewById(R.id.buttonsRegion);
 
