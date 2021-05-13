@@ -45,11 +45,11 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 
-        initializeButtons();
+        initializeButtons(view);
 
-        LinearLayout layout = getView().findViewById(R.id.linearLayout);
+        LinearLayout layout = view.findViewById(R.id.linearLayout);
 
-        imageButtonList = initializeImageButtonList();
+        imageButtonList = initializeImageButtonList(view);
 
         Collections.shuffle(imageButtonList);
 
@@ -60,14 +60,14 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
         }
 
         text = imageButtonMinigameModel.challenge;
-        textView = getView().findViewById(R.id.textView);
+        textView = view.findViewById(R.id.textView);
         textView.setText(text);
     }
 
-    public void initializeButtons(){
-        getView().findViewById(R.id.imageButton).setOnClickListener(clickHandler);
-        getView().findViewById(R.id.imageButton2).setOnClickListener(clickHandler);
-        getView().findViewById(R.id.imageButton3).setOnClickListener(clickHandler);
+    public void initializeButtons(View view){
+        view.findViewById(R.id.imageButton).setOnClickListener(clickHandler);
+        view.findViewById(R.id.imageButton2).setOnClickListener(clickHandler);
+        view.findViewById(R.id.imageButton3).setOnClickListener(clickHandler);
     }
 
     /**
@@ -75,11 +75,11 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
      *
      * @return List with all ImageButtons
      */
-    public List<ImageButton> initializeImageButtonList(){
+    public List<ImageButton> initializeImageButtonList(View view){
         List<ImageButton> initializedList = new ArrayList<>();
-        imageButtonList.add(getView().findViewById(R.id.imageButton));
-        imageButtonList.add(getView().findViewById(R.id.imageButton2));
-        imageButtonList.add(getView().findViewById(R.id.imageButton3));
+        initializedList.add(view.findViewById(R.id.imageButton));
+        initializedList.add(view.findViewById(R.id.imageButton2));
+        initializedList.add(view.findViewById(R.id.imageButton3));
         return initializedList;
     }
 
