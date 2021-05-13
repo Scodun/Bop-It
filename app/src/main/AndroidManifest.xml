@@ -19,8 +19,7 @@
             android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings" />
         <activity
-            android:name=".ui.CustomizeGameRulesActivity"
-            android:label="@string/title_activity_customize_game_rules"/>
+            android:name=".ui.CustomizeGameRulesActivity" />
         <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
