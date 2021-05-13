@@ -2,10 +2,12 @@ package com.se2.bopit.ui.games;
 
 import com.se2.bopit.domain.ButtonMiniGameModel;
 import com.se2.bopit.domain.ButtonModel;
+import com.se2.bopit.domain.annotations.MiniGameType;
 import com.se2.bopit.ui.ButtonMiniGameFragment;
 
 import java.util.ArrayList;
 
+@MiniGameType(enableByDefault = false)
 public class WeirdTextButtonMiniGame extends ButtonMiniGameFragment {
 
     private static final ArrayList<ButtonModel> possibleAnswers = initializeButtonModels();

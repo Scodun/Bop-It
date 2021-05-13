@@ -1,6 +1,8 @@
 package com.se2.bopit.ui.games;
 
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -8,10 +10,12 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.ImageButtonMinigameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
@@ -21,37 +25,31 @@ import java.util.List;
 
 public class ImageButtonMinigame extends Fragment implements MiniGame {
 
-    private GameListener listener;
+    ImageButtonMinigameModel imageButtonMinigameModel;
 
-    private ImageButton one;
-    private ImageButton two;
-    private ImageButton three;
+    List<ImageButton> imageButtonList;
 
+    String text;
+    TextView textView;
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public ImageButtonMinigame(){
         super(R.layout.fragment_image_button_game);
-        listener = null;
+        imageButtonMinigameModel = ImageButtonMinigameModel.createRandomModel();
     }
 
     @Override
     public void setGameListener(GameListener listener) {
-        this.listener = listener;
+        imageButtonMinigameModel.setGameListener(listener);
     }
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        getView().findViewById(R.id.imageButton).setOnClickListener(clickHandler);
-        getView().findViewById(R.id.imageButton2).setOnClickListener(clickHandler);
-        getView().findViewById(R.id.imageButton3).setOnClickListener(clickHandler);
 
-        LinearLayout layout = getView().findViewById(R.id.linearLayout);
+        initializeButtons(view);
 
-        one = getView().findViewById(R.id.imageButton);
-        two = getView().findViewById(R.id.imageButton2);
-        three = getView().findViewById(R.id.imageButton3);
+        LinearLayout layout = view.findViewById(R.id.linearLayout);
 
-        List<ImageButton> imageButtonList = new ArrayList<>();
-        imageButtonList.add(one);
-        imageButtonList.add(two);
-        imageButtonList.add(three);
+        imageButtonList = initializeImageButtonList(view);
 
         Collections.shuffle(imageButtonList);
 
@@ -60,51 +58,67 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
         for(ImageButton imageButton : imageButtonList){
             layout.addView(imageButton);
         }
-        String begin = "Select the ";
-        String end = "";
 
-        List<Integer> randomAnimal = new ArrayList<>();
-        randomAnimal.add(0);
-        randomAnimal.add(1);
-        randomAnimal.add(2);
-
-        Collections.shuffle(randomAnimal);
-
-        if(imageButtonList.get(randomAnimal.get(0)).getId() == R.id.imageButton){
-            end = "Cat";
-        }
-        else if(imageButtonList.get(randomAnimal.get(0)).getId() == R.id.imageButton2){
-            end = "Dog";
-        }
-        else if(imageButtonList.get(randomAnimal.get(0)).getId() == R.id.imageButton3){
-            end = "Elephant";
-        }
-        TextView textView = getView().findViewById(R.id.textView);
-        textView.setText(begin.concat(end));
+        text = imageButtonMinigameModel.challenge;
+        textView = view.findViewById(R.id.textView);
+        textView.setText(text);
     }
 
-    private final View.OnClickListener clickHandler = new View.OnClickListener() {
-        @Override
-        public void onClick(View v) {
-            TextView textView = getView().findViewById(R.id.textView);
-            String textInTextView = textView.getText().toString();
+    public void initializeButtons(View view){
+        view.findViewById(R.id.imageButton).setOnClickListener(clickHandler);
+        view.findViewById(R.id.imageButton2).setOnClickListener(clickHandler);
+        view.findViewById(R.id.imageButton3).setOnClickListener(clickHandler);
+    }
 
-            switch (textInTextView){
-                case "Select the Cat":
-                    listener.onGameResult(v.getId() == R.id.imageButton);
-                    one.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.pressed_button_green,null));
-                    break;
-                case "Select the Dog":
-                    listener.onGameResult(v.getId() == R.id.imageButton2);
-                    two.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.pressed_button_green,null));
-                    break;
-                case "Select the Elephant":
-                    listener.onGameResult(v.getId() == R.id.imageButton3);
-                    three.setBackground(ResourcesCompat.getDrawable(getResources(),R.drawable.pressed_button_green,null));
-                    break;
-                default:
-                    break;
+    /**
+     * Adds all ImageButtons to a List
+     *
+     * @return List with all ImageButtons
+     */
+    public List<ImageButton> initializeImageButtonList(View view){
+        List<ImageButton> initializedList = new ArrayList<>();
+        initializedList.add(view.findViewById(R.id.imageButton));
+        initializedList.add(view.findViewById(R.id.imageButton2));
+        initializedList.add(view.findViewById(R.id.imageButton3));
+        return initializedList;
+    }
+
+    private final View.OnClickListener clickHandler = pressedButton -> {
+
+            if(textView.getText().toString().equals(text)){
+                imageButtonMinigameModel.getGameListener()
+                        .onGameResult(pressedButton.getId() == findRightButton());
+                setBackground(findRightButton());
             }
-        }
     };
+
+    /**
+     * Changes the Background of the right ImageButton green
+     *
+     * @param buttonToSetBackground - id of the ImageButton from which the background should be changed
+     */
+    void setBackground(int buttonToSetBackground){
+        getView().findViewById(buttonToSetBackground)
+                .setBackground(ResourcesCompat.getDrawable(getResources(),
+                        R.drawable.pressed_button_green,null));
+    }
+
+    /**
+     * Finds the right id of the ImageButton which should be clicked
+     *
+     * @return id of an ImageButton
+     */
+    public int findRightButton(){
+        switch(imageButtonMinigameModel.correctResponse.image){
+            case CAT:
+                return R.id.imageButton;
+            case DOG:
+                return R.id.imageButton2;
+            case ELEPHANT:
+                return R.id.imageButton3;
+            default:
+                Log.e("ImageButtonMinigame","Unknown Image");
+                return 0;
+        }
+    }
 }

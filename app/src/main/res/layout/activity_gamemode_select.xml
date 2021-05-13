@@ -15,7 +15,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             android:textSize="40sp" app:layout_constraintBottom_toTopOf="@+id/singleplayerButton"
-            app:layout_constraintEnd_toStartOf="@+id/settingsButton" android:textStyle="bold"/>
+            app:layout_constraintEnd_toStartOf="@+id/customRulesButton" android:textStyle="bold"/>
+
+    <ImageButton
+        android:id="@+id/customRulesButton"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:src="@android:drawable/ic_menu_agenda"
+        app:layout_constraintBottom_toTopOf="@+id/singleplayerButton"
+        app:layout_constraintEnd_toStartOf="@+id/settingsButton"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageButton
             android:src="@android:drawable/ic_menu_manage"
             android:layout_width="wrap_content"

@@ -23,6 +23,14 @@ android {
     testOptions {
         unitTests {
             includeAndroidResources = true
+
+            /*
+              this config helps us to avoid errors in unit tests like "Method d in android.util.Log not mocked";
+               that is, we can run unit test on classes using android libraries,
+               however, we will not see if we have forgot to mock some api,
+               thus, deactivate it temporarily if you encounter weired errors in unit tests!
+            */
+            returnDefaultValues = true
         }
     }
 
@@ -46,12 +54,13 @@ android {
 }
 
 dependencies {
-
     implementation 'com.google.android.material:material:1.3.0'
     //    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'androidx.preference:preference:1.1.1'
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
+    implementation "com.google.android.gms:play-services-games:21.0.0"
+    implementation "com.google.android.gms:play-services-auth:19.0.0"
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:3.9.0'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'

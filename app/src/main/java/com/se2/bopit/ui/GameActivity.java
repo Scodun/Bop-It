@@ -23,13 +23,15 @@ import java.util.Random;
 public class GameActivity extends AppCompatActivity {
 
     //views
-    private ProgressBar timeBar;
-    private TextView scoreView;
-    private Random rand;
-    private ArrayList<Integer> colors;
+    ProgressBar timeBar;
+    TextView scoreView;
+    Random rand;
+    ArrayList<Integer> colors;
+    GameEngine engine;
+    boolean gameEnd=false;
 
     // providers
-    MiniGamesRegistry miniGamesProvider = new MiniGamesRegistry();
+    MiniGamesRegistry miniGamesProvider = MiniGamesRegistry.getInstance();
     AndroidPlatformFeaturesProvider platformFeaturesProvider = new AndroidPlatformFeaturesProvider();
 
     @Override
@@ -42,7 +44,8 @@ public class GameActivity extends AppCompatActivity {
         scoreView = findViewById(R.id.scoreView);
 
         //start game Engine and register listeners
-        GameEngine engine = new GameEngine(miniGamesProvider, platformFeaturesProvider, gameEngineListener);
+
+        engine = new GameEngine(miniGamesProvider, platformFeaturesProvider, gameEngineListener);
 
         engine.startNewGame();
 
@@ -60,9 +63,12 @@ public class GameActivity extends AppCompatActivity {
     private final GameEngineListener gameEngineListener = new GameEngineListener() {
         @Override
         public void onGameEnd(int score) {
-            Intent intent =  new Intent(getBaseContext(),WinLossActivity.class);
-            intent.putExtra("score", score);
-            startActivity(intent);
+            if(!gameEnd) {
+                gameEnd=true;
+                Intent intent = new Intent(getBaseContext(), WinLossActivity.class);
+                intent.putExtra("score", score);
+                startActivity(intent);
+            }
         }
 
         @Override
@@ -89,9 +95,13 @@ public class GameActivity extends AppCompatActivity {
     @Override
     public void onBackPressed()
     {
+        engine.stopCurrentGame();
         super.onBackPressed();
-        startActivity(new Intent(this, GamemodeSelectActivity.class));
-        finish();
     }
 
+    @Override
+    public void onStop() {
+        engine.stopCurrentGame();
+        super.onStop();
+    }
 }

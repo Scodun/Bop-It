@@ -28,7 +28,7 @@ public class GameEngineTest  {
     public void startNewGame() {
         getInstrumentation().runOnMainSync(() -> {
             // simulate GameActivity
-            MiniGamesRegistry miniGamesProvider = new MiniGamesRegistry();
+            MiniGamesRegistry miniGamesProvider = MiniGamesRegistry.getInstance();
             AndroidPlatformFeaturesProvider platformFeaturesProvider = new AndroidPlatformFeaturesProvider();
 
             GameEngine engine = new GameEngine(miniGamesProvider, platformFeaturesProvider, new GameEngineListener() {

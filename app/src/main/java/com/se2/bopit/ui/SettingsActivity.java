@@ -1,11 +1,10 @@
 package com.se2.bopit.ui;
 
-import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -18,10 +17,16 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.se2.bopit.R;
+import com.se2.bopit.domain.services.BackgroundSoundService;
+
+import java.util.Objects;
 
 
-public class SettingsActivity extends AppCompatActivity {
+public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String MYPREF = "myCustomSharedPref";
+    private static final String PREF_KEY_SOUND = "sound";
+    private static final String PREF_KEY_EFFECT = "effect";
+    private static final String PREF_KEY_NAME = "name";
     private Toolbar toolbar;
     private TextInputLayout textInputName;
     private SwitchCompat switchSound;
@@ -37,7 +42,8 @@ public class SettingsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.settings_activity);
-        customSharedPreferences = getSharedPreferences(MYPREF, Activity.MODE_PRIVATE);
+        customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
+        customSharedPreferences.registerOnSharedPreferenceChangeListener(this);
         initializeView();
         setPrefValues();
 
@@ -68,7 +74,6 @@ public class SettingsActivity extends AppCompatActivity {
 
         buttonSave.setOnClickListener(v -> {
             saveSharedPreferences();
-            handler = new Handler();
             handler.postDelayed(this::finish, 300);
         });
     }
@@ -97,40 +102,55 @@ public class SettingsActivity extends AppCompatActivity {
         buttonSave = findViewById(R.id.buttonSave);
     }
 
-    private void setPrefValues() throws NullPointerException {
-        try {
-            textInputName.getEditText().setText(customSharedPreferences.getString("name", ""));
-            switchSound.setChecked(customSharedPreferences.getBoolean("sound", true));
-            switchEffect.setChecked(customSharedPreferences.getBoolean("effect", true));
-        } catch (NullPointerException e) {
-            Log.e("SettingsActivity", "Set Name failed: " + e);
-        }
-
+    private void setPrefValues() {
+        Objects.requireNonNull(textInputName.getEditText()).setText(customSharedPreferences.getString(PREF_KEY_NAME, ""));
+        switchSound.setChecked(customSharedPreferences.getBoolean(PREF_KEY_SOUND, true));
+        switchEffect.setChecked(customSharedPreferences.getBoolean(PREF_KEY_EFFECT, true));
     }
 
 
     private void resetSharedPreferences() {
         customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = customSharedPreferences.edit();
-        editor.putString("name", "");
-        editor.putBoolean("sound", true);
-        editor.putBoolean("effect", true);
+        editor.putString(PREF_KEY_NAME, "");
+        editor.putBoolean(PREF_KEY_SOUND, true);
+        editor.putBoolean(PREF_KEY_EFFECT, true);
         editor.apply();
         setPrefValues();
     }
 
-
-    private void saveSharedPreferences() throws NullPointerException {
+    private void saveSharedPreferences() {
         customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = customSharedPreferences.edit();
-        try {
-            editor.putString("name", textInputName.getEditText().getText().toString());
-            editor.putBoolean("sound", switchSound.isChecked());
-            editor.putBoolean("effect", switchEffect.isChecked());
-            editor.apply();
-        } catch (NullPointerException e) {
-            Log.e("SettingsActivity", "Get Name failed: " + e);
+        editor.putString(PREF_KEY_NAME, Objects.requireNonNull(textInputName.getEditText()).getText().toString());
+        editor.putBoolean(PREF_KEY_SOUND, switchSound.isChecked());
+        editor.putBoolean(PREF_KEY_EFFECT, switchEffect.isChecked());
+        editor.apply();
+    }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        customSharedPreferences.registerOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        customSharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        customSharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        if (key.equals(PREF_KEY_SOUND)) {
+            stopService(new Intent(this, BackgroundSoundService.class));
+            startService(new Intent(this, BackgroundSoundService.class));
         }
     }
 }

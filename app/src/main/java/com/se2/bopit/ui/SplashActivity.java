@@ -1,5 +1,7 @@
 package com.se2.bopit.ui;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -11,39 +13,51 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.ImageView;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
+import com.se2.bopit.domain.services.BackgroundSoundService;
 
-import java.util.Timer;
-import java.util.TimerTask;
+
 
 public class SplashActivity extends AppCompatActivity {
-    private int i = 0;
-    private Timer timer;
     private ImageView waveView;
+    private GoogleSignInClient mGoogleSignInClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         waveView=findViewById(R.id.waveView);
-        final int period = 100;
+
+        startService(new Intent(this, BackgroundSoundService.class));
 
         startLoadingAnimation(waveView);
 
-        timer = new Timer();
-        timer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                if (i < 100) {
-                    i++;
-                } else {
-                    timer.cancel();
-                    startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
-                    finish();
+        if(!BuildConfig.DEBUG) {
+            mGoogleSignInClient = GoogleSignIn.getClient(this,
+                    new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).requestId().requestProfile().build());
 
-                }
-            }
-        }, 0, period);
+            ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        GoogleSignInResult signInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(result.getData());
+                        if (signInResult != null && signInResult.isSuccess()) {
+                            startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
+                            finish();
+                        }
+                    });
+
+            activityResultLauncher.launch(mGoogleSignInClient.getSignInIntent());
+        }
+        else{
+            startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
+            finish();
+        }
     }
 
     private void startLoadingAnimation(View view){
@@ -72,5 +86,16 @@ public class SplashActivity extends AppCompatActivity {
         a.setRepeatCount(Animation.INFINITE);
 
         view.startAnimation(a);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if(!BuildConfig.DEBUG)
+            signInSilently();
+    }
+
+    private void signInSilently() {
+        mGoogleSignInClient.silentSignIn();
     }
 }

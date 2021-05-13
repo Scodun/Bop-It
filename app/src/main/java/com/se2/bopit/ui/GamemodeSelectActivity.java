@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import com.se2.bopit.R;
+import com.se2.bopit.domain.services.BackgroundSoundService;
 
 public class GamemodeSelectActivity extends AppCompatActivity {
 
@@ -14,12 +15,15 @@ public class GamemodeSelectActivity extends AppCompatActivity {
             localMultiplayerButton,
             onlineMultiplayerButton;
     private ImageButton settingsButton;
+    private ImageButton customRulesButton;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gamemode_select);
+
+        startService(new Intent(this, BackgroundSoundService.class));
 
         initializeButtons();
         initializeListeners();
@@ -31,6 +35,7 @@ public class GamemodeSelectActivity extends AppCompatActivity {
         localMultiplayerButton = findViewById(R.id.localMultiplayerButton);
         onlineMultiplayerButton = findViewById(R.id.onlineMultiplayerButton);
         settingsButton = findViewById(R.id.settingsButton);
+        customRulesButton = findViewById(R.id.customRulesButton);
     }
 
     private void initializeListeners() {
@@ -45,6 +50,8 @@ public class GamemodeSelectActivity extends AppCompatActivity {
         });
 
         settingsButton.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
+
+        customRulesButton.setOnClickListener(v -> startActivity(new Intent(this, CustomizeGameRulesActivity.class)));
     }
 
     @Override
