@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.games.Games;
+import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
 
 import java.util.Objects;
@@ -37,7 +38,7 @@ public class WinLossActivity extends AppCompatActivity {
     }
 
     private void updateHighscore(){
-        if(GoogleSignIn.getLastSignedInAccount(this)!=null) {
+        if(!BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this)!=null) {
             Games.getLeaderboardsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
                     .submitScore(getString(R.string.leaderboard_highscore), score);
         }
@@ -80,9 +81,11 @@ public class WinLossActivity extends AppCompatActivity {
     };
 
     private final View.OnClickListener onLeaderboardSelect = v -> {
-        Games.getLeaderboardsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
-                .getLeaderboardIntent(getString(R.string.leaderboard_highscore))
-                .addOnSuccessListener(intent -> activityResultLauncher.launch(intent));
+        if(!BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this)!=null) {
+            Games.getLeaderboardsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                    .getLeaderboardIntent(getString(R.string.leaderboard_highscore))
+                    .addOnSuccessListener(intent -> activityResultLauncher.launch(intent));
+        }
     };
 
     private void initActivityLauncher(){

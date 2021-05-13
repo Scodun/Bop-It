@@ -18,6 +18,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
+import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.services.BackgroundSoundService;
 
@@ -37,20 +38,26 @@ public class SplashActivity extends AppCompatActivity {
 
         startLoadingAnimation(waveView);
 
-        mGoogleSignInClient = GoogleSignIn.getClient(this,
-                new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).requestId().requestProfile().build());
+        if(!BuildConfig.DEBUG) {
+            mGoogleSignInClient = GoogleSignIn.getClient(this,
+                    new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).requestId().requestProfile().build());
 
-        ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
+            ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
                         GoogleSignInResult signInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(result.getData());
-                        if (signInResult!=null && signInResult.isSuccess()) {
+                        if (signInResult != null && signInResult.isSuccess()) {
                             startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
                             finish();
                         }
-                });
+                    });
 
-        activityResultLauncher.launch(mGoogleSignInClient.getSignInIntent());
+            activityResultLauncher.launch(mGoogleSignInClient.getSignInIntent());
+        }
+        else{
+            startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
+            finish();
+        }
     }
 
     private void startLoadingAnimation(View view){
@@ -84,7 +91,8 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        signInSilently();
+        if(!BuildConfig.DEBUG)
+            signInSilently();
     }
 
     private void signInSilently() {
