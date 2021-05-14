@@ -139,11 +139,58 @@
         android:text="@string/summary_on"
         android:layout_marginLeft="110dp"/>
 
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginHorizontal="@dimen/setting_margin_divider"
+        android:layout_marginTop="20dp"
+        android:background="@color/primary" />
+    <TextView
+        android:id="@+id/titleHighscore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/setting_margin"
+        android:layout_marginTop="20dp"
+        android:text="@string/settings_title_highscore"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/purple"
+        android:textSize="@dimen/setting_header_size" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/setting_margin"
+        android:layout_marginTop="20dp"
+        android:clickable="false"
+        android:focusable="false">
+
+        <ImageView
+            android:id="@+id/iconHighscore"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            tools:src="@drawable/ic_highscore"
+            android:layout_marginRight="16dp" />
+
+
+        <TextView
+            android:id="@+id/textViewHighscore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/persHighscore"
+            android:textColor="@color/pink"
+            android:layout_toRightOf="@id/iconHighscore"
+            android:textSize="@dimen/setting_header_size"
+            />
+
+    </RelativeLayout>
+
+
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingTop="110dp"
+        android:paddingTop="50dp"
         >
     <Button
         android:id="@+id/buttonReset"
@@ -159,4 +206,6 @@
         android:text="@string/saveButton"
         android:layout_toRightOf="@id/buttonReset"/>
     </RelativeLayout>
+
+
 </LinearLayout>

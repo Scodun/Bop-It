@@ -27,6 +27,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     private static final String PREF_KEY_SOUND = "sound";
     private static final String PREF_KEY_EFFECT = "effect";
     private static final String PREF_KEY_NAME = "name";
+    private static final String PREF_KEY_SCORE = "highscore";
     private Toolbar toolbar;
     private TextInputLayout textInputName;
     private SwitchCompat switchSound;
@@ -35,6 +36,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     private TextView summaryEffect;
     private Button buttonReset;
     private Button buttonSave;
+    private TextView highScore;
     SharedPreferences customSharedPreferences;
     private Handler handler;
 
@@ -99,6 +101,9 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         iconEffect.setImageResource(R.drawable.ic_effect);
         switchEffect = findViewById(R.id.switchEffect);
         summaryEffect = findViewById(R.id.summaryEffect);
+        highScore = findViewById(R.id.textViewHighscore);
+        ImageView iconHighscore = findViewById(R.id.iconHighscore);
+        iconHighscore.setImageResource(R.drawable.ic_highscore);
         buttonReset = findViewById(R.id.buttonReset);
         buttonSave = findViewById(R.id.buttonSave);
     }
@@ -107,6 +112,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         Objects.requireNonNull(textInputName.getEditText()).setText(customSharedPreferences.getString(PREF_KEY_NAME, ""));
         switchSound.setChecked(customSharedPreferences.getBoolean(PREF_KEY_SOUND, true));
         switchEffect.setChecked(customSharedPreferences.getBoolean(PREF_KEY_EFFECT, true));
+        highScore.setText(String.valueOf(customSharedPreferences.getInt(PREF_KEY_SCORE,0)));
     }
 
 
@@ -116,6 +122,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         editor.putString(PREF_KEY_NAME, "");
         editor.putBoolean(PREF_KEY_SOUND, true);
         editor.putBoolean(PREF_KEY_EFFECT, true);
+        editor.putInt(PREF_KEY_SCORE,0);
         editor.apply();
         setPrefValues();
     }

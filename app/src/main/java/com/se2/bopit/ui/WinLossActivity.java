@@ -27,6 +27,9 @@ public class WinLossActivity extends AppCompatActivity {
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private int score;
 
+    private static final String MYPREF = "myCustomSharedPref";
+    private static final String PREF_KEY_SCORE = "highscore";
+    private SharedPreferences customSharedPreferences;
 
 
     @Override
@@ -40,6 +43,14 @@ public class WinLossActivity extends AppCompatActivity {
         initActivityLauncher();
         showScore();
         updateHighscore();
+        setPrefHighscore();
+    }
+
+    private void setPrefHighscore() {
+        customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = customSharedPreferences.edit();
+        editor.putInt(PREF_KEY_SCORE,score);
+        editor.apply();
     }
 
     private void updateHighscore(){
