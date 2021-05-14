@@ -1,6 +1,8 @@
 package com.se2.bopit.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -11,6 +13,7 @@ import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
 import com.se2.bopit.domain.GameEngine;
+import com.se2.bopit.domain.SoundEffects;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
@@ -33,6 +36,11 @@ public class GameActivity extends AppCompatActivity {
     // providers
     MiniGamesRegistry miniGamesProvider = new MiniGamesRegistry();
     AndroidPlatformFeaturesProvider platformFeaturesProvider = new AndroidPlatformFeaturesProvider();
+
+    // shared preferences
+    private SharedPreferences customSharedPreferences;
+    private static final String MYPREF = "myCustomSharedPref";
+    private static final String PREF_KEY_EFFECT = "effect";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +73,9 @@ public class GameActivity extends AppCompatActivity {
         public void onGameEnd(int score) {
             if(!gameEnd) {
                 gameEnd=true;
+                if (checkPref()) {
+                    SoundEffects soundEffects = new SoundEffects(getBaseContext(), 1);
+                }
                 Intent intent = new Intent(getBaseContext(), WinLossActivity.class);
                 intent.putExtra("score", score);
                 startActivity(intent);
@@ -75,6 +86,9 @@ public class GameActivity extends AppCompatActivity {
         public void onScoreUpdate(int score) {
             scoreView.setTextColor(colors.get(rand.nextInt(colors.size())));
             scoreView.setText(String.valueOf(score));
+            if (checkPref()) {
+                SoundEffects soundEffects = new SoundEffects(getBaseContext(), 0);
+            }
         }
 
         @Override
@@ -103,5 +117,10 @@ public class GameActivity extends AppCompatActivity {
     public void onStop() {
         engine.stopCurrentGame();
         super.onStop();
+    }
+
+    private boolean checkPref() {
+        customSharedPreferences = getBaseContext().getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
+        return customSharedPreferences.getBoolean(PREF_KEY_EFFECT, false);
     }
 }

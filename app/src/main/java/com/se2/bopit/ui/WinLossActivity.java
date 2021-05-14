@@ -4,7 +4,9 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +26,9 @@ public class WinLossActivity extends AppCompatActivity {
     private TextView tv_score;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private int score;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,6 +107,5 @@ public class WinLossActivity extends AppCompatActivity {
         startActivity(new Intent(this, GamemodeSelectActivity.class));
         finish();
     }
-
 
 }
