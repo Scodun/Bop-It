@@ -38,9 +38,9 @@ public class GameActivity extends AppCompatActivity {
     AndroidPlatformFeaturesProvider platformFeaturesProvider = new AndroidPlatformFeaturesProvider();
 
     // shared preferences
-    private SharedPreferences customSharedPreferences;
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_EFFECT = "effect";
+    private SoundEffects soundEffects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class GameActivity extends AppCompatActivity {
             if(!gameEnd) {
                 gameEnd=true;
                 if (checkPref()) {
-                    SoundEffects soundEffects = new SoundEffects(getBaseContext(), 1);
+                    soundEffects = new SoundEffects(getBaseContext(), 1);
                 }
                 Intent intent = new Intent(getBaseContext(), WinLossActivity.class);
                 intent.putExtra("score", score);
@@ -82,12 +82,17 @@ public class GameActivity extends AppCompatActivity {
             }
         }
 
+        private boolean checkPref() {
+            SharedPreferences customSharedPreferences = getBaseContext().getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
+            return customSharedPreferences.getBoolean(PREF_KEY_EFFECT, false);
+        }
+
         @Override
         public void onScoreUpdate(int score) {
             scoreView.setTextColor(colors.get(rand.nextInt(colors.size())));
             scoreView.setText(String.valueOf(score));
             if (checkPref()) {
-                SoundEffects soundEffects = new SoundEffects(getBaseContext(), 0);
+                soundEffects = new SoundEffects(getBaseContext(), 0);
             }
         }
 
@@ -119,8 +124,4 @@ public class GameActivity extends AppCompatActivity {
         super.onStop();
     }
 
-    private boolean checkPref() {
-        customSharedPreferences = getBaseContext().getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
-        return customSharedPreferences.getBoolean(PREF_KEY_EFFECT, false);
-    }
 }
