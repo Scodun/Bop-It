@@ -40,7 +40,6 @@ public class GameActivity extends AppCompatActivity {
     // shared preferences
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_EFFECT = "effect";
-    private SoundEffects soundEffects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +73,7 @@ public class GameActivity extends AppCompatActivity {
             if(!gameEnd) {
                 gameEnd=true;
                 if (checkPref()) {
-                    soundEffects = new SoundEffects(getBaseContext(), 1);
+                    new SoundEffects(getBaseContext(), 1);
                 }
                 Intent intent = new Intent(getBaseContext(), WinLossActivity.class);
                 intent.putExtra("score", score);
@@ -92,7 +91,7 @@ public class GameActivity extends AppCompatActivity {
             scoreView.setTextColor(colors.get(rand.nextInt(colors.size())));
             scoreView.setText(String.valueOf(score));
             if (checkPref()) {
-                soundEffects = new SoundEffects(getBaseContext(), 0);
+                new SoundEffects(getBaseContext(), 0);
             }
         }
 

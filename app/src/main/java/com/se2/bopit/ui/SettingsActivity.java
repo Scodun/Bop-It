@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -38,7 +37,6 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     private Button buttonSave;
     private TextView highScore;
     SharedPreferences customSharedPreferences;
-    private Handler handler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,8 +74,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
         buttonSave.setOnClickListener(v -> {
             saveSharedPreferences();
-            handler = new Handler();
-            handler.postDelayed(this::finish, 300);
+            finish();
         });
     }
 
