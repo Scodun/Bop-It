@@ -7,6 +7,7 @@ import com.se2.bopit.domain.GameRules;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
+import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
 import com.se2.bopit.ui.games.ImageButtonMinigame;
 import com.se2.bopit.ui.games.RightButtonCombination;
 import com.se2.bopit.ui.games.ShakePhoneMinigame;
@@ -30,7 +31,8 @@ public class MiniGamesRegistry implements MiniGamesProvider {
             ImageButtonMinigame.class,
             RightButtonCombination.class,
             ShakePhoneMinigame.class,
-            PlacePhoneMiniGame.class
+            PlacePhoneMiniGame.class,
+            CoverLightSensorMiniGame.class
     };
 
     static MiniGamesRegistry instance;
