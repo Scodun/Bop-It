@@ -13,8 +13,10 @@ import androidx.annotation.Nullable;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.CoverLightSensorMiniGameModel;
 import com.se2.bopit.domain.SensorMiniGameModel;
+import com.se2.bopit.domain.annotations.RequireSensor;
 import com.se2.bopit.ui.MiniGameFragment;
 
+@RequireSensor(CoverLightSensorMiniGameModel.SENSOR_TYPE)
 public class CoverLightSensorMiniGame extends MiniGameFragment<SensorMiniGameModel> {
 
     public CoverLightSensorMiniGame() {
