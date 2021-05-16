@@ -2,6 +2,9 @@ package com.se2.bopit.domain;
 
 import android.hardware.Sensor;
 
+import com.se2.bopit.domain.annotations.RequireSensor;
+
+@RequireSensor(CoverLightSensorMiniGameModel.SENSOR_TYPE)
 public class CoverLightSensorMiniGameModel extends SensorMiniGameModel {
 
     public static final int SENSOR_TYPE = Sensor.TYPE_LIGHT;
