@@ -13,25 +13,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
 import com.se2.bopit.domain.ButtonColor;
 import com.se2.bopit.domain.ButtonMiniGameModel;
 import com.se2.bopit.domain.ButtonModel;
-import com.se2.bopit.domain.interfaces.GameListener;
-import com.se2.bopit.domain.interfaces.MiniGame;
 
 import java.util.Random;
 
-public abstract class ButtonMiniGameFragment extends Fragment implements MiniGame {
-    protected final String tag = getClass().getSimpleName();
-
-    ButtonMiniGameModel gameModel;
-
+public abstract class ButtonMiniGameFragment extends MiniGameFragment<ButtonMiniGameModel> {
     protected ButtonMiniGameFragment(ButtonMiniGameModel gameModel) {
-        super();
-        this.gameModel = gameModel;
+        super(gameModel);
     }
 
     @Nullable
@@ -98,12 +90,7 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
             case DEFAULT:
             default:
                 return getResources().getColor(R.color.primary);
-
         }
-    }
-
-    public void setGameListener(GameListener listener) {
-        gameModel.setGameListener(listener);
     }
 }
 
