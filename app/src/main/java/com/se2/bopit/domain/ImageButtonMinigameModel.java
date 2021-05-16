@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ImageButtonMinigameModel extends GameModel<ImageButtonModel>{
+public class ImageButtonMinigameModel extends MultipleChoiceGameModel<ImageButtonModel>{
 
     public ImageButtonMinigameModel(String challenge, ImageButtonModel correctResponse, List<ImageButtonModel> wrongResponses) {
         super(challenge, correctResponse, wrongResponses);
