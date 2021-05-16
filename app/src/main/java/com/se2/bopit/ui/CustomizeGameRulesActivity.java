@@ -41,7 +41,6 @@ public class CustomizeGameRulesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_customize_game_rules);
 
         MiniGamesRegistry registry = MiniGamesRegistry.getInstance();
-        registry.checkAvailability(getApplicationContext());
         model = registry.gameRules;
 
         toolbar = findViewById(R.id.toolbar_game_rules);

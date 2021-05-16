@@ -2,12 +2,15 @@ package com.se2.bopit.ui;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
@@ -21,13 +24,16 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.services.BackgroundSoundService;
-
+import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
 
 public class SplashActivity extends AppCompatActivity {
+    private static final String TAG = SplashActivity.class.getSimpleName();
+
     private ImageView waveView;
     private GoogleSignInClient mGoogleSignInClient;
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +43,12 @@ public class SplashActivity extends AppCompatActivity {
         startService(new Intent(this, BackgroundSoundService.class));
 
         startLoadingAnimation(waveView);
+
+        // check available games here, because this view is loaded first
+        Log.d(TAG, "checking available sensors ...");
+        MiniGamesRegistry registry = MiniGamesRegistry.getInstance();
+        registry.checkAvailability(getApplicationContext());
+        Log.d(TAG, "done checking available sensors");
 
         if(!BuildConfig.DEBUG) {
             mGoogleSignInClient = GoogleSignIn.getClient(this,
