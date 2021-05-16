@@ -9,10 +9,10 @@ import java.util.stream.IntStream;
 
 import static org.junit.Assert.*;
 
-public class GameModelTest {
+public class MultipleChoiceGameModelTest {
     @Test
     public void shouldSetCorrectFlag() {
-        GameModel<ButtonModel> gm = new GameModel<>("test",
+        MultipleChoiceGameModel<ButtonModel> gm = new ButtonMiniGameModel("test",
                 new ButtonModel("correct"),
                 new ButtonModel("wrong"));
         assertTrue(gm.responses.stream().filter(m -> m.label.equals("correct")).findAny().get().isCorrect);
@@ -25,7 +25,7 @@ public class GameModelTest {
                 .mapToObj(i -> new ButtonModel("wrong" + i))
                 .collect(Collectors.toList());
         ButtonModel correct = new ButtonModel("correct");
-        GameModel<ButtonModel> gm = new GameModel<>("test2",
+        MultipleChoiceGameModel<ButtonModel> gm = new ButtonMiniGameModel("test2",
                 correct,
                 new LinkedList<>(original));
         LinkedList<ButtonModel> wrongs = new LinkedList<>(gm.responses);
