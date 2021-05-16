@@ -51,6 +51,7 @@ public class GameEngine {
             listener.onGameStart(minigame, time);
         }
 
+        minigame.setPlatformFeaturesProvider(platformFeaturesProvider);
         minigame.setGameListener(result -> {
             timer.cancel();
             if(listener != null) {
