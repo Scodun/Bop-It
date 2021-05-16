@@ -10,6 +10,12 @@ public class GameRuleItemModel {
     public final String name;
     public boolean enabled;
 
+    /**
+     * if {@code false} then the game is not safe to use at all (e.g. missing hardware)
+     * and thus, must be treated as unavailable.
+     */
+    public boolean available = true; // by default all are available
+
     public GameRuleItemModel(Class<?> type) {
         this.type = type;
         this.name = extractTypeName(type);
@@ -17,10 +23,17 @@ public class GameRuleItemModel {
     }
 
     public void reset() {
-        this.enabled = isEnabledByDefault();
+        this.enabled = available && isEnabledByDefault();
+    }
+
+    public void disablePermanently() {
+        available = false;
+        enabled = false;
     }
 
     boolean isEnabledByDefault() {
+        if(!available)
+            return false;
         MiniGameType miniGameType = type.getAnnotation(MiniGameType.class);
         return miniGameType != null ? miniGameType.enableByDefault() : MiniGameType.DEFAULT_ENABLED;
     }
