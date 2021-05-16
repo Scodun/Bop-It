@@ -4,8 +4,11 @@ import android.hardware.Sensor;
 
 public class CoverLightSensorMiniGameModel extends SensorMiniGameModel {
 
+    public static final int SENSOR_TYPE = Sensor.TYPE_LIGHT;
+    public static final float THRESHOLD = 10;
+
     public CoverLightSensorMiniGameModel() {
-        super(new SensorResponseModel(Sensor.TYPE_LIGHT, 10));
+        super(new SensorResponseModel(SENSOR_TYPE, THRESHOLD));
     }
 
     @Override

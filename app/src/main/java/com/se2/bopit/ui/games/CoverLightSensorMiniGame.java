@@ -23,7 +23,8 @@ public class CoverLightSensorMiniGame extends MiniGameFragment<SensorMiniGameMod
 
     @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_action_component, container, false);
         ImageView imageView = view.findViewById(R.id.actionImage);
         imageView.setImageResource(R.drawable.solar_eclipse);
