@@ -23,6 +23,14 @@ android {
     testOptions {
         unitTests {
             includeAndroidResources = true
+
+            /*
+              this config helps us to avoid errors in unit tests like "Method d in android.util.Log not mocked";
+               that is, we can run unit test on classes using android libraries,
+               however, we will not see if we have forgot to mock some api,
+               thus, deactivate it temporarily if you encounter weired errors in unit tests!
+            */
+            returnDefaultValues = true
         }
     }
 

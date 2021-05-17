@@ -2,8 +2,11 @@ package com.se2.bopit.ui.providers;
 
 import android.util.Log;
 
+import com.se2.bopit.domain.GameRuleItemModel;
+import com.se2.bopit.domain.GameRules;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
+import com.se2.bopit.exception.GameCreationException;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
 import com.se2.bopit.ui.games.ImageButtonMinigame;
 import com.se2.bopit.ui.games.RightButtonCombination;
@@ -12,6 +15,7 @@ import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 import com.se2.bopit.ui.games.PlacePhoneMiniGame;
 
+import java.util.List;
 import java.util.Random;
 
 public class MiniGamesRegistry implements MiniGamesProvider {
@@ -19,7 +23,8 @@ public class MiniGamesRegistry implements MiniGamesProvider {
 
     static final Random RND = new Random();
 
-    static Class<?>[] GAME_TYPES = {
+    static final Class<?>[] GAME_TYPES = {
+            // add new class here, no matter in which order
             ColorButtonMiniGame.class,
             SimpleTextButtonMiniGame.class,
             WeirdTextButtonMiniGame.class,
@@ -29,18 +34,55 @@ public class MiniGamesRegistry implements MiniGamesProvider {
             PlacePhoneMiniGame.class
     };
 
+    static MiniGamesRegistry instance;
+
+    public final GameRules gameRules;
+
+    protected MiniGamesRegistry(GameRules gameRules) {
+        this.gameRules = gameRules;
+        Log.d(TAG, "MiniGamesRegistry created");
+    }
+
+    public static MiniGamesRegistry getInstance() {
+        if(instance == null) {
+            instance = new MiniGamesRegistry(
+                    new GameRules(GAME_TYPES));
+        }
+        return instance;
+    }
+
+    GameRuleItemModel lastGameType;
+
     @Override
     public MiniGame createRandomMiniGame() {
+        List<GameRuleItemModel> items = gameRules.getEnabledItems();
+        int itemsSize = items.size();
+        boolean avoidRepeating = gameRules.avoidRepeatingGameTypes && itemsSize > 2;
+
+        if(itemsSize == 0) {
+            // ignore invalid settings
+            Log.w(TAG, "No games enabled! => ignoring preferences.");
+            items = gameRules.getItems();
+        }
+
+        GameRuleItemModel item;
+        do {
+            item = items.get(RND.nextInt(itemsSize));
+        } while (avoidRepeating && item == lastGameType);
+
+        lastGameType = item;
+        return createMiniGame(item);
+    }
+
+    MiniGame createMiniGame(GameRuleItemModel model) {
         try {
-            return (MiniGame) GAME_TYPES[RND.nextInt(GAME_TYPES.length)]
+            return (MiniGame) model.type
                     .getDeclaredConstructor()
                     .newInstance();
         } catch (Exception e) {
-            Log.e(TAG, "Error creating minigame.", e);
+            String msg = "Error creating minigame from model: " + model;
+            Log.e(TAG, msg, e);
+            throw new GameCreationException(msg, e);
         }
-
-        // fallback
-
-        return new ColorButtonMiniGame();
     }
 }

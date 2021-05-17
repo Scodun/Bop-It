@@ -13,6 +13,8 @@ import org.junit.Test;
 import org.mockito.Mockito;
 
 import java.lang.reflect.Field;
+
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
 
 public class PlacePhoneMiniGameTest {
@@ -68,12 +70,10 @@ public class PlacePhoneMiniGameTest {
             game.setGameListener(null);
 
             SensorEvent event = getSensorEvent(currentPhonePosition);
-            Exception ex = Assert.assertThrows(RuntimeException.class, () -> game.onSensorChanged(event));
-
-
+            game.onSensorChanged(event);
         }
         catch (Exception ex){
-            Log.e(TAG, ex.getMessage());
+            fail("Unexpected exception: " + ex);
         }
     }
     @After

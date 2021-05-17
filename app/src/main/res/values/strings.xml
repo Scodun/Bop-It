@@ -10,6 +10,12 @@
     <string name="settings_title_sound">Sound settings</string>
     <string name="settings_title_highscore">Your highscore</string>
 
+    <!-- Customize Game Rules -->
+    <string name="title_activity_customize_game_rules">Customize Game Rules</string>
+    <string name="reset_game_rules">Reset to default</string>
+    <string name="switch_avoid_repeating_same_game">Avoid repeating same game type</string>
+    <string name="text_switch_game_types">Switch individual game types</string>
+
     <!-- Personal Preferences -->
     <string name="setting_player_name">Your player name</string>
     <string name="yourName">Put in your player name</string>
