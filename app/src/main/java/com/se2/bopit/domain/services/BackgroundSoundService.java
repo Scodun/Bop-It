@@ -29,7 +29,7 @@ public class BackgroundSoundService extends Service {
         customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         mediaplayer = MediaPlayer.create(this, R.raw.riseandshine);
         mediaplayer.setLooping(true);
-        mediaplayer.setVolume(1.0f, 1.0f);
+        mediaplayer.setVolume(0.5f, 0.5f);
     }
 
     @Override
@@ -51,7 +51,4 @@ public class BackgroundSoundService extends Service {
             mediaplayer.release();
         }
     }
-
 }
-
-
