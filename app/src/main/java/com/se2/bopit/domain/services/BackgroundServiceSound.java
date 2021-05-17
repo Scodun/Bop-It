@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.se2.bopit.R;
 
-public class BackgroundSoundService extends Service {
+public class BackgroundServiceSound extends Service {
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_SOUND = "sound";
     private MediaPlayer mediaplayer;

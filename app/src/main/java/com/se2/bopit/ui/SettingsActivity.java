@@ -16,7 +16,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.textfield.TextInputLayout;
 import com.se2.bopit.R;
-import com.se2.bopit.domain.services.BackgroundSoundService;
+import com.se2.bopit.domain.services.BackgroundServiceSound;
 
 import java.util.Objects;
 
@@ -154,8 +154,8 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals(PREF_KEY_SOUND)) {
-            stopService(new Intent(this, BackgroundSoundService.class));
-            startService(new Intent(this, BackgroundSoundService.class));
+            stopService(new Intent(this, BackgroundServiceSound.class));
+            startService(new Intent(this, BackgroundServiceSound.class));
         }
     }
 }

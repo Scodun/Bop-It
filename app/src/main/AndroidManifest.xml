@@ -32,7 +32,7 @@
         <activity android:name=".ui.GameActivity" />
 
         <service
-            android:name=".domain.services.BackgroundSoundService"
+            android:name=".domain.services.BackgroundServiceSound"
             android:enabled="true" />
         <service
             android:name=".domain.services.BackgroundServiceAccelerometer"
