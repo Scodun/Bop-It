@@ -22,7 +22,6 @@ public class GamemodeSelectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gamemode_select);
-
         startService(new Intent(this, BackgroundSoundService.class));
 
         initializeButtons();
