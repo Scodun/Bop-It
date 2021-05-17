@@ -1,7 +1,16 @@
 package com.se2.bopit.ui;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -10,10 +19,7 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.ImageView;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -25,6 +31,8 @@ import com.se2.bopit.R;
 import com.se2.bopit.domain.services.BackgroundSoundService;
 import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
+import java.util.ArrayList;
+import java.util.List;
 
 public class SplashActivity extends BaseActivity {
     private static final String TAG = SplashActivity.class.getSimpleName();
@@ -43,13 +51,10 @@ public class SplashActivity extends BaseActivity {
 
         startLoadingAnimation(waveView);
 
-        // check available games here, because this view is loaded first
-        Log.d(TAG, "checking available sensors ...");
-        MiniGamesRegistry registry = MiniGamesRegistry.getInstance();
-        registry.checkAvailability(getApplicationContext());
-        Log.d(TAG, "done checking available sensors");
+        getPermissions();
+        checkSensors();
 
-        if (!BuildConfig.DEBUG) {
+        if(!BuildConfig.DEBUG) {
             mGoogleSignInClient = GoogleSignIn.getClient(this,
                     new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).requestId().requestProfile().build());
 
@@ -107,5 +112,38 @@ public class SplashActivity extends BaseActivity {
 
     private void signInSilently() {
         mGoogleSignInClient.silentSignIn();
+    }
+
+    private void getPermissions() {
+        int internet = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.INTERNET);
+        int loc = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_COARSE_LOCATION);
+        int loc2 = ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION);
+        List<String> listPermissionsNeeded = new ArrayList<>();
+
+        if (internet != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.INTERNET);
+        }
+        if (loc != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+        }
+        if (loc2 != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if (!listPermissionsNeeded.isEmpty()) {
+            ActivityCompat.requestPermissions((Activity) this, listPermissionsNeeded.toArray
+                    (new String[listPermissionsNeeded.size()]), 1);
+        }
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    private void checkSensors(){
+        // check available games here, because this view is loaded first
+        Log.d(TAG, "checking available sensors ...");
+        MiniGamesRegistry registry = MiniGamesRegistry.getInstance();
+        registry.checkAvailability(getApplicationContext());
+        Log.d(TAG, "done checking available sensors");
     }
 }
