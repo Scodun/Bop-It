@@ -1,6 +1,9 @@
 package com.se2.bopit.ui.providers;
 
+import com.se2.bopit.domain.GameRuleItemModel;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.exception.GameCreationException;
+import com.se2.bopit.ui.ButtonMiniGameFragment;
 import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
 import org.junit.Before;
@@ -36,5 +39,11 @@ public class MiniGamesRegistryTest {
         }
 
         assertEquals(typesCount - countDisabledByDefault, createdTypes.size());
+    }
+
+    @Test
+    public void createMiniGameException() {
+        GameRuleItemModel model = new GameRuleItemModel(ButtonMiniGameFragment.class);
+        assertThrows(GameCreationException.class, () -> registry.createMiniGame(model));
     }
 }

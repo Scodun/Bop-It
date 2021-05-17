@@ -6,6 +6,7 @@ import com.se2.bopit.domain.GameRuleItemModel;
 import com.se2.bopit.domain.GameRules;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
+import com.se2.bopit.exception.GameCreationException;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
 import com.se2.bopit.ui.games.ImageButtonMinigame;
 import com.se2.bopit.ui.games.RightButtonCombination;
@@ -79,8 +80,9 @@ public class MiniGamesRegistry implements MiniGamesProvider {
                     .getDeclaredConstructor()
                     .newInstance();
         } catch (Exception e) {
-            Log.e(TAG, "Error creating minigame from model: " + model, e);
-            throw new RuntimeException(e);
+            String msg = "Error creating minigame from model: " + model;
+            Log.e(TAG, msg, e);
+            throw new GameCreationException(msg, e);
         }
     }
 }
