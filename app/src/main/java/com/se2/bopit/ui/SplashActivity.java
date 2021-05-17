@@ -4,8 +4,13 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -22,6 +27,8 @@ import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.services.BackgroundSoundService;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class SplashActivity extends AppCompatActivity {
@@ -37,6 +44,29 @@ public class SplashActivity extends AppCompatActivity {
         startService(new Intent(this, BackgroundSoundService.class));
 
         startLoadingAnimation(waveView);
+
+            int internet = ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.INTERNET);
+            int loc = ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_COARSE_LOCATION);
+            int loc2 = ContextCompat.checkSelfPermission(this,
+                    Manifest.permission.ACCESS_FINE_LOCATION);
+            List<String> listPermissionsNeeded = new ArrayList<>();
+
+            if (internet != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(Manifest.permission.INTERNET);
+            }
+            if (loc != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(Manifest.permission.ACCESS_COARSE_LOCATION);
+            }
+            if (loc2 != PackageManager.PERMISSION_GRANTED) {
+                listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
+            }
+            if (!listPermissionsNeeded.isEmpty()) {
+                ActivityCompat.requestPermissions((Activity) this, listPermissionsNeeded.toArray
+                        (new String[listPermissionsNeeded.size()]), 1);
+            }
+
 
         if(!BuildConfig.DEBUG) {
             mGoogleSignInClient = GoogleSignIn.getClient(this,

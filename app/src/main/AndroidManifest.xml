@@ -3,6 +3,13 @@
     package="com.se2.bopit">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,16 +17,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BopIt">
+        <activity android:name=".ui.LobbyHostActivity"></activity>
+        <activity android:name=".ui.HostJoinActivity" />
+        <activity android:name=".ui.LobbyJoinActivity" />
 
-        <meta-data android:name="com.google.android.gms.games.APP_ID"
+        <meta-data
+            android:name="com.google.android.gms.games.APP_ID"
             android:value="@string/app_id" />
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version"/>
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <activity
             android:name=".ui.SettingsActivity"
             android:label="@string/title_activity_settings" />
-        <activity
-            android:name=".ui.CustomizeGameRulesActivity" />
+        <activity android:name=".ui.CustomizeGameRulesActivity" />
         <activity android:name=".ui.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
