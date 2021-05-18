@@ -10,6 +10,7 @@ import com.se2.bopit.exception.GameCreationException;
 import com.se2.bopit.ui.ButtonMiniGameFragment;
 import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -34,6 +35,12 @@ public class MiniGamesRegistryTest {
         contextMock = mock(Context.class);
         sensorManagerMock = mock(SensorManager.class);
         doReturn(sensorManagerMock).when(contextMock).getSystemService(eq(Context.SENSOR_SERVICE));
+    }
+
+    @After
+    public void tearDown() {
+        reset(contextMock, sensorManagerMock);
+        MiniGamesRegistry.instance = null;
     }
 
     @Test
