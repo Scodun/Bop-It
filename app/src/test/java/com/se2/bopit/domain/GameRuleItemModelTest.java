@@ -1,5 +1,6 @@
 package com.se2.bopit.domain;
 
+import com.se2.bopit.ui.MiniGameFragment;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
 import com.se2.bopit.ui.games.ImageButtonMinigame;
 import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
@@ -39,8 +40,43 @@ public class GameRuleItemModelTest {
     }
 
     @Test
-    public void extractTypeNameWithoutAnnotation() {
+    public void extractTypeNameWithoutAnnotationWithSuffix() {
         assertEquals("Image Button", GameRuleItemModel.extractTypeName(ImageButtonMinigame.class));
     }
+
+    @Test
+    public void extractTypeNameWithoutAnnotationWithPrefix() {
+        assertEquals("Dummy", GameRuleItemModel.extractTypeName(MinigameDummy.class));
+    }
+
+    @Test
+    public void extractTypeNameShort() {
+        assertEquals("Dummy", GameRuleItemModel.extractTypeName(Dummy.class));
+    }
+
+    @Test
+    public void disablePermanently() {
+        GameRuleItemModel item = new GameRuleItemModel(SimpleTextButtonMiniGame.class);
+        assertTrue(item.available);
+        assertTrue(item.isEnabledByDefault());
+
+        item.disablePermanently();
+
+        assertFalse(item.available);
+        assertFalse(item.isEnabledByDefault());
+
+        // even after reset
+        item.reset();
+        assertFalse(item.available);
+        assertFalse(item.isEnabledByDefault());
+    }
+
+}
+
+class Dummy extends MiniGameFragment {
+
+}
+
+class MinigameDummy extends MiniGameFragment {
 
 }
