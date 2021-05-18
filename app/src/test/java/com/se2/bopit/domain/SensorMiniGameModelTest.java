@@ -14,6 +14,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.LinkedList;
 import java.util.function.LongConsumer;
 
 import static org.junit.Assert.*;
@@ -26,7 +27,7 @@ import static org.mockito.Mockito.verifyNoInteractions;
 
 public class SensorMiniGameModelTest {
 
-    SensorMiniGameModel gameModel;
+    TestSensorMiniGameModel gameModel;
     SensorResponseModel expectedResponse;
     Sensor sensorMock;
     Context contextMock;
@@ -38,12 +39,7 @@ public class SensorMiniGameModelTest {
         sensorMock = mock(Sensor.class);
         contextMock = mock(Context.class);
         expectedResponse = new SensorResponseModel(Sensor.TYPE_LIGHT, 1);
-        gameModel = new SensorMiniGameModel(expectedResponse) {
-            @Override
-            protected boolean checkResponse(SensorResponseModel response) {
-                return true;
-            }
-        };
+        gameModel = new TestSensorMiniGameModel(expectedResponse);
         gameListenerMock = mock(GameListener.class);
         gameModel.setGameListener(gameListenerMock);
         platformProviderMock = mock(PlatformFeaturesProvider.class);
@@ -56,8 +52,15 @@ public class SensorMiniGameModelTest {
     }
 
     @Test
-    public void onSensorChanged() {
+    public void onSensorChangedFalse() {
         SensorEventModel eventModel = new SensorEventModel(0, Sensor.TYPE_LIGHT, 0, 10);
+        gameModel.onSensorChanged(eventModel);
+        verifyNoInteractions(gameListenerMock);
+    }
+
+    @Test
+    public void onSensorChangedTrue() {
+        SensorEventModel eventModel = new SensorEventModel(0, Sensor.TYPE_LIGHT, 0, 0);
         gameModel.onSensorChanged(eventModel);
         verify(gameListenerMock).onGameResult(eq(true));
     }
@@ -65,6 +68,14 @@ public class SensorMiniGameModelTest {
     @Test
     public void onAccuracyChanged() {
         gameModel.onAccuracyChanged(1);
+
+        SensorEventModel eventModel = new SensorEventModel(1, Sensor.TYPE_LIGHT, 0, 10);
+        gameModel.onSensorChanged(eventModel);
+        
+        assertFalse(gameModel.history.isEmpty());
+
+        gameModel.onAccuracyChanged(2);
+        assertTrue(gameModel.history.isEmpty());
     }
 
     @Test
@@ -84,5 +95,25 @@ public class SensorMiniGameModelTest {
         gameModel.resumeSensor(contextMock);
         gameModel.pauseSensor();
         verify(platformProviderMock).unregisterSensorListener(eq(contextMock), eq(gameModel));
+    }
+
+}
+
+class TestSensorMiniGameModel extends SensorMiniGameModel {
+    final LinkedList<SensorResponseModel> history = new LinkedList<>();
+
+    public TestSensorMiniGameModel(SensorResponseModel expected) {
+        super(expected);
+    }
+
+    @Override
+    protected boolean checkResponse(SensorResponseModel response) {
+        history.add(response);
+        return response.values[0] < expectedResponse.values[0];
+    }
+
+    @Override
+    public void onAccuracyChanged(int value) {
+        history.clear();
     }
 }
