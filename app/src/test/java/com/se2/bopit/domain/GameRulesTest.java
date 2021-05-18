@@ -30,7 +30,10 @@ public class GameRulesTest {
 
     @Test
     public void resetToDefault() {
+        gameRules.avoidRepeatingGameTypes = true;
         gameRules.resetToDefault();
+
+        assertFalse(gameRules.avoidRepeatingGameTypes);
     }
 
     @Test

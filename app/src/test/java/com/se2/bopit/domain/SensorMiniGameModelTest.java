@@ -71,7 +71,7 @@ public class SensorMiniGameModelTest {
 
         SensorEventModel eventModel = new SensorEventModel(1, Sensor.TYPE_LIGHT, 0, 10);
         gameModel.onSensorChanged(eventModel);
-        
+
         assertFalse(gameModel.history.isEmpty());
 
         gameModel.onAccuracyChanged(2);
