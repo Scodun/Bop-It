@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.se2.bopit.R;
 import com.se2.bopit.domain.services.BackgroundSoundService;
 
@@ -15,6 +17,7 @@ public class GamemodeSelectActivity extends AppCompatActivity {
             localMultiplayerButton,
             onlineMultiplayerButton;
     private ImageButton settingsButton;
+    private Intent music;
     private ImageButton customRulesButton;
 
 
@@ -22,7 +25,8 @@ public class GamemodeSelectActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gamemode_select);
-        startService(new Intent(this, BackgroundSoundService.class));
+        music = new Intent(this, BackgroundSoundService.class);
+        startService(music);
 
         initializeButtons();
         initializeListeners();
@@ -54,10 +58,10 @@ public class GamemodeSelectActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         super.onBackPressed();
         this.finishAffinity();
+        stopService(music);
     }
 
 }
