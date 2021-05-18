@@ -98,6 +98,25 @@ task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest','creat
     ])
 }
 
+task junitJacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest']) {
+    description 'This task is a clone of jacocoTestReport adapted for local coverage reports on junit tests'
+
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+
+    def fileFilter = ['**/R.class', '**/R$*.class', '**/BuildConfig.*', '**/Manifest*.*', '**/*Test*.*', 'android/**/*.*']
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/javac/debug", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.from = files([mainSrc])
+    classDirectories.from = files([debugTree])
+    executionData.from = fileTree(dir: project.buildDir, includes: [
+            "jacoco/testDebugUnitTest.exec"
+    ])
+}
+
 sonarqube {
     properties {
         property "sonar.projectKey", "Scodun_Bop-It"
