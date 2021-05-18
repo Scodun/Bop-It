@@ -1,12 +1,14 @@
 package com.se2.bopit.ui.providers;
 
+import com.se2.bopit.domain.GameRuleItemModel;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.exception.GameCreationException;
+import com.se2.bopit.ui.ButtonMiniGameFragment;
 import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
-import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -17,11 +19,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 public class MiniGamesRegistryTest {
 
@@ -52,6 +51,12 @@ public class MiniGamesRegistryTest {
         }
 
         assertEquals(typesCount - countDisabledByDefault, createdTypes.size());
+    }
+
+    @Test
+    public void createMiniGameException() {
+        GameRuleItemModel model = new GameRuleItemModel(ButtonMiniGameFragment.class);
+        assertThrows(GameCreationException.class, () -> registry.createMiniGame(model));
     }
 
     @Test
