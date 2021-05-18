@@ -17,8 +17,12 @@ import org.junit.Test;
 import java.util.function.LongConsumer;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 
 public class SensorMiniGameModelTest {
 
@@ -55,6 +59,7 @@ public class SensorMiniGameModelTest {
     public void onSensorChanged() {
         SensorEventModel eventModel = new SensorEventModel(0, Sensor.TYPE_LIGHT, 0, 10);
         gameModel.onSensorChanged(eventModel);
+        verify(gameListenerMock).onGameResult(eq(true));
     }
 
     @Test
@@ -65,10 +70,19 @@ public class SensorMiniGameModelTest {
     @Test
     public void resumeSensor() {
         gameModel.resumeSensor(contextMock);
+        verify(platformProviderMock).registerSensorListener(eq(contextMock), eq(gameModel.sensorType), eq(gameModel));
     }
 
     @Test
-    public void pauseSensor() {
+    public void pauseSensorWithoutResume() {
         gameModel.pauseSensor();
+        verifyNoInteractions(platformProviderMock);
+    }
+
+    @Test
+    public void pauseSensorAfterResume() {
+        gameModel.resumeSensor(contextMock);
+        gameModel.pauseSensor();
+        verify(platformProviderMock).unregisterSensorListener(eq(contextMock), eq(gameModel));
     }
 }
