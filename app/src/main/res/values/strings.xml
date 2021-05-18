@@ -29,12 +29,16 @@
     <!-- Button Preferences -->
     <string name="saveButton">Save</string>
     <string name="resetButton">Reset</string>
+
     <string name="up">UP</string>
     <string name="left">LEFT</string>
     <string name="right">RIGHT</string>
     <string name="down">DOWN</string>
+
     <string name="titleShake">Shake the cocktail shaker</string>
 
     <!-- Button Preferences -->
     <string name="persHighscore">0</string>
+
+    <string name="challenge_cover_light_sensor">Cover light sensor!</string>
 </resources>

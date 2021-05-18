@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class RightButtonCombinationModel extends GameModel<RightButtonModel> {
+public class RightButtonCombinationModel extends MultipleChoiceGameModel<RightButtonModel> {
 
     public RightButtonModel secondCorrectResponse;
 

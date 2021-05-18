@@ -1,6 +1,5 @@
 package com.se2.bopit.ui;
 
-import android.annotation.SuppressLint;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -41,7 +40,8 @@ public class CustomizeGameRulesActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customize_game_rules);
 
-        model = MiniGamesRegistry.getInstance().gameRules;
+        MiniGamesRegistry registry = MiniGamesRegistry.getInstance();
+        model = registry.gameRules;
 
         toolbar = findViewById(R.id.toolbar_game_rules);
 
@@ -77,7 +77,13 @@ public class CustomizeGameRulesActivity extends AppCompatActivity {
             SwitchCompat sw = createSwitchControl(template);
 
             sw.setText(item.name);
-            sw.setChecked(item.enabled);
+            if(item.available) {
+                sw.setChecked(item.enabled);
+            } else {
+                sw.setChecked(false);
+                sw.setEnabled(false);
+            }
+
             sw.setTypeface(template.getTypeface());
             sw.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);
             sw.setFontFeatureSettings(template.getFontFeatureSettings());
