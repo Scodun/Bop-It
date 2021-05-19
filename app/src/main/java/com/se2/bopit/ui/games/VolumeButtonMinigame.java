@@ -23,7 +23,6 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
 
     VolumeButtonGameModel gameModel;
     GifImageView gifImageView;
-
     TextView textView;
     String text;
     Boolean isCorrect;
@@ -33,15 +32,12 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
         super(R.layout.fragment_volume_button_game);
         gameModel = VolumeButtonGameModel.createRandomModel();
     }
-
     @Override
     public void setGameListener(GameListener listener) {
         gameModel.setGameListener(listener);
     }
-
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-
         view.setFocusableInTouchMode(true);
         view.requestFocus();
         view.setOnKeyListener(pressedKey);
