@@ -9,4 +9,9 @@ public class VolumeButtonModel extends ResponseModel{
         this.volumeButton = volumeButton;
         this.label = volumeButton.name().toUpperCase();
     }
+
+    public void setVolumeButton(VolumeButton volumeButton){
+        this.volumeButton = volumeButton;
+        this.label = volumeButton.name().toUpperCase();
+    }
 }
