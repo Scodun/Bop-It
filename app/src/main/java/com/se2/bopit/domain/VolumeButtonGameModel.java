@@ -34,4 +34,7 @@ public class VolumeButtonGameModel extends MultipleChoiceGameModel<VolumeButtonM
                 wrongResponses);
 
     }
+    public String getChallenge(){
+        return challenge;
+    }
 }
