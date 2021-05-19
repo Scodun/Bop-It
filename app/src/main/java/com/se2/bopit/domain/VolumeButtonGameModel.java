@@ -14,7 +14,11 @@ public class VolumeButtonGameModel extends MultipleChoiceGameModel<VolumeButtonM
     protected VolumeButtonGameModel(String challenge, VolumeButtonModel correctResponse, List<VolumeButtonModel> wrongResponses) {
         super(challenge, correctResponse, wrongResponses);
     }
-
+    /**
+     * Randomly picks an answers from a list of possible answers to initialize the correct response
+     *
+     * @return GameModel with the correct response and a "List" with the wrong answer
+     */
     @RequiresApi(api = Build.VERSION_CODES.N)
     public static VolumeButtonGameModel createRandomModel() {
 
