@@ -52,6 +52,11 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
         }
 
     }
+
+    /**
+     * Sets ImageResource to volume_down, if the user has to "reduce" the volume
+     *
+     */
     public void setGif(){
         gifImageView.setImageResource(R.drawable.volume_down);
     }
@@ -69,12 +74,22 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
             }
         }
     };
+
+    /**
+     * Checks if the right button was pressed or not
+     *
+     */
     public void checkPressedKey() {
         if (isCorrect != null) {
             gameModel.getGameListener().onGameResult(isCorrect);
         }
     }
 
+    /**
+     * Chooses the KeyEvent depending on the correctResponse of gameModel
+     *
+     * @return the KeyEvent which is needed to accomplish the challenge
+     */
     public int getKeyEvent(){
         switch(gameModel.correctResponse.volumeButton){
             case DOWN:
