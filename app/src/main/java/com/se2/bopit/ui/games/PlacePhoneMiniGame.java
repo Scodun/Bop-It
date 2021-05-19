@@ -129,9 +129,15 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
         accel = accel * 0.9f + sub;
         return accel > 2;
     }
+    /**
+     * getter for isFlat
+     */
     public boolean getIsFlat(){
         return isFlat;
     }
+    /**
+     * getter for hasMoved
+     */
     public boolean getHasMoved(){
         return hasMoved;
     }
