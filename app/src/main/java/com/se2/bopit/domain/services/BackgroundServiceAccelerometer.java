@@ -12,6 +12,8 @@ import android.os.IBinder;
 import androidx.annotation.Nullable;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
+import com.se2.bopit.IntentFactory;
+
 
 public class BackgroundServiceAccelerometer extends Service implements SensorEventListener {
     private static final float GRAVITY_EARTH = SensorManager.GRAVITY_EARTH;
@@ -20,6 +22,7 @@ public class BackgroundServiceAccelerometer extends Service implements SensorEve
 
     public static final String SHAKE_ACTION = "com.se2.bopit.ui.games.SHAKE";
     public static final String SHAKED = "isShaking";
+    public boolean isShaked;
 
 
     @Nullable
@@ -32,6 +35,7 @@ public class BackgroundServiceAccelerometer extends Service implements SensorEve
     public void onCreate() {
         super.onCreate();
         broadcastManager = LocalBroadcastManager.getInstance(this);
+        isShaked = false;
     }
 
     @Override
@@ -47,6 +51,8 @@ public class BackgroundServiceAccelerometer extends Service implements SensorEve
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        IntentFactory intentFactory = new IntentFactory(this);
+        Intent intent;
         if (event.sensor.getType() == Sensor.TYPE_ACCELEROMETER) {
             float x = event.values[0];
             float y = event.values[1];
@@ -54,12 +60,13 @@ public class BackgroundServiceAccelerometer extends Service implements SensorEve
 
             float mAccel = (x * x + y * y + z * z) / (GRAVITY_EARTH * GRAVITY_EARTH);
 
-            Intent intent = new Intent(SHAKE_ACTION);
             if (mAccel > 2) {
-                intent.putExtra(SHAKED, true);
+                isShaked = true;
+                intent = intentFactory.accelIntent(isShaked);
                 sensorManager = null;
             } else {
-                intent.putExtra(SHAKED, false);
+                isShaked = false;
+                intent = intentFactory.accelIntent(isShaked);
             }
             broadcastManager.sendBroadcast(intent);
         }
@@ -68,5 +75,9 @@ public class BackgroundServiceAccelerometer extends Service implements SensorEve
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         //no need
+    }
+
+    public boolean isShaked(){
+        return isShaked;
     }
 }
