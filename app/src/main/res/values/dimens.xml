@@ -5,4 +5,6 @@
     <dimen name="setting_margin_divider">50dp</dimen>
     <dimen name="setting_header_size">18sp</dimen>
     <dimen name="setting_title_size">16sp</dimen>
+    <dimen name="setting_size">24sp</dimen>
+    <dimen name="setting_padding_head">10dp</dimen>
 </resources>
