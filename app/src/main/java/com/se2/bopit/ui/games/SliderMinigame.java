@@ -15,15 +15,16 @@ import com.se2.bopit.domain.SliderListener;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Random;
 
 public class SliderMinigame extends Fragment implements MiniGame {
 
     GameListener gameListener;
-    SliderListener sliderListener ;
-    ArrayList<SeekBar> sliders = new ArrayList<>();
-    HashMap<SeekBar, Boolean> correct = new HashMap<>();
+
+    SeekBar slider;
+    int target;
+
+    Random random = new Random();
 
     @Override
     public void setGameListener(GameListener listener) {
@@ -39,38 +40,31 @@ public class SliderMinigame extends Fragment implements MiniGame {
         messageText.setText("Slide");
 
         View slidersFragment = inflater.inflate(R.layout.fragment_slider, container, false);
-        sliders.add(slidersFragment.findViewById(R.id.slider1));
-        sliders.add(slidersFragment.findViewById(R.id.slider2));
+        slider = slidersFragment.findViewById(R.id.slider1);
 
-        sliderListener = new SliderListener(7, this);
-
-        setupSliders();
+        setupSlider();
 
         layout.addView(slidersFragment);
 
         return view;
     }
 
-    private void setupSliders() {
-        for (SeekBar slider : sliders) {
-            slider.setOnSeekBarChangeListener(sliderListener);
-            correct.put(slider, false);
-        }
+    private void setupSlider() {
+
+        target = random.nextInt(9) + 1;
+
+        int progress = target;
+        while (progress == target || progress == 1)
+            progress = random.nextInt(9) + 1;
+        slider.setProgress(progress);
+
+        slider.setOnSeekBarChangeListener(new SliderListener(this));
+
     }
 
-    public void sliderStatus(SeekBar slider, boolean setTo) {
-        System.out.println(slider.toString());
-        correct.put(slider, setTo);
-        checkEverythingCorrect();
+    public void sliderStatus(int progress) {
+        if (progress == target)
+            gameListener.onGameResult(true);
     }
 
-    public void checkEverythingCorrect() {
-
-        for (SeekBar slider : correct.keySet()) {
-            System.out.println("dd");
-            if (!correct.get(slider))
-                return;
-        }
-        gameListener.onGameResult(true);
-    }
 }
