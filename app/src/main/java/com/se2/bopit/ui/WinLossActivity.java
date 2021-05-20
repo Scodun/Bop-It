@@ -19,7 +19,7 @@ import com.se2.bopit.R;
 
 import java.util.Objects;
 
-public class WinLossActivity extends AppCompatActivity {
+public class WinLossActivity extends BaseActivity {
     private Button bu_return;
     private Button bu_share;
     private Button bu_leaderboard;
