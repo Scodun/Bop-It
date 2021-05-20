@@ -75,12 +75,12 @@ public class SliderMinigame extends Fragment implements MiniGame {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-
+                // Not needed
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-
+                // Not needed
             }
         };
     }
