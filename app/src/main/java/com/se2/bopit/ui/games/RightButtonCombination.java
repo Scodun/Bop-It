@@ -14,6 +14,7 @@ import androidx.fragment.app.Fragment;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.RightButton;
 import com.se2.bopit.domain.RightButtonCombinationModel;
+import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
@@ -31,7 +32,7 @@ public class RightButtonCombination extends Fragment implements MiniGame {
     int count;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public RightButtonCombination(){
+    public RightButtonCombination() {
         super(R.layout.fragment_right_button_combination_game);
         rightButtonCombinationModel = RightButtonCombinationModel.createRandomModel();
     }
@@ -49,9 +50,11 @@ public class RightButtonCombination extends Fragment implements MiniGame {
         text = rightButtonCombinationModel.challenge;
         textView = getView().findViewById(R.id.textView2);
         textView.setText(text);
-
+        new TextToSpeech().sayText(text.split(" ")[0], this.getContext());
+        new TextToSpeech().sayText(text.split(" ")[1], this.getContext());
     }
-    public void initializeButtons(){
+
+    public void initializeButtons() {
         getView().findViewById(R.id.pressDown).setOnClickListener(clickHandler);
         getView().findViewById(R.id.pressRight).setOnClickListener(clickHandler);
         getView().findViewById(R.id.pressLeft).setOnClickListener(clickHandler);
@@ -60,7 +63,7 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     public final View.OnClickListener clickHandler = firstClickedButton -> {
 
-        if(text.equals(rightButtonCombinationModel.challenge)){
+        if (text.equals(rightButtonCombinationModel.challenge)) {
             firstClick = firstClickedButton.getId() == findButton();
             count++;
             checkFirstClick();
@@ -73,8 +76,8 @@ public class RightButtonCombination extends Fragment implements MiniGame {
      *
      * @return - id of the right Button
      */
-    int findButton(){
-        switch(chooseRightButton()){
+    int findButton() {
+        switch (chooseRightButton()) {
             case RIGHT:
                 return R.id.pressRight;
             case LEFT:
@@ -88,15 +91,15 @@ public class RightButtonCombination extends Fragment implements MiniGame {
                 return 0;
         }
     }
+
     /**
      * Checks if the first click were true or false
-     *
      */
 
-    void checkFirstClick(){
-        if(!firstClick){
+    void checkFirstClick() {
+        if (!firstClick) {
             rightButtonCombinationModel.getGameListener().onGameResult(result);
-        }else{
+        } else {
             setSecondOnClickListener();
         }
     }
@@ -109,15 +112,15 @@ public class RightButtonCombination extends Fragment implements MiniGame {
      * @return true -> if both clicks were right, false -> if the second click was false
      */
 
-    public boolean checkClick(boolean click1, boolean click2){
+    public boolean checkClick(boolean click1, boolean click2) {
         return click1 && click2;
     }
 
 
-    void setSecondOnClickListener(){
+    void setSecondOnClickListener() {
         getView().findViewById(findButton()).setOnClickListener(clickedButton -> {
             secondClick = clickedButton.getId() == findButton();
-            result = checkClick(firstClick,secondClick);
+            result = checkClick(firstClick, secondClick);
             rightButtonCombinationModel.getGameListener().onGameResult(result);
         });
     }
@@ -127,10 +130,10 @@ public class RightButtonCombination extends Fragment implements MiniGame {
      *
      * @return the right RightImage Object
      */
-    RightButton chooseRightButton(){
-        if(count == 0){
+    RightButton chooseRightButton() {
+        if (count == 0) {
             return rightButtonCombinationModel.correctResponse.rightButton;
-        }else{
+        } else {
             return rightButtonCombinationModel.secondCorrectResponse.rightButton;
         }
     }

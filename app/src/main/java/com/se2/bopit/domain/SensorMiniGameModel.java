@@ -1,0 +1,36 @@
+package com.se2.bopit.domain;
+
+import android.content.Context;
+
+import com.se2.bopit.domain.interfaces.SensorEventModelListener;
+
+public abstract class SensorMiniGameModel extends ActionGameModel<SensorResponseModel>
+        implements SensorEventModelListener {
+    protected final int sensorType;
+
+    protected transient Context context;
+
+    protected SensorMiniGameModel(SensorResponseModel expectedResponseModel) {
+        super(expectedResponseModel);
+        sensorType = expectedResponse.sensorType;
+    }
+
+    @Override
+    public void onSensorChanged(SensorEventModel sensorEvent) {
+        float value = sensorEvent.values[0];
+        if (handleResponse(new SensorResponseModel(sensorType, value))) {
+            pauseSensor();
+        }
+    }
+
+    public void resumeSensor(Context context) {
+        this.context = context;
+        platformFeaturesProvider.registerSensorListener(context, sensorType, this);
+    }
+
+    public void pauseSensor() {
+        if (context != null) {
+            platformFeaturesProvider.unregisterSensorListener(context, this);
+        }
+    }
+}

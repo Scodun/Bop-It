@@ -13,25 +13,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.graphics.drawable.DrawableCompat;
-import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
 import com.se2.bopit.domain.ButtonColor;
 import com.se2.bopit.domain.ButtonMiniGameModel;
 import com.se2.bopit.domain.ButtonModel;
-import com.se2.bopit.domain.interfaces.GameListener;
-import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.domain.TextToSpeech;
 
 import java.util.Random;
 
-public abstract class ButtonMiniGameFragment extends Fragment implements MiniGame {
-    protected final String tag = getClass().getSimpleName();
-
-    ButtonMiniGameModel gameModel;
-
+public abstract class ButtonMiniGameFragment extends MiniGameFragment<ButtonMiniGameModel> {
     protected ButtonMiniGameFragment(ButtonMiniGameModel gameModel) {
-        super();
-        this.gameModel = gameModel;
+        super(gameModel);
     }
 
     @Nullable
@@ -41,10 +34,11 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
 
         TextView messageText = view.findViewById(R.id.messageText);
         messageText.setText(gameModel.challenge);
+        new TextToSpeech().sayText(gameModel.challenge.split(" ")[1], this.getContext());
 
         LinearLayout layout = view.findViewById(R.id.buttonsRegion);
 
-        for(ButtonModel model : gameModel.responses) {
+        for (ButtonModel model : gameModel.responses) {
             layout.addView(applyButtonModel(model,
                     inflater.inflate(R.layout.button_template, layout, false)));
         }
@@ -56,7 +50,7 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
 
     Button applyButtonModel(ButtonModel model, View buttonView) {
         Button button = (Button) buttonView;
-        if(model.label != null) {
+        if (model.label != null) {
             button.setText(model.label);
         }
 
@@ -98,12 +92,7 @@ public abstract class ButtonMiniGameFragment extends Fragment implements MiniGam
             case DEFAULT:
             default:
                 return getResources().getColor(R.color.primary);
-
         }
-    }
-
-    public void setGameListener(GameListener listener) {
-        gameModel.setGameListener(listener);
     }
 }
 

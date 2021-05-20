@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.services.BackgroundServiceAccelerometer;
@@ -35,7 +36,7 @@ public class ShakePhoneMinigame extends Fragment implements MiniGame {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         broadcastReceiver = new BroadcastReceiver() {
             @Override
@@ -44,10 +45,11 @@ public class ShakePhoneMinigame extends Fragment implements MiniGame {
             }
         };
         intent = new Intent(getActivity(), BackgroundServiceAccelerometer.class);
+        new TextToSpeech().sayText("shake", this.getContext());
     }
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         getActivity().startService(intent);
         LocalBroadcastManager.getInstance(getActivity()).registerReceiver((broadcastReceiver),
@@ -55,14 +57,14 @@ public class ShakePhoneMinigame extends Fragment implements MiniGame {
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
         getActivity().stopService(intent);
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_shake_phone_game, container, false);
     }
 
@@ -73,13 +75,12 @@ public class ShakePhoneMinigame extends Fragment implements MiniGame {
     }
 
     private void updateData(Intent intent) {
-            boolean isShaked = intent.getBooleanExtra(BackgroundServiceAccelerometer.SHAKED, false);
-            if (isShaked) {
-                LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
-                listener.onGameResult(true);
+        boolean isShaked = intent.getBooleanExtra(BackgroundServiceAccelerometer.SHAKED, false);
+        if (isShaked) {
+            LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
+            listener.onGameResult(true);
         }
     }
-
 }
 
 

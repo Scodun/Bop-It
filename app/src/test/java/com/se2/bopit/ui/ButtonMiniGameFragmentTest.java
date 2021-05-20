@@ -22,7 +22,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertSame;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -103,7 +103,7 @@ public class ButtonMiniGameFragmentTest {
         VectorDrawableCompat buttonDrawable = mock(VectorDrawableCompat.class);
         doReturn(buttonDrawable).when(buttonMock).getBackground();
 
-        for(ButtonModel model : miniGame.gameModel.responses) {
+        for (ButtonModel model : miniGame.gameModel.responses) {
             miniGame.setButtonColor(model, buttonMock);
         }
 
@@ -112,7 +112,8 @@ public class ButtonMiniGameFragmentTest {
 
     @Test
     public void setGameListener() {
-        GameListener listener = r -> {};
+        GameListener listener = r -> {
+        };
         miniGame.setGameListener(listener);
         assertSame(listener, miniGame.gameModel.getGameListener());
     }

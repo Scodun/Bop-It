@@ -7,7 +7,8 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class RightButtonCombinationModelTest {
 
@@ -23,7 +24,7 @@ public class RightButtonCombinationModelTest {
 
     @Before
     public void setUp() throws Exception {
-    wrongAnswers = new ArrayList<>();
+        wrongAnswers = new ArrayList<>();
     }
 
     @After
@@ -36,8 +37,9 @@ public class RightButtonCombinationModelTest {
         rightButtonCombinationModel = RightButtonCombinationModel.createRandomModel();
         assertNotNull(rightButtonCombinationModel);
     }
+
     @Test
-    public void createRandomModelTest(){
+    public void createRandomModelTest() {
         rightButton = new RightButtonModel(RightButton.RIGHT);
         secondRightButton = new RightButtonModel(RightButton.UP);
 
@@ -51,7 +53,7 @@ public class RightButtonCombinationModelTest {
 
         String challengeCheck = rightButtonCombinationModel.getChallenge();
 
-        assertEquals(challengeCheck,rightButtonCombinationModel.challenge);
+        assertEquals(challengeCheck, rightButtonCombinationModel.challenge);
     }
 
 }

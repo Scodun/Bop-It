@@ -2,44 +2,16 @@ package com.se2.bopit.domain;
 
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
-public class GameModel<M extends ResponseModel> implements MiniGame {
-    public String challenge;
-
-    public M correctResponse;
-
-    public List<M> responses;
-
+public abstract class GameModel<M extends ResponseModel> implements MiniGame {
     protected GameListener listener;
 
-    @SafeVarargs
-    public GameModel(String challenge, M correctResponse, M... wrongResponses) {
-        this(challenge, correctResponse, Arrays.asList(wrongResponses));
-    }
+    protected PlatformFeaturesProvider platformFeaturesProvider;
 
-    public GameModel(String challenge, M correctResponse, List<M> wrongResponses) {
-        this.challenge = challenge;
-        this.correctResponse = correctResponse;
-        this.responses = new ArrayList<>();
-        responses.addAll(wrongResponses);
-        correctResponse.isCorrect = true;
-        responses.add(correctResponse);
-        Collections.shuffle(responses);
-    }
+    protected abstract boolean checkResponse(M response);
 
-    protected boolean checkResponse(M response) {
-        return correctResponse == response;
-    }
-
-    public void handleResponse(M response) {
-        listener.onGameResult(
-                checkResponse(response));
-    }
+    public abstract boolean handleResponse(M response);
 
     public GameListener getGameListener() {
         return listener;
@@ -50,4 +22,8 @@ public class GameModel<M extends ResponseModel> implements MiniGame {
         this.listener = listener;
     }
 
+    @Override
+    public void setPlatformFeaturesProvider(PlatformFeaturesProvider platformFeaturesProvider) {
+        this.platformFeaturesProvider = platformFeaturesProvider;
+    }
 }
