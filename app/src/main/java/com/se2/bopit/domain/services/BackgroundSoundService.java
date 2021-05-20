@@ -14,6 +14,7 @@ import com.se2.bopit.R;
 public class BackgroundSoundService extends Service {
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_SOUND = "sound";
+    private static int time = 0;
     private MediaPlayer mediaplayer;
     private SharedPreferences customSharedPreferences;
 
@@ -29,13 +30,14 @@ public class BackgroundSoundService extends Service {
         customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         mediaplayer = MediaPlayer.create(this, R.raw.riseandshine);
         mediaplayer.setLooping(true);
-        mediaplayer.setVolume(1.0f, 1.0f);
+        mediaplayer.setVolume(0.5f, 0.5f);
     }
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         boolean backgroundMusic = customSharedPreferences.getBoolean(PREF_KEY_SOUND, false);
         if (backgroundMusic) {
+            mediaplayer.seekTo(BackgroundSoundService.time);
             mediaplayer.start();
         } else {
             mediaplayer.stop();
@@ -47,11 +49,9 @@ public class BackgroundSoundService extends Service {
     public void onDestroy() {
         super.onDestroy();
         if (mediaplayer != null) {
+            BackgroundSoundService.time = mediaplayer.getCurrentPosition();
             mediaplayer.stop();
             mediaplayer.release();
         }
     }
-
 }
-
-

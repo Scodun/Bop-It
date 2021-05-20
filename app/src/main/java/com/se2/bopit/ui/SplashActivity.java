@@ -27,7 +27,7 @@ import com.se2.bopit.domain.services.BackgroundSoundService;
 import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
 
-public class SplashActivity extends AppCompatActivity {
+public class SplashActivity extends BaseActivity {
     private static final String TAG = SplashActivity.class.getSimpleName();
 
     private ImageView waveView;

@@ -21,7 +21,7 @@ import com.se2.bopit.domain.services.BackgroundSoundService;
 import java.util.Objects;
 
 
-public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsActivity extends BaseActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_SOUND = "sound";
     private static final String PREF_KEY_EFFECT = "effect";

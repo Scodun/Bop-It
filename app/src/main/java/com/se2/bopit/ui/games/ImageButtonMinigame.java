@@ -16,6 +16,7 @@ import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
 import com.se2.bopit.domain.ImageButtonMinigameModel;
+import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
@@ -62,6 +63,7 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
         text = imageButtonMinigameModel.challenge;
         textView = view.findViewById(R.id.textView);
         textView.setText(text);
+        new TextToSpeech().sayText(text.split(" ")[2],this.getContext());
     }
 
     public void initializeButtons(View view){
