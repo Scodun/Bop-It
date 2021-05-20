@@ -71,13 +71,13 @@ public class MultipleChoiceGameModelTest {
     public void handleCorrectResponse() {
 
         assertTrue(gameModel.handleResponse(correct));
-        verify(gameListenerMock).onGameResult(eq(true));
+        verify(gameListenerMock).onGameResult(true);
 
     }
 
     @Test
     public void handleWrongResponse() {
         assertFalse(gameModel.handleResponse(wrongs[0]));
-        verify(gameListenerMock).onGameResult(eq(false));
+        verify(gameListenerMock).onGameResult(false);
     }
 }

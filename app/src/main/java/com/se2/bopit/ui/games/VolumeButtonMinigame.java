@@ -43,9 +43,19 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         view.setFocusableInTouchMode(true);
         view.requestFocus();
-        view.setOnKeyListener(pressedKey);
+        view.setOnKeyListener(
+                (View v, int keyCode, KeyEvent event) -> {
+                    checkPressedKey();
+                    if (keyCode == getKeyEvent()) {
+                        isCorrect = true;
+                        return true;
+                    } else {
+                        isCorrect = false;
+                        return false;
+                    }
+                });
 
-        gifImageView = getView().findViewById(R.id.gifImageView);
+        gifImageView = view.findViewById(R.id.gifImageView);
 
         text = gameModel.challenge;
         textView = view.findViewById(R.id.VolumeButtonMessage);
@@ -63,20 +73,6 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
     public void setGif() {
         gifImageView.setImageResource(R.drawable.volume_down);
     }
-
-    public final View.OnKeyListener pressedKey = new View.OnKeyListener() {
-        @Override
-        public boolean onKey(View v, int keyCode, KeyEvent event) {
-            checkPressedKey();
-            if (keyCode == getKeyEvent()) {
-                isCorrect = true;
-                return true;
-            } else {
-                isCorrect = false;
-                return false;
-            }
-        }
-    };
 
     /**
      * Checks if the right button was pressed or not

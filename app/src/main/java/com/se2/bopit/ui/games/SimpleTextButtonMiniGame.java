@@ -10,10 +10,10 @@ public class SimpleTextButtonMiniGame extends ButtonMiniGameFragment {
 
     private static final ArrayList<ButtonModel> possibleAnswers = initializeButtonModels();
 
-    private static final int numberAnswers = 3;
+    private static final int NUMBER_ANSWERS = 3;
 
     public SimpleTextButtonMiniGame() {
-        super(ButtonMiniGameModel.createRandomGameModel(possibleAnswers, numberAnswers));
+        super(ButtonMiniGameModel.createRandomGameModel(possibleAnswers, NUMBER_ANSWERS));
     }
 
     private static ArrayList<ButtonModel> initializeButtonModels() {

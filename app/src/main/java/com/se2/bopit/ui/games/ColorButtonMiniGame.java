@@ -16,10 +16,10 @@ public class ColorButtonMiniGame extends ButtonMiniGameFragment {
 
     static final ArrayList<ButtonModel> possibleAnswers = initializeButtonModels();
 
-    static final int numberAnswers = 3;
+    static final int NUMBER_ANSWERS = 3;
 
     public ColorButtonMiniGame() {
-        super(ButtonMiniGameModel.createRandomGameModel(possibleAnswers, numberAnswers));
+        super(ButtonMiniGameModel.createRandomGameModel(possibleAnswers, NUMBER_ANSWERS));
     }
 
     private static ArrayList<ButtonModel> initializeButtonModels() {

@@ -41,7 +41,7 @@ public class MiniGamesRegistryTest {
         registry = MiniGamesRegistry.getInstance();
         contextMock = mock(Context.class);
         sensorManagerMock = mock(SensorManager.class);
-        doReturn(sensorManagerMock).when(contextMock).getSystemService(eq(Context.SENSOR_SERVICE));
+        doReturn(sensorManagerMock).when(contextMock).getSystemService(Context.SENSOR_SERVICE);
     }
 
     @After

@@ -57,7 +57,7 @@ public class SensorMiniGameModelTest {
     public void onSensorChangedTrue() {
         SensorEventModel eventModel = new SensorEventModel(0, Sensor.TYPE_LIGHT, 0, 0);
         gameModel.onSensorChanged(eventModel);
-        verify(gameListenerMock).onGameResult(eq(true));
+        verify(gameListenerMock).onGameResult(true);
     }
 
     @Test
@@ -76,7 +76,7 @@ public class SensorMiniGameModelTest {
     @Test
     public void resumeSensor() {
         gameModel.resumeSensor(contextMock);
-        verify(platformProviderMock).registerSensorListener(eq(contextMock), eq(gameModel.sensorType), eq(gameModel));
+        verify(platformProviderMock).registerSensorListener(contextMock, gameModel.sensorType, gameModel);
     }
 
     @Test
@@ -89,7 +89,7 @@ public class SensorMiniGameModelTest {
     public void pauseSensorAfterResume() {
         gameModel.resumeSensor(contextMock);
         gameModel.pauseSensor();
-        verify(platformProviderMock).unregisterSensorListener(eq(contextMock), eq(gameModel));
+        verify(platformProviderMock).unregisterSensorListener(contextMock, gameModel);
     }
 
 }
