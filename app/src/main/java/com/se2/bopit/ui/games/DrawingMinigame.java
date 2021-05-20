@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.se2.bopit.R;
+import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.ui.DrawTouchPathCanvas;
@@ -41,6 +42,7 @@ public class DrawingMinigame extends Fragment implements MiniGame {
 
         TextView messageText = view.findViewById(R.id.messageText);
         messageText.setText("Trace the Shape");
+        new TextToSpeech().sayText("Trace the Shape!",this.getContext());
 
         Collections.shuffle(possibleAnswersResourceIds);
 

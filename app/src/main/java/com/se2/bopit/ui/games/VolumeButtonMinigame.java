@@ -13,6 +13,7 @@ import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.VolumeButtonGameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
@@ -47,6 +48,7 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
         text = gameModel.challenge;
         textView = view.findViewById(R.id.VolumeButtonMessage);
         textView.setText(text);
+        new TextToSpeech().sayText(text.split(" ")[2],this.getContext());
         if(text.equals("Press volume DOWN")){
             setGif();
         }
