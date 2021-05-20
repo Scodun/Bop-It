@@ -9,7 +9,6 @@ import android.os.CountDownTimer;
 
 import androidx.annotation.RequiresApi;
 
-import com.se2.bopit.domain.SensorEventModel;
 import com.se2.bopit.domain.interfaces.SensorEventModelListener;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 
@@ -24,14 +23,14 @@ public class AndroidPlatformFeaturesProvider implements PlatformFeaturesProvider
         return new CountDownTimer(millisInFuture, countDownInterval) {
             @Override
             public void onTick(long l) {
-                if(onTickHandler != null) {
+                if (onTickHandler != null) {
                     onTickHandler.accept(l);
                 }
             }
 
             @Override
             public void onFinish() {
-                if(onFinishHandler != null) {
+                if (onFinishHandler != null) {
                     onFinishHandler.run();
                 }
             }

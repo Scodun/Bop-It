@@ -2,23 +2,18 @@ package com.se2.bopit.domain;
 
 import android.content.Context;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.os.CountDownTimer;
 
 import com.se2.bopit.domain.interfaces.GameListener;
-import com.se2.bopit.domain.interfaces.SensorEventModelListener;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
-import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.LinkedList;
-import java.util.function.LongConsumer;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
@@ -62,7 +57,7 @@ public class SensorMiniGameModelTest {
     public void onSensorChangedTrue() {
         SensorEventModel eventModel = new SensorEventModel(0, Sensor.TYPE_LIGHT, 0, 0);
         gameModel.onSensorChanged(eventModel);
-        verify(gameListenerMock).onGameResult(eq(true));
+        verify(gameListenerMock).onGameResult(true);
     }
 
     @Test
@@ -81,7 +76,7 @@ public class SensorMiniGameModelTest {
     @Test
     public void resumeSensor() {
         gameModel.resumeSensor(contextMock);
-        verify(platformProviderMock).registerSensorListener(eq(contextMock), eq(gameModel.sensorType), eq(gameModel));
+        verify(platformProviderMock).registerSensorListener(contextMock, gameModel.sensorType, gameModel);
     }
 
     @Test
@@ -94,7 +89,7 @@ public class SensorMiniGameModelTest {
     public void pauseSensorAfterResume() {
         gameModel.resumeSensor(contextMock);
         gameModel.pauseSensor();
-        verify(platformProviderMock).unregisterSensorListener(eq(contextMock), eq(gameModel));
+        verify(platformProviderMock).unregisterSensorListener(contextMock, gameModel);
     }
 
 }

@@ -5,12 +5,14 @@ import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 public interface MiniGame {
     /**
      * Method to set Listener in engine to listen for Minigame Events
+     *
      * @param listener - Game Listener
      */
     void setGameListener(GameListener listener);
 
     /**
      * Propagates PlatformFeaturesProvider from GameEngine
+     *
      * @param provider an instance of PlatformFeaturesProvider
      */
     default void setPlatformFeaturesProvider(PlatformFeaturesProvider provider) {

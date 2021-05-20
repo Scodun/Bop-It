@@ -45,7 +45,7 @@ public class ShakePhoneMinigame extends Fragment implements MiniGame {
             }
         };
         intent = new Intent(getActivity(), BackgroundServiceAccelerometer.class);
-        new TextToSpeech().sayText("shake",this.getContext());
+        new TextToSpeech().sayText("shake", this.getContext());
     }
 
     @Override

@@ -1,11 +1,5 @@
 package com.se2.bopit.ui;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -15,6 +9,11 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.ImageView;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -38,7 +37,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        waveView=findViewById(R.id.waveView);
+        waveView = findViewById(R.id.waveView);
 
         startService(new Intent(this, BackgroundSoundService.class));
 
@@ -50,7 +49,7 @@ public class SplashActivity extends BaseActivity {
         registry.checkAvailability(getApplicationContext());
         Log.d(TAG, "done checking available sensors");
 
-        if(!BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             mGoogleSignInClient = GoogleSignIn.getClient(this,
                     new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).requestId().requestProfile().build());
 
@@ -65,32 +64,31 @@ public class SplashActivity extends BaseActivity {
                     });
 
             activityResultLauncher.launch(mGoogleSignInClient.getSignInIntent());
-        }
-        else{
+        } else {
             startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
             finish();
         }
     }
 
-    private void startLoadingAnimation(View view){
+    private void startLoadingAnimation(View view) {
         Animation a = new Animation() {
-            boolean isNextIteration=false;
+            boolean isNextIteration = false;
+
             @Override
             protected void applyTransformation(float interpolatedTime, Transformation t) {
-                if(isNextIteration){
-                    interpolatedTime=1-interpolatedTime;
-                    isNextIteration=(interpolatedTime>0);
-                }
-                else {
+                if (isNextIteration) {
+                    interpolatedTime = 1 - interpolatedTime;
+                    isNextIteration = (interpolatedTime > 0);
+                } else {
                     isNextIteration = (interpolatedTime == 1);
                 }
                 ConstraintLayout.LayoutParams newLayoutParams = (ConstraintLayout.LayoutParams) waveView.getLayoutParams();
-                newLayoutParams.bottomMargin =(int)(100*interpolatedTime);
+                newLayoutParams.bottomMargin = (int) (100 * interpolatedTime);
                 DisplayMetrics metrics = new DisplayMetrics();
                 getWindowManager().getDefaultDisplay().getMetrics(metrics);
-                newLayoutParams.width=(int)(2000*interpolatedTime+ metrics.widthPixels);
-                newLayoutParams.height=(int)(interpolatedTime+ metrics.heightPixels*0.5);
-                newLayoutParams.horizontalBias= interpolatedTime;
+                newLayoutParams.width = (int) (2000 * interpolatedTime + metrics.widthPixels);
+                newLayoutParams.height = (int) (interpolatedTime + metrics.heightPixels * 0.5);
+                newLayoutParams.horizontalBias = interpolatedTime;
                 waveView.setLayoutParams(newLayoutParams);
             }
         };
@@ -103,7 +101,7 @@ public class SplashActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(!BuildConfig.DEBUG)
+        if (!BuildConfig.DEBUG)
             signInSilently();
     }
 

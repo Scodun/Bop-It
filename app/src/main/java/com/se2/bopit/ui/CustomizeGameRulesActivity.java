@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 
@@ -77,7 +76,7 @@ public class CustomizeGameRulesActivity extends BaseActivity {
             SwitchCompat sw = createSwitchControl(template);
 
             sw.setText(item.name);
-            if(item.available) {
+            if (item.available) {
                 sw.setChecked(item.enabled);
             } else {
                 sw.setChecked(false);
@@ -97,7 +96,7 @@ public class CustomizeGameRulesActivity extends BaseActivity {
 
     boolean menuItemOnClick(MenuItem item) {
         Log.d(TAG, "options item selected: " + item.getItemId());
-        if(item.getItemId() == R.id.action_revert) {
+        if (item.getItemId() == R.id.action_revert) {
             revertToDefault();
             return true;
         }
@@ -117,6 +116,6 @@ public class CustomizeGameRulesActivity extends BaseActivity {
 
     void applyModel() {
         switchAvoidRepeatingTypes.setSelected(model.avoidRepeatingGameTypes);
-        uiModelsMap.forEach((k,v) -> k.setChecked(v.enabled));
+        uiModelsMap.forEach((k, v) -> k.setChecked(v.enabled));
     }
 }

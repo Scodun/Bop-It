@@ -4,9 +4,9 @@ import android.os.CountDownTimer;
 
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.domain.mock.MiniGameMock;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
-import com.se2.bopit.domain.mock.MiniGameMock;
 
 import org.junit.After;
 import org.junit.Before;
@@ -14,8 +14,19 @@ import org.junit.Test;
 
 import java.util.function.LongConsumer;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 public class GameEngineUnitTest {
 
@@ -74,10 +85,10 @@ public class GameEngineUnitTest {
 
         // mock GameActivity
         doAnswer(i -> {
-           MiniGame game = i.getArgument(0);
-           long time = i.getArgument(1);
-           // simulate run game
-           return null;
+            MiniGame game = i.getArgument(0);
+            long time = i.getArgument(1);
+            // simulate run game
+            return null;
         }).when(listenerMock).onGameStart(any(), anyLong());
 
         // check initial state
@@ -103,8 +114,8 @@ public class GameEngineUnitTest {
 
         // user gives 10 correct answers
 
-        for(int i = 0; i < 10; i++) {
-            for(int j = 0; j < i + 1; j++ ) {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < i + 1; j++) {
                 mockTimerOnTickHandler.accept(System.currentTimeMillis() + j * 100);
             }
 

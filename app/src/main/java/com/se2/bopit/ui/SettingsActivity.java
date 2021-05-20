@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 
@@ -108,7 +107,7 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
         Objects.requireNonNull(textInputName.getEditText()).setText(customSharedPreferences.getString(PREF_KEY_NAME, ""));
         switchSound.setChecked(customSharedPreferences.getBoolean(PREF_KEY_SOUND, true));
         switchEffect.setChecked(customSharedPreferences.getBoolean(PREF_KEY_EFFECT, true));
-        highScore.setText(String.valueOf(customSharedPreferences.getInt(PREF_KEY_SCORE,0)));
+        highScore.setText(String.valueOf(customSharedPreferences.getInt(PREF_KEY_SCORE, 0)));
     }
 
 
@@ -118,7 +117,7 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
         editor.putString(PREF_KEY_NAME, "");
         editor.putBoolean(PREF_KEY_SOUND, true);
         editor.putBoolean(PREF_KEY_EFFECT, true);
-        editor.putInt(PREF_KEY_SCORE,0);
+        editor.putInt(PREF_KEY_SCORE, 0);
         editor.apply();
         setPrefValues();
     }
@@ -159,8 +158,7 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
     }
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         super.onBackPressed();
         saveSharedPreferences();
     }

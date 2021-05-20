@@ -15,13 +15,14 @@ public class BaseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         BaseActivity.isRunning = true;
-        if(BaseActivity.music == null) {
+        if (BaseActivity.music == null) {
             BaseActivity.music = new Intent(this, BackgroundSoundService.class);
             startService(BaseActivity.music);
-            BaseActivity.isRunning=true;
+            BaseActivity.isRunning = true;
         }
 
     }
+
     @Override
     protected void onPause() {
         super.onPause();
@@ -31,7 +32,7 @@ public class BaseActivity extends AppCompatActivity {
                 new java.util.TimerTask() {
                     @Override
                     public void run() {
-                        if(!BaseActivity.isRunning)
+                        if (!BaseActivity.isRunning)
                             stopService(BaseActivity.music);
                     }
                 },
@@ -42,7 +43,7 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if(!BaseActivity.isRunning) {
+        if (!BaseActivity.isRunning) {
             startService(BaseActivity.music);
             BaseActivity.isRunning = true;
         }

@@ -4,11 +4,6 @@ import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-
 public abstract class GameModel<M extends ResponseModel> implements MiniGame {
     protected GameListener listener;
 

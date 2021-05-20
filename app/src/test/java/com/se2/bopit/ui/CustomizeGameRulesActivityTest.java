@@ -2,7 +2,6 @@ package com.se2.bopit.ui;
 
 import android.content.Context;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.lifecycle.Lifecycle;
 
@@ -11,7 +10,8 @@ import com.se2.bopit.ui.providers.MiniGamesRegistry;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 

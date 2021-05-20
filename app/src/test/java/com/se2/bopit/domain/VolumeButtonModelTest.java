@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class VolumeButtonModelTest {
 
@@ -23,12 +23,13 @@ public class VolumeButtonModelTest {
     }
 
     @Test
-    public void labelTest(){
-        assertEquals("DOWN",volumeButtonModel.label);
+    public void labelTest() {
+        assertEquals("DOWN", volumeButtonModel.label);
     }
+
     @Test
-    public void volumeButtonTest(){
+    public void volumeButtonTest() {
         volumeButtonModel.setVolumeButton(volumeButton);
-        assertEquals("UP",volumeButtonModel.label);
+        assertEquals("UP", volumeButtonModel.label);
     }
 }

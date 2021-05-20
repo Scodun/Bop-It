@@ -41,7 +41,6 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
     private float accel;
 
 
-
     public PlacePhoneMiniGame() {
         super(R.layout.fragment_button_component);
     }
@@ -58,15 +57,16 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
         imageView.setImageResource(R.drawable.phone_flat);
         TextView messageText = view.findViewById(R.id.actionText);
         messageText.setText("Place your phone on a flat surface");
-        new TextToSpeech().sayText("Flat",this.getContext());
+        new TextToSpeech().sayText("Flat", this.getContext());
         sensorManager = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
         Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(this, accelerometer,SensorManager.SENSOR_DELAY_NORMAL);
+        sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);
         current = SensorManager.GRAVITY_EARTH;
-        last = SensorManager. GRAVITY_EARTH;
+        last = SensorManager.GRAVITY_EARTH;
 
         return view;
     }
+
     /**
      * gets called as soon as the accelerator sensor changes
      * This method calls isFlat, and if isFlat returns true, we call the GameListener
@@ -76,7 +76,7 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
     @Override
     public void onSensorChanged(SensorEvent event) {
 
-        try{
+        try {
             //Source for calculation: https://stackoverflow.com/questions/11175599/how-to-measure-the-tilt-of-the-phone-in-xy-plane-using-accelerometer-in-android/15149421#15149421
             float[] vals = event.values.clone();
             last = current;
@@ -89,21 +89,20 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
 
             int inclination = (int) Math.round(Math.toDegrees(Math.acos(vals[2])));
 
-            if(isFlat(inclination)){
+            if (isFlat(inclination)) {
                 isFlat = true;
             }
-            if(hasMoved(current, last)){
+            if (hasMoved(current, last)) {
                 hasMoved = true;
             }
-            if(isFlat && hasMoved){
-                if(sensorManager != null){
+            if (isFlat && hasMoved) {
+                if (sensorManager != null) {
                     sensorManager.unregisterListener(this);
                 }
                 listener.onGameResult(true);
             }
-        }
-        catch (Exception ex){
-            Log.e(TAG,ex.getMessage());
+        } catch (Exception ex) {
+            Log.e(TAG, ex.getMessage());
         }
     }
 
@@ -115,41 +114,45 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
         // needed for SensorEventListener. Is empty on purpose
     }
+
     /**
      * @param inclination - value to detect if phone is flat
-     * Checks if phone is placed flat
-     * There is a realtive generous error margin calculated in, to account for Camera bumps.
+     *                    Checks if phone is placed flat
+     *                    There is a realtive generous error margin calculated in, to account for Camera bumps.
      */
-    private boolean isFlat(int inclination){
+    private boolean isFlat(int inclination) {
         return inclination < 15 || inclination > 155;
     }
+
     /**
-     * @param cr - current sensor value
+     * @param cr  - current sensor value
      * @param lst - previous sensor value
-     * Checks if phone was moved
-     * This method was added to prevent getting double points if this minigame gets selected twice or more often in a row. So the phone has to be moved first.
-     * To detect more subtle movements, you have to lower the number in the return statement
+     *            Checks if phone was moved
+     *            This method was added to prevent getting double points if this minigame gets selected twice or more often in a row. So the phone has to be moved first.
+     *            To detect more subtle movements, you have to lower the number in the return statement
      */
-    private boolean hasMoved(float cr, float lst){
+    private boolean hasMoved(float cr, float lst) {
         //Source for calculation: https://stackoverflow.com/questions/11175599/how-to-measure-the-tilt-of-the-phone-in-xy-plane-using-accelerometer-in-android/15149421#15149421
         float sub = cr - lst;
         accel = accel * 0.9f + sub;
         return accel > 2;
     }
+
     /**
      * getter for isFlat
      */
-    public boolean getIsFlat(){
+    public boolean getIsFlat() {
         return isFlat;
     }
+
     /**
      * getter for hasMoved
      */
-    public boolean getHasMoved(){
+    public boolean getHasMoved() {
         return hasMoved;
     }
 
-    public void setCurrent(float _current){
+    public void setCurrent(float _current) {
         this.current = _current;
     }
 }

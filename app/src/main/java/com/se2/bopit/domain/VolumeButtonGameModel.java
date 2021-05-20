@@ -14,6 +14,7 @@ public class VolumeButtonGameModel extends MultipleChoiceGameModel<VolumeButtonM
     protected VolumeButtonGameModel(String challenge, VolumeButtonModel correctResponse, List<VolumeButtonModel> wrongResponses) {
         super(challenge, correctResponse, wrongResponses);
     }
+
     /**
      * Randomly picks an answers from a list of possible answers to initialize the correct response
      *
@@ -30,7 +31,7 @@ public class VolumeButtonGameModel extends MultipleChoiceGameModel<VolumeButtonM
 
         VolumeButtonModel correctResponse = possibleAnswers.get(0);
 
-        List<VolumeButtonModel> wrongResponses = possibleAnswers.subList(1,possibleAnswers.size());
+        List<VolumeButtonModel> wrongResponses = possibleAnswers.subList(1, possibleAnswers.size());
 
         return new VolumeButtonGameModel(
                 String.format("Press volume %s", correctResponse.label),
@@ -38,7 +39,8 @@ public class VolumeButtonGameModel extends MultipleChoiceGameModel<VolumeButtonM
                 wrongResponses);
 
     }
-    public String getChallenge(){
+
+    public String getChallenge() {
         return challenge;
     }
 }
