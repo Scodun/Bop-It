@@ -34,7 +34,7 @@ public abstract class ButtonMiniGameFragment extends MiniGameFragment<ButtonMini
 
         TextView messageText = view.findViewById(R.id.messageText);
         messageText.setText(gameModel.challenge);
-        new TextToSpeech().sayText(gameModel.challenge.split(" ")[1],this.getContext());
+        new TextToSpeech().sayText(gameModel.challenge.split(" ")[1], this.getContext());
 
         LinearLayout layout = view.findViewById(R.id.buttonsRegion);
 

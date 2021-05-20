@@ -47,7 +47,7 @@ public class DrawingMinigame extends Fragment implements MiniGame {
 
         TextView messageText = view.findViewById(R.id.messageText);
         messageText.setText("Trace the Shape");
-        new TextToSpeech().sayText("Trace the Shape!",this.getContext());
+        new TextToSpeech().sayText("Trace the Shape!", this.getContext());
 
         Collections.shuffle(possibleAnswersResourceIds);
 

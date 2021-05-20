@@ -57,7 +57,7 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
         imageView.setImageResource(R.drawable.phone_flat);
         TextView messageText = view.findViewById(R.id.actionText);
         messageText.setText("Place your phone on a flat surface");
-        new TextToSpeech().sayText("Flat",this.getContext());
+        new TextToSpeech().sayText("Flat", this.getContext());
         sensorManager = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
         Sensor accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         sensorManager.registerListener(this, accelerometer, SensorManager.SENSOR_DELAY_NORMAL);

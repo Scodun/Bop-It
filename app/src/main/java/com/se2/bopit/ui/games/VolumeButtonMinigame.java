@@ -60,8 +60,8 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
         text = gameModel.challenge;
         textView = view.findViewById(R.id.VolumeButtonMessage);
         textView.setText(text);
-        new TextToSpeech().sayText(text.split(" ")[2],this.getContext());
-        if(text.equals("Press volume DOWN")){
+        new TextToSpeech().sayText("Volume" + text.split(" ")[2], this.getContext());
+        if (text.equals("Press volume DOWN")) {
             setGif();
         }
 

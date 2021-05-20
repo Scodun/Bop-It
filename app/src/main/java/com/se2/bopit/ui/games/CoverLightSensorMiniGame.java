@@ -32,7 +32,7 @@ public class CoverLightSensorMiniGame extends SensorMiniGameFragment<CoverLightS
         imageView.setImageResource(R.drawable.solar_eclipse);
         TextView messageText = view.findViewById(R.id.actionText);
         messageText.setText(R.string.challenge_cover_light_sensor);
-        new TextToSpeech().sayText("Dark!",this.getContext());
+        new TextToSpeech().sayText("Dark!", this.getContext());
 
         return view;
     }

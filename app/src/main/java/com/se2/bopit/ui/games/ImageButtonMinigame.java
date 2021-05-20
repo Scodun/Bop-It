@@ -64,7 +64,7 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
         text = imageButtonMinigameModel.challenge;
         textView = view.findViewById(R.id.textView);
         textView.setText(text);
-        new TextToSpeech().sayText(text.split(" ")[2],this.getContext());
+        new TextToSpeech().sayText(text.split(" ")[2], this.getContext());
     }
 
     public void initializeButtons(View view) {

@@ -50,8 +50,8 @@ public class RightButtonCombination extends Fragment implements MiniGame {
         text = rightButtonCombinationModel.challenge;
         textView = getView().findViewById(R.id.textView2);
         textView.setText(text);
-        new TextToSpeech().sayText(text.split(" ")[0],this.getContext());
-        new TextToSpeech().sayText(text.split(" ")[1],this.getContext());
+        new TextToSpeech().sayText(text.split(" ")[0], this.getContext());
+        new TextToSpeech().sayText(text.split(" ")[1], this.getContext());
     }
 
     public void initializeButtons() {
