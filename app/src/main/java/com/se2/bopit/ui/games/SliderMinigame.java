@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.se2.bopit.R;
-import com.se2.bopit.domain.SliderListener;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
@@ -58,13 +57,32 @@ public class SliderMinigame extends Fragment implements MiniGame {
             progress = random.nextInt(9) + 1;
         slider.setProgress(progress);
 
-        slider.setOnSeekBarChangeListener(new SliderListener(this));
+        slider.setOnSeekBarChangeListener(getListener());
 
     }
 
     public void sliderStatus(int progress) {
         if (progress == target)
             gameListener.onGameResult(true);
+    }
+
+    private SeekBar.OnSeekBarChangeListener getListener() {
+        return new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                sliderStatus(progress);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        };
     }
 
 }
