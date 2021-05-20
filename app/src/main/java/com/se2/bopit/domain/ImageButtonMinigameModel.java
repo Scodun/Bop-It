@@ -9,18 +9,19 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ImageButtonMinigameModel extends MultipleChoiceGameModel<ImageButtonModel>{
+public class ImageButtonMinigameModel extends MultipleChoiceGameModel<ImageButtonModel> {
 
     public ImageButtonMinigameModel(String challenge, ImageButtonModel correctResponse, List<ImageButtonModel> wrongResponses) {
         super(challenge, correctResponse, wrongResponses);
     }
+
     /**
      * Randomly an answer from a list of possible answers to initialize the correct answer
      *
      * @return GameModel with 1 correct answer and possibleAnswers-1 wrong answers
      */
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public static ImageButtonMinigameModel createRandomModel(){
+    public static ImageButtonMinigameModel createRandomModel() {
 
         List<ImageButtonModel> possibleAnswers = Arrays.stream(ButtonImage.values())
                 .map(ImageButtonModel::new)
@@ -30,7 +31,7 @@ public class ImageButtonMinigameModel extends MultipleChoiceGameModel<ImageButto
 
         ImageButtonModel correctResponse = possibleAnswers.get(0);
 
-        List<ImageButtonModel> wrongAnswers = possibleAnswers.subList(1,possibleAnswers.size());
+        List<ImageButtonModel> wrongAnswers = possibleAnswers.subList(1, possibleAnswers.size());
 
         return new ImageButtonMinigameModel(
                 String.format("Select the %s", correctResponse.label),
@@ -38,7 +39,8 @@ public class ImageButtonMinigameModel extends MultipleChoiceGameModel<ImageButto
                 wrongAnswers
         );
     }
-    public String getChallenge(){
+
+    public String getChallenge() {
         return challenge;
     }
 }

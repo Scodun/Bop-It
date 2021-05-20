@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.view.MotionEvent;
 import android.view.View;
+
 import com.se2.bopit.R;
 import com.se2.bopit.ui.games.DrawingMinigame;
 
@@ -43,10 +44,10 @@ public class DrawTouchPathCanvas extends View {
 
         scaleSolution(newWidth);
 
-        canvas.rotate(getRandomAngle(), newWidth/2f, newHeight/2f);
+        canvas.rotate(getRandomAngle(), newWidth / 2f, newHeight / 2f);
 
-        float drawAtX = newWidth/2f - solution.getWidth()/2f;
-        float drawAtY = newHeight/2f - solution.getHeight()/2f;
+        float drawAtX = newWidth / 2f - solution.getWidth() / 2f;
+        float drawAtY = newHeight / 2f - solution.getHeight() / 2f;
 
         canvas.drawBitmap(solution, drawAtX, drawAtY, null);
     }

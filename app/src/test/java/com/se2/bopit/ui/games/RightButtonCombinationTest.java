@@ -1,7 +1,6 @@
 package com.se2.bopit.ui.games;
 
 import com.se2.bopit.R;
-import com.se2.bopit.domain.ButtonImage;
 import com.se2.bopit.domain.RightButton;
 import com.se2.bopit.domain.RightButtonCombinationModel;
 import com.se2.bopit.domain.RightButtonModel;
@@ -14,7 +13,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
 
 public class RightButtonCombinationTest {
 
@@ -53,14 +54,15 @@ public class RightButtonCombinationTest {
         wrongAnswers.add(wrongButton);
         wrongAnswers.add(secondWrongButton);
 
-        gameModel = new RightButtonCombinationModel("RIGHT RIGHT",rightButton,secondRightButton,wrongAnswers);
+        gameModel = new RightButtonCombinationModel("RIGHT RIGHT", rightButton, secondRightButton, wrongAnswers);
 
         rightButtonCombination.rightButtonCombinationModel = gameModel;
         rightButtonCombination.count = 0;
 
-        assertEquals(R.id.pressRight,rightButtonCombination.findButton());
+        assertEquals(R.id.pressRight, rightButtonCombination.findButton());
 
     }
+
     @Test
     public void firstButtonToClickIsLEFT() {
         rightButton = new RightButtonModel(RightButton.LEFT);
@@ -72,13 +74,14 @@ public class RightButtonCombinationTest {
         wrongAnswers.add(wrongButton);
         wrongAnswers.add(secondWrongButton);
 
-        gameModel = new RightButtonCombinationModel("RIGHT RIGHT",rightButton,secondRightButton,wrongAnswers);
+        gameModel = new RightButtonCombinationModel("RIGHT RIGHT", rightButton, secondRightButton, wrongAnswers);
 
         rightButtonCombination.rightButtonCombinationModel = gameModel;
         rightButtonCombination.count = 0;
 
-        assertEquals(R.id.pressLeft,rightButtonCombination.findButton());
+        assertEquals(R.id.pressLeft, rightButtonCombination.findButton());
     }
+
     @Test
     public void firstButtonToClickIsUP() {
         rightButton = new RightButtonModel(RightButton.UP);
@@ -90,13 +93,14 @@ public class RightButtonCombinationTest {
         wrongAnswers.add(wrongButton);
         wrongAnswers.add(secondWrongButton);
 
-        gameModel = new RightButtonCombinationModel("RIGHT RIGHT",rightButton,secondRightButton,wrongAnswers);
+        gameModel = new RightButtonCombinationModel("RIGHT RIGHT", rightButton, secondRightButton, wrongAnswers);
 
         rightButtonCombination.rightButtonCombinationModel = gameModel;
         rightButtonCombination.count = 0;
 
-        assertEquals(R.id.pressUp,rightButtonCombination.findButton());
+        assertEquals(R.id.pressUp, rightButtonCombination.findButton());
     }
+
     @Test
     public void firstButtonToClickIsDOWN() {
         rightButton = new RightButtonModel(RightButton.DOWN);
@@ -108,13 +112,14 @@ public class RightButtonCombinationTest {
         wrongAnswers.add(wrongButton);
         wrongAnswers.add(secondWrongButton);
 
-        gameModel = new RightButtonCombinationModel("RIGHT RIGHT",rightButton,secondRightButton,wrongAnswers);
+        gameModel = new RightButtonCombinationModel("RIGHT RIGHT", rightButton, secondRightButton, wrongAnswers);
 
         rightButtonCombination.rightButtonCombinationModel = gameModel;
         rightButtonCombination.count = 0;
 
-        assertEquals(R.id.pressDown,rightButtonCombination.findButton());
+        assertEquals(R.id.pressDown, rightButtonCombination.findButton());
     }
+
     @Test
     public void secondButtonToClickIsRIGHT() {
         rightButton = new RightButtonModel(RightButton.RIGHT);
@@ -126,21 +131,24 @@ public class RightButtonCombinationTest {
         wrongAnswers.add(wrongButton);
         wrongAnswers.add(secondWrongButton);
 
-        gameModel = new RightButtonCombinationModel("RIGHT RIGHT",rightButton,secondRightButton,wrongAnswers);
+        gameModel = new RightButtonCombinationModel("RIGHT RIGHT", rightButton, secondRightButton, wrongAnswers);
 
         rightButtonCombination.rightButtonCombinationModel = gameModel;
         rightButtonCombination.count = 1;
 
-        assertEquals(R.id.pressRight,rightButtonCombination.findButton());
+        assertEquals(R.id.pressRight, rightButtonCombination.findButton());
 
     }
+
     @Test
     public void checkClickTrue() {
-        assertTrue(rightButtonCombination.checkClick(true,true));
+        assertTrue(rightButtonCombination.checkClick(true, true));
     }
+
     @Test
-    public void setGameListener(){
-        GameListener listener = r -> {};
+    public void setGameListener() {
+        GameListener listener = r -> {
+        };
         rightButtonCombination.setGameListener(listener);
         assertSame(listener, rightButtonCombination.rightButtonCombinationModel.getGameListener());
     }

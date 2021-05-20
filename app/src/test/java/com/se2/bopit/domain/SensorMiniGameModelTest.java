@@ -2,23 +2,18 @@ package com.se2.bopit.domain;
 
 import android.content.Context;
 import android.hardware.Sensor;
-import android.hardware.SensorEvent;
-import android.os.CountDownTimer;
 
 import com.se2.bopit.domain.interfaces.GameListener;
-import com.se2.bopit.domain.interfaces.SensorEventModelListener;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
-import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.LinkedList;
-import java.util.function.LongConsumer;
 
-import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.any;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;

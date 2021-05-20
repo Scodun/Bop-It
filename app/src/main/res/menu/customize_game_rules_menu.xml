@@ -7,6 +7,6 @@
         android:id="@+id/action_revert"
         android:icon="@android:drawable/ic_menu_revert"
         android:title="@string/reset_game_rules"
-        app:showAsAction="always"/>
+        app:showAsAction="always" />
 
 </menu>

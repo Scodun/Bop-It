@@ -38,7 +38,7 @@ public abstract class ButtonMiniGameFragment extends MiniGameFragment<ButtonMini
 
         LinearLayout layout = view.findViewById(R.id.buttonsRegion);
 
-        for(ButtonModel model : gameModel.responses) {
+        for (ButtonModel model : gameModel.responses) {
             layout.addView(applyButtonModel(model,
                     inflater.inflate(R.layout.button_template, layout, false)));
         }
@@ -50,7 +50,7 @@ public abstract class ButtonMiniGameFragment extends MiniGameFragment<ButtonMini
 
     Button applyButtonModel(ButtonModel model, View buttonView) {
         Button button = (Button) buttonView;
-        if(model.label != null) {
+        if (model.label != null) {
             button.setText(model.label);
         }
 

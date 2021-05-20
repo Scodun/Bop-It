@@ -11,7 +11,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.reset;
@@ -28,7 +30,7 @@ public class MultipleChoiceGameModelTest {
     public void setUp() {
         correct = new ButtonModel("correct");
         wrongs = new ButtonModel[3];
-        for(int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++) {
             wrongs[i] = new ButtonModel("wrong" + i);
         }
         gameModel = new ButtonMiniGameModel("test", correct, wrongs);

@@ -8,7 +8,8 @@ import com.se2.bopit.ui.ButtonMiniGameFragment;
 
 import java.util.ArrayList;
 
-import static com.se2.bopit.domain.ButtonColor.*;
+import static com.se2.bopit.domain.ButtonColor.DEFAULT;
+import static com.se2.bopit.domain.ButtonColor.RANDOM;
 
 @MiniGameType(name = "Color Buttons")
 public class ColorButtonMiniGame extends ButtonMiniGameFragment {
