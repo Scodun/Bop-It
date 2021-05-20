@@ -19,6 +19,7 @@ import com.se2.bopit.ui.games.ImageButtonMinigame;
 import com.se2.bopit.ui.games.RightButtonCombination;
 import com.se2.bopit.ui.games.ShakePhoneMinigame;
 import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
+import com.se2.bopit.ui.games.VolumeButtonMinigame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 import com.se2.bopit.ui.games.PlacePhoneMiniGame;
 
@@ -43,7 +44,8 @@ public class MiniGamesRegistry implements MiniGamesProvider {
             RightButtonCombination.class,
             ShakePhoneMinigame.class,
             PlacePhoneMiniGame.class,
-            CoverLightSensorMiniGame.class
+            CoverLightSensorMiniGame.class,
+            VolumeButtonMinigame.class
     };
 
     final Map<Integer, Boolean> availableSensorTypes = new HashMap<>();
