@@ -49,16 +49,16 @@ public class SliderMinigame extends Fragment implements MiniGame {
     }
 
     private void setupSlider() {
+        // target is one of 2 3 4 5 6 10 11 12 13 14
+        target = random.nextInt(5) + 2;
+        if (random.nextInt(2) == 0)
+            target += 8;
 
-        target = random.nextInt(9) + 1;
-
-        int progress = target;
-        while (progress == target || progress == 1)
-            progress = random.nextInt(9) + 1;
+        // progress if one of 7 8 9
+        int progress = random.nextInt(3) + 7;
         slider.setProgress(progress);
 
         slider.setOnSeekBarChangeListener(getListener());
-
     }
 
     public void sliderStatus(int progress) {

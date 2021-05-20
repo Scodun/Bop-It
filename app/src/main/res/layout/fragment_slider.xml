@@ -10,7 +10,7 @@
             style="@android:style/Widget.SeekBar"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:max="10"
+            android:max="15"
             android:progress="5"
             android:id="@+id/slider1"
             app:layout_constraintBottom_toBottomOf="parent"
