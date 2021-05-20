@@ -64,11 +64,4 @@ public class VolumeButtonMinigameTest extends Fragment {
         volumeButtonMinigame.gameModel.correctResponse.volumeButton = VolumeButton.UP;
         assertEquals(24, volumeButtonMinigame.getKeyEvent());
     }
-
-    @Test
-    public void getKeyEventIsNothing() {
-        volumeButtonMinigame.gameModel.correctResponse.volumeButton = VolumeButton.MUTE;
-
-        assertEquals(0, volumeButtonMinigame.getKeyEvent());
-    }
 }
