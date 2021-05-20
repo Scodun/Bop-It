@@ -88,7 +88,6 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     }
 
     private void initializeView() {
-        toolbar = findViewById(R.id.toolbar_settings);
         textInputName = findViewById(R.id.textFieldName);
         ImageView iconSound = findViewById(R.id.iconSound);
         iconSound.setImageResource(R.drawable.ic_sound);
@@ -157,5 +156,12 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
             stopService(new Intent(this, BackgroundSoundService.class));
             startService(new Intent(this, BackgroundSoundService.class));
         }
+    }
+
+    @Override
+    public void onBackPressed()
+    {
+        super.onBackPressed();
+        saveSharedPreferences();
     }
 }
