@@ -5,6 +5,7 @@
 [![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=Scodun_Bop-It&metric=code_smells)](https://sonarcloud.io/dashboard?id=Scodun_Bop-It)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=Scodun_Bop-It&metric=coverage)](https://sonarcloud.io/dashboard?id=Scodun_Bop-It)
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=Scodun_Bop-It&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=Scodun_Bop-It)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=Scodun_Bop-It&metric=ncloc)](https://sonarcloud.io/dashboard?id=Scodun_Bop-It)
 
 Sonar Cloud: [Link](https://sonarcloud.io/dashboard?id=Scodun_Bop-It)
 
