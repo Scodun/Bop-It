@@ -69,16 +69,19 @@ public class GameEngineUnitTest {
         reset(miniGamesProviderMock, listenerMock, platformProviderMock, timerMock);
     }
 
-    @Test
-    public void startNewGame() {
-
+    private void mockGameActivity() {
         // mock GameActivity
         doAnswer(i -> {
-           MiniGame game = i.getArgument(0);
-           long time = i.getArgument(1);
-           // simulate run game
-           return null;
+            MiniGame game = i.getArgument(0);
+            long time = i.getArgument(1);
+            // simulate run game
+            return null;
         }).when(listenerMock).onGameStart(any(), anyLong());
+    }
+
+    @Test
+    public void startNewGame() {
+        mockGameActivity();
 
         // check initial state
         assertEquals(0, gameEngine.score);
@@ -103,8 +106,8 @@ public class GameEngineUnitTest {
 
         // user gives 10 correct answers
 
-        for(int i = 0; i < 10; i++) {
-            for(int j = 0; j < i + 1; j++ ) {
+        for (int i = 0; i < 10; i++) {
+            for (int j = 0; j < i + 1; j++) {
                 mockTimerOnTickHandler.accept(System.currentTimeMillis() + j * 100);
             }
 
@@ -185,6 +188,24 @@ public class GameEngineUnitTest {
         assertFalse(gameEngine.isOverTime);
         assertTrue(gameEngine.miniGameLost);
         assertEquals(0, gameEngine.score);
+    }
+
+    @Test
+    public void testPauseCountDown() {
+        mockGameActivity();
+
+        gameEngine.startNewGame();
+        gameEngine.pauseCountDown();
+        assertFalse(timerRunning);
+    }
+
+    @Test
+    public void testResumeCountDown() {
+        mockGameActivity();
+
+        gameEngine.startNewGame();
+        gameEngine.resumeCountDown();
+        assertTrue(timerRunning);
     }
 
 }
