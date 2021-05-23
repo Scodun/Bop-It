@@ -31,6 +31,13 @@ public class GameRules {
         gameTypeModels.forEach((k,v) -> v.reset());
     }
 
+    public void disablePermanently(Class<?> type) {
+        GameRuleItemModel model = gameTypeModels.get(type);
+        if(model != null) {
+            model.disablePermanently();
+        } // TODO maybe else throw exception!
+    }
+
     public List<GameRuleItemModel> getItems() {
         return new ArrayList<>(gameTypeModels.values());
     }

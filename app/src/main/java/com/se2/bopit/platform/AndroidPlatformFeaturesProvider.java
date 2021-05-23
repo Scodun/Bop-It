@@ -1,18 +1,27 @@
 package com.se2.bopit.platform;
 
+import android.content.Context;
+import android.hardware.Sensor;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.CountDownTimer;
 
+import androidx.annotation.RequiresApi;
+
+import com.se2.bopit.domain.SensorEventModel;
+import com.se2.bopit.domain.interfaces.SensorEventModelListener;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 
 import java.util.function.LongConsumer;
 
 public class AndroidPlatformFeaturesProvider implements PlatformFeaturesProvider {
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public CountDownTimer createCountDownTimer(long millisInFuture, long countDownInterval,
                                                LongConsumer onTickHandler,
                                                Runnable onFinishHandler) {
         return new CountDownTimer(millisInFuture, countDownInterval) {
-            //@RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onTick(long l) {
                 if(onTickHandler != null) {
@@ -27,5 +36,22 @@ public class AndroidPlatformFeaturesProvider implements PlatformFeaturesProvider
                 }
             }
         };
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void registerSensorListener(Context context, int sensorType,
+                                       SensorEventModelListener listener) {
+        SensorManager mgr = getSensorManager(context);
+        Sensor sensor = mgr.getDefaultSensor(sensorType);
+        SensorEventListener sensorListener = SensorEventListenerWrapper.wrap(listener);
+        mgr.registerListener(sensorListener, sensor, SensorManager.SENSOR_DELAY_GAME);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void unregisterSensorListener(Context context, SensorEventModelListener listener) {
+        SensorEventListener sensorListener = SensorEventListenerWrapper.wrap(listener);
+        getSensorManager(context).unregisterListener(sensorListener);
     }
 }

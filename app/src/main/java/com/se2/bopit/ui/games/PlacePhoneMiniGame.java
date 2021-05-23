@@ -79,7 +79,6 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
         }
         catch (Exception ex){
             Log.e(TAG,ex.getMessage());
-            throw new RuntimeException(ex);
         }
     }
 

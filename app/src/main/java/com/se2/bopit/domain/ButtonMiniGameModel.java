@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ButtonMiniGameModel extends GameModel<ButtonModel> {
+public class ButtonMiniGameModel extends MultipleChoiceGameModel<ButtonModel> {
 
     public ButtonMiniGameModel(String challenge, ButtonModel correctResponse, ButtonModel... wrongResponses) {
         super(challenge, correctResponse, wrongResponses);
