@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -31,7 +34,9 @@ public class GameActivity extends AppCompatActivity {
     Random rand;
     ArrayList<Integer> colors;
     GameEngine engine;
-    boolean gameEnd=false;
+    boolean gameEnd = false;
+    //cheatButton for testing
+    Button cheatButton;
 
     // providers
     MiniGamesRegistry miniGamesProvider = MiniGamesRegistry.getInstance();
@@ -50,6 +55,10 @@ public class GameActivity extends AppCompatActivity {
         timeBar = findViewById(R.id.timeBar);
         scoreView = findViewById(R.id.scoreView);
 
+        //cheatButton for testing
+        cheatButton = findViewById(R.id.cheatButton);
+
+
         //start game Engine and register listeners
 
         engine = new GameEngine(miniGamesProvider, platformFeaturesProvider, gameEngineListener);
@@ -65,13 +74,26 @@ public class GameActivity extends AppCompatActivity {
                         ContextCompat.getColor(this, R.color.secondary_variant_2)
                 )
         );
+
+//cheatbutton for testing ontouchlistener
+        cheatButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                    engine.pauseCountDown();
+                } else if (event.getAction() == MotionEvent.ACTION_UP){
+                    engine.resumeCountDown();
+                }
+                    return false;
+            }
+        });
     }
 
     private final GameEngineListener gameEngineListener = new GameEngineListener() {
         @Override
         public void onGameEnd(int score) {
-            if(!gameEnd) {
-                gameEnd=true;
+            if (!gameEnd) {
+                gameEnd = true;
                 if (checkPref()) {
                     new SoundEffects(getBaseContext(), 1);
                 }
@@ -99,7 +121,7 @@ public class GameActivity extends AppCompatActivity {
         public void onGameStart(MiniGame game, long time) {
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
-                    .replace(R.id.fragment_container_view, (Fragment) game , null)
+                    .replace(R.id.fragment_container_view, (Fragment) game, null)
                     .commit();
             timeBar.setMax((int) time);
         }
@@ -111,8 +133,7 @@ public class GameActivity extends AppCompatActivity {
     };
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         engine.stopCurrentGame();
         super.onBackPressed();
     }

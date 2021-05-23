@@ -41,4 +41,8 @@
     <string name="persHighscore">0</string>
 
     <string name="challenge_cover_light_sensor">Cover light sensor!</string>
+
+    <!-- Button Cheating -->
+    <string name="cheatButton">Cheat</string>
+    <string name="detectButton">Detect cheat</string>
 </resources>
