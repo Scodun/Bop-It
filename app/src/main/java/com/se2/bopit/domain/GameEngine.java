@@ -16,6 +16,7 @@ public class GameEngine {
     boolean miniGameLost = false;
     boolean lifecycleCancel = false;
     CountDownTimer timer;
+    private long timeRemaining;
 
     MiniGamesProvider miniGamesProvider;
     PlatformFeaturesProvider platformFeaturesProvider;
@@ -82,9 +83,18 @@ public class GameEngine {
                 .start();
     }
 
+    public void pauseCountDown() {
+        timer.cancel();
+    }
+
+    public void resumeCountDown(){
+        timer = startCountDown(timeRemaining);
+    }
+
     public void onTick(long millisUntilFinished) {
         if (listener != null)
             listener.onTimeTick(millisUntilFinished);
+        timeRemaining = millisUntilFinished;
     }
 
     public void onFinish() {
