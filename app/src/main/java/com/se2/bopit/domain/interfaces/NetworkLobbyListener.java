@@ -2,7 +2,7 @@ package com.se2.bopit.domain.interfaces;
 
 import java.util.ArrayList;
 
-public interface NetworkListener {
+public interface NetworkLobbyListener {
 
     void onError(String error);
 
@@ -15,4 +15,8 @@ public interface NetworkListener {
     void onEndpointConnected(String id, ArrayList<String> names);
 
     void onUserLobbyChange(ArrayList<String> users);
+
+    void onGameStart(ArrayList<String> users);
+
+    void onGameCountdownStart();
 }

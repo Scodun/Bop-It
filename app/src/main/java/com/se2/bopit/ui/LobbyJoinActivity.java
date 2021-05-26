@@ -2,22 +2,21 @@ package com.se2.bopit.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.github.javafaker.Faker;
 import com.se2.bopit.R;
 import com.se2.bopit.data.NearbyDataProvider;
-import com.se2.bopit.domain.interfaces.NetworkListener;
+import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
+import com.se2.bopit.ui.helpers.CustomToast;
 
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 
 public class LobbyJoinActivity extends BaseActivity {
@@ -28,8 +27,9 @@ public class LobbyJoinActivity extends BaseActivity {
     private final ArrayList<String> userItems = new ArrayList<>();
     private String endpointId;
     private ListView lobbyUserList;
-    private static final String MYPREF = "myCustomSharedPref";
-    private static final String PREF_KEY_NAME = "name";
+    private Context context;
+    private static int countdown;
+    static ScheduledFuture<?> countdownFuture;
 
     private ArrayAdapter<String> endPointAdapter;
     private ArrayAdapter<String> userAdapter;
@@ -51,12 +51,14 @@ public class LobbyJoinActivity extends BaseActivity {
         lobbyUserList.setAdapter(userAdapter);
         openEndpointsList.setOnItemClickListener((arg0, arg1, position, arg3) -> dp.connectToEndpoint(endpointId));
 
+        context = this;
+
         Intent intent = getIntent();
-        dp = new NearbyDataProvider(this, networkListener,  intent.getStringExtra("username"));
+        dp = new NearbyDataProvider(this, networkListener, intent.getStringExtra("username"));
         dp.startDiscovery();
     }
 
-    private final NetworkListener networkListener = new NetworkListener() {
+    private final NetworkLobbyListener networkListener = new NetworkLobbyListener() {
 
         @Override
         public void onError(String error) {
@@ -89,6 +91,28 @@ public class LobbyJoinActivity extends BaseActivity {
                 userAdapter.notifyDataSetChanged();
             }
         }
+
+        @Override
+        public void onGameStart(ArrayList<String> users) {
+
+        }
+
+        @Override
+        public void onGameCountdownStart() {
+            LobbyJoinActivity.countdown = 3;
+            Runnable countdownRunnable = () -> {
+                runOnUiThread(
+                        () -> {
+                            CustomToast.showToast(String.valueOf(LobbyJoinActivity.countdown), context);
+                            LobbyJoinActivity.countdown--;
+                            if (LobbyJoinActivity.countdown <= 0)
+                                countdownFuture.cancel(false);
+                        });
+            };
+            ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+            countdownFuture = executor.scheduleAtFixedRate(countdownRunnable, 0, 1, TimeUnit.SECONDS);
+        }
+
 
         @Override
         public void onGameInformationReceived(String data) {

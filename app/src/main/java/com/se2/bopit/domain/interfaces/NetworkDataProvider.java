@@ -9,5 +9,7 @@ public interface NetworkDataProvider {
 
     void startAdvertising();
 
-    void setListener(NetworkListener listener);
+    void setListener(NetworkGameListener listener);
+
+    void setListener(NetworkLobbyListener listener);
 }
