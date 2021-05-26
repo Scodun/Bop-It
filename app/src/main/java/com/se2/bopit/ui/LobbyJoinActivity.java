@@ -1,6 +1,7 @@
 package com.se2.bopit.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,27 +41,18 @@ public class LobbyJoinActivity extends AppCompatActivity {
 
         openEndpointsList = findViewById(R.id.openEndpointLists);
         lobbyUserList = findViewById(R.id.userList);
-        endPointAdapter = new ArrayAdapter<String>(this,
+        endPointAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
                 endpointItems);
-        userAdapter = new ArrayAdapter<String>(this,
+        userAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
                 userItems);
         openEndpointsList.setAdapter(endPointAdapter);
         lobbyUserList.setAdapter(userAdapter);
-        openEndpointsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-                dp.connectToEndpoint(endpointId);
-            }
-        });
+        openEndpointsList.setOnItemClickListener((arg0, arg1, position, arg3) -> dp.connectToEndpoint(endpointId));
 
-        SharedPreferences customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
-        String username = customSharedPreferences.getString(PREF_KEY_NAME, "");
-        if (username.equals("")) {
-            username = new Faker().lordOfTheRings().character();
-        }
-        dp = new NearbyDataProvider(this, networkListener, username);
+        Intent intent = getIntent();
+        dp = new NearbyDataProvider(this, networkListener,  intent.getStringExtra("username"));
         dp.startDiscovery();
     }
 

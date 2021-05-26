@@ -1,6 +1,7 @@
 package com.se2.bopit.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,8 +23,6 @@ public class LobbyHostActivity extends AppCompatActivity {
     private NearbyDataProvider dp;
     private final ArrayList<String> userItems = new ArrayList<>();
     private ListView lobbyUserList;
-    private static final String MYPREF = "myCustomSharedPref";
-    private static final String PREF_KEY_NAME = "name";
 
     private ArrayAdapter<String> userAdapter;
 
@@ -38,12 +37,8 @@ public class LobbyHostActivity extends AppCompatActivity {
                 userItems);
         lobbyUserList.setAdapter(userAdapter);
 
-        SharedPreferences customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
-        String username = customSharedPreferences.getString(PREF_KEY_NAME, "");
-        if (username.equals("")) {
-            username = new Faker().lordOfTheRings().character();
-        }
-        dp = new NearbyDataProvider(this, networkListener, username);
+        Intent intent = getIntent();
+        dp = new NearbyDataProvider(this, networkListener,  intent.getStringExtra("username"));
         dp.startAdvertising();
     }
 
