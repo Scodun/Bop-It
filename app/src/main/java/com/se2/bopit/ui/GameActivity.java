@@ -12,9 +12,11 @@ import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
 import com.se2.bopit.domain.GameEngine;
+import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.SoundEffects;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.ui.providers.GameEngineProvider;
 import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
 import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
@@ -24,6 +26,8 @@ import java.util.Random;
 
 public class GameActivity extends BaseActivity {
 
+    public static final String GAME_MODE = "gameMode";
+
     //views
     ProgressBar timeBar;
     TextView scoreView;
@@ -32,9 +36,11 @@ public class GameActivity extends BaseActivity {
     GameEngine engine;
     boolean gameEnd = false;
 
+    GameMode gameMode;
+
     // providers
-    MiniGamesRegistry miniGamesProvider = MiniGamesRegistry.getInstance();
-    AndroidPlatformFeaturesProvider platformFeaturesProvider = new AndroidPlatformFeaturesProvider();
+    //MiniGamesRegistry miniGamesProvider = MiniGamesRegistry.getInstance();
+    //AndroidPlatformFeaturesProvider platformFeaturesProvider = new AndroidPlatformFeaturesProvider();
 
     // shared preferences
     private static final String MYPREF = "myCustomSharedPref";
@@ -50,10 +56,9 @@ public class GameActivity extends BaseActivity {
         scoreView = findViewById(R.id.scoreView);
 
         //start game Engine and register listeners
+        gameMode = (GameMode) getIntent().getExtras().get(GAME_MODE);
 
-        engine = new GameEngine(miniGamesProvider, platformFeaturesProvider, gameEngineListener);
-
-        engine.startNewGame();
+        engine = GameEngineProvider.getInstance().create(gameMode, gameEngineListener);
 
         rand = new Random();
         colors = new ArrayList<>(
@@ -64,6 +69,8 @@ public class GameActivity extends BaseActivity {
                         ContextCompat.getColor(this, R.color.secondary_variant_2)
                 )
         );
+
+        engine.startNewGame();
     }
 
     private final GameEngineListener gameEngineListener = new GameEngineListener() {
