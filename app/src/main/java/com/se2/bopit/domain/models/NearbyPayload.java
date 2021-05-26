@@ -5,14 +5,14 @@ import java.io.Serializable;
 /**
  * Types:
  * 0... User update (Lobby)
- *
+ * <p>
  * Payload: json string
  */
-public class NearbyPayload implements Serializable{
+public class NearbyPayload implements Serializable {
     private String payload;
     private int type;
 
-    public NearbyPayload(int type, String payload){
+    public NearbyPayload(int type, String payload) {
         this.type = type;
         this.payload = payload;
     }

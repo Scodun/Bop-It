@@ -1,7 +1,5 @@
 package com.se2.bopit.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -10,6 +8,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.javafaker.Faker;
 import com.se2.bopit.R;
@@ -23,8 +23,8 @@ public class LobbyJoinActivity extends AppCompatActivity {
 
     private NearbyDataProvider dp;
     private ListView openEndpointsList;
-    private ArrayList<String> endpointItems= new ArrayList<>();
-    private ArrayList<String> userItems = new ArrayList<>();
+    private final ArrayList<String> endpointItems = new ArrayList<>();
+    private final ArrayList<String> userItems = new ArrayList<>();
     private String endpointId;
     private ListView lobbyUserList;
     private static final String MYPREF = "myCustomSharedPref";
@@ -40,10 +40,10 @@ public class LobbyJoinActivity extends AppCompatActivity {
 
         openEndpointsList = findViewById(R.id.openEndpointLists);
         lobbyUserList = findViewById(R.id.userList);
-        endPointAdapter=new ArrayAdapter<String>(this,
+        endPointAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 endpointItems);
-        userAdapter=new ArrayAdapter<String>(this,
+        userAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 userItems);
         openEndpointsList.setAdapter(endPointAdapter);
@@ -57,10 +57,10 @@ public class LobbyJoinActivity extends AppCompatActivity {
 
         SharedPreferences customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         String username = customSharedPreferences.getString(PREF_KEY_NAME, "");
-        if(username.equals("")){
-            username =  new Faker().lordOfTheRings().character();
+        if (username.equals("")) {
+            username = new Faker().lordOfTheRings().character();
         }
-        dp = new NearbyDataProvider(this, networkListener,username);
+        dp = new NearbyDataProvider(this, networkListener, username);
         dp.startDiscovery();
     }
 
@@ -78,20 +78,20 @@ public class LobbyJoinActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onEndpointDiscovered(String id, String name){
-            endpointId=id;
+        public void onEndpointDiscovered(String id, String name) {
+            endpointId = id;
             endpointItems.add(name);
             endPointAdapter.notifyDataSetChanged();
         }
 
         @Override
-        public void onEndpointConnected(String id, ArrayList<String> names){
+        public void onEndpointConnected(String id, ArrayList<String> names) {
 
         }
 
         @Override
         public void onUserLobbyChange(ArrayList<String> users) {
-            if(users!=null) {
+            if (users != null) {
                 userAdapter.clear();
                 userAdapter.addAll(users);
                 userAdapter.notifyDataSetChanged();

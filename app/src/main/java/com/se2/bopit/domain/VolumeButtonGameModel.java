@@ -1,9 +1,5 @@
 package com.se2.bopit.domain;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;

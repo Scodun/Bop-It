@@ -1,15 +1,8 @@
 package com.se2.bopit.ui;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Build;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
@@ -19,7 +12,11 @@ import android.view.animation.Animation;
 import android.view.animation.Transformation;
 import android.widget.ImageView;
 
-import androidx.annotation.RequiresApi;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
@@ -53,7 +50,7 @@ public class SplashActivity extends BaseActivity {
         getPermissions();
         checkSensors();
 
-        if(!BuildConfig.DEBUG) {
+        if (!BuildConfig.DEBUG) {
             mGoogleSignInClient = GoogleSignIn.getClient(this,
                     new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).requestId().requestProfile().build());
 
@@ -137,7 +134,7 @@ public class SplashActivity extends BaseActivity {
         }
     }
 
-    private void checkSensors(){
+    private void checkSensors() {
         // check available games here, because this view is loaded first
         Log.d(TAG, "checking available sensors ...");
         MiniGamesRegistry registry = MiniGamesRegistry.getInstance();

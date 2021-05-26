@@ -4,10 +4,7 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.os.CountDownTimer;
-
-import androidx.annotation.RequiresApi;
 
 import com.se2.bopit.domain.interfaces.SensorEventModelListener;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;

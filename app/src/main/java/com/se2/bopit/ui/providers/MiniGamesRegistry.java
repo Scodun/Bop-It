@@ -2,10 +2,7 @@ package com.se2.bopit.ui.providers;
 
 import android.content.Context;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.util.Log;
-
-import androidx.annotation.RequiresApi;
 
 import com.se2.bopit.domain.GameRuleItemModel;
 import com.se2.bopit.domain.GameRules;

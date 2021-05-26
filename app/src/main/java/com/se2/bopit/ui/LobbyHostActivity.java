@@ -1,7 +1,5 @@
 package com.se2.bopit.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.github.javafaker.Faker;
 import com.se2.bopit.R;
@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class LobbyHostActivity extends AppCompatActivity {
 
     private NearbyDataProvider dp;
-    private ArrayList<String> userItems = new ArrayList<>();
+    private final ArrayList<String> userItems = new ArrayList<>();
     private ListView lobbyUserList;
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_NAME = "name";
@@ -33,21 +33,21 @@ public class LobbyHostActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lobby_host);
 
         lobbyUserList = findViewById(R.id.userList);
-        userAdapter=new ArrayAdapter<String>(this,
+        userAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_list_item_1,
                 userItems);
         lobbyUserList.setAdapter(userAdapter);
 
         SharedPreferences customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         String username = customSharedPreferences.getString(PREF_KEY_NAME, "");
-        if(username.equals("")){
-            username =  new Faker().lordOfTheRings().character();
+        if (username.equals("")) {
+            username = new Faker().lordOfTheRings().character();
         }
-        dp = new NearbyDataProvider(this, networkListener,username);
+        dp = new NearbyDataProvider(this, networkListener, username);
         dp.startAdvertising();
     }
 
-    public void onStartClick(View view){
+    public void onStartClick(View view) {
 
     }
 
@@ -65,18 +65,18 @@ public class LobbyHostActivity extends AppCompatActivity {
         }
 
         @Override
-        public void onEndpointDiscovered(String id, String name){
+        public void onEndpointDiscovered(String id, String name) {
             //Listener for Endpoint Discovered
         }
 
         @Override
-        public void onEndpointConnected(String id, ArrayList<String> names){
+        public void onEndpointConnected(String id, ArrayList<String> names) {
             //Listener for Endpoint Connection
         }
 
         @Override
         public void onUserLobbyChange(ArrayList<String> users) {
-            if(users!=null) {
+            if (users != null) {
                 userAdapter.clear();
                 userAdapter.addAll(users);
                 userAdapter.notifyDataSetChanged();
