@@ -20,6 +20,8 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.se2.bopit.domain.interfaces.NetworkDataProvider;
 import com.se2.bopit.domain.interfaces.NetworkListener;
+import com.se2.bopit.domain.models.NearbyPayload;
+import com.se2.bopit.domain.models.User;
 
 
 import java.io.Serializable;
@@ -34,7 +36,7 @@ public class NearbyDataProvider implements NetworkDataProvider {
     private static final String SERVICE_ID = "120001";
     private final Context context;
     private NetworkListener listener;
-    private List<Device> connectedDevices = new ArrayList<Device>();
+    private List<User> connectedUsers = new ArrayList<User>();
     private boolean isHost = false;
     private String username;
 
@@ -99,7 +101,7 @@ public class NearbyDataProvider implements NetworkDataProvider {
                 public void onConnectionInitiated(String endpointId, ConnectionInfo connectionInfo) {
                     // Automatically accept the connection on both sides.
                     if(connectionInfo.isIncomingConnection())
-                        connectedDevices.add(new Device(endpointId,connectionInfo.getEndpointName()));
+                        connectedUsers.add(new User(endpointId,connectionInfo.getEndpointName()));
                     Nearby.getConnectionsClient(context).acceptConnection(endpointId, mPayloadCallback);
 
                 }
@@ -136,7 +138,7 @@ public class NearbyDataProvider implements NetworkDataProvider {
             final byte[] receivedBytes = payload.asBytes();
             if(receivedBytes!=null){
                 Gson gson = new Gson();
-                PayloadObject po = gson.fromJson(new String(receivedBytes), PayloadObject.class);
+                NearbyPayload po = gson.fromJson(new String(receivedBytes), NearbyPayload.class);
                 Type type = new TypeToken<List<String>>() {}.getType();
                 if(po.type==0)
                     listener.onUserLobbyChange(gson.fromJson(po.payload, type));
@@ -183,47 +185,19 @@ public class NearbyDataProvider implements NetworkDataProvider {
     }
 
     private void sendOnlinePlayers(){
-        List<String> devices = new ArrayList<>();
+        List<String> users = new ArrayList<>();
         ArrayList<String> deviceNames = new ArrayList<>();
         deviceNames.add(username + " (host)");
-        for(Device connected:connectedDevices){
-            devices.add(connected.id);
+        for(User connected:connectedUsers){
+            users.add(connected.id);
             deviceNames.add(connected.name);
         }
         Gson gson = new Gson();
 
         listener.onUserLobbyChange(deviceNames);
 
-        Payload bytesPayload = Payload.fromBytes(gson.toJson(new PayloadObject(0,gson.toJson(deviceNames))).getBytes());
-        Nearby.getConnectionsClient(context).sendPayload(devices, bytesPayload);
+        Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(0,gson.toJson(deviceNames))).getBytes());
+        Nearby.getConnectionsClient(context).sendPayload(users, bytesPayload);
     }
-
-    private class Device implements Serializable {
-        private String id;
-        private String name;
-        public Device(String id, String name){
-            this.id=id;
-            this.name=name;
-        }
-
-        @Override
-        public String toString() {
-            return "Device{" +
-                    "id='" + id + '\'' +
-                    ", name='" + name + '\'' +
-                    '}';
-        }
-    }
-
-    private class PayloadObject implements Serializable {
-        String payload;
-        int type;
-
-        public PayloadObject(int type, String payload){
-            this.type = type;
-            this.payload = payload;
-        }
-    }
-
 
 }
