@@ -12,7 +12,8 @@ public class MiniGameFragment<M extends GameModel<?>> extends Fragment implement
 
     protected M gameModel;
 
-    protected MiniGameFragment() {}
+    protected MiniGameFragment() {
+    }
 
     protected MiniGameFragment(M gameModel) {
         this.gameModel = gameModel;

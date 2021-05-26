@@ -11,7 +11,7 @@ import com.se2.bopit.R;
 public class SoundEffects {
 
     private AudioAttributes audioAttributes;
-    private SoundPool soundPool;
+    private final SoundPool soundPool;
     private int effectSound;
     private static final int MAX_STREAMS = 2;
 

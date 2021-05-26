@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 public class CoverLightSensorMiniGameModelTest {
 
     CoverLightSensorMiniGameModel model;
+
     @Before
     public void setUp() throws Exception {
         model = new CoverLightSensorMiniGameModel();
@@ -20,6 +21,7 @@ public class CoverLightSensorMiniGameModelTest {
                 CoverLightSensorMiniGameModel.SENSOR_TYPE,
                 CoverLightSensorMiniGameModel.THRESHOLD)));
     }
+
     @Test
     public void checkResponseBelowThreshold() {
         assertTrue(model.checkResponse(new SensorResponseModel(

@@ -1,9 +1,5 @@
 package com.se2.bopit.ui;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -12,6 +8,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.games.Games;
 import com.se2.bopit.BuildConfig;
@@ -19,7 +18,7 @@ import com.se2.bopit.R;
 
 import java.util.Objects;
 
-public class WinLossActivity extends AppCompatActivity {
+public class WinLossActivity extends BaseActivity {
     private Button bu_return;
     private Button bu_share;
     private Button bu_leaderboard;

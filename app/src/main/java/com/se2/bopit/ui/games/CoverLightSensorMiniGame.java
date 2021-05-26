@@ -12,6 +12,7 @@ import androidx.annotation.Nullable;
 
 import com.se2.bopit.R;
 import com.se2.bopit.domain.CoverLightSensorMiniGameModel;
+import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.annotations.RequireSensor;
 import com.se2.bopit.ui.SensorMiniGameFragment;
 
@@ -31,6 +32,7 @@ public class CoverLightSensorMiniGame extends SensorMiniGameFragment<CoverLightS
         imageView.setImageResource(R.drawable.solar_eclipse);
         TextView messageText = view.findViewById(R.id.actionText);
         messageText.setText(R.string.challenge_cover_light_sensor);
+        new TextToSpeech().sayText("Dark!", this.getContext());
 
         return view;
     }

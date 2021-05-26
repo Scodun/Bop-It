@@ -1,6 +1,5 @@
 package com.se2.bopit.ui;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
@@ -8,8 +7,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 
@@ -22,8 +19,7 @@ import java.util.Comparator;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
-@RequiresApi(api = Build.VERSION_CODES.R)
-public class CustomizeGameRulesActivity extends AppCompatActivity {
+public class CustomizeGameRulesActivity extends BaseActivity {
 
     private static final String TAG = CustomizeGameRulesActivity.class.getSimpleName();
 
@@ -77,7 +73,7 @@ public class CustomizeGameRulesActivity extends AppCompatActivity {
             SwitchCompat sw = createSwitchControl(template);
 
             sw.setText(item.name);
-            if(item.available) {
+            if (item.available) {
                 sw.setChecked(item.enabled);
             } else {
                 sw.setChecked(false);
@@ -97,7 +93,7 @@ public class CustomizeGameRulesActivity extends AppCompatActivity {
 
     boolean menuItemOnClick(MenuItem item) {
         Log.d(TAG, "options item selected: " + item.getItemId());
-        if(item.getItemId() == R.id.action_revert) {
+        if (item.getItemId() == R.id.action_revert) {
             revertToDefault();
             return true;
         }
@@ -117,6 +113,6 @@ public class CustomizeGameRulesActivity extends AppCompatActivity {
 
     void applyModel() {
         switchAvoidRepeatingTypes.setSelected(model.avoidRepeatingGameTypes);
-        uiModelsMap.forEach((k,v) -> k.setChecked(v.enabled));
+        uiModelsMap.forEach((k, v) -> k.setChecked(v.enabled));
     }
 }

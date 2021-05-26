@@ -4,7 +4,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class RightButtonModelTest {
 
@@ -21,7 +21,7 @@ public class RightButtonModelTest {
     }
 
     @Test
-    public void labelTest(){
-        assertEquals("RIGHT",rightButtonModel.label);
+    public void labelTest() {
+        assertEquals("RIGHT", rightButtonModel.label);
     }
 }

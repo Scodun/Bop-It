@@ -1,9 +1,5 @@
 package com.se2.bopit.domain;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -19,13 +15,14 @@ public class RightButtonCombinationModel extends MultipleChoiceGameModel<RightBu
         super(challenge, correctResponse, wrongAnswers);
         this.secondCorrectResponse = secondCorrectResponse;
     }
+
     /**
      * Randomly picks two answers from a list of possible answers to initialize the first and the second correct response
      *
      * @return GameModel with two correct responses and a List with the wrong answers
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public static RightButtonCombinationModel createRandomModel(){
+
+    public static RightButtonCombinationModel createRandomModel() {
 
         List<RightButtonModel> possibleAnswers = Arrays.stream(RightButton.values())
                 .map(RightButtonModel::new)
@@ -41,19 +38,20 @@ public class RightButtonCombinationModel extends MultipleChoiceGameModel<RightBu
 
         List<RightButtonModel> wrongResponses = new ArrayList<>();
 
-        for(RightButtonModel rightButtonModel : possibleAnswers){
-            if(rightButtonModel != firstCorrectResponse && rightButtonModel != secondCorrectResponse){
+        for (RightButtonModel rightButtonModel : possibleAnswers) {
+            if (rightButtonModel != firstCorrectResponse && rightButtonModel != secondCorrectResponse) {
                 wrongResponses.add(rightButtonModel);
             }
         }
         return new RightButtonCombinationModel(
-                firstCorrectResponse.label+" "+secondCorrectResponse.label,
+                firstCorrectResponse.label + " " + secondCorrectResponse.label,
                 firstCorrectResponse,
                 secondCorrectResponse,
                 wrongResponses
         );
     }
-    public String getChallenge(){
+
+    public String getChallenge() {
         return challenge;
     }
 }

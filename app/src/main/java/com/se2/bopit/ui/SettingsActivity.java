@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
 
@@ -21,7 +20,7 @@ import com.se2.bopit.domain.services.BackgroundSoundService;
 import java.util.Objects;
 
 
-public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsActivity extends BaseActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_SOUND = "sound";
     private static final String PREF_KEY_EFFECT = "effect";
@@ -88,7 +87,6 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     }
 
     private void initializeView() {
-        toolbar = findViewById(R.id.toolbar_settings);
         textInputName = findViewById(R.id.textFieldName);
         ImageView iconSound = findViewById(R.id.iconSound);
         iconSound.setImageResource(R.drawable.ic_sound);
@@ -109,7 +107,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         Objects.requireNonNull(textInputName.getEditText()).setText(customSharedPreferences.getString(PREF_KEY_NAME, ""));
         switchSound.setChecked(customSharedPreferences.getBoolean(PREF_KEY_SOUND, true));
         switchEffect.setChecked(customSharedPreferences.getBoolean(PREF_KEY_EFFECT, true));
-        highScore.setText(String.valueOf(customSharedPreferences.getInt(PREF_KEY_SCORE,0)));
+        highScore.setText(String.valueOf(customSharedPreferences.getInt(PREF_KEY_SCORE, 0)));
     }
 
 
@@ -119,7 +117,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         editor.putString(PREF_KEY_NAME, "");
         editor.putBoolean(PREF_KEY_SOUND, true);
         editor.putBoolean(PREF_KEY_EFFECT, true);
-        editor.putInt(PREF_KEY_SCORE,0);
+        editor.putInt(PREF_KEY_SCORE, 0);
         editor.apply();
         setPrefValues();
     }
@@ -157,5 +155,11 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
             stopService(new Intent(this, BackgroundSoundService.class));
             startService(new Intent(this, BackgroundSoundService.class));
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        saveSharedPreferences();
     }
 }

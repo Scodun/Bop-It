@@ -23,66 +23,139 @@ public class PlacePhoneMiniGameTest {
 
     PlacePhoneMiniGame game;
 
+    /**
+     * sets up test class
+     */
     @Before
     public void setUp() {
         game = new PlacePhoneMiniGame();
     }
 
+    /**
+     * Tests methods isflat and hasmoved
+     * Combination: Not flat, not moved
+     */
     @Test
-    public void phoneNotFlatTEST() {
+    public void phoneNotFlatNotMovedTEST() {
 
-        float[] currentPhonePosition = {10,10,10};
-        try{
-            GameListener listener = r -> {};
+        float[] currentPhonePosition = {10, 10, 10};
+        try {
+            GameListener listener = r -> {
+            };
             game.setGameListener(listener);
+            game.setCurrent(17f);
             SensorEvent event = getSensorEvent(currentPhonePosition);
             game.onSensorChanged(event);
             Assert.assertFalse(game.getIsFlat());
+            Assert.assertFalse(game.getHasMoved());
 
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
         }
     }
-    @Test
-    public void phoneFlatTEST() {
 
-        float[] currentPhonePosition = {0,0,100};
-        try{
-            GameListener listener = r -> {};
+    /**
+     * Tests methods isflat and hasmoved
+     * Combination: Not flat, moved
+     */
+    @Test
+    public void phoneNotFlatMovedTEST() {
+
+        float[] currentPhonePosition = {10, 10, 10};
+        try {
+            GameListener listener = r -> {
+            };
             game.setGameListener(listener);
+            game.setCurrent(5.1f);
+            SensorEvent event = getSensorEvent(currentPhonePosition);
+            game.onSensorChanged(event);
+            Assert.assertFalse(game.getIsFlat());
+            Assert.assertTrue(game.getHasMoved());
+
+        } catch (Exception ex) {
+            Log.e(TAG, ex.getMessage());
+        }
+    }
+
+    /**
+     * Tests methods isflat and hasmoved
+     * Combination: flat, not moved
+     */
+    @Test
+    public void phoneFlatNotMovedTEST() {
+
+        float[] currentPhonePosition = {0, 0, 100};
+        try {
+            GameListener listener = r -> {
+            };
+            game.setGameListener(listener);
+            game.setCurrent(99f);
             SensorEvent event = getSensorEvent(currentPhonePosition);
             game.onSensorChanged(event);
             Assert.assertTrue(game.getIsFlat());
+            Assert.assertFalse(game.getHasMoved());
 
-        }
-        catch (Exception ex){
+
+        } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
         }
     }
 
+    /**
+     * Tests methods isflat and hasmoved
+     * Combination: flat, moved
+     */
+    @Test
+    public void phoneFlatAndMovedTEST() {
+
+        float[] currentPhonePosition = {0, 0, 100};
+        try {
+            GameListener listener = r -> {
+            };
+            game.setGameListener(listener);
+            game.setCurrent(15f);
+            SensorEvent event = getSensorEvent(currentPhonePosition);
+            game.onSensorChanged(event);
+            Assert.assertTrue(game.getIsFlat());
+            Assert.assertTrue(game.getHasMoved());
+
+        } catch (Exception ex) {
+            Log.e(TAG, ex.getMessage());
+        }
+    }
+
+    /**
+     * Checks exception in onsensor changed
+     */
     @Test
     public void sensorExceptionTEST() {
 
-        float[] currentPhonePosition = {0,0,100};
-        try{
-            GameListener listener = r -> {};
+        float[] currentPhonePosition = {0, 0, 100};
+        try {
+            GameListener listener = r -> {
+            };
             game.setGameListener(null);
 
             SensorEvent event = getSensorEvent(currentPhonePosition);
             game.onSensorChanged(event);
-        }
-        catch (Exception ex){
+        } catch (Exception ex) {
             fail("Unexpected exception: " + ex);
         }
     }
+
+    /**
+     * frees minigame
+     */
     @After
-    public void teardown(){
+    public void teardown() {
         game = null;
     }
 
-    private SensorEvent getSensorEvent(float[] values) throws Exception{
-        //https://stackoverflow.com/questions/34530865/how-to-mock-motionevent-and-sensorevent-for-unit-testing-in-android
+    /**
+     * Mocks a sensor event, of type accelerometer
+     * https://stackoverflow.com/questions/34530865/how-to-mock-motionevent-and-sensorevent-for-unit-testing-in-android
+     */
+    private SensorEvent getSensorEvent(float[] values) throws Exception {
         SensorEvent event = Mockito.mock(SensorEvent.class);
         Field sensorField = SensorEvent.class.getField("sensor");
         sensorField.setAccessible(true);
