@@ -2,10 +2,7 @@ package com.se2.bopit.ui.providers;
 
 import android.content.Context;
 import android.hardware.SensorManager;
-import android.os.Build;
 import android.util.Log;
-
-import androidx.annotation.RequiresApi;
 
 import com.se2.bopit.domain.GameRuleItemModel;
 import com.se2.bopit.domain.GameRules;
@@ -65,7 +62,6 @@ public class MiniGamesRegistry implements MiniGamesProvider {
         return instance;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void checkAvailability(Context context) {
         if (!availableSensorTypes.isEmpty())
             return; // already checked

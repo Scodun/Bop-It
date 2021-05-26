@@ -18,44 +18,72 @@ import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.se2.bopit.domain.interfaces.NetworkDataProvider;
-import com.se2.bopit.domain.interfaces.NetworkListener;
+import com.se2.bopit.domain.data.DataProviderStrategy;
+import com.se2.bopit.domain.interfaces.NetworkContextListener;
+import com.se2.bopit.domain.interfaces.NetworkGameListener;
+import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
+import com.se2.bopit.domain.models.NearbyPayload;
+import com.se2.bopit.domain.models.User;
 
-
-import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
 import static com.google.android.gms.nearby.connection.Strategy.P2P_STAR;
 
-public class NearbyDataProvider implements NetworkDataProvider {
+public class NearbyDataProvider extends DataProviderStrategy {
 
     private static final String SERVICE_ID = "120001";
     private final Context context;
-    private NetworkListener listener;
-    private List<Device> connectedDevices = new ArrayList<Device>();
+    private NetworkLobbyListener lobbyListener;
+    private NetworkGameListener gameListener;
+    private NetworkContextListener contextListener;
+    private final ArrayList<User> connectedUsers = new ArrayList<User>();
     private boolean isHost = false;
-    private String username;
+    private String hostEndpointId = null;
+    private final String username;
 
     private static NearbyDataProvider instance;
 
-    public NearbyDataProvider(Context context, NetworkListener networkListener, String username) {
+    public NearbyDataProvider(Context context, NetworkLobbyListener networkLobbyListener, String username) {
         this.context = context;
-        this.listener = networkListener;
+        this.lobbyListener = networkLobbyListener;
         this.username = username;
     }
 
-    public static NearbyDataProvider getInstance(Context context, NetworkListener networkListener, String username){
-        if(instance == null) {
-            instance = new NearbyDataProvider(context, networkListener, username);
+    public NearbyDataProvider(Context context, NetworkGameListener networkGameListener, String username) {
+        this.context = context;
+        this.gameListener = networkGameListener;
+        this.username = username;
+    }
+
+    public static NearbyDataProvider getInstance(Context context, NetworkLobbyListener networkLobbyListener, String username) {
+        if (instance == null) {
+            instance = new NearbyDataProvider(context, networkLobbyListener, username);
+        }
+        return instance;
+    }
+
+    public static NearbyDataProvider getInstance(Context context, NetworkGameListener networkGameListener, String username) {
+        if (instance == null) {
+            instance = new NearbyDataProvider(context, networkGameListener, username);
         }
         return instance;
     }
 
     @Override
-    public void setListener(NetworkListener listener){
-        this.listener = listener;
+    public void setListener(NetworkLobbyListener listener) {
+        this.lobbyListener = listener;
+    }
+
+    @Override
+    public void setListener(NetworkGameListener listener) {
+        this.gameListener = listener;
+    }
+
+    @Override
+    public void setListener(NetworkContextListener listener) {
+        this.contextListener = listener;
     }
 
     @Override
@@ -67,13 +95,14 @@ public class NearbyDataProvider implements NetworkDataProvider {
                         username, SERVICE_ID, connectionLifecycleCallback, advertisingOptions)
                 .addOnSuccessListener(
                         (Void unused) -> {
-                            isHost=true;
+                            isHost = true;
+                            connectedUsers.add(new User("0",username));
                             sendOnlinePlayers();
-                            listener.onStatusChange("Advertising start");
+                            lobbyListener.onStatusChange("Advertising start");
                         })
                 .addOnFailureListener(
                         (Exception e) -> {
-                            listener.onError("Advertising error");
+                            lobbyListener.onError("Advertising error");
                         });
     }
 
@@ -85,11 +114,11 @@ public class NearbyDataProvider implements NetworkDataProvider {
                 .startDiscovery(SERVICE_ID, endpointDiscoveryCallback, discoveryOptions)
                 .addOnSuccessListener(
                         (Void unused) -> {
-                            listener.onStatusChange("Discovering start");
+                            lobbyListener.onStatusChange("Discovering start");
                         })
                 .addOnFailureListener(
                         (Exception e) -> {
-                            listener.onError("Discovering error");
+                            lobbyListener.onError("Discovering error");
                         });
     }
 
@@ -98,8 +127,8 @@ public class NearbyDataProvider implements NetworkDataProvider {
                 @Override
                 public void onConnectionInitiated(String endpointId, ConnectionInfo connectionInfo) {
                     // Automatically accept the connection on both sides.
-                    if(connectionInfo.isIncomingConnection())
-                        connectedDevices.add(new Device(endpointId,connectionInfo.getEndpointName()));
+                    if (connectionInfo.isIncomingConnection())
+                        connectedUsers.add(new User(endpointId, connectionInfo.getEndpointName()));
                     Nearby.getConnectionsClient(context).acceptConnection(endpointId, mPayloadCallback);
 
                 }
@@ -108,16 +137,19 @@ public class NearbyDataProvider implements NetworkDataProvider {
                 public void onConnectionResult(String endpointId, ConnectionResolution result) {
                     switch (result.getStatus().getStatusCode()) {
                         case ConnectionsStatusCodes.STATUS_OK:
-                            if(isHost)
+                            if (isHost)
                                 sendOnlinePlayers();
+                            else
+                                hostEndpointId = endpointId;
+
                             Nearby.getConnectionsClient(context).stopDiscovery();
-                            listener.onStatusChange("Connected");
+                            lobbyListener.onStatusChange("Connected");
                             break;
                         case ConnectionsStatusCodes.STATUS_CONNECTION_REJECTED:
-                            listener.onStatusChange("Connection Refused");
+                            lobbyListener.onStatusChange("Connection Refused");
                             break;
                         case ConnectionsStatusCodes.STATUS_ERROR:
-                            listener.onError("Connection Error");
+                            lobbyListener.onError("Connection Error");
                             break;
                         default:
                             // Unknown status code
@@ -126,7 +158,9 @@ public class NearbyDataProvider implements NetworkDataProvider {
 
                 @Override
                 public void onDisconnected(String endpointId) {
-                    listener.onStatusChange("Disconnected");
+                    lobbyListener.onStatusChange("Disconnected");
+                    connectedUsers.removeIf(e -> e.getId().equals(endpointId));
+                    sendOnlinePlayers();
                 }
             };
 
@@ -134,12 +168,25 @@ public class NearbyDataProvider implements NetworkDataProvider {
         @Override
         public void onPayloadReceived(@NonNull String s, @NonNull Payload payload) {
             final byte[] receivedBytes = payload.asBytes();
-            if(receivedBytes!=null){
+            if (receivedBytes != null) {
                 Gson gson = new Gson();
-                PayloadObject po = gson.fromJson(new String(receivedBytes), PayloadObject.class);
-                Type type = new TypeToken<List<String>>() {}.getType();
-                if(po.type==0)
-                    listener.onUserLobbyChange(gson.fromJson(po.payload, type));
+                NearbyPayload po = gson.fromJson(new String(receivedBytes), NearbyPayload.class);
+                Type type = new TypeToken<List<User>>() {
+                }.getType();
+
+                switch (po.getType()) {
+                    case 0:
+                        lobbyListener.onUserLobbyChange(gson.fromJson(po.getPayload(), type));
+                        break;
+                    case 1:
+                        lobbyListener.onGameCountdownStart();
+                        break;
+                    case 2:
+                        contextListener.onGameStart(gson.fromJson(po.getPayload(), type));
+                        lobbyListener.onGameStart();
+                        break;
+
+                }
             }
 
         }
@@ -158,72 +205,87 @@ public class NearbyDataProvider implements NetworkDataProvider {
             new EndpointDiscoveryCallback() {
                 @Override
                 public void onEndpointFound(String endpointId, DiscoveredEndpointInfo info) {
-                    listener.onEndpointDiscovered(endpointId,info.getEndpointName());
+                    lobbyListener.onEndpointDiscovered(endpointId, info.getEndpointName());
                 }
 
                 @Override
                 public void onEndpointLost(String endpointId) {
-                    listener.onStatusChange("Endpoint Lost");
+                    lobbyListener.onStatusChange("Endpoint Lost");
                 }
             };
 
     @Override
-    public void connectToEndpoint(String id){
+    public void connectToEndpoint(String id) {
         Nearby.getConnectionsClient(context)
                 .requestConnection(username, id, connectionLifecycleCallback)
                 .addOnSuccessListener(
                         (Void unused) -> {
-                            listener.onStatusChange("Request Connection");
+                            lobbyListener.onStatusChange("Request Connection");
                         })
                 .addOnFailureListener(
                         (Exception e) -> {
-                            listener.onError("Request Connection Error");
+                            lobbyListener.onError("Request Connection Error");
                         });
 
     }
 
-    private void sendOnlinePlayers(){
-        List<String> devices = new ArrayList<>();
-        ArrayList<String> deviceNames = new ArrayList<>();
-        deviceNames.add(username + " (host)");
-        for(Device connected:connectedDevices){
-            devices.add(connected.id);
-            deviceNames.add(connected.name);
-        }
+    private void sendOnlinePlayers() {
         Gson gson = new Gson();
+        lobbyListener.onUserLobbyChange(connectedUsers);
 
-        listener.onUserLobbyChange(deviceNames);
-
-        Payload bytesPayload = Payload.fromBytes(gson.toJson(new PayloadObject(0,gson.toJson(deviceNames))).getBytes());
-        Nearby.getConnectionsClient(context).sendPayload(devices, bytesPayload);
+        Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(0, gson.toJson(connectedUsers))).getBytes());
+        Nearby.getConnectionsClient(context).sendPayload(getConnectedUserIds(), bytesPayload);
     }
 
-    private class Device implements Serializable {
-        private String id;
-        private String name;
-        public Device(String id, String name){
-            this.id=id;
-            this.name=name;
+    public void disconnect() {
+        if (isHost) {
+            Nearby.getConnectionsClient(context).stopAdvertising();
+            Nearby.getConnectionsClient(context).stopAllEndpoints();
+            isHost = false;
+            connectedUsers.clear();
+        } else if (hostEndpointId != null) {
+            Nearby.getConnectionsClient(context).disconnectFromEndpoint(hostEndpointId);
+            hostEndpointId = null;
+        } else {
+            Nearby.getConnectionsClient(context).stopDiscovery();
         }
+        sendOnlinePlayers();
+    }
 
-        @Override
-        public String toString() {
-            return "Device{" +
-                    "id='" + id + '\'' +
-                    ", name='" + name + '\'' +
-                    '}';
+    @Override
+    public void startGameCountdown() {
+        if (isHost) {
+            Gson gson = new Gson();
+            Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(1, null)).getBytes());
+            Nearby.getConnectionsClient(context).sendPayload(getConnectedUserIds(), bytesPayload);
+            lobbyListener.onGameCountdownStart();
+
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+                            Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(2, gson.toJson(connectedUsers))).getBytes());
+                            Nearby.getConnectionsClient(context).sendPayload(getConnectedUserIds(), bytesPayload);
+                            contextListener.onGameStart(connectedUsers);
+                            lobbyListener.onGameStart();
+                        }
+                    },
+                    3000
+            );
         }
     }
 
-    private class PayloadObject implements Serializable {
-        String payload;
-        int type;
-
-        public PayloadObject(int type, String payload){
-            this.type = type;
-            this.payload = payload;
+    private ArrayList<String> getConnectedUserIds() {
+        if (isHost) {
+            ArrayList<String> users = new ArrayList<>();
+            for (User connected : connectedUsers) {
+                if(!connected.getId().equals("0"))
+                    users.add(connected.getId());
+            }
+            return users;
         }
+        return new ArrayList<String>() {
+        };
     }
-
 
 }

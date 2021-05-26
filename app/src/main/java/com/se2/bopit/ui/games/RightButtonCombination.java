@@ -1,6 +1,5 @@
 package com.se2.bopit.ui.games;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,7 +7,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
@@ -31,7 +29,6 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     int count;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public RightButtonCombination() {
         super(R.layout.fragment_right_button_combination_game);
         rightButtonCombinationModel = RightButtonCombinationModel.createRandomModel();
