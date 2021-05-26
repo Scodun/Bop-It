@@ -1,5 +1,6 @@
 package com.se2.bopit.domain.data;
 
+import com.se2.bopit.domain.interfaces.NetworkContextListener;
 import com.se2.bopit.domain.interfaces.NetworkGameListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 
@@ -14,6 +15,8 @@ public abstract class DataProviderStrategy {
     public abstract void setListener(NetworkGameListener listener);
 
     public abstract void setListener(NetworkLobbyListener listener);
+
+    public abstract void setListener(NetworkContextListener listener);
 
     public abstract void startGameCountdown();
 

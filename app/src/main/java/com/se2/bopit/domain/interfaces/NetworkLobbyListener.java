@@ -1,5 +1,7 @@
 package com.se2.bopit.domain.interfaces;
 
+import com.se2.bopit.domain.models.User;
+
 import java.util.ArrayList;
 
 public interface NetworkLobbyListener {
@@ -14,9 +16,9 @@ public interface NetworkLobbyListener {
 
     void onEndpointConnected(String id, ArrayList<String> names);
 
-    void onUserLobbyChange(ArrayList<String> users);
+    void onUserLobbyChange(ArrayList<User> users);
 
-    void onGameStart(ArrayList<String> users);
+    void onGameStart();
 
     void onGameCountdownStart();
 }

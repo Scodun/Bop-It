@@ -1,13 +1,20 @@
 package com.se2.bopit.domain.data;
 
+import com.se2.bopit.domain.interfaces.NetworkContextListener;
 import com.se2.bopit.domain.interfaces.NetworkGameListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
+import com.se2.bopit.domain.models.User;
+
+import java.util.ArrayList;
 
 public class DataProviderContext {
     private DataProviderStrategy dataProvider;
+    protected ArrayList<User> users;
 
     public DataProviderContext(DataProviderStrategy dataProvider){
         this.dataProvider = dataProvider;
+        NetworkContextListener networkListener = u -> users = u;
+        this.dataProvider.setListener(networkListener);
     }
 
     public void setDataProvider(DataProviderStrategy dataProvider){
@@ -41,5 +48,6 @@ public class DataProviderContext {
     public void disconnect(){
         dataProvider.disconnect();
     }
+
 
 }

@@ -19,6 +19,7 @@ import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.se2.bopit.domain.data.DataProviderStrategy;
+import com.se2.bopit.domain.interfaces.NetworkContextListener;
 import com.se2.bopit.domain.interfaces.NetworkGameListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.NearbyPayload;
@@ -36,7 +37,8 @@ public class NearbyDataProvider extends DataProviderStrategy {
     private final Context context;
     private NetworkLobbyListener lobbyListener;
     private NetworkGameListener gameListener;
-    private final List<User> connectedUsers = new ArrayList<User>();
+    private NetworkContextListener contextListener;
+    private final ArrayList<User> connectedUsers = new ArrayList<User>();
     private boolean isHost = false;
     private String hostEndpointId = null;
     private final String username;
@@ -80,6 +82,11 @@ public class NearbyDataProvider extends DataProviderStrategy {
     }
 
     @Override
+    public void setListener(NetworkContextListener listener) {
+        this.contextListener = listener;
+    }
+
+    @Override
     public void startAdvertising() {
         AdvertisingOptions advertisingOptions =
                 new AdvertisingOptions.Builder().setStrategy(P2P_STAR).build();
@@ -89,6 +96,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
                 .addOnSuccessListener(
                         (Void unused) -> {
                             isHost = true;
+                            connectedUsers.add(new User("0",username));
                             sendOnlinePlayers();
                             lobbyListener.onStatusChange("Advertising start");
                         })
@@ -163,7 +171,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
             if (receivedBytes != null) {
                 Gson gson = new Gson();
                 NearbyPayload po = gson.fromJson(new String(receivedBytes), NearbyPayload.class);
-                Type type = new TypeToken<List<String>>() {
+                Type type = new TypeToken<List<User>>() {
                 }.getType();
 
                 switch (po.getType()) {
@@ -174,7 +182,8 @@ public class NearbyDataProvider extends DataProviderStrategy {
                         lobbyListener.onGameCountdownStart();
                         break;
                     case 2:
-                        lobbyListener.onGameStart(gson.fromJson(po.getPayload(), type));
+                        contextListener.onGameStart(gson.fromJson(po.getPayload(), type));
+                        lobbyListener.onGameStart();
                         break;
 
                 }
@@ -221,19 +230,11 @@ public class NearbyDataProvider extends DataProviderStrategy {
     }
 
     private void sendOnlinePlayers() {
-        List<String> users = new ArrayList<>();
-        ArrayList<String> deviceNames = new ArrayList<>();
-        deviceNames.add(username + " (host)");
-        for (User connected : connectedUsers) {
-            users.add(connected.getId());
-            deviceNames.add(connected.getName());
-        }
         Gson gson = new Gson();
+        lobbyListener.onUserLobbyChange(connectedUsers);
 
-        lobbyListener.onUserLobbyChange(deviceNames);
-
-        Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(0, gson.toJson(deviceNames))).getBytes());
-        Nearby.getConnectionsClient(context).sendPayload(users, bytesPayload);
+        Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(0, gson.toJson(connectedUsers))).getBytes());
+        Nearby.getConnectionsClient(context).sendPayload(getConnectedUserIds(), bytesPayload);
     }
 
     public void disconnect() {
@@ -258,6 +259,16 @@ public class NearbyDataProvider extends DataProviderStrategy {
             Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(1, null)).getBytes());
             Nearby.getConnectionsClient(context).sendPayload(getConnectedUserIds(), bytesPayload);
             lobbyListener.onGameCountdownStart();
+
+            new java.util.Timer().schedule(
+                    new java.util.TimerTask() {
+                        @Override
+                        public void run() {
+
+                        }
+                    },
+                    3000
+            );
         }
     }
 
@@ -265,7 +276,8 @@ public class NearbyDataProvider extends DataProviderStrategy {
         if (isHost) {
             ArrayList<String> users = new ArrayList<>();
             for (User connected : connectedUsers) {
-                users.add(connected.getId());
+                if(!connected.getId().equals("0"))
+                    users.add(connected.getId());
             }
             return users;
         }

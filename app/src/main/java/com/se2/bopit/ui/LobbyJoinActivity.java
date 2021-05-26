@@ -11,6 +11,7 @@ import com.se2.bopit.R;
 import com.se2.bopit.data.NearbyDataProvider;
 import com.se2.bopit.domain.data.DataProviderContext;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
+import com.se2.bopit.domain.models.User;
 import com.se2.bopit.ui.helpers.CustomToast;
 
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 
 public class LobbyJoinActivity extends BaseActivity {
@@ -85,16 +87,16 @@ public class LobbyJoinActivity extends BaseActivity {
         }
 
         @Override
-        public void onUserLobbyChange(ArrayList<String> users) {
+        public void onUserLobbyChange(ArrayList<User> users) {
             if (users != null) {
                 userAdapter.clear();
-                userAdapter.addAll(users);
+                userAdapter.addAll(users.stream().map(User::getName).collect(Collectors.toList()));
                 userAdapter.notifyDataSetChanged();
             }
         }
 
         @Override
-        public void onGameStart(ArrayList<String> users) {
+        public void onGameStart() {
 
         }
 
