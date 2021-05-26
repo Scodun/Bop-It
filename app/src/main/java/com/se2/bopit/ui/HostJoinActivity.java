@@ -10,6 +10,8 @@ import android.widget.EditText;
 import com.github.javafaker.Faker;
 import com.se2.bopit.R;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class HostJoinActivity extends BaseActivity {
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_NAME = "name";
@@ -26,7 +28,8 @@ public class HostJoinActivity extends BaseActivity {
         SharedPreferences customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         String username = customSharedPreferences.getString(PREF_KEY_NAME, "");
         if (username.equals("")) {
-            username = new Faker().lordOfTheRings().character();
+            Faker fk = new Faker();
+            username = StringUtils.capitalize(fk.color().name())+"_"+ StringUtils.capitalize(fk.animal().name());
         }
         userInput.setText(username);
 
