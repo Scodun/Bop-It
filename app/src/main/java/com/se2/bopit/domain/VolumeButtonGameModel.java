@@ -20,7 +20,6 @@ public class VolumeButtonGameModel extends MultipleChoiceGameModel<VolumeButtonM
      *
      * @return GameModel with the correct response and a "List" with the wrong answer
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public static VolumeButtonGameModel createRandomModel() {
 
         List<VolumeButtonModel> possibleAnswers = Arrays.stream(VolumeButton.values())

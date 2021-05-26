@@ -2,12 +2,15 @@ package com.se2.bopit.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.github.javafaker.Faker;
 import com.se2.bopit.R;
 import com.se2.bopit.data.NearbyDataProvider;
 import com.se2.bopit.domain.interfaces.NetworkListener;
@@ -19,6 +22,8 @@ public class LobbyHostActivity extends AppCompatActivity {
     private NearbyDataProvider dp;
     private ArrayList<String> userItems = new ArrayList<>();
     private ListView lobbyUserList;
+    private static final String MYPREF = "myCustomSharedPref";
+    private static final String PREF_KEY_NAME = "name";
 
     private ArrayAdapter<String> userAdapter;
 
@@ -33,8 +38,12 @@ public class LobbyHostActivity extends AppCompatActivity {
                 userItems);
         lobbyUserList.setAdapter(userAdapter);
 
-        //TODO: replace username
-        dp = new NearbyDataProvider(this, networkListener,"usernameHoster");
+        SharedPreferences customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
+        String username = customSharedPreferences.getString(PREF_KEY_NAME, "");
+        if(username.equals("")){
+            username =  new Faker().lordOfTheRings().character();
+        }
+        dp = new NearbyDataProvider(this, networkListener,username);
         dp.startAdvertising();
     }
 
@@ -79,4 +88,10 @@ public class LobbyHostActivity extends AppCompatActivity {
             Log.i("Network data", data);
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        dp.disconnect();
+    }
 }

@@ -1,8 +1,11 @@
 package com.se2.bopit.data;
 
 import android.content.Context;
+import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
@@ -24,7 +27,6 @@ import com.se2.bopit.domain.models.NearbyPayload;
 import com.se2.bopit.domain.models.User;
 
 
-import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +38,10 @@ public class NearbyDataProvider implements NetworkDataProvider {
     private static final String SERVICE_ID = "120001";
     private final Context context;
     private NetworkListener listener;
-    private List<User> connectedUsers = new ArrayList<User>();
+    private final List<User> connectedUsers = new ArrayList<User>();
     private boolean isHost = false;
-    private String username;
+    private String hostEndpointId = null;
+    private final String username;
 
     private static NearbyDataProvider instance;
 
@@ -112,6 +115,9 @@ public class NearbyDataProvider implements NetworkDataProvider {
                         case ConnectionsStatusCodes.STATUS_OK:
                             if(isHost)
                                 sendOnlinePlayers();
+                            else
+                                hostEndpointId = endpointId;
+
                             Nearby.getConnectionsClient(context).stopDiscovery();
                             listener.onStatusChange("Connected");
                             break;
@@ -129,6 +135,8 @@ public class NearbyDataProvider implements NetworkDataProvider {
                 @Override
                 public void onDisconnected(String endpointId) {
                     listener.onStatusChange("Disconnected");
+                    connectedUsers.removeIf(e -> e.getId().equals(endpointId));
+                    sendOnlinePlayers();
                 }
             };
 
@@ -140,8 +148,8 @@ public class NearbyDataProvider implements NetworkDataProvider {
                 Gson gson = new Gson();
                 NearbyPayload po = gson.fromJson(new String(receivedBytes), NearbyPayload.class);
                 Type type = new TypeToken<List<String>>() {}.getType();
-                if(po.type==0)
-                    listener.onUserLobbyChange(gson.fromJson(po.payload, type));
+                if(po.getType() == 0)
+                    listener.onUserLobbyChange(gson.fromJson(po.getPayload(), type));
             }
 
         }
@@ -189,8 +197,8 @@ public class NearbyDataProvider implements NetworkDataProvider {
         ArrayList<String> deviceNames = new ArrayList<>();
         deviceNames.add(username + " (host)");
         for(User connected:connectedUsers){
-            users.add(connected.id);
-            deviceNames.add(connected.name);
+            users.add(connected.getId());
+            deviceNames.add(connected.getName());
         }
         Gson gson = new Gson();
 
@@ -198,6 +206,22 @@ public class NearbyDataProvider implements NetworkDataProvider {
 
         Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(0,gson.toJson(deviceNames))).getBytes());
         Nearby.getConnectionsClient(context).sendPayload(users, bytesPayload);
+    }
+
+    public void disconnect() {
+        if( isHost ) {
+            Nearby.getConnectionsClient(context).stopAdvertising();
+            Nearby.getConnectionsClient(context).stopAllEndpoints();
+            isHost = false;
+            connectedUsers.clear();
+        } else if( hostEndpointId != null ){
+            Nearby.getConnectionsClient(context).disconnectFromEndpoint(hostEndpointId);
+            hostEndpointId = null;
+        }
+        else {
+            Nearby.getConnectionsClient(context).stopDiscovery();
+        }
+        sendOnlinePlayers();
     }
 
 }

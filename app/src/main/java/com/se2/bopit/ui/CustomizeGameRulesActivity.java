@@ -21,7 +21,6 @@ import java.util.Comparator;
 import java.util.IdentityHashMap;
 import java.util.Map;
 
-@RequiresApi(api = Build.VERSION_CODES.R)
 public class CustomizeGameRulesActivity extends BaseActivity {
 
     private static final String TAG = CustomizeGameRulesActivity.class.getSimpleName();

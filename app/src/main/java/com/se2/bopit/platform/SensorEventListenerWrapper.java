@@ -26,7 +26,6 @@ public class SensorEventListenerWrapper implements SensorEventListener {
         this.delegate = delegate;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public static SensorEventListenerWrapper wrap(SensorEventModelListener delegate) {
         return cache.computeIfAbsent(delegate, SensorEventListenerWrapper::new);
     }

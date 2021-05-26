@@ -65,7 +65,6 @@ public class MiniGamesRegistry implements MiniGamesProvider {
         return instance;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public void checkAvailability(Context context) {
         if (!availableSensorTypes.isEmpty())
             return; // already checked

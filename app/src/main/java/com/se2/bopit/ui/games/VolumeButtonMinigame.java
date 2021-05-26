@@ -28,7 +28,6 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
     String text;
     Boolean isCorrect;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public VolumeButtonMinigame() {
         super(R.layout.fragment_volume_button_game);
         gameModel = VolumeButtonGameModel.createRandomModel();

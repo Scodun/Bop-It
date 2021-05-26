@@ -25,7 +25,7 @@ public class RightButtonCombinationModel extends MultipleChoiceGameModel<RightBu
      *
      * @return GameModel with two correct responses and a List with the wrong answers
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     public static RightButtonCombinationModel createRandomModel() {
 
         List<RightButtonModel> possibleAnswers = Arrays.stream(RightButton.values())

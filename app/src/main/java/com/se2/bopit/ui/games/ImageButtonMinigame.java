@@ -33,7 +33,6 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
     String text;
     TextView textView;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public ImageButtonMinigame() {
         super(R.layout.fragment_image_button_game);
         imageButtonMinigameModel = ImageButtonMinigameModel.createRandomModel();

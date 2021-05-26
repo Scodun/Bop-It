@@ -40,7 +40,6 @@ public class SplashActivity extends BaseActivity {
     private ImageView waveView;
     private GoogleSignInClient mGoogleSignInClient;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -138,7 +137,6 @@ public class SplashActivity extends BaseActivity {
         }
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     private void checkSensors(){
         // check available games here, because this view is loaded first
         Log.d(TAG, "checking available sensors ...");

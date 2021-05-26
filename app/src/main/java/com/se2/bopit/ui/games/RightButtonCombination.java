@@ -31,7 +31,6 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     int count;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public RightButtonCombination() {
         super(R.layout.fragment_right_button_combination_game);
         rightButtonCombinationModel = RightButtonCombinationModel.createRandomModel();
