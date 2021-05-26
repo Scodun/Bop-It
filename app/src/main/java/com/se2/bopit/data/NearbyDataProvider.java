@@ -264,7 +264,10 @@ public class NearbyDataProvider extends DataProviderStrategy {
                     new java.util.TimerTask() {
                         @Override
                         public void run() {
-
+                            Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(2, gson.toJson(connectedUsers))).getBytes());
+                            Nearby.getConnectionsClient(context).sendPayload(getConnectedUserIds(), bytesPayload);
+                            contextListener.onGameStart(connectedUsers);
+                            lobbyListener.onGameStart();
                         }
                     },
                     3000
