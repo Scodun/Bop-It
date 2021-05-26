@@ -3,10 +3,7 @@ package com.se2.bopit.platform;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.os.Build;
 import android.util.Log;
-
-import androidx.annotation.RequiresApi;
 
 import com.se2.bopit.domain.SensorEventModel;
 import com.se2.bopit.domain.interfaces.SensorEventModelListener;
@@ -26,7 +23,6 @@ public class SensorEventListenerWrapper implements SensorEventListener {
         this.delegate = delegate;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public static SensorEventListenerWrapper wrap(SensorEventModelListener delegate) {
         return cache.computeIfAbsent(delegate, SensorEventListenerWrapper::new);
     }
