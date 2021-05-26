@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.github.javafaker.Faker;
 import com.se2.bopit.R;
 
-public class HostJoinActivity extends AppCompatActivity {
+public class HostJoinActivity extends BaseActivity {
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_NAME = "name";
     private EditText userInput;

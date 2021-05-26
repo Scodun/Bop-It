@@ -20,7 +20,7 @@ import com.se2.bopit.domain.interfaces.NetworkListener;
 import java.util.ArrayList;
 
 
-public class LobbyJoinActivity extends AppCompatActivity {
+public class LobbyJoinActivity extends BaseActivity {
 
     private NearbyDataProvider dp;
     private ListView openEndpointsList;

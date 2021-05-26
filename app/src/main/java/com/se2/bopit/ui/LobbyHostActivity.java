@@ -18,7 +18,7 @@ import com.se2.bopit.domain.interfaces.NetworkListener;
 
 import java.util.ArrayList;
 
-public class LobbyHostActivity extends AppCompatActivity {
+public class LobbyHostActivity extends BaseActivity {
 
     private NearbyDataProvider dp;
     private final ArrayList<String> userItems = new ArrayList<>();
