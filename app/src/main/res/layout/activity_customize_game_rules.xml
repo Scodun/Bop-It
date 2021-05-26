@@ -10,7 +10,7 @@
         android:id="@+id/toolbar_game_rules"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:background="@color/primary"
+        android:background="@color/darker_yellow"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:menu="@menu/customize_game_rules_menu"
         app:navigationIcon="@android:drawable/ic_menu_close_clear_cancel"
