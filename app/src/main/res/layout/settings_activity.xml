@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <TextView
@@ -13,7 +14,7 @@
         android:textColor="@color/white"
         android:paddingHorizontal="@dimen/setting_margin_divider"
         android:paddingVertical="@dimen/setting_padding_head"
-        android:background="@color/primary"
+        android:background="@color/darker_yellow"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -195,19 +196,29 @@
         android:layout_gravity="center"
         android:paddingTop="50dp">
 
-        <Button
+        <info.hoang8f.widget.FButton
             android:id="@+id/buttonReset"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/resetButton"
-            android:layout_marginRight="70dp" />
+            android:layout_marginRight="70dp"
+            android:textColor="@color/white"
+            app:fButtonColor="@color/darker_yellow"
+            fbutton:cornerRadius="100dp"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="5dp"/>
 
-        <Button
+        <info.hoang8f.widget.FButton
             android:id="@+id/buttonSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/saveButton"
-            android:layout_toRightOf="@id/buttonReset" />
+            android:layout_toRightOf="@id/buttonReset"
+            android:textColor="@color/white"
+            app:fButtonColor="@color/darker_yellow"
+            fbutton:cornerRadius="100dp"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="5dp"/>
     </RelativeLayout>
 
 
