@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.se2.bopit.R;
 import com.se2.bopit.data.NearbyDataProvider;
+import com.se2.bopit.domain.data.DataProviderContext;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.ui.helpers.CustomToast;
 
@@ -22,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 
 public class LobbyHostActivity extends BaseActivity {
 
-    private NearbyDataProvider dp;
+    private DataProviderContext dataProvider;
     private final ArrayList<String> userItems = new ArrayList<>();
     private ListView lobbyUserList;
     private Context context;
@@ -43,13 +44,14 @@ public class LobbyHostActivity extends BaseActivity {
         lobbyUserList.setAdapter(userAdapter);
         context = this;
 
+        //Set dataprovider, currently one one available
         Intent intent = getIntent();
-        dp = new NearbyDataProvider(this, networkListener, intent.getStringExtra("username"));
-        dp.startAdvertising();
+        dataProvider = new DataProviderContext(new NearbyDataProvider(this, networkListener, intent.getStringExtra("username")));
+        dataProvider.startAdvertising();
     }
 
     public void onStartClick(View view) {
-        dp.startGameCountDown();
+        dataProvider.startGameCountdown();
     }
 
     private final NetworkLobbyListener networkListener = new NetworkLobbyListener() {
@@ -114,6 +116,6 @@ public class LobbyHostActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        dp.disconnect();
+        dataProvider.disconnect();
     }
 }

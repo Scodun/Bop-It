@@ -18,7 +18,7 @@ import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.se2.bopit.domain.interfaces.NetworkDataProvider;
+import com.se2.bopit.domain.data.DataProviderStrategy;
 import com.se2.bopit.domain.interfaces.NetworkGameListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.NearbyPayload;
@@ -30,7 +30,7 @@ import java.util.List;
 
 import static com.google.android.gms.nearby.connection.Strategy.P2P_STAR;
 
-public class NearbyDataProvider implements NetworkDataProvider {
+public class NearbyDataProvider extends DataProviderStrategy {
 
     private static final String SERVICE_ID = "120001";
     private final Context context;
@@ -251,7 +251,8 @@ public class NearbyDataProvider implements NetworkDataProvider {
         sendOnlinePlayers();
     }
 
-    public void startGameCountDown() {
+    @Override
+    public void startGameCountdown() {
         if (isHost) {
             Gson gson = new Gson();
             Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(1, null)).getBytes());

@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.se2.bopit.R;
 import com.se2.bopit.data.NearbyDataProvider;
+import com.se2.bopit.domain.data.DataProviderContext;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.ui.helpers.CustomToast;
 
@@ -21,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 
 public class LobbyJoinActivity extends BaseActivity {
 
-    private NearbyDataProvider dp;
+    private DataProviderContext dataProvider;
     private ListView openEndpointsList;
     private final ArrayList<String> endpointItems = new ArrayList<>();
     private final ArrayList<String> userItems = new ArrayList<>();
@@ -49,13 +50,13 @@ public class LobbyJoinActivity extends BaseActivity {
                 userItems);
         openEndpointsList.setAdapter(endPointAdapter);
         lobbyUserList.setAdapter(userAdapter);
-        openEndpointsList.setOnItemClickListener((arg0, arg1, position, arg3) -> dp.connectToEndpoint(endpointId));
+        openEndpointsList.setOnItemClickListener((arg0, arg1, position, arg3) -> dataProvider.connectToEndpoint(endpointId));
 
         context = this;
 
         Intent intent = getIntent();
-        dp = new NearbyDataProvider(this, networkListener, intent.getStringExtra("username"));
-        dp.startDiscovery();
+        dataProvider = new DataProviderContext(new NearbyDataProvider(this, networkListener, intent.getStringExtra("username")));
+        dataProvider.startDiscovery();
     }
 
     private final NetworkLobbyListener networkListener = new NetworkLobbyListener() {
@@ -123,6 +124,6 @@ public class LobbyJoinActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        dp.disconnect();
+        dataProvider.disconnect();
     }
 }
