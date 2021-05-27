@@ -8,7 +8,7 @@ public class DrawingGameModel extends GameModel<DrawingResponseModel> {
     private static final int ERROR = 150;
 
     @Override
-    protected boolean checkResponse(DrawingResponseModel response) {
+    public boolean checkResponse(DrawingResponseModel response) {
         RectF bounds = new RectF();
         response.drawnPath.computeBounds(bounds, false);
 
