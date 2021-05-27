@@ -12,15 +12,13 @@ import static org.junit.Assert.*;
 public class SliderGameModelTest {
 
     SliderGameModel model;
-    SeekBar slider;
     SliderResponseModel response;
     GameListenerMock listener;
 
     //@BeforeEach
     public void setup() {
         model = new SliderGameModel();
-        slider = new SeekBar(null);
-        response = new SliderResponseModel(slider, 0);
+        response = new SliderResponseModel(new SeekBar(null), 0);
         listener = new GameListenerMock();
     }
 
@@ -97,7 +95,7 @@ public class SliderGameModelTest {
 
         for (int i=0; i<1000; i++) {
             int progress = SliderGameModel.generateProgress();
-            if ((1 <= progress && progress <= 6) || (10 <= progress && progress <= 14)) {
+            if (progress != 7 && progress != 8 && progress != 9) {
                 success = false;
                 break;
             }
@@ -111,8 +109,9 @@ public class SliderGameModelTest {
         boolean success = true;
 
         for (int i=0; i<1000; i++) {
-            int progress = SliderGameModel.generateTarget();
-            if (7 <= progress && progress <= 9) {
+            int target = SliderGameModel.generateTarget();
+            System.out.println(target);
+            if (target <= 0 || (7 <= target && target <= 9) || 15 <= target) {
                 success = false;
                 break;
             }
