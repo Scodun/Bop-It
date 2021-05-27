@@ -22,8 +22,10 @@
 
     <ImageButton
         android:id="@+id/customRulesButton"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_marginEnd="2dp"
+        android:background="@drawable/round_button"
         android:src="@android:drawable/ic_menu_agenda"
         app:layout_constraintBottom_toTopOf="@+id/singleplayerButton"
         app:layout_constraintEnd_toStartOf="@+id/settingsButton"
@@ -31,8 +33,9 @@
 
     <ImageButton
         android:src="@android:drawable/ic_menu_manage"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:background="@drawable/round_button"
         android:id="@+id/settingsButton"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/singleplayerButton"
