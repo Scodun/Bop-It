@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.GamemodeSelectActivity"
@@ -37,40 +38,61 @@
         app:layout_constraintBottom_toTopOf="@+id/singleplayerButton"
         app:layout_constraintEnd_toEndOf="parent" />
 
-    <Button
-        android:text="Singleplayer"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+    <info.hoang8f.widget.FButton
         android:id="@+id/singleplayerButton"
-        app:layout_constraintTop_toBottomOf="@+id/gameSelectTitle"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/localMultiplayerButton"
-        app:layout_constraintHorizontal_bias="1.0"
-        android:textStyle="bold"
-        android:textSize="32sp" />
-
-    <Button
-        android:text="Local Multiplayer"
         android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:id="@+id/localMultiplayerButton"
-        app:layout_constraintTop_toBottomOf="@+id/singleplayerButton"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/onlineMultiplayerButton"
+        android:layout_height="200dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="Singleplayer"
+        android:textColor="@color/white"
         android:textSize="32sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:fButtonColor="@color/darker_yellow"
+        app:layout_constraintBottom_toTopOf="@+id/localMultiplayerButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/gameSelectTitle"
+        fbutton:cornerRadius="100dp"
+        fbutton:shadowEnabled="true"
+        fbutton:shadowHeight="5dp"/>
 
-    <Button
-        android:text="Online Multiplayer"
+    <info.hoang8f.widget.FButton
+        android:id="@+id/localMultiplayerButton"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="Local Multiplayer"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:fButtonColor="@color/darker_yellow"
+        app:layout_constraintBottom_toTopOf="@+id/onlineMultiplayerButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/singleplayerButton"
+        fbutton:cornerRadius="100dp"
+        fbutton:shadowEnabled="true"
+        fbutton:shadowHeight="5dp"/>
+
+    <info.hoang8f.widget.FButton
         android:id="@+id/onlineMultiplayerButton"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
+        android:text="Online Multiplayer"
+        android:textColor="@color/white"
+        android:textSize="32sp"
+        android:textStyle="bold"
+        app:fButtonColor="@color/darker_yellow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/localMultiplayerButton"
-        android:textSize="32sp"
-        android:textStyle="bold" />
+        fbutton:cornerRadius="100dp"
+        fbutton:shadowEnabled="true"
+        fbutton:shadowHeight="5dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
