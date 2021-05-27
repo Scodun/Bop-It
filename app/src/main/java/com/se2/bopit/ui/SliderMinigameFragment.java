@@ -6,11 +6,10 @@ import com.se2.bopit.domain.sliderminigame.SliderResponseModel;
 
 public class SliderMinigameFragment extends MiniGameFragment<SliderGameModel>{
 
-    private static SliderGameModel gameModel;
+    public static SliderGameModel gameModel;
 
     public SliderMinigameFragment(SliderGameModel gameModel) {
         super(gameModel);
-        SliderMinigameFragment.gameModel = gameModel;
     }
 
     public static SeekBar.OnSeekBarChangeListener getListener() {

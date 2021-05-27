@@ -1,24 +1,22 @@
 package com.se2.bopit.domain;
 
-import android.widget.SeekBar;
 import com.se2.bopit.domain.mock.GameListenerMock;
 import com.se2.bopit.domain.sliderminigame.SliderGameModel;
 import com.se2.bopit.domain.sliderminigame.SliderResponseModel;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 
 public class SliderGameModelTest {
 
     SliderGameModel model;
-    SliderResponseModel response;
     GameListenerMock listener;
 
     //@BeforeEach
     public void setup() {
         model = new SliderGameModel();
-        response = new SliderResponseModel(new SeekBar(null), 0);
         listener = new GameListenerMock();
     }
 
@@ -26,7 +24,7 @@ public class SliderGameModelTest {
     public void testCheckResponseCorrect() {
         setup();
 
-        response.progress = model.target;
+        SliderResponseModel response = new SliderResponseModel(null, model.target);
 
         assertTrue(model.checkResponse(response));
     }
@@ -35,7 +33,7 @@ public class SliderGameModelTest {
     public void testCheckResponseIncorrect() {
         setup();
 
-        response.progress = model.target + 1;
+        SliderResponseModel response = new SliderResponseModel(null, model.target + 1);
 
         assertFalse(model.checkResponse(response));
     }
@@ -44,7 +42,7 @@ public class SliderGameModelTest {
     public void testHandleResponseCorrect() {
         setup();
 
-        response.progress = model.target;
+        SliderResponseModel response = new SliderResponseModel(null, model.target);
 
         model.setGameListener(listener);
 
@@ -55,7 +53,7 @@ public class SliderGameModelTest {
     public void testHandleResponseIncorrect() {
         setup();
 
-        response.progress = model.target + 1;
+        SliderResponseModel response = new SliderResponseModel(null, model.target + 1);
 
         model.setGameListener(listener);
 
@@ -66,7 +64,7 @@ public class SliderGameModelTest {
     public void testHandleResponseListenerValueCorrect() {
         setup();
 
-        response.progress = model.target;
+        SliderResponseModel response = new SliderResponseModel(null, model.target);
 
         model.setGameListener(listener);
 
@@ -79,7 +77,7 @@ public class SliderGameModelTest {
     public void testHandleResponseListenerValueIncorrect() {
         setup();
 
-        response.progress = model.target + 1;
+        SliderResponseModel response = new SliderResponseModel(null, model.target + 1);
 
         model.setGameListener(listener);
 

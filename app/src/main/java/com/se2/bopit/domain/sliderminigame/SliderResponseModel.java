@@ -5,8 +5,8 @@ import com.se2.bopit.domain.ResponseModel;
 
 public class SliderResponseModel extends ResponseModel {
 
-    public SeekBar slider;
-    public int progress;
+    public final SeekBar slider;
+    public final int progress;
 
     public SliderResponseModel(SeekBar slider, int progress) {
         this.slider = slider;

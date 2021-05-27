@@ -15,8 +15,11 @@ import com.se2.bopit.ui.SliderMinigameFragment;
 
 public class SliderMinigame extends SliderMinigameFragment {
 
+    static SliderGameModel gameModel = new SliderGameModel();
+
     public SliderMinigame() {
-        super(new SliderGameModel());
+        super(gameModel);
+        SliderMinigameFragment.gameModel = gameModel;
     }
 
     @Override
