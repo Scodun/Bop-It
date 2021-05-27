@@ -5,10 +5,11 @@ import android.widget.SeekBar;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
 import com.se2.bopit.domain.sliderminigame.SliderGameModel;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotEquals;
 
 @RunWith(AndroidJUnit4.class)
 public class SliderGameModelInstrumentedTest {
@@ -16,7 +17,7 @@ public class SliderGameModelInstrumentedTest {
     Context appContext;
     SliderGameModel model;
 
-    //@BeforeEach
+    @Before
     public void setup() {
         model = new SliderGameModel();
         appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -24,8 +25,6 @@ public class SliderGameModelInstrumentedTest {
 
     @Test
     public void testSetupSliderProgress() {
-        setup();
-
         SeekBar slider = new SeekBar(appContext);
 
         SliderGameModel.setupSlider(slider);

@@ -3,6 +3,7 @@ package com.se2.bopit.domain;
 import com.se2.bopit.domain.mock.GameListenerMock;
 import com.se2.bopit.domain.sliderminigame.SliderGameModel;
 import com.se2.bopit.domain.sliderminigame.SliderResponseModel;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertFalse;
@@ -14,7 +15,7 @@ public class SliderGameModelTest {
     SliderGameModel model;
     GameListenerMock listener;
 
-    //@BeforeEach
+    @Before
     public void setup() {
         model = new SliderGameModel();
         listener = new GameListenerMock();
@@ -22,8 +23,6 @@ public class SliderGameModelTest {
 
     @Test
     public void testCheckResponseCorrect() {
-        setup();
-
         SliderResponseModel response = new SliderResponseModel(null, model.target);
 
         assertTrue(model.checkResponse(response));
@@ -31,8 +30,6 @@ public class SliderGameModelTest {
 
     @Test
     public void testCheckResponseIncorrect() {
-        setup();
-
         SliderResponseModel response = new SliderResponseModel(null, model.target + 1);
 
         assertFalse(model.checkResponse(response));
@@ -40,8 +37,6 @@ public class SliderGameModelTest {
 
     @Test
     public void testHandleResponseCorrect() {
-        setup();
-
         SliderResponseModel response = new SliderResponseModel(null, model.target);
 
         model.setGameListener(listener);
@@ -51,8 +46,6 @@ public class SliderGameModelTest {
 
     @Test
     public void testHandleResponseIncorrect() {
-        setup();
-
         SliderResponseModel response = new SliderResponseModel(null, model.target + 1);
 
         model.setGameListener(listener);
@@ -62,8 +55,6 @@ public class SliderGameModelTest {
 
     @Test
     public void testHandleResponseListenerValueCorrect() {
-        setup();
-
         SliderResponseModel response = new SliderResponseModel(null, model.target);
 
         model.setGameListener(listener);
@@ -75,8 +66,6 @@ public class SliderGameModelTest {
 
     @Test
     public void testHandleResponseListenerValueIncorrect() {
-        setup();
-
         SliderResponseModel response = new SliderResponseModel(null, model.target + 1);
 
         model.setGameListener(listener);

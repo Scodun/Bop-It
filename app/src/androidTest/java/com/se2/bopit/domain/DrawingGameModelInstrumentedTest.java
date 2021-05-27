@@ -8,6 +8,7 @@ import androidx.test.platform.app.InstrumentationRegistry;
 import com.se2.bopit.domain.drawingminigame.DrawingGameModel;
 import com.se2.bopit.domain.drawingminigame.DrawingResponseModel;
 import com.se2.bopit.domain.mock.GameListenerMock;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -22,7 +23,7 @@ public class DrawingGameModelInstrumentedTest {
     Context appContext;
     DrawingGameModel model;
 
-    //@BeforeEach
+    @Before
     public void setup() {
         model = new DrawingGameModel();
         appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
@@ -30,8 +31,6 @@ public class DrawingGameModelInstrumentedTest {
 
     @Test
     public void testCheckResponseExactPath() {
-        setup();
-
         Bitmap square = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.RGB_565);
 
         DrawingResponseModel response = new DrawingResponseModel(square, getSquarePath(bitmapSize));
@@ -41,8 +40,6 @@ public class DrawingGameModelInstrumentedTest {
 
     @Test
     public void testCheckResponseMaxPath() {
-        setup();
-
         Bitmap square = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.RGB_565);
 
         DrawingResponseModel response = new DrawingResponseModel(square, getSquarePath(bitmapSize + error));
@@ -52,8 +49,6 @@ public class DrawingGameModelInstrumentedTest {
 
     @Test
     public void testCheckPathMinPath() {
-        setup();
-
         Bitmap square = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.RGB_565);
 
         DrawingResponseModel response = new DrawingResponseModel(square, getSquarePath(bitmapSize-error));
@@ -63,8 +58,6 @@ public class DrawingGameModelInstrumentedTest {
 
     @Test
     public void testCheckPathTooSmallPath() {
-        setup();
-
         Bitmap square = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.RGB_565);
 
         DrawingResponseModel response = new DrawingResponseModel(square, getSquarePath(bitmapSize-error-1));
@@ -74,8 +67,6 @@ public class DrawingGameModelInstrumentedTest {
 
     @Test
     public void testCheckPathTooBigPath() {
-        setup();
-
         Bitmap square = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.RGB_565);
 
         DrawingResponseModel response = new DrawingResponseModel(square, getSquarePath(bitmapSize+error+1));
@@ -85,8 +76,6 @@ public class DrawingGameModelInstrumentedTest {
 
     @Test
     public void testHandleResponseCorrect() {
-        setup();
-
         Bitmap square = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.RGB_565);
 
         DrawingResponseModel response = new DrawingResponseModel(square, getSquarePath(bitmapSize));
@@ -102,8 +91,6 @@ public class DrawingGameModelInstrumentedTest {
 
     @Test
     public void testHandleResponseIncorrect() {
-        setup();
-
         Bitmap square = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.RGB_565);
 
         DrawingResponseModel response = new DrawingResponseModel(square, getSquarePath(bitmapSize-error-1));
