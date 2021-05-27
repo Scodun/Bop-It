@@ -1,9 +1,5 @@
 package com.se2.bopit.domain;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -14,12 +10,12 @@ public class VolumeButtonGameModel extends MultipleChoiceGameModel<VolumeButtonM
     protected VolumeButtonGameModel(String challenge, VolumeButtonModel correctResponse, List<VolumeButtonModel> wrongResponses) {
         super(challenge, correctResponse, wrongResponses);
     }
+
     /**
      * Randomly picks an answers from a list of possible answers to initialize the correct response
      *
      * @return GameModel with the correct response and a "List" with the wrong answer
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public static VolumeButtonGameModel createRandomModel() {
 
         List<VolumeButtonModel> possibleAnswers = Arrays.stream(VolumeButton.values())
@@ -30,7 +26,7 @@ public class VolumeButtonGameModel extends MultipleChoiceGameModel<VolumeButtonM
 
         VolumeButtonModel correctResponse = possibleAnswers.get(0);
 
-        List<VolumeButtonModel> wrongResponses = possibleAnswers.subList(1,possibleAnswers.size());
+        List<VolumeButtonModel> wrongResponses = possibleAnswers.subList(1, possibleAnswers.size());
 
         return new VolumeButtonGameModel(
                 String.format("Press volume %s", correctResponse.label),
@@ -38,7 +34,8 @@ public class VolumeButtonGameModel extends MultipleChoiceGameModel<VolumeButtonM
                 wrongResponses);
 
     }
-    public String getChallenge(){
+
+    public String getChallenge() {
         return challenge;
     }
 }

@@ -1,16 +1,22 @@
 package com.se2.bopit.ui.games;
 
-import android.graphics.*;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Path;
+import android.graphics.RectF;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import com.se2.bopit.R;
+import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.ui.DrawTouchPathCanvas;
@@ -41,6 +47,7 @@ public class DrawingMinigame extends Fragment implements MiniGame {
 
         TextView messageText = view.findViewById(R.id.messageText);
         messageText.setText("Trace the Shape");
+        new TextToSpeech().sayText("Trace the Shape!", this.getContext());
 
         Collections.shuffle(possibleAnswersResourceIds);
 

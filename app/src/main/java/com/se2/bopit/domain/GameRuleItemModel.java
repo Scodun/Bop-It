@@ -32,7 +32,7 @@ public class GameRuleItemModel {
     }
 
     boolean isEnabledByDefault() {
-        if(!available)
+        if (!available)
             return false;
         MiniGameType miniGameType = type.getAnnotation(MiniGameType.class);
         return miniGameType != null ? miniGameType.enableByDefault() : MiniGameType.DEFAULT_ENABLED;
@@ -41,11 +41,11 @@ public class GameRuleItemModel {
     static String extractTypeName(Class<?> type) {
         MiniGameType miniGameType = type.getAnnotation(MiniGameType.class);
         String name = null;
-        if(miniGameType != null && !MiniGameType.DEFAULT_NAME.equals(miniGameType.name())) {
+        if (miniGameType != null && !MiniGameType.DEFAULT_NAME.equals(miniGameType.name())) {
             name = miniGameType.name();
         }
         // process default name
-        if(name == null) {
+        if (name == null) {
             name = type.getSimpleName();
             name = removeSuffixes(name);
             name = removePrefixes(name);

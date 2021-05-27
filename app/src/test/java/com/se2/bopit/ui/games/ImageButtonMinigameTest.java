@@ -15,9 +15,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
-
-import static org.mockito.Mockito.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.mockito.Mockito.mock;
 
 public class ImageButtonMinigameTest {
 
@@ -34,7 +34,7 @@ public class ImageButtonMinigameTest {
     Log log;
 
     @Before
-    public void setUp() throws Exception{
+    public void setUp() throws Exception {
         imageButtonMinigame = new ImageButtonMinigame();
         rightImage = new ImageButtonModel(ButtonImage.CAT);
         wrongImage = new ImageButtonModel(ButtonImage.ELEPHANT);
@@ -48,36 +48,40 @@ public class ImageButtonMinigameTest {
     }
 
     @After
-    public void tearDown() throws Exception{
+    public void tearDown() throws Exception {
         imageButtonMinigame = null;
     }
 
     @Test
     public void rightButtonIsImageButton() {
-        gameModelTest = new ImageButtonMinigameModel("Select the CAT",rightImage,wrongAnswers);
+        gameModelTest = new ImageButtonMinigameModel("Select the CAT", rightImage, wrongAnswers);
 
         imageButtonMinigame.imageButtonMinigameModel = gameModelTest;
-        assertEquals(R.id.imageButton,imageButtonMinigame.findRightButton());
+        assertEquals(R.id.imageButton, imageButtonMinigame.findRightButton());
     }
+
     @Test
     public void rightButtonIsImageButton2() {
         rightImage.image = ButtonImage.DOG;
-        gameModelTest = new ImageButtonMinigameModel("Select the DOG",rightImage,wrongAnswers);
+        gameModelTest = new ImageButtonMinigameModel("Select the DOG", rightImage, wrongAnswers);
 
         imageButtonMinigame.imageButtonMinigameModel = gameModelTest;
-        assertEquals(R.id.imageButton2,imageButtonMinigame.findRightButton());
+        assertEquals(R.id.imageButton2, imageButtonMinigame.findRightButton());
     }
+
     @Test
     public void rightButtonIsImageButton3() {
         rightImage.image = ButtonImage.ELEPHANT;
-        gameModelTest = new ImageButtonMinigameModel("Select the ELEPHANT",rightImage,wrongAnswers);
+        gameModelTest = new ImageButtonMinigameModel("Select the ELEPHANT", rightImage, wrongAnswers);
 
         imageButtonMinigame.imageButtonMinigameModel = gameModelTest;
-        assertEquals(R.id.imageButton3,imageButtonMinigame.findRightButton());
+        assertEquals(R.id.imageButton3, imageButtonMinigame.findRightButton());
     }
+
     @Test
-    public void setGameListenerTest(){
-        GameListener listener = r -> {};
+    public void setGameListenerTest() {
+        GameListener listener = r -> {
+        };
         imageButtonMinigame.setGameListener(listener);
         assertSame(listener, imageButtonMinigame.imageButtonMinigameModel.getGameListener());
     }

@@ -7,7 +7,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class ImageButtonMinigameModelTest {
 
@@ -40,6 +42,7 @@ public class ImageButtonMinigameModelTest {
 
         assertNotNull(imageButtonMinigameModel);
     }
+
     @Test
     public void rightButtonIsCAT() {
         rightImage = new ImageButtonModel(ButtonImage.CAT);
@@ -56,19 +59,19 @@ public class ImageButtonMinigameModelTest {
     }
 
     @Test
-    public void shuffleResponses(){
-    imageButtonMinigameModel = ImageButtonMinigameModel.createRandomModel();
-    wrongAnswers = imageButtonMinigameModel.responses;
-    rightImage = imageButtonMinigameModel.correctResponse;
-    wrongAnswers.remove(rightImage);
+    public void shuffleResponses() {
+        imageButtonMinigameModel = ImageButtonMinigameModel.createRandomModel();
+        wrongAnswers = imageButtonMinigameModel.responses;
+        rightImage = imageButtonMinigameModel.correctResponse;
+        wrongAnswers.remove(rightImage);
 
-    do{
-        imageButtonMinigameModelCheck = ImageButtonMinigameModel.createRandomModel();
-        wrongAnswersCheck = imageButtonMinigameModelCheck.responses;
-        rightImageCheck = imageButtonMinigameModelCheck.correctResponse;
-        wrongAnswersCheck.remove(rightImageCheck);
-    }while(rightImage.label.equals(rightImageCheck.label));
+        do {
+            imageButtonMinigameModelCheck = ImageButtonMinigameModel.createRandomModel();
+            wrongAnswersCheck = imageButtonMinigameModelCheck.responses;
+            rightImageCheck = imageButtonMinigameModelCheck.correctResponse;
+            wrongAnswersCheck.remove(rightImageCheck);
+        } while (rightImage.label.equals(rightImageCheck.label));
 
-    assertNotEquals(wrongAnswers,wrongAnswersCheck);
+        assertNotEquals(wrongAnswers, wrongAnswersCheck);
     }
 }

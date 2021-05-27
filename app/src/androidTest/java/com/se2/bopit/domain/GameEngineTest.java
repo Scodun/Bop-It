@@ -9,21 +9,25 @@ import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
 import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
-import static java.util.concurrent.TimeUnit.SECONDS;
-import static org.awaitility.Awaitility.await;
-import static org.junit.Assert.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import java.util.concurrent.Callable;
 
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+import static java.util.concurrent.TimeUnit.SECONDS;
+import static org.awaitility.Awaitility.await;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
-public class GameEngineTest  {
+public class GameEngineTest {
 
-    private boolean isGameEnd=false;
+    private boolean isGameEnd = false;
+
     @Test
     public void startNewGame() {
         getInstrumentation().runOnMainSync(() -> {
@@ -34,8 +38,8 @@ public class GameEngineTest  {
             GameEngine engine = new GameEngine(miniGamesProvider, platformFeaturesProvider, new GameEngineListener() {
                 @Override
                 public void onGameEnd(int score) {
-                    isGameEnd=true;
-                    assertEquals(0,score);
+                    isGameEnd = true;
+                    assertEquals(0, score);
                 }
 
                 @Override
@@ -46,12 +50,12 @@ public class GameEngineTest  {
                 @Override
                 public void onGameStart(MiniGame game, long time) {
                     assertNotNull(game);
-                    assertTrue(time>0);
+                    assertTrue(time > 0);
                 }
 
                 @Override
                 public void onTimeTick(long time) {
-                    assertTrue(time>0);
+                    assertTrue(time > 0);
                 }
             });
             engine.startNewGame();

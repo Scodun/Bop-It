@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
@@ -23,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class GameActivity extends AppCompatActivity {
+public class GameActivity extends BaseActivity {
 
     //views
     ProgressBar timeBar;
@@ -31,7 +30,7 @@ public class GameActivity extends AppCompatActivity {
     Random rand;
     ArrayList<Integer> colors;
     GameEngine engine;
-    boolean gameEnd=false;
+    boolean gameEnd = false;
 
     // providers
     MiniGamesRegistry miniGamesProvider = MiniGamesRegistry.getInstance();
@@ -70,8 +69,8 @@ public class GameActivity extends AppCompatActivity {
     private final GameEngineListener gameEngineListener = new GameEngineListener() {
         @Override
         public void onGameEnd(int score) {
-            if(!gameEnd) {
-                gameEnd=true;
+            if (!gameEnd) {
+                gameEnd = true;
                 if (checkPref()) {
                     new SoundEffects(getBaseContext(), 1);
                 }
@@ -99,7 +98,7 @@ public class GameActivity extends AppCompatActivity {
         public void onGameStart(MiniGame game, long time) {
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
-                    .replace(R.id.fragment_container_view, (Fragment) game , null)
+                    .replace(R.id.fragment_container_view, (Fragment) game, null)
                     .commit();
             timeBar.setMax((int) time);
         }
@@ -111,8 +110,7 @@ public class GameActivity extends AppCompatActivity {
     };
 
     @Override
-    public void onBackPressed()
-    {
+    public void onBackPressed() {
         engine.stopCurrentGame();
         super.onBackPressed();
     }

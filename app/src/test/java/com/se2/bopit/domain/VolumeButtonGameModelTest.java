@@ -7,7 +7,9 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.assertNotNull;
 
 public class VolumeButtonGameModelTest {
 
@@ -39,6 +41,7 @@ public class VolumeButtonGameModelTest {
 
         assertNotNull(gameModel);
     }
+
     @Test
     public void rightVolumeButtonIsUP() {
         wrong = new VolumeButtonModel(VolumeButton.DOWN);
@@ -54,19 +57,19 @@ public class VolumeButtonGameModelTest {
     }
 
     @Test
-    public void shuffleResponses(){
+    public void shuffleResponses() {
         gameModel = VolumeButtonGameModel.createRandomModel();
         volumeButtonModels = gameModel.responses;
         right = gameModel.correctResponse;
         volumeButtonModels.remove(right);
 
-        do{
+        do {
             gameModelCheck = VolumeButtonGameModel.createRandomModel();
             volumeButtonModelsCheck = gameModelCheck.responses;
             rightCheck = gameModelCheck.correctResponse;
             volumeButtonModelsCheck.remove(rightCheck);
-        }while(right.label.equals(rightCheck.label));
+        } while (right.label.equals(rightCheck.label));
 
-        assertNotEquals(volumeButtonModels,volumeButtonModelsCheck);
+        assertNotEquals(volumeButtonModels, volumeButtonModelsCheck);
     }
 }

@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.services.BackgroundServiceAccelerometer;
@@ -44,6 +45,7 @@ public class ShakePhoneMinigame extends Fragment implements MiniGame {
             }
         };
         intent = new Intent(getActivity(), BackgroundServiceAccelerometer.class);
+        new TextToSpeech().sayText("shake", this.getContext());
     }
 
     @Override

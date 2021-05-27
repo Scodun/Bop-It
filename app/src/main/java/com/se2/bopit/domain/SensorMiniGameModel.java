@@ -18,7 +18,7 @@ public abstract class SensorMiniGameModel extends ActionGameModel<SensorResponse
     @Override
     public void onSensorChanged(SensorEventModel sensorEvent) {
         float value = sensorEvent.values[0];
-        if(handleResponse(new SensorResponseModel(sensorType, value))) {
+        if (handleResponse(new SensorResponseModel(sensorType, value))) {
             pauseSensor();
         }
     }
@@ -29,7 +29,7 @@ public abstract class SensorMiniGameModel extends ActionGameModel<SensorResponse
     }
 
     public void pauseSensor() {
-        if(context != null) {
+        if (context != null) {
             platformFeaturesProvider.unregisterSensorListener(context, this);
         }
     }

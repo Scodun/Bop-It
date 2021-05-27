@@ -10,7 +10,9 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 
 public class VolumeButtonMinigameTest extends Fragment {
 
@@ -18,19 +20,20 @@ public class VolumeButtonMinigameTest extends Fragment {
     VolumeButtonGameModel gameModel;
 
     @Before
-    public void setUp() throws Exception{
+    public void setUp() throws Exception {
         volumeButtonMinigame = new VolumeButtonMinigame();
         gameModel = VolumeButtonGameModel.createRandomModel();
     }
 
     @After
-    public void tearDown() throws Exception{
+    public void tearDown() throws Exception {
         volumeButtonMinigame = null;
     }
 
     @Test
     public void setGameListener() {
-        GameListener listener = r -> {};
+        GameListener listener = r -> {
+        };
         volumeButtonMinigame.setGameListener(listener);
         assertSame(listener, volumeButtonMinigame.gameModel.getGameListener());
     }
@@ -40,9 +43,11 @@ public class VolumeButtonMinigameTest extends Fragment {
         volumeButtonMinigame.checkPressedKey();
         assertNull(volumeButtonMinigame.isCorrect);
     }
+
     @Test
     public void checkPressedKeyTrue() {
-        GameListener listener = r -> {};
+        GameListener listener = r -> {
+        };
         volumeButtonMinigame.setGameListener(listener);
         volumeButtonMinigame.isCorrect = true;
         volumeButtonMinigame.checkPressedKey();
@@ -58,11 +63,5 @@ public class VolumeButtonMinigameTest extends Fragment {
     public void getKeyEventIsUP() {
         volumeButtonMinigame.gameModel.correctResponse.volumeButton = VolumeButton.UP;
         assertEquals(24, volumeButtonMinigame.getKeyEvent());
-    }
-    @Test
-    public void getKeyEventIsNothing(){
-        volumeButtonMinigame.gameModel.correctResponse.volumeButton = VolumeButton.MUTE;
-
-        assertEquals(0,volumeButtonMinigame.getKeyEvent());
     }
 }

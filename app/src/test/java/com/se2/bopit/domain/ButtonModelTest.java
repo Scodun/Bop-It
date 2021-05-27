@@ -1,10 +1,10 @@
 package com.se2.bopit.domain;
 
-import android.graphics.Color;
-
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotSame;
 
 public class ButtonModelTest {
     @Test

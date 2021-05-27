@@ -19,7 +19,7 @@ public class GameRules {
         this.gameTypes = gameTypes;
 
         IdentityHashMap<Class<?>, GameRuleItemModel> map = new IdentityHashMap<>(gameTypes.length);
-        for(Class<?> type : gameTypes) {
+        for (Class<?> type : gameTypes) {
             map.put(type, new GameRuleItemModel(type));
         }
         this.gameTypeModels = Collections.unmodifiableMap(map);
@@ -28,12 +28,12 @@ public class GameRules {
     @SuppressLint("NewApi")
     public void resetToDefault() {
         avoidRepeatingGameTypes = false;
-        gameTypeModels.forEach((k,v) -> v.reset());
+        gameTypeModels.forEach((k, v) -> v.reset());
     }
 
     public void disablePermanently(Class<?> type) {
         GameRuleItemModel model = gameTypeModels.get(type);
-        if(model != null) {
+        if (model != null) {
             model.disablePermanently();
         } // TODO maybe else throw exception!
     }

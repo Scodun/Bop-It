@@ -1,6 +1,5 @@
 package com.se2.bopit.ui.games;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -9,10 +8,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.VolumeButtonGameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
@@ -27,27 +26,39 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
     String text;
     Boolean isCorrect;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
-    public VolumeButtonMinigame(){
+    public VolumeButtonMinigame() {
         super(R.layout.fragment_volume_button_game);
         gameModel = VolumeButtonGameModel.createRandomModel();
     }
+
     @Override
     public void setGameListener(GameListener listener) {
         gameModel.setGameListener(listener);
     }
+
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         view.setFocusableInTouchMode(true);
         view.requestFocus();
-        view.setOnKeyListener(pressedKey);
+        view.setOnKeyListener(
+                (View v, int keyCode, KeyEvent event) -> {
+                    checkPressedKey();
+                    if (keyCode == getKeyEvent()) {
+                        isCorrect = true;
+                        return true;
+                    } else {
+                        isCorrect = false;
+                        return false;
+                    }
+                });
 
-        gifImageView = getView().findViewById(R.id.gifImageView);
+        gifImageView = view.findViewById(R.id.gifImageView);
 
         text = gameModel.challenge;
         textView = view.findViewById(R.id.VolumeButtonMessage);
         textView.setText(text);
-        if(text.equals("Press volume DOWN")){
+        new TextToSpeech().sayText("Volume" + text.split(" ")[2], this.getContext());
+        if (text.equals("Press volume DOWN")) {
             setGif();
         }
 
@@ -55,29 +66,13 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
 
     /**
      * Sets ImageResource to volume_down, if the user has to "reduce" the volume
-     *
      */
-    public void setGif(){
+    public void setGif() {
         gifImageView.setImageResource(R.drawable.volume_down);
     }
 
-    public final View.OnKeyListener pressedKey = new View.OnKeyListener() {
-        @Override
-        public boolean onKey(View v, int keyCode, KeyEvent event) {
-            checkPressedKey();
-            if(keyCode == getKeyEvent()){
-                isCorrect = true;
-                return true;
-            }else{
-                isCorrect = false;
-                return false;
-            }
-        }
-    };
-
     /**
      * Checks if the right button was pressed or not
-     *
      */
     public void checkPressedKey() {
         if (isCorrect != null) {
@@ -90,14 +85,14 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
      *
      * @return the KeyEvent which is needed to accomplish the challenge
      */
-    public int getKeyEvent(){
-        switch(gameModel.correctResponse.volumeButton){
+    public int getKeyEvent() {
+        switch (gameModel.correctResponse.volumeButton) {
             case DOWN:
                 return KeyEvent.KEYCODE_VOLUME_DOWN;
             case UP:
                 return KeyEvent.KEYCODE_VOLUME_UP;
             default:
-                Log.e("ImageButtonMinigame","Unknown Image");
+                Log.e("ImageButtonMinigame", "Unknown Image");
                 return 0;
         }
     }
