@@ -6,17 +6,17 @@ import com.se2.bopit.domain.sliderminigame.SliderResponseModel;
 
 public class SliderMinigameFragment extends MiniGameFragment<SliderGameModel>{
 
-    public static SliderGameModel gameModel;
+    public static SliderGameModel sliderGameModel = new SliderGameModel();
 
-    public SliderMinigameFragment(SliderGameModel gameModel) {
-        super(gameModel);
+    public SliderMinigameFragment(SliderGameModel sliderGameModel) {
+        super(sliderGameModel);
     }
 
     public static SeekBar.OnSeekBarChangeListener getListener() {
         return new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                gameModel.handleResponse(new SliderResponseModel(seekBar, progress));
+                sliderGameModel.handleResponse(new SliderResponseModel(seekBar, progress));
             }
 
             @Override
