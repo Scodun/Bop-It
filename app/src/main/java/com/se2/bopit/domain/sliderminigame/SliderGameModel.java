@@ -9,11 +9,11 @@ import java.util.Random;
 public class SliderGameModel extends GameModel<SliderResponseModel> {
 
     private static final Random random = new Random();
-    private final int target = generateTarget();
+    public final int target = generateTarget();
 
     @Override
-    protected boolean checkResponse(SliderResponseModel response) {
-        return response.slider.getProgress() == target;
+    public boolean checkResponse(SliderResponseModel response) {
+        return response.progress == target;
     }
 
     @Override
