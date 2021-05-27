@@ -30,7 +30,7 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
     private SpeechRecognizer speechRecognizer;
     private Intent intentRecognizer;
     private String[] possibleAnswers = {"apple","beer", "forest", "sunday", "dog", "feeling"};
-    private String correctAnswer = getRandomAnswer();
+    private String correctAnswer = "beer";//getRandomAnswer();
 
 
     public SpeechRecognitionMiniGame(){
@@ -45,7 +45,8 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_action_component, container, false);
         ImageView imageView = view.findViewById(R.id.actionImage);
-        imageView.setImageResource(R.drawable.phone_flat);
+        imageView.setImageResource(R.drawable.speaking);
+
         TextView messageText = view.findViewById(R.id.actionText);
         messageText.setText("Say \"" + correctAnswer+"\"!");
         intentRecognizer = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -86,10 +87,13 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
             public void onResults(Bundle results) {
 
                 for(String res : results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)){
-                    Log.println(Log.DEBUG,"test",res);
+                    Log.println(Log.DEBUG,"Heard",res);
                     if(res.toLowerCase().equals(correctAnswer.toLowerCase()) ){
                         listener.onGameResult(true);
                         speechRecognizer.stopListening();
+                    }
+                    else {
+                        speechRecognizer.startListening(intentRecognizer);
                     }
                 }
 
