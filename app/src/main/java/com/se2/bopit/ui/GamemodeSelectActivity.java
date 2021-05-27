@@ -7,9 +7,11 @@ import android.widget.ImageButton;
 
 import com.se2.bopit.R;
 
+import info.hoang8f.widget.FButton;
+
 public class GamemodeSelectActivity extends BaseActivity {
 
-    private Button
+    private FButton
             singleplayerButton,
             localMultiplayerButton,
             onlineMultiplayerButton;
