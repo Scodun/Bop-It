@@ -6,7 +6,7 @@ import com.se2.bopit.domain.sliderminigame.SliderResponseModel;
 
 public class SliderMinigameFragment extends MiniGameFragment<SliderGameModel>{
 
-    public static SliderGameModel sliderGameModel = new SliderGameModel();
+    private static SliderGameModel sliderGameModel = new SliderGameModel();
 
     public SliderMinigameFragment(SliderGameModel sliderGameModel) {
         super(sliderGameModel);
@@ -29,5 +29,9 @@ public class SliderMinigameFragment extends MiniGameFragment<SliderGameModel>{
                 // Not needed
             }
         };
+    }
+
+    public static void setSliderGameModel(SliderGameModel sliderGameModel) {
+        SliderMinigameFragment.sliderGameModel = sliderGameModel;
     }
 }

@@ -19,7 +19,7 @@ public class SliderMinigame extends SliderMinigameFragment {
 
     public SliderMinigame() {
         super(gameModel);
-        SliderMinigameFragment.sliderGameModel = gameModel;
+        SliderMinigameFragment.setSliderGameModel(gameModel);
     }
 
     @Override
