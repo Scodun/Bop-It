@@ -10,15 +10,7 @@ import com.se2.bopit.domain.annotations.RequireSensor;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
 import com.se2.bopit.exception.GameCreationException;
-import com.se2.bopit.ui.games.ColorButtonMiniGame;
-import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
-import com.se2.bopit.ui.games.ImageButtonMinigame;
-import com.se2.bopit.ui.games.PlacePhoneMiniGame;
-import com.se2.bopit.ui.games.RightButtonCombination;
-import com.se2.bopit.ui.games.ShakePhoneMinigame;
-import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
-import com.se2.bopit.ui.games.VolumeButtonMinigame;
-import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
+import com.se2.bopit.ui.games.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -40,7 +32,8 @@ public class MiniGamesRegistry implements MiniGamesProvider {
             ShakePhoneMinigame.class,
             PlacePhoneMiniGame.class,
             CoverLightSensorMiniGame.class,
-            VolumeButtonMinigame.class
+            VolumeButtonMinigame.class,
+            DrawingMinigame.class
     };
 
     final Map<Integer, Boolean> availableSensorTypes = new HashMap<>();

@@ -9,6 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.drawingminigame.DrawingResponseModel;
 import com.se2.bopit.ui.games.DrawingMinigame;
 
 import java.util.Random;
@@ -66,7 +67,8 @@ public class DrawTouchPathCanvas extends View {
                 break;
             case MotionEvent.ACTION_UP:
                 drawnPath.lineTo(touchX, touchY);
-                minigame.checkShape(solution, drawnPath);
+                DrawingResponseModel response = new DrawingResponseModel(solution, drawnPath);
+                minigame.gameModel.handleResponse(response);
                 drawnPath = new Path();
                 break;
             default:
