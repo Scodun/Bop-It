@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageButton;
 
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.se2.bopit.R;
 
 import info.hoang8f.widget.FButton;
@@ -16,7 +18,7 @@ public class GamemodeSelectActivity extends BaseActivity {
             localMultiplayerButton,
             onlineMultiplayerButton;
     private ImageButton settingsButton;
-    private ImageButton customRulesButton;
+    private ConstraintLayout customRulesButton;
 
 
     @Override
