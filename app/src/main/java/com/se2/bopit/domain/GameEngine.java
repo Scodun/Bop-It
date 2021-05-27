@@ -2,13 +2,22 @@ package com.se2.bopit.domain;
 
 import android.os.CountDownTimer;
 
+import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 
+/**
+ * GameEngine Client used by UI on each device.
+ * Depending on gameMode GameEngine connects to local or remote server.
+ */
 public class GameEngine {
+    static final String TAG = GameEngine.class.getSimpleName();
+
     GameEngineListener listener;
+    public GameEngineDataProvider dataProvider;
+    public String userId;
 
 
     int score = 0;
@@ -16,6 +25,7 @@ public class GameEngine {
     boolean miniGameLost = false;
     boolean lifecycleCancel = false;
     CountDownTimer timer;
+    boolean isMyTurn;
 
     MiniGamesProvider miniGamesProvider;
     PlatformFeaturesProvider platformFeaturesProvider;
@@ -43,28 +53,39 @@ public class GameEngine {
      * Sets the GameListener for the Minigame
      */
     public void startNewGame() {
-        MiniGame minigame = getMiniGame();
-        long time = (long) (Math.exp(-this.score * 0.08 + 7) + 2000);
+        dataProvider.readyToStart(userId);
+    }
+
+    public void startNewGame(GameRoundModel round) {
+        isMyTurn = userId.equals(round.currentUserId);
+
+        MiniGame minigame = miniGamesProvider.createMiniGame(round);
+        long time = round.time; //(long) (Math.exp(-this.score * 0.08 + 7) + 2000);
         timer = startCountDown(time);
         if (this.listener != null) {
             listener.onGameStart(minigame, time);
         }
 
         minigame.setPlatformFeaturesProvider(platformFeaturesProvider);
-        minigame.setGameListener(result -> {
-            timer.cancel();
-            if (listener != null) {
-                if (result && !isOverTime && !miniGameLost) {
-                    score++;
-                    listener.onScoreUpdate(score);
-                    startNewGame();
-                } else if (!lifecycleCancel) {
-                    miniGameLost = true;
-                    listener.onGameEnd(score);
+        if(isMyTurn) {
+            minigame.setGameListener(r -> {
+                timer.cancel();
+                if (listener != null) {
+                    int roundScore = dataProvider.sendGameResult(userId, r, null); // TODO!
+                    boolean result = roundScore != 0;
+                    if (result && !isOverTime && !miniGameLost) {
+                        score+=roundScore;
+                        listener.onScoreUpdate(score);
+                        startNewGame();
+                    } else if (!lifecycleCancel) {
+                        miniGameLost = true;
+                        // TODO ?
+                        listener.onGameEnd(score);
+                    }
                 }
-            }
 
-        });
+            });
+        }
     }
 
     private MiniGame getMiniGame() {
@@ -88,7 +109,9 @@ public class GameEngine {
     }
 
     public void onFinish() {
-        isOverTime = true;
+        if(isMyTurn) {
+            isOverTime = true;
+        }
         if (listener != null)
             listener.onGameEnd(score);
     }
@@ -96,6 +119,7 @@ public class GameEngine {
 
     public void stopCurrentGame() {
         if (!lifecycleCancel && !miniGameLost) {
+            dataProvider.stopCurrentGame(userId);
             lifecycleCancel = true;
             timer.cancel();
             miniGameLost = true;

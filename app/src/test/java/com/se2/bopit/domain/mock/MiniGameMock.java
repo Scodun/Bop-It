@@ -1,5 +1,6 @@
 package com.se2.bopit.domain.mock;
 
+import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
@@ -11,4 +12,10 @@ public class MiniGameMock implements MiniGame {
     public void setGameListener(GameListener listener) {
         this.listener = listener;
     }
+
+    @Override
+    public GameModel<?> getModel() {
+        return null;
+    }
+
 }

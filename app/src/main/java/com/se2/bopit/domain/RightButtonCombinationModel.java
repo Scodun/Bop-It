@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class RightButtonCombinationModel extends MultipleChoiceGameModel<RightButtonModel> {
 
-    public RightButtonModel secondCorrectResponse;
+    public transient RightButtonModel secondCorrectResponse;
 
     public RightButtonCombinationModel(String challenge, RightButtonModel correctResponse,
                                        RightButtonModel secondCorrectResponse, List<RightButtonModel> wrongAnswers) {

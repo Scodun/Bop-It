@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
@@ -77,4 +78,10 @@ public class DrawingMinigame extends Fragment implements MiniGame {
 
         return resourceIds;
     }
+
+    @Override
+    public GameModel<?> getModel() {
+        return null;
+    }
+
 }
