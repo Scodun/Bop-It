@@ -15,7 +15,7 @@ public class DrawingGameModel extends GameModel<DrawingResponseModel> {
         float heightDifference = response.solution.getHeight() - (bounds.bottom - bounds.top);
         float widthDifference = response.solution.getWidth() - (bounds.right - bounds.left);
 
-        return Math.abs(heightDifference) < ERROR && Math.abs(widthDifference) < ERROR;
+        return Math.abs(heightDifference) <= ERROR && Math.abs(widthDifference) <= ERROR;
     }
 
     @Override
