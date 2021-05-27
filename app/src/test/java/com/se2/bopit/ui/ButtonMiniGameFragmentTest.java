@@ -86,7 +86,7 @@ public class ButtonMiniGameFragmentTest {
 
     @Test
     public void applyButtonModel() {
-        Button buttonMock = mock(Button.class);
+        FButton buttonMock = mock(FButton.class);
         VectorDrawableCompat buttonDrawable = mock(VectorDrawableCompat.class);
         doReturn(buttonDrawable).when(buttonMock).getBackground();
 

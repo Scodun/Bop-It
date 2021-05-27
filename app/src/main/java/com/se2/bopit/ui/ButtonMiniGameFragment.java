@@ -50,7 +50,7 @@ public abstract class ButtonMiniGameFragment extends MiniGameFragment<ButtonMini
         return view;
     }
 
-    Button applyButtonModel(ButtonModel model, View buttonView) {
+    FButton applyButtonModel(ButtonModel model, View buttonView) {
         FButton button = (FButton) buttonView;
         if (model.label != null) {
             button.setText(model.label);
