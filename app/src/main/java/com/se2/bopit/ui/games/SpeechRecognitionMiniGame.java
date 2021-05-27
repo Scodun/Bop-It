@@ -29,18 +29,30 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
     private GameListener listener;
     private SpeechRecognizer speechRecognizer;
     private Intent intentRecognizer;
-    private String[] possibleAnswers = {"apple","beer", "forest", "sunday", "dog", "feeling"};
-    private String correctAnswer = "beer";//getRandomAnswer();
+    private String[] possibleAnswers = {"apple","forest", "sunday", "guitar", "piano"};
+    private String correctAnswer = getRandomAnswer();
 
 
     public SpeechRecognitionMiniGame(){
         super(R.layout.fragment_action_component);
     }
+    /**
+     * @param listener - Game listener
+     * Sets Game Listener
+     */
     @Override
     public void setGameListener(GameListener listener) {
         this.listener = listener;
     }
 
+    /**
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * Binds view to game
+     * injects image into view
+     * sets up speech recognizer
+     */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_action_component, container, false);
@@ -53,36 +65,64 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
         intentRecognizer.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(view.getContext());
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
+            /**
+             * @param params
+             * Called when the endpointer is ready for the user to start speaking.
+             */
             @Override
             public void onReadyForSpeech(Bundle params) {
 
             }
 
+            /**
+             * The user has started to speak.
+             */
             @Override
             public void onBeginningOfSpeech() {
 
             }
 
+            /**
+             * @param rmsdB
+             * The sound level in the audio stream has changed.
+             */
             @Override
             public void onRmsChanged(float rmsdB) {
 
             }
 
+            /**
+             * More sound has been received.
+             */
             @Override
             public void onBufferReceived(byte[] buffer) {
 
             }
 
+            /**
+             * Called after the user stops speaking.
+             */
             @Override
             public void onEndOfSpeech() {
 
             }
 
+            /**
+             * @param error
+             * A network or recognition error occurred.
+             */
             @Override
             public void onError(int error) {
-                //Log.e(TAG,error);
+
             }
 
+            /**
+             * @param results - current sensor value
+             * receives results of speech
+             * Checks wether the said word matches the correct answer
+             * if it matches, the Game listener is called and the game ends
+             * if it doesnt match, the speech recognizer starts listening again for other words
+             */
             @Override
             public void onResults(Bundle results) {
 
@@ -99,11 +139,20 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
 
             }
 
+            /**
+             * @param partialResults - contains partial results
+             * Called when partial recognition results are available.
+             */
             @Override
             public void onPartialResults(Bundle partialResults) {
 
             }
 
+            /**
+             * @param eventType - eventType
+             * @param params - params
+             * Reserved for adding future events.
+             */
             @Override
             public void onEvent(int eventType, Bundle params) {
 
@@ -114,6 +163,10 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
 
         return view;
     }
+    /**
+     * returns a random string from the
+     * answer set arraw
+     */
     private String getRandomAnswer(){
         int rnd = new Random().nextInt(possibleAnswers.length);
         return possibleAnswers[rnd];
