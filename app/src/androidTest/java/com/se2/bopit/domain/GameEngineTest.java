@@ -64,6 +64,7 @@ public class GameEngineTest {
                 }
             });
             String singleUserId = "Player";
+            engine.userId = singleUserId;
             GameEngineServer server = new GameEngineServer(miniGamesProvider, platformFeaturesProvider,
                     Collections.singletonMap(singleUserId, new User(singleUserId, singleUserId)));
             SinglePlayerGameEngineDataProvider dataProvider = new SinglePlayerGameEngineDataProvider(engine, server);
