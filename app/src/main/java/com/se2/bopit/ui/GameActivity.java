@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class GameActivity extends BaseActivity {
+    static final String TAG = GameActivity.class.getSimpleName();
 
     public static final String GAME_MODE = "gameMode";
 
@@ -56,7 +58,13 @@ public class GameActivity extends BaseActivity {
         scoreView = findViewById(R.id.scoreView);
 
         //start game Engine and register listeners
-        gameMode = (GameMode) getIntent().getExtras().get(GAME_MODE);
+        Intent intent = getIntent();
+        if(intent.hasExtra(GAME_MODE)) {
+            gameMode = (GameMode) intent.getSerializableExtra(GAME_MODE);
+        } else {
+            Log.w(TAG, "Fallback to default game mode");
+            gameMode = GameMode.SINGLE_PLAYER;
+        }
 
         engine = GameEngineProvider.getInstance().create(gameMode, gameEngineListener);
 
