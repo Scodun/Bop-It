@@ -10,6 +10,7 @@ import android.widget.ListView;
 
 import com.se2.bopit.R;
 import com.se2.bopit.data.NearbyDataProvider;
+import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.data.DataProviderContext;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.User;
@@ -48,7 +49,7 @@ public class LobbyHostActivity extends BaseActivity {
 
         //Set dataprovider, currently one one available
         Intent intent = getIntent();
-        dataProvider = new DataProviderContext(new NearbyDataProvider(this, networkListener, intent.getStringExtra("username")));
+        dataProvider = DataProviderContext.create(new NearbyDataProvider(this, networkListener, intent.getStringExtra("username")));
         dataProvider.startAdvertising();
     }
 
@@ -106,7 +107,9 @@ public class LobbyHostActivity extends BaseActivity {
 
         @Override
         public void onGameStart() {
+            Log.d("LobbyHostActivity", "onGameStart");
 
+            startGame();
         }
 
         @Override
@@ -119,5 +122,10 @@ public class LobbyHostActivity extends BaseActivity {
     public void onBackPressed() {
         super.onBackPressed();
         dataProvider.disconnect();
+    }
+
+    void startGame() {
+        startActivity(new Intent(this, GameActivity.class)
+                .putExtra(GameActivity.GAME_MODE, GameMode.MULTI_PLAYER_SERVER));
     }
 }

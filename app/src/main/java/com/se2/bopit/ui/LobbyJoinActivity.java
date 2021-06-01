@@ -57,7 +57,7 @@ public class LobbyJoinActivity extends BaseActivity {
         context = this;
 
         Intent intent = getIntent();
-        dataProvider = new DataProviderContext(new NearbyDataProvider(this, networkListener, intent.getStringExtra("username")));
+        dataProvider = DataProviderContext.create(new NearbyDataProvider(this, networkListener, intent.getStringExtra("username")));
         dataProvider.startDiscovery();
     }
 
