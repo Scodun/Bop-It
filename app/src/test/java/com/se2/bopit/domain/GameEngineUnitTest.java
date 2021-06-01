@@ -74,7 +74,7 @@ public class GameEngineUnitTest {
         when(miniGamesProviderMock.createRandomMiniGame())
                 .thenReturn(gameMock);
 
-        gameEngine = new GameEngine(miniGamesProviderMock, platformProviderMock, listenerMock);
+        gameEngine = new GameEngine(miniGamesProviderMock, platformProviderMock, listenerMock, dataProvider);
     }
 
     @After
@@ -143,7 +143,7 @@ public class GameEngineUnitTest {
     // TODO this test checks status quo. Reconsider if game engine without listener should work at all
     @Test
     public void startNewGameWithoutListener() {
-        gameEngine = new GameEngine(miniGamesProviderMock, platformProviderMock, null);
+        gameEngine = new GameEngine(miniGamesProviderMock, platformProviderMock, null, dataProvider);
 
         gameEngine.startNewGame();
 
@@ -157,14 +157,14 @@ public class GameEngineUnitTest {
 
     @Test
     public void shouldFailWithoutGamesProvider() {
-        gameEngine = new GameEngine(null, platformProviderMock, listenerMock);
+        gameEngine = new GameEngine(null, platformProviderMock, listenerMock, dataProvider);
 
         assertThrows(NullPointerException.class, gameEngine::startNewGame);
     }
 
     @Test
     public void shouldFailWithoutPlatformProvider() {
-        gameEngine = new GameEngine(miniGamesProviderMock, null, listenerMock);
+        gameEngine = new GameEngine(miniGamesProviderMock, null, listenerMock, dataProvider);
 
         assertThrows(NullPointerException.class, gameEngine::startNewGame);
     }

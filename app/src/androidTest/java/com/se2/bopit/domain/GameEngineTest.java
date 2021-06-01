@@ -10,7 +10,6 @@ import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
-import com.se2.bopit.ui.providers.GameEngineProvider;
 import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
 import org.junit.Test;
@@ -39,6 +38,7 @@ public class GameEngineTest {
             // simulate GameActivity
             MiniGamesRegistry miniGamesProvider = MiniGamesRegistry.getInstance();
             AndroidPlatformFeaturesProvider platformFeaturesProvider = new AndroidPlatformFeaturesProvider();
+            SinglePlayerGameEngineDataProvider dataProvider = new SinglePlayerGameEngineDataProvider();
 
             GameEngine engine = new GameEngine(miniGamesProvider, platformFeaturesProvider, new GameEngineListener() {
                 @Override
@@ -62,14 +62,11 @@ public class GameEngineTest {
                 public void onTimeTick(long time) {
                     assertTrue(time > 0);
                 }
-            });
+            }, dataProvider);
             String singleUserId = "Player";
             engine.userId = singleUserId;
             GameEngineServer server = new GameEngineServer(miniGamesProvider, platformFeaturesProvider,
-                    Collections.singletonMap(singleUserId, new User(singleUserId, singleUserId)));
-            SinglePlayerGameEngineDataProvider dataProvider = new SinglePlayerGameEngineDataProvider(engine, server);
-            engine.dataProvider = dataProvider;
-            server.dataProvider = dataProvider;
+                    Collections.singletonMap(singleUserId, new User(singleUserId, singleUserId)), dataProvider);
 
             engine.startNewGame();
         });
