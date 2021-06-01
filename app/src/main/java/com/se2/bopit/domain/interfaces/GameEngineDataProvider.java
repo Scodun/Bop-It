@@ -1,7 +1,9 @@
 package com.se2.bopit.domain.interfaces;
 
+import com.se2.bopit.domain.GameEngine;
 import com.se2.bopit.domain.GameRoundModel;
 import com.se2.bopit.domain.ResponseModel;
+import com.se2.bopit.domain.engine.GameEngineServer;
 import com.se2.bopit.domain.models.User;
 
 public interface GameEngineDataProvider {
@@ -22,9 +24,8 @@ public interface GameEngineDataProvider {
      * Client sends Game result;
      * Server returns earned score;
      * @param result
-     * @return score from this game
      */
-    int sendGameResult(String userId, boolean result, ResponseModel responseModel);
+    void sendGameResult(String userId, boolean result, ResponseModel responseModel);
 
     /**
      * Server notifies all clients, but current, about current client response,
@@ -45,4 +46,7 @@ public interface GameEngineDataProvider {
      */
     User[] getRoundResult();
 
+    void setGameEngineClient(GameEngine client);
+
+    void setGameEngineServer(GameEngineServer server);
 }
