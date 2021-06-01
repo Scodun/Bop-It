@@ -1,12 +1,12 @@
 package com.se2.bopit.domain.engine;
 
 import android.os.Build;
-import android.os.CountDownTimer;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
 import com.google.gson.Gson;
+import com.se2.bopit.data.SinglePlayerGameEngineDataProvider;
 import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.GameRoundModel;
 import com.se2.bopit.domain.ResponseModel;
@@ -44,7 +44,7 @@ public class GameEngineServer {
     boolean isOverTime = false;
     boolean miniGameLost = false;
     boolean lifecycleCancel = false;
-    CountDownTimer timer;
+//    CountDownTimer timer;
 
     MiniGamesProvider miniGamesProvider;
     PlatformFeaturesProvider platformFeaturesProvider;
@@ -52,11 +52,14 @@ public class GameEngineServer {
     Gson gson = new Gson();
 
     public GameEngineServer(MiniGamesProvider miniGamesProvider,
-                      PlatformFeaturesProvider platformFeaturesProvider,
-                            Map<String, User> users) {
+                            PlatformFeaturesProvider platformFeaturesProvider,
+                            Map<String, User> users,
+                            GameEngineDataProvider dataProvider) {
         this.miniGamesProvider = miniGamesProvider;
         this.platformFeaturesProvider = platformFeaturesProvider;
         this.users = users;
+        this.dataProvider = dataProvider;
+        dataProvider.setGameEngineServer(this);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -103,7 +106,7 @@ public class GameEngineServer {
         dataProvider.startNewGame(currentRound);
         isOverTime = false;
         miniGameLost = false;
-        timer = startCountDown(time);
+        //timer = startCountDown(time);
 
 //        minigame.setPlatformFeaturesProvider(platformFeaturesProvider);
 //        minigame.setGameListener(result -> {
@@ -136,34 +139,34 @@ public class GameEngineServer {
         return miniGamesProvider.createRandomMiniGame();
     }
 
-    /**
-     * @param time - countdown time in ms
-     *             Starts a new countdown
-     *             Calls the MainActivity onTimeTick, onFinish listener to display the time
-     */
-    private CountDownTimer startCountDown(long time) {
-        return platformFeaturesProvider.createCountDownTimer(
-                time, 5, this::onTick, this::onFinish)
-                .start();
-    }
+//    /**
+//     * @param time - countdown time in ms
+//     *             Starts a new countdown
+//     *             Calls the MainActivity onTimeTick, onFinish listener to display the time
+//     */
+//    private CountDownTimer startCountDown(long time) {
+//        return platformFeaturesProvider.createCountDownTimer(
+//                time, 5, this::onTick, this::onFinish)
+//                .start();
+//    }
 
-    public void onTick(long millisUntilFinished) {
-        // unused
-    }
+//    public void onTick(long millisUntilFinished) {
+//        // unused
+//    }
 
-    public void onFinish() {
-        isOverTime = true;
-//        if (listener != null)
-//            listener.onGameEnd(score);
-        Log.d(TAG, "timeout");
-        dataProvider.notifyGameResult(false, null);
-    }
+//    public void onFinish() {
+//        isOverTime = true;
+////        if (listener != null)
+////            listener.onGameEnd(score);
+//        Log.d(TAG, "timeout");
+//        dataProvider.notifyGameResult(false, null);
+//    }
 
 
     public void stopCurrentGame() {
         if (!lifecycleCancel && !miniGameLost) {
             lifecycleCancel = true;
-            timer.cancel();
+//            timer.cancel();
             miniGameLost = true;
             //listener.onGameEnd(score);
         }
@@ -172,7 +175,7 @@ public class GameEngineServer {
     public int sendGameResult(String userId, boolean result, ResponseModel responseModel) {
         int score = 0;
         if(!isOverTime && !miniGameLost) {
-            timer.cancel();
+//            timer.cancel();
 
             boolean correct = responseModel != null ? currentGame.handleResponse(responseModel) : result;
             if(correct)
@@ -185,7 +188,7 @@ public class GameEngineServer {
     }
 
     public void stopCurrentGame(String userId) {
-
+        Log.d(TAG, "Stop current game: " + userId);
     }
 
     public User[] getRoundResult() {

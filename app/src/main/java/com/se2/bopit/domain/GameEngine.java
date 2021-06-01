@@ -2,6 +2,7 @@ package com.se2.bopit.domain;
 
 import android.os.CountDownTimer;
 
+import com.se2.bopit.data.SinglePlayerGameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
@@ -32,10 +33,12 @@ public class GameEngine {
 
     public GameEngine(MiniGamesProvider miniGamesProvider,
                       PlatformFeaturesProvider platformFeaturesProvider,
-                      GameEngineListener listener) {
+                      GameEngineListener listener, GameEngineDataProvider dataProvider) {
         this.miniGamesProvider = miniGamesProvider;
         this.platformFeaturesProvider = platformFeaturesProvider;
         this.listener = listener;
+        this.dataProvider = dataProvider;
+        dataProvider.setGameEngineClient(this);
     }
 
     /**
@@ -68,28 +71,24 @@ public class GameEngine {
 
         minigame.setPlatformFeaturesProvider(platformFeaturesProvider);
         if(isMyTurn) {
-            minigame.setGameListener(r -> {
+            minigame.setGameListener(result -> {
                 timer.cancel();
                 if (listener != null) {
-                    int roundScore = dataProvider.sendGameResult(userId, r, null); // TODO!
-                    boolean result = roundScore != 0;
                     if (result && !isOverTime && !miniGameLost) {
-                        score+=roundScore;
+                        dataProvider.sendGameResult(userId, true, null); // TODO!
+                        score++;
                         listener.onScoreUpdate(score);
                         startNewGame();
                     } else if (!lifecycleCancel) {
                         miniGameLost = true;
                         // TODO ?
+                        dataProvider.sendGameResult(userId, false, null);
                         listener.onGameEnd(score);
                     }
                 }
 
             });
         }
-    }
-
-    private MiniGame getMiniGame() {
-        return miniGamesProvider.createRandomMiniGame();
     }
 
     /**
@@ -104,16 +103,16 @@ public class GameEngine {
     }
 
     public void onTick(long millisUntilFinished) {
-        if (listener != null)
+        if (listener != null) {
             listener.onTimeTick(millisUntilFinished);
+        }
     }
 
     public void onFinish() {
-        if(isMyTurn) {
-            isOverTime = true;
-        }
-        if (listener != null)
+        isOverTime = true;
+        if (isMyTurn && listener != null) {
             listener.onGameEnd(score);
+        }
     }
 
 
@@ -127,4 +126,10 @@ public class GameEngine {
         }
     }
 
+    public void notifyGameResult(boolean result, ResponseModel responseModel) {
+        if(!isMyTurn) {
+            timer.cancel();
+            // TODO
+        }
+    }
 }
