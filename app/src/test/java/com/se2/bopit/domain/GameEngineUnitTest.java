@@ -2,6 +2,7 @@ package com.se2.bopit.domain;
 
 import android.os.CountDownTimer;
 
+import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.mock.MiniGameMock;
@@ -46,6 +47,7 @@ public class GameEngineUnitTest {
     boolean timerRunning;
     long timerStartedAt;
     long timerStoppedAt;
+    GameEngineDataProvider dataProviderMock;
 
     @Before
     public void setUp() throws Exception {
@@ -74,7 +76,9 @@ public class GameEngineUnitTest {
         when(miniGamesProviderMock.createRandomMiniGame())
                 .thenReturn(gameMock);
 
-        gameEngine = new GameEngine(miniGamesProviderMock, platformProviderMock, listenerMock, dataProvider);
+        dataProviderMock = mock(GameEngineDataProvider.class);
+        gameEngine = new GameEngine(miniGamesProviderMock, platformProviderMock, listenerMock,
+                dataProviderMock);
     }
 
     @After
@@ -143,7 +147,7 @@ public class GameEngineUnitTest {
     // TODO this test checks status quo. Reconsider if game engine without listener should work at all
     @Test
     public void startNewGameWithoutListener() {
-        gameEngine = new GameEngine(miniGamesProviderMock, platformProviderMock, null, dataProvider);
+        gameEngine = new GameEngine(miniGamesProviderMock, platformProviderMock, null, dataProviderMock);
 
         gameEngine.startNewGame();
 
@@ -157,14 +161,14 @@ public class GameEngineUnitTest {
 
     @Test
     public void shouldFailWithoutGamesProvider() {
-        gameEngine = new GameEngine(null, platformProviderMock, listenerMock, dataProvider);
+        gameEngine = new GameEngine(null, platformProviderMock, listenerMock, dataProviderMock);
 
         assertThrows(NullPointerException.class, gameEngine::startNewGame);
     }
 
     @Test
     public void shouldFailWithoutPlatformProvider() {
-        gameEngine = new GameEngine(miniGamesProviderMock, null, listenerMock, dataProvider);
+        gameEngine = new GameEngine(miniGamesProviderMock, null, listenerMock, dataProviderMock);
 
         assertThrows(NullPointerException.class, gameEngine::startNewGame);
     }
