@@ -1,14 +1,18 @@
 package com.se2.bopit.data;
 
 import android.content.Context;
+import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
 import com.google.android.gms.nearby.connection.ConnectionInfo;
 import com.google.android.gms.nearby.connection.ConnectionLifecycleCallback;
 import com.google.android.gms.nearby.connection.ConnectionResolution;
+import com.google.android.gms.nearby.connection.ConnectionsClient;
 import com.google.android.gms.nearby.connection.ConnectionsStatusCodes;
 import com.google.android.gms.nearby.connection.DiscoveredEndpointInfo;
 import com.google.android.gms.nearby.connection.DiscoveryOptions;
@@ -18,7 +22,11 @@ import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.se2.bopit.domain.GameEngine;
+import com.se2.bopit.domain.GameRoundModel;
+import com.se2.bopit.domain.ResponseModel;
 import com.se2.bopit.domain.data.DataProviderStrategy;
+import com.se2.bopit.domain.engine.GameEngineServer;
 import com.se2.bopit.domain.interfaces.NetworkContextListener;
 import com.se2.bopit.domain.interfaces.NetworkGameListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
@@ -42,6 +50,8 @@ public class NearbyDataProvider extends DataProviderStrategy {
     private boolean isHost = false;
     private String hostEndpointId = null;
     private final String username;
+
+    Gson gson = new Gson();
 
     private static NearbyDataProvider instance;
 
@@ -156,6 +166,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
                     }
                 }
 
+                @RequiresApi(api = Build.VERSION_CODES.N)
                 @Override
                 public void onDisconnected(String endpointId) {
                     lobbyListener.onStatusChange("Disconnected");
@@ -186,6 +197,8 @@ public class NearbyDataProvider extends DataProviderStrategy {
                         lobbyListener.onGameStart();
                         break;
 
+                    default:
+                        Log.e("NearbyDataProvider", "Unknown payload: " + po);
                 }
             }
 
@@ -255,7 +268,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
     @Override
     public void startGameCountdown() {
         if (isHost) {
-            Gson gson = new Gson();
+
             Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(1, null)).getBytes());
             Nearby.getConnectionsClient(context).sendPayload(getConnectedUserIds(), bytesPayload);
             lobbyListener.onGameCountdownStart();
@@ -286,6 +299,75 @@ public class NearbyDataProvider extends DataProviderStrategy {
         }
         return new ArrayList<String>() {
         };
+    }
+
+    ConnectionsClient getConnectionsClient() {
+        return Nearby.getConnectionsClient(context);
+    }
+
+    Payload wrapPayload(int type, Object data) {
+        return Payload.fromBytes(gson.toJson(new NearbyPayload(type, gson.toJson(data))).getBytes());
+    }
+
+    Payload wrapPayload(int type) {
+        return Payload.fromBytes(gson.toJson(new NearbyPayload(type, null)).getBytes());
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public void readyToStart(String userId) {
+        if(isHost) {
+            gameEngineServer.readyToStart(userId);
+        } else {
+            getConnectionsClient().sendPayload(hostEndpointId,
+                    wrapPayload(NearbyPayload.READY_TO_START, userId));
+        }
+    }
+
+    @Override
+    public void startNewGame(GameRoundModel roundModel) {
+        if(isHost) {
+            gameEngineClient.startNewGame(roundModel);
+        } else {
+            getConnectionsClient().sendPayload(getConnectedUserIds(),
+                    wrapPayload(NearbyPayload.START_NEW_ROUND, roundModel));
+        }
+    }
+
+    @Override
+    public void sendGameResult(String userId, boolean result, ResponseModel responseModel) {
+        if(isHost) {
+            gameEngineServer.sendGameResult(userId, result, responseModel);
+        } else {
+            getConnectionsClient().sendPayload(hostEndpointId,
+                    wrapPayload(NearbyPayload.SEND_ROUND_RESULT, result));
+        }
+    }
+
+    @Override
+    public void notifyGameResult(boolean result, ResponseModel responseModel) {
+        if(isHost) {
+           gameEngineClient.notifyGameResult(result, responseModel);
+        } else {
+            getConnectionsClient().sendPayload(getConnectedUserIds(),
+                    wrapPayload(NearbyPayload.NOTIFY_ROUND_RESULT, result));
+        }
+    }
+
+    @Override
+    public void stopCurrentGame(String userId) {
+        if(isHost) {
+            gameEngineServer.stopCurrentGame(userId);
+        } else {
+            getConnectionsClient().sendPayload(hostEndpointId,
+                    wrapPayload(NearbyPayload.STOP_CURRENT_GAME, userId));
+        }
+    }
+
+    @Override
+    public User[] getRoundResult() {
+        // TODO
+        return new User[0];
     }
 
 }
