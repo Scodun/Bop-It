@@ -67,12 +67,12 @@
         android:textColor="@color/white"/>
 
     <info.hoang8f.widget.FButton
-        android:id="@+id/leaderboardButton"
+        android:id="@+id/leaderboardEasyButton"
         android:layout_width="115dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="45dp"
-        android:text="Leaderboard Easy"
+        android:layout_marginTop="70dp"
+        android:text="Easy Mode"
         android:textColor="@color/primary"
 
         app:fButtonColor="@color/white"
@@ -84,13 +84,13 @@
         android:id="@+id/leaderboardMediumButton"
         android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
-        android:text="Leaderboard Medium"
+        android:layout_marginTop="70dp"
+        android:text="Medium Mode"
 
         android:textColor="@color/primary"
         app:fButtonColor="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/leaderboardHardButton"
-        app:layout_constraintStart_toEndOf="@+id/leaderboardButton"
+        app:layout_constraintStart_toEndOf="@+id/leaderboardEasyButton"
         app:layout_constraintTop_toTopOf="parent"
         fbutton:cornerRadius="100dp" />
 
@@ -98,13 +98,30 @@
         android:id="@+id/leaderboardHardButton"
         android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="70dp"
         android:layout_marginEnd="20dp"
 
-        android:text="Learderboard Hard"
+        android:text="Hard Mode"
         android:textColor="@color/primary"
         app:fButtonColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         fbutton:cornerRadius="100dp" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="176dp"
+        android:layout_marginEnd="176dp"
+        android:text="Leaderboards"
+        android:letterSpacing="0.2"
+        app:layout_constraintBottom_toTopOf="@id/leaderboardMediumButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:typeface="normal"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
