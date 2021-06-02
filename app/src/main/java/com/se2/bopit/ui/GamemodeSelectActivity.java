@@ -41,7 +41,7 @@ public class GamemodeSelectActivity extends BaseActivity {
 
     private void initializeListeners() {
         singleplayerButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, GameActivity.class));
+            startActivity(new Intent(this, DifficultyActivity.class));
         });
 
         localMultiplayerButton.setOnClickListener(v -> {
