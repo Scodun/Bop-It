@@ -26,6 +26,10 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
     private static final String PREF_KEY_EFFECT = "effect";
     private static final String PREF_KEY_NAME = "name";
     private static final String PREF_KEY_SCORE = "highscore";
+    private static final String PREF_KEY_SCORE_MEDIUM = "highscore2";
+    private static final String PREF_KEY_SCORE_HARD = "highscore3";
+
+
     private Toolbar toolbar;
     private TextInputLayout textInputName;
     private SwitchCompat switchSound;
@@ -37,10 +41,16 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
     private TextView highScore;
     SharedPreferences customSharedPreferences;
 
+    private TextView mediumHighscore;
+    private TextView hardHighscore;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.settings_activity);
+        //setContentView(R.layout.settings_activity);
+
+        setContentView(R.layout.settings_try_layout);
+
         customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         customSharedPreferences.registerOnSharedPreferenceChangeListener(this);
         initializeView();
@@ -101,6 +111,12 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
         iconHighscore.setImageResource(R.drawable.ic_highscore);
         buttonReset = findViewById(R.id.buttonReset);
         buttonSave = findViewById(R.id.buttonSave);
+        mediumHighscore = findViewById(R.id.textViewMediumHighscore);
+        hardHighscore = findViewById(R.id.textViewHardHighscore);
+        ImageView iconMediumHighscoreImage = findViewById(R.id.iconMediumHighscore);
+        iconMediumHighscoreImage.setImageResource(R.drawable.ic_highscore);
+        ImageView iconHardHighscoreImage = findViewById(R.id.iconHardHighscore);
+        iconHardHighscoreImage.setImageResource(R.drawable.ic_highscore);
     }
 
     private void setPrefValues() {
@@ -108,6 +124,9 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
         switchSound.setChecked(customSharedPreferences.getBoolean(PREF_KEY_SOUND, true));
         switchEffect.setChecked(customSharedPreferences.getBoolean(PREF_KEY_EFFECT, true));
         highScore.setText(String.valueOf(customSharedPreferences.getInt(PREF_KEY_SCORE, 0)));
+        mediumHighscore.setText(String.valueOf(customSharedPreferences.getInt(PREF_KEY_SCORE_MEDIUM, 0)));
+        hardHighscore.setText(String.valueOf(customSharedPreferences.getInt(PREF_KEY_SCORE_HARD, 0)));
+
     }
 
 
@@ -118,6 +137,8 @@ public class SettingsActivity extends BaseActivity implements SharedPreferences.
         editor.putBoolean(PREF_KEY_SOUND, true);
         editor.putBoolean(PREF_KEY_EFFECT, true);
         editor.putInt(PREF_KEY_SCORE, 0);
+        editor.putInt(PREF_KEY_SCORE_MEDIUM, 0);
+        editor.putInt(PREF_KEY_SCORE_HARD, 0);
         editor.apply();
         setPrefValues();
     }
