@@ -65,4 +65,14 @@ public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvide
         this.server = server;
     }
 
+    @Override
+    public void setClientCheated(String userId) {
+        server.setClientCheated(userId);
+    }
+
+    @Override
+    public void detectCheating(String userId) {
+        server.detectCheating(userId);
+    }
+
 }
