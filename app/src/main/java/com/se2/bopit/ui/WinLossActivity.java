@@ -18,10 +18,14 @@ import com.se2.bopit.R;
 
 import java.util.Objects;
 
+import info.hoang8f.widget.FButton;
+
 public class WinLossActivity extends BaseActivity {
     private Button bu_return;
     private Button bu_share;
-    private Button bu_leaderboard;
+    private Button bu_leaderboardEasy;
+    private FButton bu_leaderboardMedium;
+    private FButton bu_leaderboardHard;
     private TextView tv_score;
     private ActivityResultLauncher<Intent> activityResultLauncher;
     private int score;
@@ -69,14 +73,20 @@ public class WinLossActivity extends BaseActivity {
     private void initializeListeners() {
         bu_share.setOnClickListener(onShare);
         bu_return.setOnClickListener(onReturnToGameSelectMode);
-        bu_leaderboard.setOnClickListener(onLeaderboardSelect);
+        bu_leaderboardEasy.setOnClickListener(onLeaderboardSelect);
+
+        bu_leaderboardMedium.setOnClickListener(onLeaderboardSelect);
+        bu_leaderboardHard.setOnClickListener(onLeaderboardSelect);
     }
 
     private void initializeButtons() {
         bu_return = findViewById(R.id.bu_return);
         bu_share = findViewById(R.id.bu_share);
         tv_score = findViewById(R.id.tv_score);
-        bu_leaderboard = findViewById(R.id.leaderboardButton);
+        bu_leaderboardEasy = findViewById(R.id.leaderboardEasyButton);
+
+        bu_leaderboardMedium = findViewById(R.id.leaderboardMediumButton);
+        bu_leaderboardHard = findViewById(R.id.leaderboardHardButton);
     }
 
     private void showScore() {
