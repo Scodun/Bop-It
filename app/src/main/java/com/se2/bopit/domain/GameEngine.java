@@ -105,6 +105,7 @@ public class GameEngine {
 
     public void pauseCountDown() {
         timer.cancel();
+        dataProvider.setClientCheated(userId);
     }
 
     public void resumeCountDown(){

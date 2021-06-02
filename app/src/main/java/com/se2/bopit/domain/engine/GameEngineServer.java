@@ -46,7 +46,8 @@ public class GameEngineServer {
     boolean lifecycleCancel = false;
     //    CountDownTimer timer;
     //for cheatfunction
-    private long timeRemaining;
+    private User lastPlayer;
+    private User nextPlayer;
 
     MiniGamesProvider miniGamesProvider;
     PlatformFeaturesProvider platformFeaturesProvider;
@@ -95,7 +96,7 @@ public class GameEngineServer {
         GameRoundModel lastRound = currentRound;
         currentRound = new GameRoundModel();
         currentRound.round = (lastRound != null ? lastRound.round : 0) + 1; // start with round 1
-        User nextPlayer = selectNextRoundUser();
+        nextPlayer = selectNextRoundUser();
         //for cheatfunction
         nextPlayer.setCheated(false);
         currentRound.currentUserId = nextPlayer.getId();
@@ -108,7 +109,7 @@ public class GameEngineServer {
             currentRound.modelJson = gson.toJson(currentGame);
         }
         //for cheatfunction
-        User lastPlayer = nextPlayer;
+        lastPlayer = nextPlayer;
         dataProvider.startNewGame(currentRound);
         isOverTime = false;
         miniGameLost = false;
@@ -156,22 +157,9 @@ public class GameEngineServer {
 //                .start();
 //    }
 
- /* for Cheatfunction
-    public void pauseCountDown() {
-        timer.cancel();
-        nextPlayer.setCheated(true);
-    }
-
-    public void resumeCountDown(){
-        timer = startCountDown(timeRemaining);
-    }
-
-    public void onTick(long millisUntilFinished) {
-       if (listener != null) {
-           listener.onTimeTick(millisUntilFinished);
-       }
-       timeRemaining = millisUntilFinished;
-    }*/
+//    public void onTick(long millisUntilFinished) {
+//        // unused
+//    }
 
 //    public void onFinish() {
 //        isOverTime = true;
@@ -213,5 +201,28 @@ public class GameEngineServer {
     public User[] getRoundResult() {
         return new User[0];
     }
+
+    public void setClientCheated(String userId) {
+        if (userId.equals(currentRound.currentUserId)) {
+            nextPlayer.setCheated(true);
+        }
+    }
+
+    public void detectCheating(String userId) {
+        if (userId.equals(currentRound.currentUserId)) {
+            boolean cheated = lastPlayer.hasCheated();
+            if (cheated) {
+                lastPlayer.setCheatDetected(true);
+                //TODO send to all cheating of player detected
+                //TODO stop game for cheating player
+            } else {
+                nextPlayer.looseLife();
+                if (nextPlayer.getLife()==0){
+                    //TODO stop game for this player
+                }
+            }
+        }
+    }
+
 
 }

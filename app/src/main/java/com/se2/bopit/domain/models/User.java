@@ -9,6 +9,7 @@ public class User implements Serializable {
     private int score = 0;
     private boolean cheated;
     private boolean cheatDetected;
+    private int life = 3;
 
     public User(String id, String name) {
         this.id = id;
@@ -34,11 +35,11 @@ public class User implements Serializable {
         return score;
     }
 
-    public boolean hasCheated(){
+    public boolean hasCheated() {
         return cheated;
     }
 
-    public void setCheated(boolean cheated){
+    public void setCheated(boolean cheated) {
         this.cheated = cheated;
     }
 
@@ -46,7 +47,15 @@ public class User implements Serializable {
         return cheatDetected;
     }
 
-    public void setCheatDetected(boolean cheatDetected){
+    public void setCheatDetected(boolean cheatDetected) {
         this.cheatDetected = cheatDetected;
+    }
+
+    public void looseLife() {
+        life--;
+    }
+
+    public int getLife() {
+        return life;
     }
 }

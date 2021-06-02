@@ -92,10 +92,8 @@ public class GameActivity extends BaseActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    //TODO change to GameEngineServer
                     engine.pauseCountDown();
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    //TODO change to GameEngineServer
                     engine.resumeCountDown();
                 }
                 return false;
