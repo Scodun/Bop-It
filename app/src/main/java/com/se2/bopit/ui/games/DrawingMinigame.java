@@ -2,42 +2,30 @@ package com.se2.bopit.ui.games;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Path;
-import android.graphics.RectF;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import com.se2.bopit.R;
+import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.TextToSpeech;
-import com.se2.bopit.domain.interfaces.GameListener;
-import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.domain.drawingminigame.DrawingGameModel;
 import com.se2.bopit.ui.DrawTouchPathCanvas;
+import com.se2.bopit.ui.MiniGameFragment;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class DrawingMinigame extends Fragment implements MiniGame {
+public class DrawingMinigame extends MiniGameFragment<DrawingGameModel> {
 
     private static final ArrayList<Integer> possibleAnswersResourceIds = initializeResourceIds();
 
-    private GameListener listener;
-    private static final int ERROR = 150;
-
     public DrawingMinigame() {
-        super(R.layout.fragment_button_component);
-    }
-
-    @Override
-    public void setGameListener(GameListener listener) {
-        this.listener = listener;
+        super(new DrawingGameModel());
     }
 
     @Override
@@ -57,17 +45,6 @@ public class DrawingMinigame extends Fragment implements MiniGame {
         return view;
     }
 
-    public void checkShape(Bitmap solution, Path drawnPath) {
-        RectF bounds = new RectF();
-        drawnPath.computeBounds(bounds, false);
-
-        float heightDifference = solution.getHeight() - (bounds.bottom - bounds.top);
-        float widthDifference = solution.getWidth() - (bounds.right - bounds.left);
-
-        if (Math.abs(heightDifference) < ERROR && Math.abs(widthDifference) < ERROR)
-            listener.onGameResult(true);
-    }
-
     private static ArrayList<Integer> initializeResourceIds() {
         ArrayList<Integer> resourceIds = new ArrayList<>();
 
@@ -77,4 +54,10 @@ public class DrawingMinigame extends Fragment implements MiniGame {
 
         return resourceIds;
     }
+
+    @Override
+    public GameModel<?> getModel() {
+        return null;
+    }
+
 }

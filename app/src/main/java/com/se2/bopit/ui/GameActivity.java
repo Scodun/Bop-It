@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -15,9 +16,11 @@ import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
 import com.se2.bopit.domain.GameEngine;
+import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.SoundEffects;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.ui.providers.GameEngineProvider;
 import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
 import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
@@ -26,6 +29,9 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class GameActivity extends BaseActivity {
+    static final String TAG = GameActivity.class.getSimpleName();
+
+    public static final String GAME_MODE = "gameMode";
 
     //views
     ProgressBar timeBar;
@@ -37,9 +43,11 @@ public class GameActivity extends BaseActivity {
     //cheatButton for testing
     Button cheatButton;
 
+    GameMode gameMode;
+
     // providers
-    MiniGamesRegistry miniGamesProvider = MiniGamesRegistry.getInstance();
-    AndroidPlatformFeaturesProvider platformFeaturesProvider = new AndroidPlatformFeaturesProvider();
+    //MiniGamesRegistry miniGamesProvider = MiniGamesRegistry.getInstance();
+    //AndroidPlatformFeaturesProvider platformFeaturesProvider = new AndroidPlatformFeaturesProvider();
 
     // shared preferences
     private static final String MYPREF = "myCustomSharedPref";
@@ -59,10 +67,15 @@ public class GameActivity extends BaseActivity {
 
 
         //start game Engine and register listeners
+        Intent intent = getIntent();
+        if(intent.hasExtra(GAME_MODE)) {
+            gameMode = (GameMode) intent.getSerializableExtra(GAME_MODE);
+        } else {
+            Log.w(TAG, "Fallback to default game mode");
+            gameMode = GameMode.SINGLE_PLAYER;
+        }
 
-        engine = new GameEngine(miniGamesProvider, platformFeaturesProvider, gameEngineListener);
-
-        engine.startNewGame();
+        engine = GameEngineProvider.getInstance().create(gameMode, gameEngineListener);
 
         rand = new Random();
         colors = new ArrayList<>(
@@ -86,6 +99,8 @@ public class GameActivity extends BaseActivity {
                     return false;
             }
         });
+
+        engine.startNewGame();
     }
 
     private final GameEngineListener gameEngineListener = new GameEngineListener() {

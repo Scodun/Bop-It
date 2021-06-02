@@ -2,24 +2,24 @@ package com.se2.bopit.ui.providers;
 
 import android.content.Context;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.util.Log;
 
+import androidx.annotation.RequiresApi;
+
+import com.google.gson.Gson;
+import com.se2.bopit.domain.GameModel;
+import com.se2.bopit.domain.GameRoundModel;
 import com.se2.bopit.domain.GameRuleItemModel;
 import com.se2.bopit.domain.GameRules;
 import com.se2.bopit.domain.annotations.RequireSensor;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
 import com.se2.bopit.exception.GameCreationException;
-import com.se2.bopit.ui.games.ColorButtonMiniGame;
-import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
-import com.se2.bopit.ui.games.ImageButtonMinigame;
-import com.se2.bopit.ui.games.PlacePhoneMiniGame;
-import com.se2.bopit.ui.games.RightButtonCombination;
-import com.se2.bopit.ui.games.ShakePhoneMinigame;
-import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
-import com.se2.bopit.ui.games.VolumeButtonMinigame;
-import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
+import com.se2.bopit.ui.games.*;
 
+import java.lang.reflect.Constructor;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,7 +40,8 @@ public class MiniGamesRegistry implements MiniGamesProvider {
             ShakePhoneMinigame.class,
             PlacePhoneMiniGame.class,
             CoverLightSensorMiniGame.class,
-            VolumeButtonMinigame.class
+            VolumeButtonMinigame.class,
+            DrawingMinigame.class
     };
 
     final Map<Integer, Boolean> availableSensorTypes = new HashMap<>();
@@ -62,6 +63,7 @@ public class MiniGamesRegistry implements MiniGamesProvider {
         return instance;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public void checkAvailability(Context context) {
         if (!availableSensorTypes.isEmpty())
             return; // already checked
@@ -104,6 +106,42 @@ public class MiniGamesRegistry implements MiniGamesProvider {
 
         lastGameType = item;
         return createMiniGame(item);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
+    @Override
+    public MiniGame createMiniGame(GameRoundModel round) {
+        try {
+            Class<?> cls = Class.forName("com.se2.bopit.ui.games." + round.gameType);
+            Object model;
+            if(round.modelType != null && round.modelJson != null) {
+                Class<?> modelType = Class.forName("com.se2.bopit.domain." + round.modelType);
+                Gson gson = new Gson();
+                model = gson.fromJson(round.modelJson, modelType);
+            } else {
+                model = null;
+            }
+
+            Constructor<?> constructor = null;
+            if(model != null) {
+                constructor = Arrays.stream(cls.getConstructors())
+                        .filter(c -> c.getParameterTypes().length == 1
+                                && c.getParameterTypes()[0].isInstance(model))
+                        .findFirst().orElse(null);
+            }
+            if(constructor != null) {
+                return (MiniGame) constructor.newInstance(model);
+            }
+
+            // fallback with drawback - games may be not the same!!!
+            return (MiniGame) cls
+                    .getDeclaredConstructor()
+                    .newInstance();
+        } catch (Exception ex) {
+            String msg = "Error creating minigame from model: " + round.gameType;
+            Log.e(TAG, msg, ex);
+            throw new GameCreationException(msg, ex);
+        }
     }
 
     MiniGame createMiniGame(GameRuleItemModel model) {

@@ -8,7 +8,7 @@ import java.util.List;
 public abstract class MultipleChoiceGameModel<M extends ResponseModel> extends GameModel<M> {
     public String challenge;
 
-    public M correctResponse;
+    public transient M correctResponse;
 
     public List<M> responses;
 
@@ -34,9 +34,11 @@ public abstract class MultipleChoiceGameModel<M extends ResponseModel> extends G
     }
 
     @Override
-    public boolean handleResponse(M response) {
-        boolean result = checkResponse(response);
-        listener.onGameResult(result);
+    public boolean handleResponse(Object response) {
+        boolean result = response != null && checkResponse((M)response);
+        if(listener != null) {
+            listener.onGameResult(result);
+        }
         return result;
     }
 }

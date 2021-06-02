@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.GameMode;
 
 public class GamemodeSelectActivity extends BaseActivity {
 
@@ -37,7 +38,8 @@ public class GamemodeSelectActivity extends BaseActivity {
 
     private void initializeListeners() {
         singleplayerButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, GameActivity.class));
+            startActivity(new Intent(this, GameActivity.class)
+                    .putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER));
         });
 
         localMultiplayerButton.setOnClickListener(v -> {
