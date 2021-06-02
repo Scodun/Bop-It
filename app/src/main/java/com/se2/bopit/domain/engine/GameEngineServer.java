@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 /**
  * GameEngine Server.
- *
+ * <p>
  * This class is neither access UI nor is accessed by UI.
  * GameEngine communicates with Server via DataProvider
  */
@@ -44,7 +44,9 @@ public class GameEngineServer {
     boolean isOverTime = false;
     boolean miniGameLost = false;
     boolean lifecycleCancel = false;
-//    CountDownTimer timer;
+    //    CountDownTimer timer;
+    //for cheatfunction
+    private long timeRemaining;
 
     MiniGamesProvider miniGamesProvider;
     PlatformFeaturesProvider platformFeaturesProvider;
@@ -66,7 +68,7 @@ public class GameEngineServer {
     public void readyToStart(String userId) {
         usersReady.add(userId);
 
-        if(usersReady.size() == users.size()) {
+        if (usersReady.size() == users.size()) {
             Log.d(TAG, "All players ready, starting round...");
             startNewGame();
         }
@@ -94,15 +96,19 @@ public class GameEngineServer {
         currentRound = new GameRoundModel();
         currentRound.round = (lastRound != null ? lastRound.round : 0) + 1; // start with round 1
         User nextPlayer = selectNextRoundUser();
+        //for cheatfunction
+        nextPlayer.setCheated(false);
         currentRound.currentUserId = nextPlayer.getId();
         long time = (long) (Math.exp(-nextPlayer.getScore() * 0.08 + 7) + 2000);
         currentRound.time = time;
         currentRound.gameType = minigame.getClass().getSimpleName();
         currentGame = minigame.getModel();
-        if(currentGame != null) {
+        if (currentGame != null) {
             currentRound.modelType = currentGame.getClass().getSimpleName();
             currentRound.modelJson = gson.toJson(currentGame);
         }
+        //for cheatfunction
+        User lastPlayer = nextPlayer;
         dataProvider.startNewGame(currentRound);
         isOverTime = false;
         miniGameLost = false;
@@ -150,9 +156,22 @@ public class GameEngineServer {
 //                .start();
 //    }
 
-//    public void onTick(long millisUntilFinished) {
-//        // unused
-//    }
+ /* for Cheatfunction
+    public void pauseCountDown() {
+        timer.cancel();
+        nextPlayer.setCheated(true);
+    }
+
+    public void resumeCountDown(){
+        timer = startCountDown(timeRemaining);
+    }
+
+    public void onTick(long millisUntilFinished) {
+       if (listener != null) {
+           listener.onTimeTick(millisUntilFinished);
+       }
+       timeRemaining = millisUntilFinished;
+    }*/
 
 //    public void onFinish() {
 //        isOverTime = true;
@@ -174,11 +193,11 @@ public class GameEngineServer {
 
     public int sendGameResult(String userId, boolean result, ResponseModel responseModel) {
         int score = 0;
-        if(!isOverTime && !miniGameLost) {
+        if (!isOverTime && !miniGameLost) {
 //            timer.cancel();
 
             boolean correct = responseModel != null ? currentGame.handleResponse(responseModel) : result;
-            if(correct)
+            if (correct)
                 score = 1;
             dataProvider.notifyGameResult(correct, responseModel);
         } else {

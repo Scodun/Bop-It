@@ -1,5 +1,6 @@
 package com.se2.bopit.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -40,7 +41,6 @@ public class GameActivity extends BaseActivity {
     ArrayList<Integer> colors;
     GameEngine engine;
     boolean gameEnd = false;
-    //cheatButton for testing
     Button cheatButton;
 
     GameMode gameMode;
@@ -53,6 +53,7 @@ public class GameActivity extends BaseActivity {
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_EFFECT = "effect";
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,13 +63,12 @@ public class GameActivity extends BaseActivity {
         timeBar = findViewById(R.id.timeBar);
         scoreView = findViewById(R.id.scoreView);
 
-        //cheatButton for testing
         cheatButton = findViewById(R.id.cheatButton);
 
 
         //start game Engine and register listeners
         Intent intent = getIntent();
-        if(intent.hasExtra(GAME_MODE)) {
+        if (intent.hasExtra(GAME_MODE)) {
             gameMode = (GameMode) intent.getSerializableExtra(GAME_MODE);
         } else {
             Log.w(TAG, "Fallback to default game mode");
@@ -87,16 +87,18 @@ public class GameActivity extends BaseActivity {
                 )
         );
 
-//cheatbutton for testing ontouchlistener
+        //cheatbutton ontouchlistener
         cheatButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN){
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    //TODO change to GameEngineServer
                     engine.pauseCountDown();
-                } else if (event.getAction() == MotionEvent.ACTION_UP){
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    //TODO change to GameEngineServer
                     engine.resumeCountDown();
                 }
-                    return false;
+                return false;
             }
         });
 
