@@ -40,13 +40,7 @@ public class GameEngine {
     /**
      * Starts a new Minigame
      * Calls getTimeForMinigame to initialize the Time
-     * This time will be used for the countdown:
-     * Game 1   Time: 3096 ms
-     * Game 10  Time: 2500 ms
-     * Game 20  Time: 2221 ms
-     * Game 30  Time: 2100 ms
-     * Game 50  Time: 2020 ms
-     * Game 100 Time: 2000 ms
+     * This time will be used for the countdown.
      * <p>
      * Calls the MainActivity onGameStart Listener to display the Fragment
      * Sets the GameListener for the Minigame
@@ -148,6 +142,14 @@ public class GameEngine {
             return (long) (Math.exp(-this.score*0.06+7.6)+1000);
         }
         else{
+        /*
+        *Score 1   Time: 3096 ms
+        *Score 10  Time: 2500 ms
+        *Score 20  Time: 2221 ms
+        *Score 30  Time: 2100 ms
+        *Score 50  Time: 2020 ms
+        *Score 100 Time: 2000 ms
+        */
             return (long) (Math.exp(-this.score * 0.08 + 7) + 2000);
         }
     }
