@@ -32,6 +32,8 @@ public class WinLossActivity extends BaseActivity {
 
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_SCORE = "highscore";
+    private static final String PREF_KEY_SCORE_MEDIUM = "highscore2";
+    private static final String PREF_KEY_SCORE_HARD = "highscore3";
 
 
     @Override
@@ -50,12 +52,21 @@ public class WinLossActivity extends BaseActivity {
 
     private void setPrefHighscore() {
         SharedPreferences customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
-        int lastHighscore = customSharedPreferences.getInt(PREF_KEY_SCORE, 0);
-        if (score > lastHighscore) {
-            SharedPreferences.Editor editor = customSharedPreferences.edit();
+        int lastHighscoreEasy = customSharedPreferences.getInt(PREF_KEY_SCORE, 0);
+        int lastHighscoreMedium = customSharedPreferences.getInt(PREF_KEY_SCORE_MEDIUM,0);
+        int lastHighscoreHard = customSharedPreferences.getInt(PREF_KEY_SCORE_HARD,0);
+        SharedPreferences.Editor editor = customSharedPreferences.edit();
+
+        if (score > lastHighscoreEasy && DifficultyActivity.difficulty.equals("easy")) {
             editor.putInt(PREF_KEY_SCORE, score);
-            editor.apply();
         }
+        else if(score > lastHighscoreMedium && DifficultyActivity.difficulty.equals("medium")){
+            editor.putInt(PREF_KEY_SCORE_MEDIUM, score);
+            }
+        else if(score > lastHighscoreHard && DifficultyActivity.difficulty.equals("hard")){
+            editor.putInt(PREF_KEY_SCORE_HARD, score);
+        }
+        editor.apply();
     }
 
     private void updateHighscore() {
