@@ -212,12 +212,13 @@ public class GameEngineServer {
         if (userId.equals(currentRound.currentUserId)) {
             boolean cheated = lastPlayer.hasCheated();
             if (cheated) {
-                lastPlayer.setCheatDetected(true);
                 //TODO send to all cheating of player detected
                 //TODO stop game for cheating player
             } else {
                 nextPlayer.looseLife();
+                //TODO send to all cheating detection failed
                 if (nextPlayer.getLife()==0){
+                    //TODO send to all cheating detection failed player lost all lifes
                     //TODO stop game for this player
                 }
             }

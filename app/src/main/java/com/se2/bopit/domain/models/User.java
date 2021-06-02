@@ -8,14 +8,12 @@ public class User implements Serializable {
     private final String name;
     private int score = 0;
     private boolean cheated;
-    private boolean cheatDetected;
     private int life = 3;
 
     public User(String id, String name) {
         this.id = id;
         this.name = name;
         cheated = false;
-        cheatDetected = false;
     }
 
     public void addScore() {
@@ -41,14 +39,6 @@ public class User implements Serializable {
 
     public void setCheated(boolean cheated) {
         this.cheated = cheated;
-    }
-
-    public boolean isCheatDetected() {
-        return cheatDetected;
-    }
-
-    public void setCheatDetected(boolean cheatDetected) {
-        this.cheatDetected = cheatDetected;
     }
 
     public void looseLife() {

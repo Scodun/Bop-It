@@ -67,12 +67,12 @@ public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvide
 
     @Override
     public void setClientCheated(String userId) {
-        server.setClientCheated(userId);
+        //TODO server.setClientCheated(userId); or unused?
     }
 
     @Override
     public void detectCheating(String userId) {
-        server.detectCheating(userId);
+        //TODO server.detectCheating(userId); or unused?
     }
 
 }

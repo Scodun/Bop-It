@@ -106,7 +106,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
                 .addOnSuccessListener(
                         (Void unused) -> {
                             isHost = true;
-                            connectedUsers.add(new User("0",username));
+                            connectedUsers.add(new User("0", username));
                             sendOnlinePlayers();
                             lobbyListener.onStatusChange("Advertising start");
                         })
@@ -292,7 +292,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
         if (isHost) {
             ArrayList<String> users = new ArrayList<>();
             for (User connected : connectedUsers) {
-                if(!connected.getId().equals("0"))
+                if (!connected.getId().equals("0"))
                     users.add(connected.getId());
             }
             return users;
@@ -316,7 +316,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void readyToStart(String userId) {
-        if(isHost) {
+        if (isHost) {
             gameEngineServer.readyToStart(userId);
         } else {
             getConnectionsClient().sendPayload(hostEndpointId,
@@ -326,7 +326,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public void startNewGame(GameRoundModel roundModel) {
-        if(isHost) {
+        if (isHost) {
             gameEngineClient.startNewGame(roundModel);
         } else {
             getConnectionsClient().sendPayload(getConnectedUserIds(),
@@ -336,7 +336,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public void sendGameResult(String userId, boolean result, ResponseModel responseModel) {
-        if(isHost) {
+        if (isHost) {
             gameEngineServer.sendGameResult(userId, result, responseModel);
         } else {
             getConnectionsClient().sendPayload(hostEndpointId,
@@ -346,8 +346,8 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public void notifyGameResult(boolean result, ResponseModel responseModel) {
-        if(isHost) {
-           gameEngineClient.notifyGameResult(result, responseModel);
+        if (isHost) {
+            gameEngineClient.notifyGameResult(result, responseModel);
         } else {
             getConnectionsClient().sendPayload(getConnectedUserIds(),
                     wrapPayload(NearbyPayload.NOTIFY_ROUND_RESULT, result));
@@ -356,7 +356,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public void stopCurrentGame(String userId) {
-        if(isHost) {
+        if (isHost) {
             gameEngineServer.stopCurrentGame(userId);
         } else {
             getConnectionsClient().sendPayload(hostEndpointId,
@@ -368,6 +368,26 @@ public class NearbyDataProvider extends DataProviderStrategy {
     public User[] getRoundResult() {
         // TODO
         return new User[0];
+    }
+
+    @Override
+    public void setClientCheated(String userId) {
+        if (isHost) {
+            gameEngineServer.setClientCheated(userId);
+        }else {
+            getConnectionsClient().sendPayload(getConnectedUserIds(),
+                    wrapPayload(NearbyPayload.SET_CLIENT_CHEATED, userId));
+        }
+    }
+
+    @Override
+    public void detectCheating(String userId) {
+        if (isHost) {
+            gameEngineServer.detectCheating(userId);
+        }else {
+            getConnectionsClient().sendPayload(getConnectedUserIds(),
+                    wrapPayload(NearbyPayload.DETECT_CHEATING, userId));
+        }
     }
 
 }
