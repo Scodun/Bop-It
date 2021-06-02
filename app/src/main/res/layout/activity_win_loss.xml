@@ -30,7 +30,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.959"
 
-        app:fButtonColor="@color/darker_yellow"
+        app:fButtonColor="@color/primary"
         fbutton:cornerRadius="100dp"
         android:textColor="@color/white"/>
 
@@ -47,7 +47,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.959"
 
-        app:fButtonColor="@color/darker_yellow"
+        app:fButtonColor="@color/primary"
         fbutton:cornerRadius="100dp"
         android:textColor="@color/white"/>
 
@@ -62,7 +62,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
 
-        app:fButtonColor="@color/darker_yellow"
+        app:fButtonColor="@color/primary"
         fbutton:cornerRadius="100dp"
         android:textColor="@color/white"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

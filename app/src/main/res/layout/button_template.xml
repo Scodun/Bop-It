@@ -9,7 +9,7 @@
     android:textSize="64sp"
     android:textStyle="bold"
     fbutton:cornerRadius="100dp"
-    fbutton:fButtonColor="@color/darker_yellow"
+    fbutton:fButtonColor="@color/primary"
     fbutton:shadowEnabled="true"
     fbutton:shadowHeight="6dp"/><!--    app:layout_constraintEnd_toEndOf="parent"-->
     <!--    app:layout_constraintStart_toStartOf="parent"-->

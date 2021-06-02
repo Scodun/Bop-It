@@ -14,7 +14,7 @@
         android:textColor="@color/white"
         android:paddingHorizontal="@dimen/setting_margin_divider"
         android:paddingVertical="@dimen/setting_padding_head"
-        android:background="@color/darker_yellow"
+        android:background="@color/primary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -203,7 +203,7 @@
             android:text="@string/resetButton"
             android:layout_marginRight="70dp"
             android:textColor="@color/white"
-            app:fButtonColor="@color/darker_yellow"
+            app:fButtonColor="@color/primary"
             fbutton:cornerRadius="100dp"
             fbutton:shadowEnabled="true"
             fbutton:shadowHeight="5dp"/>
@@ -215,7 +215,7 @@
             android:text="@string/saveButton"
             android:layout_toRightOf="@id/buttonReset"
             android:textColor="@color/white"
-            app:fButtonColor="@color/darker_yellow"
+            app:fButtonColor="@color/primary"
             fbutton:cornerRadius="100dp"
             fbutton:shadowEnabled="true"
             fbutton:shadowHeight="5dp"/>
