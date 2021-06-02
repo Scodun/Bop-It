@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.WinLossActivity">
+    <ImageView
+        android:id="@+id/waveViewWinLoss"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/wave_bg"
+        android:rotation="180"
+        android:scaleType="fitXY"
+        android:scaleY="2"
+        android:translationY="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_wave_1" />
 
     <TextView
         android:id="@+id/tv_score"
@@ -53,16 +68,43 @@
 
     <info.hoang8f.widget.FButton
         android:id="@+id/leaderboardButton"
-        android:layout_width="wrap_content"
+        android:layout_width="115dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="40dp"
-        android:text="Leaderboard"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="45dp"
+        android:text="Leaderboard Easy"
+        android:textColor="@color/primary"
+
+        app:fButtonColor="@color/white"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        fbutton:cornerRadius="100dp" />
 
-        app:fButtonColor="@color/primary"
-        fbutton:cornerRadius="100dp"
-        android:textColor="@color/white"/>
+    <info.hoang8f.widget.FButton
+        android:id="@+id/leaderboardMediumButton"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:text="Leaderboard Medium"
+
+        android:textColor="@color/primary"
+        app:fButtonColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/leaderboardHardButton"
+        app:layout_constraintStart_toEndOf="@+id/leaderboardButton"
+        app:layout_constraintTop_toTopOf="parent"
+        fbutton:cornerRadius="100dp" />
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/leaderboardHardButton"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="45dp"
+        android:layout_marginEnd="20dp"
+
+        android:text="Learderboard Hard"
+        android:textColor="@color/primary"
+        app:fButtonColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        fbutton:cornerRadius="100dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
