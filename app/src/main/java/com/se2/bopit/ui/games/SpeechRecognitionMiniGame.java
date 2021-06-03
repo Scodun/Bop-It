@@ -167,7 +167,7 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
     }
     /**
      * returns a random string from the
-     * answer set arraw
+     * answer set.
      */
     private String getRandomAnswer(){
         int rnd = new Random().nextInt(possibleAnswers.length);
