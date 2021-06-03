@@ -41,6 +41,11 @@ public interface GameEngineDataProvider {
     void stopCurrentGame(String userId);
 
     /**
+     * Server notofoes all clients about game over.
+     */
+    void notifyGameOver();
+
+    /**
      * Client polls the current round result. This call is expected between sendGameResult and startNewGame
      * @return
      */
@@ -49,4 +54,6 @@ public interface GameEngineDataProvider {
     void setGameEngineClient(GameEngine client);
 
     void setGameEngineServer(GameEngineServer server);
+
+    String getUserId();
 }
