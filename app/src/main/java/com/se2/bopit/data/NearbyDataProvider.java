@@ -284,7 +284,6 @@ public class NearbyDataProvider extends DataProviderStrategy {
     }
 
     private void sendOnlinePlayers() {
-        Gson gson = new Gson();
         lobbyListener.onUserLobbyChange(connectedUsers);
 
         Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(0, gson.toJson(connectedUsers))).getBytes());
