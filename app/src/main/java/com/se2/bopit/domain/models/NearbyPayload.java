@@ -18,6 +18,7 @@ public class NearbyPayload implements Serializable {
     public static final int SEND_ROUND_RESULT = 12;
     public static final int STOP_CURRENT_GAME = 13;
     public static final int NOTIFY_ROUND_RESULT = 14;
+    public static final int NOTIFY_GAME_OVER = 15;
 
     private String payload;
     private int type;
