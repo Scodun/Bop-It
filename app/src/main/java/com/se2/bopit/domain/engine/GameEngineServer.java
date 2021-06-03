@@ -45,11 +45,6 @@ public class GameEngineServer {
     GameRoundModel currentRound;
     GameModel<? extends ResponseModel> currentGame;
 
-//    boolean isOverTime = false;
-//    boolean miniGameLost = false;
-//    boolean lifecycleCancel = false;
-//    CountDownTimer timer;
-
     MiniGamesProvider miniGamesProvider;
     PlatformFeaturesProvider platformFeaturesProvider;
 
@@ -118,25 +113,6 @@ public class GameEngineServer {
         }
         Log.d(TAG, "sending currentRound to data provider: " + currentRound);
         dataProvider.startNewGame(currentRound);
-//        isOverTime = false;
-//        miniGameLost = false;
-        //timer = startCountDown(time);
-
-//        minigame.setPlatformFeaturesProvider(platformFeaturesProvider);
-//        minigame.setGameListener(result -> {
-//            timer.cancel();
-//            if (listener != null) {
-//                if (result && !isOverTime && !miniGameLost) {
-//                    score++;
-//                    listener.onScoreUpdate(score);
-//                    startNewGame();
-//                } else if (!lifecycleCancel) {
-//                    miniGameLost = true;
-//                    listener.onGameEnd(score);
-//                }
-//            }
-//
-//        });
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -155,39 +131,6 @@ public class GameEngineServer {
     private MiniGame getMiniGame() {
         return miniGamesProvider.createRandomMiniGame();
     }
-
-//    /**
-//     * @param time - countdown time in ms
-//     *             Starts a new countdown
-//     *             Calls the MainActivity onTimeTick, onFinish listener to display the time
-//     */
-//    private CountDownTimer startCountDown(long time) {
-//        return platformFeaturesProvider.createCountDownTimer(
-//                time, 5, this::onTick, this::onFinish)
-//                .start();
-//    }
-
-//    public void onTick(long millisUntilFinished) {
-//        // unused
-//    }
-
-//    public void onFinish() {
-//        isOverTime = true;
-////        if (listener != null)
-////            listener.onGameEnd(score);
-//        Log.d(TAG, "timeout");
-//        dataProvider.notifyGameResult(false, null);
-//    }
-
-
-//    public void stopCurrentGame() {
-//        if (!lifecycleCancel && !miniGameLost) {
-//            lifecycleCancel = true;
-////            timer.cancel();
-//            miniGameLost = true;
-//            //listener.onGameEnd(score);
-//        }
-//    }
 
     public void sendGameResult(String userId, boolean result, ResponseModel responseModel) {
         if(result) {

@@ -42,10 +42,6 @@ public class GameActivity extends BaseActivity {
 
     GameMode gameMode;
 
-    // providers
-    //MiniGamesRegistry miniGamesProvider = MiniGamesRegistry.getInstance();
-    //AndroidPlatformFeaturesProvider platformFeaturesProvider = new AndroidPlatformFeaturesProvider();
-
     // shared preferences
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_EFFECT = "effect";
