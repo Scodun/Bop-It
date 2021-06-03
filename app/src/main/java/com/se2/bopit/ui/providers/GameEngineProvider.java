@@ -1,6 +1,7 @@
 package com.se2.bopit.ui.providers;
 
 import android.os.Build;
+import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
@@ -19,6 +20,8 @@ import java.util.Collections;
 import java.util.stream.Collectors;
 
 public class GameEngineProvider {
+    static final String TAG = GameEngineProvider.class.getSimpleName();
+
     static GameEngineProvider instance;
     public static GameEngineProvider getInstance() {
         if(instance == null) {
@@ -27,13 +30,16 @@ public class GameEngineProvider {
         return instance;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public GameEngine create(GameMode gameMode, GameEngineListener gameListener) {
+        Log.d(TAG, "create game engine for " + gameMode);
         return create(gameMode,
                 MiniGamesRegistry.getInstance(),
                 new AndroidPlatformFeaturesProvider(),
                 gameListener);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     public GameEngine create(GameMode gameMode,
                              MiniGamesProvider gamesProvider,
                              PlatformFeaturesProvider platformFeaturesProvider,
@@ -55,7 +61,6 @@ public class GameEngineProvider {
     GameEngine createMultiPlayerHost(MiniGamesProvider gamesProvider, PlatformFeaturesProvider platformFeaturesProvider, GameEngineListener gameListener) {
         DataProviderContext context = DataProviderContext.getContext();
         GameEngine client = new GameEngine(gamesProvider, platformFeaturesProvider, gameListener, context.getDataProvider());
-        client.userId = context.getUserId();
         GameEngineServer server = new GameEngineServer(gamesProvider, platformFeaturesProvider,
                 context.getUsers().stream()
                         .collect(Collectors.toMap(User::getId, u -> u)),
@@ -67,18 +72,15 @@ public class GameEngineProvider {
                                  PlatformFeaturesProvider platformFeaturesProvider,
                                  GameEngineListener gameListener) {
         DataProviderContext context = DataProviderContext.getContext();
-        GameEngine client = new GameEngine(gamesProvider, platformFeaturesProvider, gameListener, context.getDataProvider());
-        client.userId = context.getUserId();
-        return client;
+        return new GameEngine(gamesProvider, platformFeaturesProvider, gameListener, context.getDataProvider());
     }
 
     GameEngine createSinglePlayer(MiniGamesProvider gamesProvider,
                                   PlatformFeaturesProvider platformFeaturesProvider,
                                   GameEngineListener gameListener) {
         SinglePlayerGameEngineDataProvider dataProvider = new SinglePlayerGameEngineDataProvider();
-        String singleUserId = "Player";
         GameEngine client = new GameEngine(gamesProvider, platformFeaturesProvider, gameListener, dataProvider);
-        client.userId = singleUserId;
+        String singleUserId = dataProvider.getUserId();
         GameEngineServer server = new GameEngineServer(gamesProvider, platformFeaturesProvider,
                 Collections.singletonMap(singleUserId, new User(singleUserId, singleUserId)), dataProvider);
         return client;

@@ -1,6 +1,7 @@
 package com.se2.bopit.domain;
 
 import android.os.CountDownTimer;
+import android.util.Log;
 
 import com.se2.bopit.data.SinglePlayerGameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
@@ -26,7 +27,7 @@ public class GameEngine {
     boolean miniGameLost = false;
     boolean lifecycleCancel = false;
     CountDownTimer timer;
-    boolean isMyTurn;
+    public boolean isMyTurn;
 
     MiniGamesProvider miniGamesProvider;
     PlatformFeaturesProvider platformFeaturesProvider;
@@ -39,6 +40,7 @@ public class GameEngine {
         this.listener = listener;
         this.dataProvider = dataProvider;
         dataProvider.setGameEngineClient(this);
+        this.userId = dataProvider.getUserId();
     }
 
     /**
@@ -78,15 +80,19 @@ public class GameEngine {
                         dataProvider.sendGameResult(userId, true, null); // TODO!
                         score++;
                         listener.onScoreUpdate(score);
-                        startNewGame();
+                        //startNewGame();
                     } else if (!lifecycleCancel) {
                         miniGameLost = true;
                         // TODO ?
                         dataProvider.sendGameResult(userId, false, null);
-                        listener.onGameEnd(score);
+                        //listener.onGameEnd(score);
                     }
                 }
 
+            });
+        } else {
+            minigame.setGameListener(result -> {
+                Log.d(TAG, "not your turn");
             });
         }
     }
@@ -109,27 +115,32 @@ public class GameEngine {
     }
 
     public void onFinish() {
-        isOverTime = true;
         if (isMyTurn && listener != null) {
-            listener.onGameEnd(score);
+            isOverTime = true;
+            //listener.onGameEnd(score);
+            Log.d(TAG, "timeout");
+            dataProvider.sendGameResult(userId, false, null);
         }
     }
 
 
     public void stopCurrentGame() {
-        if (!lifecycleCancel && !miniGameLost) {
-            dataProvider.stopCurrentGame(userId);
+        Log.d(TAG, "stopCurrentGame");
+        if (!lifecycleCancel) {
             lifecycleCancel = true;
             timer.cancel();
-            miniGameLost = true;
+            dataProvider.stopCurrentGame(userId);
             listener.onGameEnd(score);
         }
     }
 
     public void notifyGameResult(boolean result, ResponseModel responseModel) {
+        timer.cancel();
         if(!isMyTurn) {
-            timer.cancel();
             // TODO
+            listener.onScoreUpdate(score);
         }
+        if(!lifecycleCancel)
+            startNewGame();
     }
 }

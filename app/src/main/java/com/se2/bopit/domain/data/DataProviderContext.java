@@ -1,5 +1,7 @@
 package com.se2.bopit.domain.data;
 
+import android.util.Log;
+
 import com.se2.bopit.domain.interfaces.NetworkContextListener;
 import com.se2.bopit.domain.interfaces.NetworkGameListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
@@ -10,8 +12,11 @@ import java.util.List;
 import java.util.Map;
 
 public class DataProviderContext {
+    static final String TAG = DataProviderContext.class.getSimpleName();
+
     private DataProviderStrategy dataProvider;
     protected ArrayList<User> users;
+//    protected String currentUserId;
     
     private static DataProviderContext context;
 
@@ -35,6 +40,7 @@ public class DataProviderContext {
     }
 
     public void connectToEndpoint(String endpointId){
+        Log.d(TAG, "connectToEndpoint: " + endpointId);
         dataProvider.connectToEndpoint(endpointId);
     }
 
@@ -47,14 +53,17 @@ public class DataProviderContext {
     }
 
     public void setListener(NetworkGameListener listener){
+        Log.d(TAG, "setNetworkGameListener");
         dataProvider.setListener(listener);
     }
 
     public void setListener(NetworkLobbyListener listener){
+        Log.d(TAG, "setNetworkLobbyListener");
         dataProvider.setListener(listener);
     }
 
-    public void startGameCountdown(){
+    public void startGameCountdown() {
+        Log.d(TAG, "startGameCountdown");
         dataProvider.startGameCountdown();
     }
 
@@ -67,9 +76,12 @@ public class DataProviderContext {
         return dataProvider;
     }
 
-    public String getUserId() {
-        return users.get(0).getId(); // FIXME
-    }
+//    public String getUserId() {
+//
+//        String userId = users.get(0).getId(); // FIXME
+//        Log.d(TAG, "getUserId("+users+") => " + userId);
+//        return userId;
+//    }
 
     public List<User> getUsers() {
         return users;

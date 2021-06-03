@@ -40,8 +40,9 @@ public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvide
     }
 
     @Override
-    public void notifyGameResult(boolean b, ResponseModel result) {
-        // unused
+    public void notifyGameResult(boolean result, ResponseModel responseModel) {
+        Log.d(TAG, "notifyGameResult: " + result);
+        client.notifyGameResult(result, responseModel);
     }
 
     @Override
@@ -50,6 +51,13 @@ public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvide
         server.stopCurrentGame(userId);
     }
 
+    @Override
+    public void notifyGameOver() {
+        Log.d(TAG, "notifyGameOver");
+        client.stopCurrentGame();
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public User[] getRoundResult() {
         return server.getRoundResult();
@@ -65,4 +73,8 @@ public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvide
         this.server = server;
     }
 
+    @Override
+    public String getUserId() {
+        return "player";
+    }
 }
