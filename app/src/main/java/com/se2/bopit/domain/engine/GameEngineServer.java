@@ -144,6 +144,7 @@ public class GameEngineServer {
         List<User> pool = users.values().stream()
                 .filter(u -> activePlayers.contains(u.getId()))
                 .collect(Collectors.toList());
+        usersReady.clear();
         if(!pool.isEmpty()) {
             Collections.shuffle(pool);
             return pool.get(0);
