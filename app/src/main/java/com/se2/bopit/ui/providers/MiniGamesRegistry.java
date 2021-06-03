@@ -33,7 +33,7 @@ public class MiniGamesRegistry implements MiniGamesProvider {
             PlacePhoneMiniGame.class,
             CoverLightSensorMiniGame.class,
             VolumeButtonMinigame.class,
-            DrawingMinigame.class
+            SpeechRecognitionMiniGame.class
     };
 
     final Map<Integer, Boolean> availableSensorTypes = new HashMap<>();
