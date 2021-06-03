@@ -19,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
@@ -64,6 +65,10 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
         intentRecognizer = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intentRecognizer.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(view.getContext());
+        RecognizeSpeech();
+        return view;
+    }
+    public void RecognizeSpeech(){
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
             /**
              * @param params
@@ -159,9 +164,6 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
             }
         });
         speechRecognizer.startListening(intentRecognizer);
-
-
-        return view;
     }
     /**
      * returns a random string from the
