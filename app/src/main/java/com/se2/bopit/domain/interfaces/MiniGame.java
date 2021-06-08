@@ -1,5 +1,7 @@
 package com.se2.bopit.domain.interfaces;
 
+import com.se2.bopit.domain.GameModel;
+import com.se2.bopit.domain.ResponseModel;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 
 public interface MiniGame {
@@ -18,4 +20,6 @@ public interface MiniGame {
     default void setPlatformFeaturesProvider(PlatformFeaturesProvider provider) {
         // do nothing. override in games that use platform features!
     }
+
+    GameModel<? extends ResponseModel> getModel();
 }

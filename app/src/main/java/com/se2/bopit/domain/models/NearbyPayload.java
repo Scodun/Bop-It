@@ -9,6 +9,17 @@ import java.io.Serializable;
  * Payload: json string
  */
 public class NearbyPayload implements Serializable {
+    // lobby
+    public static final int USER_UPDATE = 0;
+
+    // game rounds
+    public static final int READY_TO_START = 10;
+    public static final int START_NEW_ROUND = 11;
+    public static final int SEND_ROUND_RESULT = 12;
+    public static final int STOP_CURRENT_GAME = 13;
+    public static final int NOTIFY_ROUND_RESULT = 14;
+    public static final int NOTIFY_GAME_OVER = 15;
+
     private String payload;
     private int type;
 
@@ -31,5 +42,10 @@ public class NearbyPayload implements Serializable {
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return "type=" + type + "; payload=" + payload;
     }
 }

@@ -10,6 +10,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.RightButton;
 import com.se2.bopit.domain.RightButtonCombinationModel;
 import com.se2.bopit.domain.TextToSpeech;
@@ -134,4 +135,10 @@ public class RightButtonCombination extends Fragment implements MiniGame {
             return rightButtonCombinationModel.secondCorrectResponse.rightButton;
         }
     }
+
+    @Override
+    public GameModel<?> getModel() {
+        return rightButtonCombinationModel;
+    }
+
 }

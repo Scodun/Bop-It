@@ -28,4 +28,9 @@ public class MiniGameFragment<M extends GameModel<?>> extends Fragment implement
     public void setPlatformFeaturesProvider(PlatformFeaturesProvider provider) {
         gameModel.setPlatformFeaturesProvider(provider);
     }
+
+    @Override
+    public GameModel<?> getModel() {
+        return gameModel;
+    }
 }

@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
@@ -80,6 +81,11 @@ public class ShakePhoneMinigame extends Fragment implements MiniGame {
             LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
             listener.onGameResult(true);
         }
+    }
+
+    @Override
+    public GameModel<?> getModel() {
+        return null;
     }
 }
 
