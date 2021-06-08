@@ -123,7 +123,7 @@ public class GameEngineServer {
         if (pool.isEmpty())
             return null;
 
-        if (new Random().nextInt(100) < CHANCE_TO_REPEAT && pool.contains(currentRound.currentUserId))
+        if (new Random().nextInt(100) < CHANCE_TO_REPEAT && users.get(currentRound.currentUserId).getLives() > 0)
             return users.get(currentRound.currentUserId);
 
         Collections.shuffle(pool);
