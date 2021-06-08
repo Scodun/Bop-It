@@ -25,6 +25,7 @@ import java.util.stream.Collectors;
  */
 public class GameEngineServer {
     static final String TAG = GameEngineServer.class.getSimpleName();
+    private final int CHANCE_TO_REPEAT = 5;
 
     final Map<String, User> users;
 
@@ -106,6 +107,7 @@ public class GameEngineServer {
             currentRound.modelType = currentGame.getClass().getSimpleName();
             currentRound.modelJson = gson.toJson(currentGame);
         }
+
         Log.d(TAG, "sending currentRound to data provider: " + currentRound);
         dataProvider.startNewGame(currentRound);
     }
@@ -115,12 +117,17 @@ public class GameEngineServer {
         List<User> pool = users.values().stream()
                 .filter(u -> u.getLives() > 0)
                 .collect(Collectors.toList());
+
         usersReady.clear();
-        if (!pool.isEmpty()) {
-            Collections.shuffle(pool);
-            return pool.get(0);
-        }
-        return null;
+
+        if (pool.isEmpty())
+            return null;
+
+        if (new Random().nextInt(100) < CHANCE_TO_REPEAT && pool.contains(currentRound.currentUserId))
+            return users.get(currentRound.currentUserId);
+
+        Collections.shuffle(pool);
+        return pool.get(0);
     }
 
     private MiniGame getMiniGame() {
