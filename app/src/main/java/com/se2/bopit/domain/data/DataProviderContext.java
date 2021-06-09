@@ -49,5 +49,7 @@ public class DataProviderContext {
         dataProvider.disconnect();
     }
 
+    public void sendReadyMessage() {dataProvider.sendReadyMessage(); }
 
+    public void sendReadyAnswer(boolean answer, String username) {dataProvider.sendReadyAnswer(answer, username); }
 }
