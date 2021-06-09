@@ -41,4 +41,20 @@
     <string name="persHighscore">0</string>
 
     <string name="challenge_cover_light_sensor">Cover light sensor!</string>
+
+    <!-- Achievement -->
+    <string name="easy100">0001</string>
+    <string name="medium100">0002</string>
+    <string name="hard100">0003</string>
+    <string name="easy1000">0004</string>
+    <string name="medium1000">0005</string>
+    <string name="hard1000">0006</string>
+    <string name="easy10000">0007</string>
+    <string name="medium10000">0008</string>
+    <string name="hard10000">0009</string>
+    <string name="gamesInRow10">0010</string>
+    <string name="gamesInRow25">0011</string>
+    <string name="gamesInRow50">0012</string>
+
+
 </resources>
