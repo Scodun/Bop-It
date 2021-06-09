@@ -332,7 +332,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
         if (isHost) {
             ArrayList<String> users = new ArrayList<>();
             for (User connected : connectedUsers) {
-                if(!connected.getId().equals("0"))
+                if (!connected.getId().equals("0"))
                     users.add(connected.getId());
             }
             return users;
@@ -429,6 +429,26 @@ public class NearbyDataProvider extends DataProviderStrategy {
         
         // TODO
         return new User[0];
+    }
+
+    @Override
+    public void setClientCheated(String userId) {
+        if (isHost) {
+            gameEngineServer.setClientCheated(userId);
+        }else {
+            getConnectionsClient().sendPayload(getConnectedUserIds(),
+                    wrapPayload(NearbyPayload.SET_CLIENT_CHEATED, userId));
+        }
+    }
+
+    @Override
+    public void detectCheating(String userId) {
+        if (isHost) {
+            gameEngineServer.detectCheating(userId);
+        }else {
+            getConnectionsClient().sendPayload(getConnectedUserIds(),
+                    wrapPayload(NearbyPayload.DETECT_CHEATING, userId));
+        }
     }
 
     @Override

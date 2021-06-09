@@ -1,10 +1,14 @@
 package com.se2.bopit.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -39,6 +43,7 @@ public class GameActivity extends BaseActivity {
     ArrayList<Integer> colors;
     GameEngine engine;
     boolean gameEnd = false;
+    Button cheatButton;
 
     GameMode gameMode;
 
@@ -46,6 +51,7 @@ public class GameActivity extends BaseActivity {
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_EFFECT = "effect";
 
+    @SuppressLint("ClickableViewAccessibility")
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +63,12 @@ public class GameActivity extends BaseActivity {
         timeBar = findViewById(R.id.timeBar);
         scoreView = findViewById(R.id.scoreView);
 
+        cheatButton = findViewById(R.id.cheatButton);
+
+
         //start game Engine and register listeners
         Intent intent = getIntent();
-        if(intent.hasExtra(GAME_MODE)) {
+        if (intent.hasExtra(GAME_MODE)) {
             gameMode = (GameMode) intent.getSerializableExtra(GAME_MODE);
         } else {
             Log.w(TAG, "Fallback to default game mode");
@@ -77,6 +86,19 @@ public class GameActivity extends BaseActivity {
                         ContextCompat.getColor(this, R.color.secondary_variant_2)
                 )
         );
+
+        //cheatbutton ontouchlistener
+        cheatButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    engine.pauseCountDown();
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    engine.resumeCountDown();
+                }
+                return false;
+            }
+        });
 
         engine.startNewGame();
     }
