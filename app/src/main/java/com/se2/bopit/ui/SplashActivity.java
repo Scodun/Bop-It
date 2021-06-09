@@ -118,6 +118,8 @@ public class SplashActivity extends BaseActivity {
                 Manifest.permission.ACCESS_COARSE_LOCATION);
         int loc2 = ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION);
+        int mic =  ContextCompat.checkSelfPermission(this,
+                Manifest.permission.RECORD_AUDIO);
         List<String> listPermissionsNeeded = new ArrayList<>();
 
         if (internet != PackageManager.PERMISSION_GRANTED) {
@@ -128,6 +130,9 @@ public class SplashActivity extends BaseActivity {
         }
         if (loc2 != PackageManager.PERMISSION_GRANTED) {
             listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
+        }
+        if (mic != PackageManager.PERMISSION_GRANTED) {
+            listPermissionsNeeded.add(Manifest.permission.RECORD_AUDIO);
         }
         if (!listPermissionsNeeded.isEmpty()) {
             ActivityCompat.requestPermissions((Activity) this, listPermissionsNeeded.toArray
