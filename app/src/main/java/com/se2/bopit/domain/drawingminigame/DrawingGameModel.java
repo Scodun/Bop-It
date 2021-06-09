@@ -21,6 +21,7 @@ public class DrawingGameModel extends GameModel<DrawingResponseModel> {
     @Override
     public boolean handleResponse(DrawingResponseModel response) {
         boolean result = checkResponse(response);
+
         if (result)
             listener.onGameResult(true);
         return result;

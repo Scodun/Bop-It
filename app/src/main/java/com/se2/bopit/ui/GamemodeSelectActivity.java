@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.GameMode;
 
 import info.hoang8f.widget.FButton;
 
@@ -41,7 +42,11 @@ public class GamemodeSelectActivity extends BaseActivity {
 
     private void initializeListeners() {
         singleplayerButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, DifficultyActivity.class));
+
+            //startActivity(new Intent(this, DifficultyActivity.class));
+            startActivity(new Intent(this, GameActivity.class)
+                    .putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER));
+
         });
 
         localMultiplayerButton.setOnClickListener(v -> {

@@ -19,6 +19,8 @@ public class SliderGameModel extends GameModel<SliderResponseModel> {
     @Override
     public boolean handleResponse(SliderResponseModel response) {
         boolean result = checkResponse(response);
+
+    
         if (result)
             listener.onGameResult(true);
         return result;

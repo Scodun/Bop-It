@@ -4,14 +4,18 @@ package com.se2.bopit.domain;
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
 
+import com.se2.bopit.data.SinglePlayerGameEngineDataProvider;
+import com.se2.bopit.domain.engine.GameEngineServer;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.domain.models.User;
 import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
 import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import java.util.Collections;
 import java.util.concurrent.Callable;
 
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
@@ -34,6 +38,7 @@ public class GameEngineTest {
             // simulate GameActivity
             MiniGamesRegistry miniGamesProvider = MiniGamesRegistry.getInstance();
             AndroidPlatformFeaturesProvider platformFeaturesProvider = new AndroidPlatformFeaturesProvider();
+            SinglePlayerGameEngineDataProvider dataProvider = new SinglePlayerGameEngineDataProvider();
 
             GameEngine engine = new GameEngine(miniGamesProvider, platformFeaturesProvider, new GameEngineListener() {
                 @Override
@@ -57,7 +62,12 @@ public class GameEngineTest {
                 public void onTimeTick(long time) {
                     assertTrue(time > 0);
                 }
-            });
+            }, dataProvider);
+            String singleUserId = "Player";
+            engine.userId = singleUserId;
+            GameEngineServer server = new GameEngineServer(miniGamesProvider, platformFeaturesProvider,
+                    Collections.singletonMap(singleUserId, new User(singleUserId, singleUserId)), dataProvider);
+
             engine.startNewGame();
         });
         await().atMost(5, SECONDS).until(onGameEnd());
