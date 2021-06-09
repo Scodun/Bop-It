@@ -49,6 +49,9 @@ public class GameEngineServer {
     boolean miniGameLost = false;
     boolean lifecycleCancel = false;
 
+    User nextPlayer;
+    User lastPlayer;
+
     MiniGamesProvider miniGamesProvider;
     PlatformFeaturesProvider platformFeaturesProvider;
 
@@ -97,7 +100,7 @@ public class GameEngineServer {
     public void startNewGame() {
         Log.d(TAG, "startNewGame round #" + round + "...");
         // GameRoundModel lastRound = currentRound;
-        User nextPlayer = selectNextRoundUser();
+        nextPlayer = selectNextRoundUser();
         if(nextPlayer == null) {
             Log.d(TAG, "No active users left -> game over after " + round + " round");
             dataProvider.notifyGameOver();

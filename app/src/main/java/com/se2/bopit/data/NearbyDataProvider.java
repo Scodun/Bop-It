@@ -451,6 +451,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
         }
     }
 
+    @Override
     public String getUserId() {
         return userId;
     }
