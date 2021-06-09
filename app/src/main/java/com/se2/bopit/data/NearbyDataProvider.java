@@ -3,6 +3,7 @@ package com.se2.bopit.data;
 import android.content.Context;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresPermission;
 
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
@@ -23,7 +24,10 @@ import com.se2.bopit.domain.interfaces.NetworkContextListener;
 import com.se2.bopit.domain.interfaces.NetworkGameListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.NearbyPayload;
+import com.se2.bopit.domain.models.ReadyMessage;
 import com.se2.bopit.domain.models.User;
+
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -185,6 +189,13 @@ public class NearbyDataProvider extends DataProviderStrategy {
                         contextListener.onGameStart(gson.fromJson(po.getPayload(), type));
                         lobbyListener.onGameStart();
                         break;
+                    case 7:
+                        lobbyListener.onReadyMessageReceived();
+                        break;
+                    case 8:
+                        ReadyMessage msg = gson.fromJson(po.getPayload(), ReadyMessage.class);
+                        lobbyListener.OnReadyAnswerReceived(msg.answer, msg.username);
+
 
                 }
             }
@@ -272,6 +283,34 @@ public class NearbyDataProvider extends DataProviderStrategy {
                     },
                     3000
             );
+        }
+    }
+    @Override
+    public void sendReadyMessage() {
+        if (isHost) {
+            Gson gson = new Gson();
+            Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(7, null)).getBytes());
+            Nearby.getConnectionsClient(context).sendPayload(getConnectedUserIds(), bytesPayload);
+
+
+        }
+    }
+    @Override
+    public void sendReadyAnswer(boolean answer, String username) {
+        if (!isHost) {
+            try{
+                JSONObject obj = new JSONObject();
+                obj.put("answer",answer);
+                obj.put("username",username);
+                Gson gson = new Gson();
+                Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(8, obj.toString())).getBytes());
+                Nearby.getConnectionsClient(context).sendPayload(hostEndpointId, bytesPayload);
+            }
+            catch(Exception ex){
+
+            }
+
+
         }
     }
 
