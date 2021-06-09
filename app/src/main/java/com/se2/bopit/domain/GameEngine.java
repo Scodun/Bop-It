@@ -77,7 +77,7 @@ public class GameEngine {
         }
 
         minigame.setPlatformFeaturesProvider(platformFeaturesProvider);
-        if(isMyTurn) {
+        if (isMyTurn) {
             minigame.setGameListener(result -> {
                 timer.cancel();
                 if (listener != null) {
@@ -95,6 +95,7 @@ public class GameEngine {
                 }
             });
         }
+    }
      /**
      * Sets the Time depending on the Minigame
      *
