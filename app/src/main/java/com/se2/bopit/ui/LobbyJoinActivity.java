@@ -1,6 +1,8 @@
 package com.se2.bopit.ui;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -97,6 +99,31 @@ public class LobbyJoinActivity extends BaseActivity {
 
         @Override
         public void onGameStart() {
+
+        }
+
+        @Override
+        public void onReadyMessageReceived() {
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            dataProvider.sendReadyAnswer(true, getIntent().getStringExtra("username"));
+                            break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            dataProvider.sendReadyAnswer(false, getIntent().getStringExtra("username"));
+                            break;
+                    }
+                }
+            };
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setMessage("Are you ready?").setPositiveButton("Yes", dialogClickListener)
+                    .setNegativeButton("No", dialogClickListener).show();
+        }
+
+        @Override
+        public void OnReadyAnswerReceived(boolean answer, String username) {
 
         }
 
