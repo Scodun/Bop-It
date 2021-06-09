@@ -84,15 +84,7 @@ public class GameEngineServer {
 
     /**
      * Starts a new Minigame
-     * Initialises the Time e^(-score*0.08+7)+2000
-     * This time will be used for the countdown:
-     * Game 1   Time: 3096 ms
-     * Game 10  Time: 2500 ms
-     * Game 20  Time: 2221 ms
-     * Game 30  Time: 2100 ms
-     * Game 50  Time: 2020 ms
-     * Game 100 Time: 2000 ms
-     * <p>
+     *
      * Calls the MainActivity onGameStart Listener to display the Fragment
      * Sets the GameListener for the Minigame
      */
@@ -209,21 +201,28 @@ public class GameEngineServer {
         }
     }
 
-    public void detectCheating(String userId) {
-        if (userId.equals(currentRound.currentUserId)) {
-            boolean cheated = lastPlayer.hasCheated();
+    public void detectCheating(String reporterUserId) {
+        Log.d("CHEATTERR rep",reporterUserId);
+        Log.d("CHEATTERR next",String.valueOf(activePlayers.size()));
+            boolean cheated = nextPlayer.hasCheated();
             if (cheated) {
-                //TODO send to all cheating of player detected
-                //TODO stop game for cheating player
+                activePlayers.remove(nextPlayer.getId());
+                users.remove(nextPlayer.getId());
+                dataProvider.cheaterDetected(nextPlayer.getId());
             } else {
-                nextPlayer.looseLife();
-                //TODO send to all cheating detection failed
+                User reporter = users.get(reporterUserId);
+                reporter.looseLife();
                 if (nextPlayer.getLife()==0){
+                    activePlayers.remove(reporterUserId);
+                    users.remove(reporterUserId);
                     //TODO send to all cheating detection failed player lost all lifes
                     //TODO stop game for this player
                 }
             }
-        }
+
+            if(activePlayers.size()<=1){
+                dataProvider.notifyGameOver();
+            }
     }
 
 

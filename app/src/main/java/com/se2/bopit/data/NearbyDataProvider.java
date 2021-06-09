@@ -232,6 +232,14 @@ public class NearbyDataProvider extends DataProviderStrategy {
                     case NearbyPayload.NOTIFY_GAME_OVER:
                         gameEngineClient.stopCurrentGame();
                         break;
+                    case NearbyPayload.SET_CLIENT_CHEATED:
+                        gameEngineServer.setClientCheated(endpointId);
+                        break;
+                    case NearbyPayload.DETECT_CHEATING:
+                        gameEngineServer.detectCheating(endpointId);
+                        break;
+                    case NearbyPayload.CHEATER_DETECTED:
+                        gameEngineClient.cheaterDetected(gson.fromJson(po.getPayload(), String.class));
 
                     default:
                         Log.e(TAG, "Unknown payload [from " + endpointId + "]: " + po);
@@ -290,6 +298,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
         Nearby.getConnectionsClient(context).sendPayload(getConnectedUserIds(), bytesPayload);
     }
 
+    @Override
     public void disconnect() {
         if (isHost) {
             Nearby.getConnectionsClient(context).stopAdvertising();
@@ -436,23 +445,33 @@ public class NearbyDataProvider extends DataProviderStrategy {
         if (isHost) {
             gameEngineServer.setClientCheated(userId);
         }else {
-            getConnectionsClient().sendPayload(getConnectedUserIds(),
+            getConnectionsClient().sendPayload(hostEndpointId,
                     wrapPayload(NearbyPayload.SET_CLIENT_CHEATED, userId));
         }
     }
 
     @Override
-    public void detectCheating(String userId) {
+    public void detectCheating() {
         if (isHost) {
             gameEngineServer.detectCheating(userId);
         }else {
-            getConnectionsClient().sendPayload(getConnectedUserIds(),
-                    wrapPayload(NearbyPayload.DETECT_CHEATING, userId));
+            getConnectionsClient().sendPayload(hostEndpointId,
+                    wrapPayload(NearbyPayload.DETECT_CHEATING));
         }
     }
 
     @Override
     public String getUserId() {
         return userId;
+    }
+
+
+    @Override
+    public void cheaterDetected(String cheaterId) {
+        if(isHost) {
+            Log.d(TAG, "Broadcast cheater detected");
+            getConnectionsClient().sendPayload(getConnectedUserIds(),
+                    wrapPayload(NearbyPayload.CHEATER_DETECTED, cheaterId));
+        }
     }
 }

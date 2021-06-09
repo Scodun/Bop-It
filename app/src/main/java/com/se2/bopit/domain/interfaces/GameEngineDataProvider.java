@@ -65,10 +65,13 @@ public interface GameEngineDataProvider {
     /**
      * Client detects cheating. Server stops Game for lastPlayer, if hasCheated = true.
      * Server take away one life from currentPlayer, if hasCheated = false.
-     * @param userId
      */
-    void detectCheating(String userId);
+    void detectCheating();
 
     String getUserId();
 
+    void disconnect();
+
+
+    void cheaterDetected(String userId);
 }
