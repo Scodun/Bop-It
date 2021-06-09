@@ -24,13 +24,13 @@
         android:gravity="center"
         app:srcCompat="@drawable/checkmark" />
 
-    <Button
-        android:id="@+id/kickButton"
-        android:layout_width="wrap_content"
-        android:layout_marginLeft="10pt"
-        android:layout_gravity="center_horizontal"
-        android:layout_height="match_parent"
-        android:text="Kick" />
+<!--    <Button-->
+<!--        android:id="@+id/kickButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_marginLeft="10pt"-->
+<!--        android:layout_gravity="center_horizontal"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:text="Kick" />-->
 
 
 </LinearLayout>

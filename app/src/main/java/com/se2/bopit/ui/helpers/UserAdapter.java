@@ -55,7 +55,14 @@ public class UserAdapter extends ArrayAdapter<User> {
 
         TextView usernameTV = (TextView) convertView.findViewById(R.id.userNameTV);
         ImageView readyIV = (ImageView) convertView.findViewById(R.id.readySign);
-        Button kickButton = (Button) convertView.findViewById(R.id.kickButton);
+//        Button kickButton = (Button) convertView.findViewById(R.id.kickButton);
+//        kickButton.setOnClickListener(new View.OnClickListener() {
+//
+//            @Override
+//            public void onClick(View view) {
+//
+//            }
+//        });
 
         usernameTV.setText(username);
 
