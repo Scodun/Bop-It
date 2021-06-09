@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.se2.bopit.R;
+import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.drawingminigame.DrawingGameModel;
 import com.se2.bopit.ui.DrawTouchPathCanvas;
@@ -53,4 +54,10 @@ public class DrawingMinigame extends MiniGameFragment<DrawingGameModel> {
 
         return resourceIds;
     }
+
+    @Override
+    public GameModel<?> getModel() {
+        return null;
+    }
+
 }

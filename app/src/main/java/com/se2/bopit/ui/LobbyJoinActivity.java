@@ -11,12 +11,14 @@ import android.widget.ListView;
 
 import com.se2.bopit.R;
 import com.se2.bopit.data.NearbyDataProvider;
+import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.data.DataProviderContext;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.ui.helpers.CustomToast;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
@@ -25,6 +27,7 @@ import java.util.stream.Collectors;
 
 
 public class LobbyJoinActivity extends BaseActivity {
+    static final String TAG = LobbyJoinActivity.class.getSimpleName();
 
     private DataProviderContext dataProvider;
     private ListView openEndpointsList;
@@ -59,7 +62,7 @@ public class LobbyJoinActivity extends BaseActivity {
         context = this;
 
         Intent intent = getIntent();
-        dataProvider = new DataProviderContext(new NearbyDataProvider(this, networkListener, intent.getStringExtra("username")));
+        dataProvider = DataProviderContext.create(new NearbyDataProvider(this, networkListener, intent.getStringExtra("username")));
         dataProvider.startDiscovery();
     }
 
@@ -84,7 +87,7 @@ public class LobbyJoinActivity extends BaseActivity {
         }
 
         @Override
-        public void onEndpointConnected(String id, ArrayList<String> names) {
+        public void onEndpointConnected(String id, List<String> names) {
 
         }
 
@@ -99,7 +102,8 @@ public class LobbyJoinActivity extends BaseActivity {
 
         @Override
         public void onGameStart() {
-
+            Log.d(TAG, "onGameStart");
+            startGame();
         }
 
         @Override
@@ -154,5 +158,11 @@ public class LobbyJoinActivity extends BaseActivity {
     public void onBackPressed() {
         super.onBackPressed();
         dataProvider.disconnect();
+    }
+
+    void startGame() {
+        Log.d(TAG, "startGame");
+        startActivity(new Intent(this, GameActivity.class)
+                .putExtra(GameActivity.GAME_MODE, GameMode.MULTI_PLAYER_CLIENT));
     }
 }

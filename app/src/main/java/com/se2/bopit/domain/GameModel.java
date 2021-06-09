@@ -5,13 +5,13 @@ import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 
 public abstract class GameModel<M extends ResponseModel> implements MiniGame {
-    protected GameListener listener;
+    protected transient GameListener listener;
 
-    protected PlatformFeaturesProvider platformFeaturesProvider;
+    protected transient PlatformFeaturesProvider platformFeaturesProvider;
 
     protected abstract boolean checkResponse(M response);
 
-    public abstract boolean handleResponse(M response);
+    public abstract boolean handleResponse(Object response);
 
     public GameListener getGameListener() {
         return listener;
@@ -26,4 +26,10 @@ public abstract class GameModel<M extends ResponseModel> implements MiniGame {
     public void setPlatformFeaturesProvider(PlatformFeaturesProvider platformFeaturesProvider) {
         this.platformFeaturesProvider = platformFeaturesProvider;
     }
+
+    @Override
+    public GameModel<M> getModel() {
+        return this;
+    }
+
 }
