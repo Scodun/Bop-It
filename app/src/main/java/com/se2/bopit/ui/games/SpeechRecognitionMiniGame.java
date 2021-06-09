@@ -1,7 +1,5 @@
 package com.se2.bopit.ui.games;
 
-import android.annotation.SuppressLint;
-//import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.speech.RecognitionListener;
@@ -19,7 +17,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
-import com.se2.bopit.domain.TextToSpeech;
+import com.se2.bopit.domain.GameModel;
+import com.se2.bopit.domain.ResponseModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
@@ -44,6 +43,11 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
     @Override
     public void setGameListener(GameListener listener) {
         this.listener = listener;
+    }
+
+    @Override
+    public GameModel<? extends ResponseModel> getModel() {
+        return null;
     }
 
     /**

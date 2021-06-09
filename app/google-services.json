@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "324785078100",
+    "project_id": "bopit-29512843",
+    "storage_bucket": "bopit-29512843.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:324785078100:android:817b7aaa026f3f01c412c1",
+        "android_client_info": {
+          "package_name": "com.se2.bopit"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "324785078100-imgu9rp5g22dvaqbuvv34ifs9i26p7mh.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCzTyJDwhpbeAxiIMQyDq8v2Ml9GRlPdhU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "324785078100-imgu9rp5g22dvaqbuvv34ifs9i26p7mh.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
