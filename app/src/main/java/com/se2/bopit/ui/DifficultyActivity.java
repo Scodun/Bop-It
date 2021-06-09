@@ -11,6 +11,7 @@ public class DifficultyActivity extends BaseActivity{
     FButton easy;
     FButton medium;
     FButton hard;
+    FButton back;
 
     public static String difficulty = "";
 
@@ -21,12 +22,19 @@ public class DifficultyActivity extends BaseActivity{
 
         initializeButtons();
         initializeOnClickListeners();
+
+        back.setOnClickListener(v -> {
+            startActivity(new Intent(this, GamemodeSelectActivity.class));
+        });
+
+
     }
 
     private void initializeButtons() {
         easy = findViewById(R.id.Easy);
         medium = findViewById(R.id.Medium);
         hard = findViewById(R.id.Hard);
+        back = findViewById(R.id.backToSelect);
     }
 
     private void initializeOnClickListeners() {
@@ -52,7 +60,7 @@ public class DifficultyActivity extends BaseActivity{
         this.finishAffinity();
     }
 
-    public void setDifficulty(String difficulty) {
+    public static void setDifficulty(String difficulty) {
         DifficultyActivity.difficulty = difficulty;
     }
 }
