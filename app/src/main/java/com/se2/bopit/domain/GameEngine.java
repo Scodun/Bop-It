@@ -15,11 +15,12 @@ import com.se2.bopit.ui.games.PlacePhoneMiniGame;
 import com.se2.bopit.ui.games.RightButtonCombination;
 import com.se2.bopit.ui.games.ShakePhoneMinigame;
 import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
+import com.se2.bopit.ui.games.SliderMinigame;
+import com.se2.bopit.ui.games.VolumeButtonMinigame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
 public class GameEngine {
     GameEngineListener listener;
-
 
     int score = 0;
     boolean isOverTime = false;
@@ -53,12 +54,12 @@ public class GameEngine {
         if (this.listener != null) {
             listener.onGameStart(minigame, time);
         }
-
         minigame.setPlatformFeaturesProvider(platformFeaturesProvider);
         minigame.setGameListener(result -> {
             timer.cancel();
             if (listener != null) {
                 if (result && !isOverTime && !miniGameLost) {
+                    setCounter(minigame);
                     score++;
                     listener.onScoreUpdate(score);
                     startNewGame();
@@ -208,5 +209,37 @@ public class GameEngine {
             listener.onGameEnd(score);
         }
     }
-
+    public void setCounter(MiniGame minigame){
+        if(minigame.getClass().equals(ImageButtonMinigame.class)){
+            MinigameAchievementCounters.counterImageButtonMinigame++;
+        }
+        else if(minigame.getClass().equals(SimpleTextButtonMiniGame.class)||
+                minigame.getClass().equals(WeirdTextButtonMiniGame.class)){
+            MinigameAchievementCounters.counterTextBasedMinigame++;
+        }
+        else if(minigame.getClass().equals(ShakePhoneMinigame.class)){
+            MinigameAchievementCounters.counterShakePhoneMinigame++;
+        }
+        else if(minigame.getClass().equals(PlacePhoneMiniGame.class)){
+            MinigameAchievementCounters.counterPlacePhoneMinigame++;
+        }
+        else if(minigame.getClass().equals(CoverLightSensorMiniGame.class)){
+            MinigameAchievementCounters.counterCoverLightSensorMinigame++;
+        }
+        else if(minigame.getClass().equals(ColorButtonMiniGame.class)){
+            MinigameAchievementCounters.counterColorButtonMinigame++;
+        }
+        else if(minigame.getClass().equals(SliderMinigame.class)){
+            MinigameAchievementCounters.counterSliderMinigame++;
+        }
+        else if(minigame.getClass().equals(DrawingMinigame.class)){
+            MinigameAchievementCounters.counterDrawingMinigame++;
+        }
+        else if(minigame.getClass().equals(VolumeButtonMinigame.class)){
+            MinigameAchievementCounters.counterVolumeButtonMinigame++;
+        }
+        else if(minigame.getClass().equals(RightButtonCombination.class)){
+            MinigameAchievementCounters.counterRightButtonsMinigame++;
+        }
+    }
 }
