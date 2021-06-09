@@ -17,6 +17,7 @@ import com.se2.bopit.ui.games.PlacePhoneMiniGame;
 import com.se2.bopit.ui.games.RightButtonCombination;
 import com.se2.bopit.ui.games.ShakePhoneMinigame;
 import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
+import com.se2.bopit.ui.games.SpeechRecognitionMiniGame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
 /**
@@ -166,6 +167,18 @@ public class GameEngine {
          */
         else if(miniGame.getClass().equals(ShakePhoneMinigame.class)){
             return (long) (Math.exp(-this.score*0.06+7.6)+1000);
+        }
+        /*
+         *Score 0   Time: 4480 ms
+         *Score 1	Time: 4197 ms
+         *Score 10	Time: 2596 ms
+         *Score 20  Time: 1903 ms
+         *Score 30  Time: 1648 ms
+         *Score 50	Time: 1520 ms
+         *Score 100	Time: 1500 ms
+         */
+        else if(miniGame.getClass().equals(SpeechRecognitionMiniGame.class)){
+            return (long) (Math.exp(-this.score*0.1+8)+1500);
         }
         else{
         /*
