@@ -1,5 +1,7 @@
 package com.se2.bopit.ui;
 
+import android.os.Bundle;
+
 import androidx.test.espresso.Espresso;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;

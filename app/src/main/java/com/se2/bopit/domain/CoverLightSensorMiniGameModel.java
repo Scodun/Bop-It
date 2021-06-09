@@ -2,6 +2,8 @@ package com.se2.bopit.domain;
 
 import android.hardware.Sensor;
 
+import com.google.gson.Gson;
+
 public class CoverLightSensorMiniGameModel extends SensorMiniGameModel {
 
     public static final int SENSOR_TYPE = Sensor.TYPE_LIGHT;
@@ -15,4 +17,5 @@ public class CoverLightSensorMiniGameModel extends SensorMiniGameModel {
     protected boolean checkResponse(SensorResponseModel response) {
         return response.values[0] < expectedResponse.values[0];
     }
+
 }

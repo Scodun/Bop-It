@@ -13,7 +13,11 @@ public class SimpleTextButtonMiniGame extends ButtonMiniGameFragment {
     private static final int NUMBER_ANSWERS = 3;
 
     public SimpleTextButtonMiniGame() {
-        super(ButtonMiniGameModel.createRandomGameModel(possibleAnswers, NUMBER_ANSWERS));
+        this(ButtonMiniGameModel.createRandomGameModel(possibleAnswers, NUMBER_ANSWERS));
+    }
+
+    public SimpleTextButtonMiniGame(ButtonMiniGameModel gameModel) {
+        super(gameModel);
     }
 
     private static ArrayList<ButtonModel> initializeButtonModels() {

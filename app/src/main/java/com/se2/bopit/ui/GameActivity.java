@@ -3,18 +3,23 @@ package com.se2.bopit.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
 import com.se2.bopit.domain.GameEngine;
+import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.SoundEffects;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.ui.providers.GameEngineProvider;
 import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
 import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
@@ -23,6 +28,9 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class GameActivity extends BaseActivity {
+    static final String TAG = GameActivity.class.getSimpleName();
+
+    public static final String GAME_MODE = "gameMode";
 
     //views
     ProgressBar timeBar;
@@ -32,16 +40,16 @@ public class GameActivity extends BaseActivity {
     GameEngine engine;
     boolean gameEnd = false;
 
-    // providers
-    MiniGamesRegistry miniGamesProvider = MiniGamesRegistry.getInstance();
-    AndroidPlatformFeaturesProvider platformFeaturesProvider = new AndroidPlatformFeaturesProvider();
+    GameMode gameMode;
 
     // shared preferences
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_EFFECT = "effect";
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
 
@@ -50,10 +58,15 @@ public class GameActivity extends BaseActivity {
         scoreView = findViewById(R.id.scoreView);
 
         //start game Engine and register listeners
+        Intent intent = getIntent();
+        if(intent.hasExtra(GAME_MODE)) {
+            gameMode = (GameMode) intent.getSerializableExtra(GAME_MODE);
+        } else {
+            Log.w(TAG, "Fallback to default game mode");
+            gameMode = GameMode.SINGLE_PLAYER;
+        }
 
-        engine = new GameEngine(miniGamesProvider, platformFeaturesProvider, gameEngineListener);
-
-        engine.startNewGame();
+        engine = GameEngineProvider.getInstance().create(gameMode, gameEngineListener);
 
         rand = new Random();
         colors = new ArrayList<>(
@@ -64,11 +77,14 @@ public class GameActivity extends BaseActivity {
                         ContextCompat.getColor(this, R.color.secondary_variant_2)
                 )
         );
+
+        engine.startNewGame();
     }
 
     private final GameEngineListener gameEngineListener = new GameEngineListener() {
         @Override
         public void onGameEnd(int score) {
+            Log.d(TAG, "onGameEnd");
             if (!gameEnd) {
                 gameEnd = true;
                 if (checkPref()) {
@@ -96,6 +112,8 @@ public class GameActivity extends BaseActivity {
 
         @Override
         public void onGameStart(MiniGame game, long time) {
+            Log.d(TAG, "onGameStart");
+            scoreView.setText(engine.isMyTurn ? "YOU" : "other");
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
                     .replace(R.id.fragment_container_view, (Fragment) game, null)
@@ -111,12 +129,14 @@ public class GameActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
+        Log.d(TAG, "onBackPressed");
         engine.stopCurrentGame();
         super.onBackPressed();
     }
 
     @Override
     public void onStop() {
+        Log.d(TAG, "onStop");
         engine.stopCurrentGame();
         super.onStop();
     }
