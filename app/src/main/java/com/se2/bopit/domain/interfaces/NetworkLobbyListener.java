@@ -21,4 +21,8 @@ public interface NetworkLobbyListener {
     void onGameStart();
 
     void onGameCountdownStart();
+
+    void onReadyMessageReceived();
+
+    void OnReadyAnswerReceived(boolean answer, String username);
 }
