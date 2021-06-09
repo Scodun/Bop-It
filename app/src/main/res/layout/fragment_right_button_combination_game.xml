@@ -2,9 +2,10 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto">
 
-    <Button
+    <info.hoang8f.widget.FButton
         android:id="@+id/pressUp"
         android:layout_width="200dp"
         android:layout_height="133dp"
@@ -14,9 +15,15 @@
         android:textSize="40sp"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        fbutton:fButtonColor="@color/primary"
+        fbutton:cornerRadius="100dp"
+        fbutton:shadowEnabled="true"
+        fbutton:shadowHeight="6dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
 
-    <Button
+    <info.hoang8f.widget.FButton
         android:id="@+id/pressDown"
         android:layout_width="200dp"
         android:layout_height="133dp"
@@ -25,7 +32,13 @@
         android:textSize="40sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+        fbutton:fButtonColor="@color/primary"
+        fbutton:cornerRadius="100dp"
+        fbutton:shadowEnabled="true"
+        fbutton:shadowHeight="6dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"/>
 
     <TextView
         android:id="@+id/textView2"
@@ -55,22 +68,34 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
-        <Button
+        <info.hoang8f.widget.FButton
             android:id="@+id/pressLeft"
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_marginEnd="5dp"
             android:layout_marginRight="5dp"
             android:text="@string/left"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            fbutton:fButtonColor="@color/primary"
+            fbutton:cornerRadius="100dp"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="6dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
 
-        <Button
+        <info.hoang8f.widget.FButton
             android:id="@+id/pressRight"
             android:layout_width="200dp"
             android:layout_height="match_parent"
             android:layout_marginStart="5dp"
             android:layout_marginLeft="5dp"
             android:text="@string/right"
-            android:textSize="40sp" />
+            android:textSize="40sp"
+            fbutton:fButtonColor="@color/primary"
+            fbutton:cornerRadius="100dp"
+            fbutton:shadowEnabled="true"
+            fbutton:shadowHeight="6dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"/>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
