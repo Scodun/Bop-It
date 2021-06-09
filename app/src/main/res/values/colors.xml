@@ -16,4 +16,7 @@
     <color name="green">#089404</color>
     <color name="grey">#808080</color>
     <color name="colorAccent">@color/secondary</color>
+    <color name="white_smoke">#F5F5F5</color>
+    <color name="light_grey">#D3D3D3</color>
+    <color name="darker_yellow">#E8A317</color>
 </resources>
