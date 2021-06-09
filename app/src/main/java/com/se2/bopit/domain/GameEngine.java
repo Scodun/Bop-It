@@ -3,7 +3,6 @@ package com.se2.bopit.domain;
 import android.os.CountDownTimer;
 import android.util.Log;
 
-import com.se2.bopit.data.SinglePlayerGameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
@@ -111,7 +110,7 @@ public class GameEngine {
 
     public void pauseCountDown() {
         timer.cancel();
-        dataProvider.setClientCheated(userId);
+        dataProvider.setClientCheated();
     }
 
     public void resumeCountDown(){
@@ -123,6 +122,10 @@ public class GameEngine {
             listener.onTimeTick(millisUntilFinished);
         }
         timeRemaining = millisUntilFinished;
+    }
+
+    public void cheatDetected(){
+
     }
 
     public void onFinish() {

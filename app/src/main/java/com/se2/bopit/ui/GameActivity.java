@@ -24,8 +24,6 @@ import com.se2.bopit.domain.SoundEffects;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.ui.providers.GameEngineProvider;
-import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
-import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,6 +42,7 @@ public class GameActivity extends BaseActivity {
     GameEngine engine;
     boolean gameEnd = false;
     Button cheatButton;
+    Button detectButton;
 
     GameMode gameMode;
 
@@ -62,17 +61,24 @@ public class GameActivity extends BaseActivity {
         //get Views
         timeBar = findViewById(R.id.timeBar);
         scoreView = findViewById(R.id.scoreView);
-
         cheatButton = findViewById(R.id.cheatButton);
+        detectButton = findViewById(R.id.detectButton);
 
 
         //start game Engine and register listeners
         Intent intent = getIntent();
-        if(intent.hasExtra(GAME_MODE)) {
+        if (intent.hasExtra(GAME_MODE)) {
             gameMode = (GameMode) intent.getSerializableExtra(GAME_MODE);
         } else {
             Log.w(TAG, "Fallback to default game mode");
             gameMode = GameMode.SINGLE_PLAYER;
+
+        }
+
+        //set visibility of cheat and detect button to gone in singleplayer mode
+        if(gameMode == GameMode.SINGLE_PLAYER){
+            cheatButton.setVisibility(View.GONE);
+            detectButton.setVisibility(View.GONE);
         }
 
         engine = GameEngineProvider.getInstance().create(gameMode, gameEngineListener);
@@ -87,7 +93,6 @@ public class GameActivity extends BaseActivity {
                 )
         );
 
-        //cheatbutton ontouchlistener
         cheatButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -96,6 +101,15 @@ public class GameActivity extends BaseActivity {
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
                     engine.resumeCountDown();
                 }
+                return false;
+            }
+        });
+
+        detectButton.setOnTouchListener(new View.OnTouchListener(){
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                engine.cheatDetected();
                 return false;
             }
         });

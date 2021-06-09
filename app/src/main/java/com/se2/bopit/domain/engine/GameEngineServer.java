@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 
 /**
  * GameEngine Server.
- *
+ * <p>
  * This class is neither access UI nor is accessed by UI.
  * GameEngine communicates with Server via DataProvider
  */
@@ -101,8 +101,8 @@ public class GameEngineServer {
     public void startNewGame() {
         Log.d(TAG, "startNewGame round #" + round + "...");
 //        GameRoundModel lastRound = currentRound;
-        User nextPlayer = selectNextRoundUser();
-        if(nextPlayer == null) {
+        nextPlayer = selectNextRoundUser();
+        if (nextPlayer == null) {
             Log.d(TAG, "No active users left -> game over after " + round + " round");
             dataProvider.notifyGameOver();
             return;
@@ -134,7 +134,7 @@ public class GameEngineServer {
                 .filter(u -> activePlayers.contains(u.getId()))
                 .collect(Collectors.toList());
         usersReady.clear();
-        if(!pool.isEmpty()) {
+        if (!pool.isEmpty()) {
             Collections.shuffle(pool);
             return pool.get(0);
         }
@@ -146,7 +146,7 @@ public class GameEngineServer {
     }
 
     public void sendGameResult(String userId, boolean result, ResponseModel responseModel) {
-        if(result) {
+        if (result) {
             Log.d(TAG, "User " + userId + " did the round #" + currentRound.round);
             users.get(userId)
                     .addScore();
@@ -159,7 +159,7 @@ public class GameEngineServer {
 
     public void stopCurrentGame(String userId) {
         Log.d(TAG, "Stop current game: " + userId);
-        if(users.remove(userId) != null) {
+        if (users.remove(userId) != null) {
             Log.d(TAG, "User " + userId + " left after round #" + currentRound.round);
         }
     }
@@ -168,32 +168,28 @@ public class GameEngineServer {
     public User[] getRoundResult() {
         return users.values()
                 .stream()
-                .sorted((u,v) -> Integer.compare(v.getScore(), u.getScore())) // sort by score
+                .sorted((u, v) -> Integer.compare(v.getScore(), u.getScore())) // sort by score
                 .toArray(User[]::new);
     }
 
-    public void setClientCheated(String userId) {
-        if (userId.equals(currentRound.currentUserId)) {
-            nextPlayer.setCheated(true);
-        }
+    public void setClientCheated() {
+        nextPlayer.setCheated(true);
+        Log.d(TAG, "set cheated " + nextPlayer.getId() + " " + nextPlayer.getName() + " " + nextPlayer.hasCheated());
     }
 
-    public void detectCheating(String userId) {
-        if (userId.equals(currentRound.currentUserId)) {
-            boolean cheated = lastPlayer.hasCheated();
-            if (cheated) {
-                //TODO send to all cheating of player detected
-                //TODO stop game for cheating player
-            } else {
-                nextPlayer.looseLife();
-                //TODO send to all cheating detection failed
-                if (nextPlayer.getLife()==0){
-                    //TODO send to all cheating detection failed player lost all lifes
-                    //TODO stop game for this player
-                }
+    public void detectCheating() {
+        boolean cheated = lastPlayer.hasCheated();
+        if (cheated) {
+            //TODO send to all cheating of player detected
+            //TODO stop game for cheating player
+        } else {
+            nextPlayer.looseLife();
+            //TODO send to all cheating detection failed
+            if (nextPlayer.getLife() == 0) {
+                //TODO send to all cheating detection failed player lost all lifes
+                //TODO stop game for this player
             }
         }
     }
-
 
 }

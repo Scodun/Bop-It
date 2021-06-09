@@ -232,6 +232,12 @@ public class NearbyDataProvider extends DataProviderStrategy {
                     case NearbyPayload.NOTIFY_GAME_OVER:
                         gameEngineClient.stopCurrentGame();
                         break;
+                    case NearbyPayload.SET_CLIENT_CHEATED:
+                        gameEngineServer.setClientCheated();
+                        break;
+                        case NearbyPayload.DETECT_CHEATING:
+                            gameEngineServer.detectCheating();
+
 
                     default:
                         Log.e(TAG, "Unknown payload [from " + endpointId + "]: " + po);
@@ -437,22 +443,22 @@ public class NearbyDataProvider extends DataProviderStrategy {
     }
 
     @Override
-    public void setClientCheated(String userId) {
+    public void setClientCheated() {
         if (isHost) {
-            gameEngineServer.setClientCheated(userId);
+            gameEngineServer.setClientCheated();
         }else {
             getConnectionsClient().sendPayload(getConnectedUserIds(),
-                    wrapPayload(NearbyPayload.SET_CLIENT_CHEATED, userId));
+                    wrapPayload(NearbyPayload.SET_CLIENT_CHEATED));
         }
     }
 
     @Override
-    public void detectCheating(String userId) {
+    public void detectCheating() {
         if (isHost) {
-            gameEngineServer.detectCheating(userId);
+            gameEngineServer.detectCheating();
         }else {
             getConnectionsClient().sendPayload(getConnectedUserIds(),
-                    wrapPayload(NearbyPayload.DETECT_CHEATING, userId));
+                    wrapPayload(NearbyPayload.DETECT_CHEATING));
         }
     }
 
