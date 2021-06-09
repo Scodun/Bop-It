@@ -127,9 +127,10 @@
     <info.hoang8f.widget.FButton
         android:id="@+id/singleplayerButton"
         android:layout_width="0dp"
-        android:layout_height="120dp"
+        android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="10dp"
         android:text="Singleplayer"
         android:textColor="@color/white"
         android:textSize="32sp"
@@ -147,7 +148,7 @@
         android:id="@+id/textView7"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="140dp"
         android:background="@color/primary"
         android:letterSpacing="0.1"
         android:text="Multiplayer"
@@ -157,7 +158,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/singleplayerButton" />
+        app:layout_constraintTop_toBottomOf="@+id/waveView5" />
 
     <info.hoang8f.widget.FButton
         android:id="@+id/localMultiplayerButton"
@@ -184,7 +185,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="130dp"
         android:text="Online"
         android:textColor="@color/white"
         android:textSize="32sp"
@@ -193,9 +194,41 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/localMultiplayerButton"
+        app:layout_constraintTop_toBottomOf="@+id/textView7"
         fbutton:cornerRadius="100dp"
         fbutton:shadowEnabled="true"
         fbutton:shadowHeight="5dp" />
+
+    <ImageButton
+        android:id="@+id/achievments"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:background="@drawable/rounded_corners"
+        android:backgroundTint="@color/primary_variant"
+        android:elevation="5dp"
+        android:src="@drawable/ic_trophy"
+        android:stateListAnimator="@null"
+        android:translationZ="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/settingsButton" />
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/googlePlayAchievements"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginBottom="10dp"
+        android:text="Google Play Achievements"
+        app:layout_constraintBottom_toTopOf="@id/singleplayerButton"
+        app:layout_constraintLeft_toLeftOf="@id/waveView5"
+        app:layout_constraintRight_toRightOf="@id/waveView5"
+        fbutton:cornerRadius="100dp"
+        fbutton:shadowEnabled="true"
+        fbutton:shadowHeight="5dp"
+        android:textColor="@color/white"
+        app:fButtonColor="@color/primary_variant"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
