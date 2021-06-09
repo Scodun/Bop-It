@@ -93,4 +93,22 @@
         fbutton:layout_constraintRight_toRightOf="@+id/waveViewDifficultyScreen"
         fbutton:layout_constraintTop_toTopOf="@+id/waveViewDifficultyScreen"
         fbutton:layout_constraintVertical_bias="0.0" />
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/backToSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Back"
+        android:textSize="16sp"
+        fbutton:layout_constraintBottom_toBottomOf="parent"
+        fbutton:layout_constraintStart_toStartOf="parent"
+        fbutton:cornerRadius="100dp"
+        fbutton:fButtonColor="@color/primary"
+        fbutton:shadowEnabled="true"
+        fbutton:shadowHeight="5dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
