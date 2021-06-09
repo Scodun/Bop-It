@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.se2.bopit.R;
@@ -14,6 +15,7 @@ import com.se2.bopit.domain.data.DataProviderContext;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.ui.helpers.CustomToast;
+import com.se2.bopit.ui.helpers.UserAdapter;
 
 import java.util.ArrayList;
 import java.util.concurrent.Executors;
@@ -26,13 +28,16 @@ import java.util.stream.Collectors;
 public class LobbyHostActivity extends BaseActivity {
 
     private DataProviderContext dataProvider;
-    private final ArrayList<String> userItems = new ArrayList<>();
+    private ArrayList<User> userItems = new ArrayList<>();
+    private ArrayList<User> readyUsers = new ArrayList<>();
     private ListView lobbyUserList;
+    private Button startGameButton;
     private Context context;
     private static int countdown;
+    private static int ready;
     static ScheduledFuture<?> countdownFuture;
 
-    private ArrayAdapter<String> userAdapter;
+    private UserAdapter userAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,9 +45,9 @@ public class LobbyHostActivity extends BaseActivity {
         setContentView(R.layout.activity_lobby_host);
 
         lobbyUserList = findViewById(R.id.userList);
-        userAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_list_item_1,
-                userItems);
+        startGameButton = findViewById(R.id.button_start);
+        userAdapter = new UserAdapter(this, R.layout.custom_listview_layout, userItems);
+
         lobbyUserList.setAdapter(userAdapter);
         context = this;
 
@@ -54,6 +59,10 @@ public class LobbyHostActivity extends BaseActivity {
 
     public void onStartClick(View view) {
         dataProvider.startGameCountdown();
+    }
+
+    public void onReadyClick(View view) {
+        dataProvider.sendReadyMessage();
     }
 
     private final NetworkLobbyListener networkListener = new NetworkLobbyListener() {
@@ -81,8 +90,9 @@ public class LobbyHostActivity extends BaseActivity {
         @Override
         public void onUserLobbyChange(ArrayList<User> users) {
             if (users != null) {
+                userItems = users;
                 userAdapter.clear();
-                userAdapter.addAll(users.stream().map(User::getName).collect(Collectors.toList()));
+                userAdapter.addAll(userItems);
                 userAdapter.notifyDataSetChanged();
             }
         }
@@ -102,6 +112,32 @@ public class LobbyHostActivity extends BaseActivity {
 
             ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
             countdownFuture = executor.scheduleAtFixedRate(countdownRunnable, 0, 1, TimeUnit.SECONDS);
+        }
+
+        @Override
+        public void onReadyMessageReceived() {
+
+        }
+
+        @Override
+        public void OnReadyAnswerReceived(boolean answer, String username) {
+            for (User usr : userItems)
+            {
+                if(usr.getName().equals(username)){
+                    if(answer){
+                        usr.setReady(true);
+                        readyUsers.add(usr);
+
+                    }
+                    else{
+                        usr.setReady(false);
+                        readyUsers.remove(usr);
+                    }
+                }
+            }
+            userAdapter.clear();
+            userAdapter.addAll(userItems);
+            userAdapter.notifyDataSetChanged();
         }
 
         @Override
