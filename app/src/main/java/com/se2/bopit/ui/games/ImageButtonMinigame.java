@@ -1,6 +1,5 @@
 package com.se2.bopit.ui.games;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -10,11 +9,11 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.ImageButtonMinigameModel;
 import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.interfaces.GameListener;
@@ -33,7 +32,6 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
     String text;
     TextView textView;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public ImageButtonMinigame() {
         super(R.layout.fragment_image_button_game);
         imageButtonMinigameModel = ImageButtonMinigameModel.createRandomModel();
@@ -69,8 +67,13 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
 
     public void initializeButtons(View view) {
         view.findViewById(R.id.imageButton).setOnClickListener(clickHandler);
+        view.findViewById(R.id.imageButton).setBackgroundColor(View.INVISIBLE);
+
         view.findViewById(R.id.imageButton2).setOnClickListener(clickHandler);
+        view.findViewById(R.id.imageButton2).setBackgroundColor(View.INVISIBLE);
+
         view.findViewById(R.id.imageButton3).setOnClickListener(clickHandler);
+        view.findViewById(R.id.imageButton3).setBackgroundColor(View.INVISIBLE);
     }
 
     /**
@@ -87,10 +90,9 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
     }
 
     private final View.OnClickListener clickHandler = pressedButton -> {
-
-        if (textView.getText().toString().equals(text)) {
-            imageButtonMinigameModel.getGameListener()
-                    .onGameResult(pressedButton.getId() == findRightButton());
+        GameListener listener = imageButtonMinigameModel.getGameListener();
+        if (textView.getText().toString().equals(text) && listener != null) {
+            listener.onGameResult(pressedButton.getId() == findRightButton());
             setBackground(findRightButton());
         }
     };
@@ -101,6 +103,8 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
      * @param buttonToSetBackground - id of the ImageButton from which the background should be changed
      */
     void setBackground(int buttonToSetBackground) {
+        getView().findViewById(buttonToSetBackground)
+                .setBackgroundColor(View.VISIBLE);
         getView().findViewById(buttonToSetBackground)
                 .setBackground(ResourcesCompat.getDrawable(getResources(),
                         R.drawable.pressed_button_green, null));
@@ -124,4 +128,10 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
                 return 0;
         }
     }
+
+    @Override
+    public GameModel<?> getModel() {
+        return imageButtonMinigameModel;
+    }
+
 }

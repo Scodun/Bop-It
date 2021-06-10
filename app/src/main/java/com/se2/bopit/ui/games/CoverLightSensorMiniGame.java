@@ -20,7 +20,11 @@ import com.se2.bopit.ui.SensorMiniGameFragment;
 public class CoverLightSensorMiniGame extends SensorMiniGameFragment<CoverLightSensorMiniGameModel> {
 
     public CoverLightSensorMiniGame() {
-        super(new CoverLightSensorMiniGameModel());
+        this(new CoverLightSensorMiniGameModel());
+    }
+
+    public CoverLightSensorMiniGame(CoverLightSensorMiniGameModel gameModel) {
+        super(gameModel);
     }
 
     @Nullable

@@ -8,9 +8,9 @@ public abstract class ActionGameModel<R extends ResponseModel> extends GameModel
     }
 
     @Override
-    public boolean handleResponse(R response) {
-        boolean result = checkResponse(response);
-        if (result) {
+    public boolean handleResponse(Object response) {
+        boolean result = response != null && checkResponse((R)response);
+        if (result && listener != null) {
             listener.onGameResult(true);
         }
         return result;

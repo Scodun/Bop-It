@@ -22,6 +22,8 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import info.hoang8f.widget.FButton;
+
 import static org.junit.Assert.assertSame;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyBoolean;
@@ -84,7 +86,7 @@ public class ButtonMiniGameFragmentTest {
 
     @Test
     public void applyButtonModel() {
-        Button buttonMock = mock(Button.class);
+        FButton buttonMock = mock(FButton.class);
         VectorDrawableCompat buttonDrawable = mock(VectorDrawableCompat.class);
         doReturn(buttonDrawable).when(buttonMock).getBackground();
 
@@ -99,7 +101,7 @@ public class ButtonMiniGameFragmentTest {
 
     @Test
     public void setButtonColor() {
-        Button buttonMock = mock(Button.class);
+        FButton buttonMock = mock(FButton.class);
         VectorDrawableCompat buttonDrawable = mock(VectorDrawableCompat.class);
         doReturn(buttonDrawable).when(buttonMock).getBackground();
 

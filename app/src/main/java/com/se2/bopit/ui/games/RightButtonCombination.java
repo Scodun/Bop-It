@@ -1,6 +1,5 @@
 package com.se2.bopit.ui.games;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -8,10 +7,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.RightButton;
 import com.se2.bopit.domain.RightButtonCombinationModel;
 import com.se2.bopit.domain.TextToSpeech;
@@ -31,7 +30,6 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     int count;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public RightButtonCombination() {
         super(R.layout.fragment_right_button_combination_game);
         rightButtonCombinationModel = RightButtonCombinationModel.createRandomModel();
@@ -97,8 +95,9 @@ public class RightButtonCombination extends Fragment implements MiniGame {
      */
 
     void checkFirstClick() {
-        if (!firstClick) {
-            rightButtonCombinationModel.getGameListener().onGameResult(result);
+        GameListener listener = rightButtonCombinationModel.getGameListener();
+        if (!firstClick && listener!=null) {
+            listener.onGameResult(result);
         } else {
             setSecondOnClickListener();
         }
@@ -118,11 +117,14 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
 
     void setSecondOnClickListener() {
-        getView().findViewById(findButton()).setOnClickListener(clickedButton -> {
-            secondClick = clickedButton.getId() == findButton();
-            result = checkClick(firstClick, secondClick);
-            rightButtonCombinationModel.getGameListener().onGameResult(result);
-        });
+        GameListener listener = rightButtonCombinationModel.getGameListener();
+        if(listener != null) {
+            getView().findViewById(findButton()).setOnClickListener(clickedButton -> {
+                secondClick = clickedButton.getId() == findButton();
+                result = checkClick(firstClick, secondClick);
+                listener.onGameResult(result);
+            });
+        }
     }
 
     /**
@@ -137,4 +139,10 @@ public class RightButtonCombination extends Fragment implements MiniGame {
             return rightButtonCombinationModel.secondCorrectResponse.rightButton;
         }
     }
+
+    @Override
+    public GameModel<?> getModel() {
+        return rightButtonCombinationModel;
+    }
+
 }

@@ -1,6 +1,5 @@
 package com.se2.bopit.ui.games;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -9,10 +8,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.VolumeButtonGameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
@@ -28,7 +27,6 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
     String text;
     Boolean isCorrect;
 
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public VolumeButtonMinigame() {
         super(R.layout.fragment_volume_button_game);
         gameModel = VolumeButtonGameModel.createRandomModel();
@@ -78,8 +76,9 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
      * Checks if the right button was pressed or not
      */
     public void checkPressedKey() {
-        if (isCorrect != null) {
-            gameModel.getGameListener().onGameResult(isCorrect);
+        GameListener listener = gameModel.getGameListener();
+        if (isCorrect != null && listener != null) {
+            listener.onGameResult(isCorrect);
         }
     }
 
@@ -99,4 +98,10 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
                 return 0;
         }
     }
+
+    @Override
+    public GameModel<?> getModel() {
+        return gameModel;
+    }
+
 }

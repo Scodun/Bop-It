@@ -6,7 +6,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -21,6 +20,8 @@ import com.se2.bopit.domain.ButtonModel;
 import com.se2.bopit.domain.TextToSpeech;
 
 import java.util.Random;
+
+import info.hoang8f.widget.FButton;
 
 public abstract class ButtonMiniGameFragment extends MiniGameFragment<ButtonMiniGameModel> {
     protected ButtonMiniGameFragment(ButtonMiniGameModel gameModel) {
@@ -48,8 +49,8 @@ public abstract class ButtonMiniGameFragment extends MiniGameFragment<ButtonMini
         return view;
     }
 
-    Button applyButtonModel(ButtonModel model, View buttonView) {
-        Button button = (Button) buttonView;
+    FButton applyButtonModel(ButtonModel model, View buttonView) {
+        FButton button = (FButton) buttonView;
         if (model.label != null) {
             button.setText(model.label);
         }
@@ -61,11 +62,13 @@ public abstract class ButtonMiniGameFragment extends MiniGameFragment<ButtonMini
         return button;
     }
 
-    void setButtonColor(ButtonModel model, Button button) {
+    void setButtonColor(ButtonModel model, FButton button) {
         Drawable buttonDrawable = button.getBackground();
         buttonDrawable = DrawableCompat.wrap(buttonDrawable);
         DrawableCompat.setTint(buttonDrawable, getTintFromButtonColor(model.color));
         button.setBackground(buttonDrawable);
+
+        button.setButtonColor(getTintFromButtonColor(model.color));
     }
 
     private int getTintFromButtonColor(ButtonColor buttonColor) {

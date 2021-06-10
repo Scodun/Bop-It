@@ -18,6 +18,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
@@ -99,7 +100,8 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
                 if (sensorManager != null) {
                     sensorManager.unregisterListener(this);
                 }
-                listener.onGameResult(true);
+                if(listener != null)
+                    listener.onGameResult(true);
             }
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());
@@ -155,4 +157,10 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
     public void setCurrent(float _current) {
         this.current = _current;
     }
+
+    @Override
+    public GameModel<?> getModel() {
+        return null;
+    }
+
 }

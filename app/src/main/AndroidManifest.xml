@@ -3,6 +3,14 @@
     package="com.se2.bopit">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logobopitmix"
@@ -10,6 +18,9 @@
         android:roundIcon="@drawable/logobopitmix"
         android:supportsRtl="true"
         android:theme="@style/Theme.BopIt">
+        <activity android:name=".ui.LobbyHostActivity" />
+        <activity android:name=".ui.HostJoinActivity" />
+        <activity android:name=".ui.LobbyJoinActivity" />
 
         <meta-data
             android:name="com.google.android.gms.games.APP_ID"
@@ -32,6 +43,10 @@
         <activity android:name=".ui.GamemodeSelectActivity" />
         <activity android:name=".ui.WinLossActivity" />
         <activity android:name=".ui.GameActivity" />
+        <activity android:name=".ui.DifficultyActivity"/>
+        <activity android:name=".ui.OverallAchievementsActivity"/>
+        <activity android:name=".ui.MinigameAchievementsActivity"/>
+        <activity android:name=".ui.AchievementsSelectActivity"/>
 
         <service
             android:name=".domain.services.BackgroundSoundService"

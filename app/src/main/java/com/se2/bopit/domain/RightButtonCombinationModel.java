@@ -1,9 +1,5 @@
 package com.se2.bopit.domain;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -12,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class RightButtonCombinationModel extends MultipleChoiceGameModel<RightButtonModel> {
 
-    public RightButtonModel secondCorrectResponse;
+    public transient RightButtonModel secondCorrectResponse;
 
     public RightButtonCombinationModel(String challenge, RightButtonModel correctResponse,
                                        RightButtonModel secondCorrectResponse, List<RightButtonModel> wrongAnswers) {
@@ -25,7 +21,7 @@ public class RightButtonCombinationModel extends MultipleChoiceGameModel<RightBu
      *
      * @return GameModel with two correct responses and a List with the wrong answers
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
+
     public static RightButtonCombinationModel createRandomModel() {
 
         List<RightButtonModel> possibleAnswers = Arrays.stream(RightButton.values())

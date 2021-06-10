@@ -4,7 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.WinLossActivity">
+    <ImageView
+        android:id="@+id/waveViewWinLoss"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/wave_bg"
+        android:rotation="180"
+        android:scaleType="fitXY"
+        android:scaleY="2"
+        android:translationY="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_wave_1" />
 
     <TextView
         android:id="@+id/tv_score"
@@ -17,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <info.hoang8f.widget.FButton
         android:layout_width="75pt"
         android:layout_height="30pt"
         android:text="Return to GameSelect"
@@ -27,9 +43,13 @@
         app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.959" />
+        app:layout_constraintVertical_bias="0.959"
 
-    <Button
+        app:fButtonColor="@color/primary"
+        fbutton:cornerRadius="100dp"
+        android:textColor="@color/white"/>
+
+    <info.hoang8f.widget.FButton
         android:layout_width="75pt"
         android:layout_height="30pt"
         android:text="Share Score"
@@ -40,16 +60,68 @@
         app:layout_constraintHorizontal_bias="0.938"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.959" />
+        app:layout_constraintVertical_bias="0.959"
 
-    <Button
-        android:id="@+id/leaderboardButton"
+        app:fButtonColor="@color/primary"
+        fbutton:cornerRadius="100dp"
+        android:textColor="@color/white"/>
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/leaderboardEasyButton"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="70dp"
+        android:text="Easy Mode"
+        android:textColor="@color/primary"
+
+        app:fButtonColor="@color/white"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        fbutton:cornerRadius="100dp" />
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/leaderboardMediumButton"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:text="Medium Mode"
+
+        android:textColor="@color/primary"
+        app:fButtonColor="@color/white"
+        app:layout_constraintEnd_toStartOf="@+id/leaderboardHardButton"
+        app:layout_constraintStart_toEndOf="@+id/leaderboardEasyButton"
+        app:layout_constraintTop_toTopOf="parent"
+        fbutton:cornerRadius="100dp" />
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/leaderboardHardButton"
+        android:layout_width="115dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_marginEnd="20dp"
+
+        android:text="Hard Mode"
+        android:textColor="@color/primary"
+        app:fButtonColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        fbutton:cornerRadius="100dp" />
+
+    <TextView
+        android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginLeft="32dp"
-        android:layout_marginTop="40dp"
-        android:text="Leaderboard"
+        android:layout_marginStart="176dp"
+        android:layout_marginEnd="176dp"
+        android:text="Leaderboards"
+        android:letterSpacing="0.2"
+        app:layout_constraintBottom_toTopOf="@id/leaderboardMediumButton"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:typeface="normal"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

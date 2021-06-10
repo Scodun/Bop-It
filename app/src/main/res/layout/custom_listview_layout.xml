@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:orientation="horizontal"
+    android:layout_gravity="center_horizontal"
+    android:visibility="visible"
+    android:weightSum="100">
+
+    <TextView
+        android:id="@+id/userNameTV"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        android:layout_weight="60"
+        android:gravity="center"
+        android:text="user1"
+        android:textAlignment="center" />
+
+    <ImageView
+        android:id="@+id/readySign"
+        android:layout_width="30dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        app:srcCompat="@drawable/checkmark" />
+
+<!--    <Button-->
+<!--        android:id="@+id/kickButton"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_marginLeft="10pt"-->
+<!--        android:layout_gravity="center_horizontal"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:text="Kick" />-->
+
+
+</LinearLayout>

@@ -1,8 +1,5 @@
 package com.se2.bopit.domain;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -20,7 +17,6 @@ public class ImageButtonMinigameModel extends MultipleChoiceGameModel<ImageButto
      *
      * @return GameModel with 1 correct answer and possibleAnswers-1 wrong answers
      */
-    @RequiresApi(api = Build.VERSION_CODES.N)
     public static ImageButtonMinigameModel createRandomModel() {
 
         List<ImageButtonModel> possibleAnswers = Arrays.stream(ButtonImage.values())

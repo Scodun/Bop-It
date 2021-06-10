@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
@@ -76,10 +77,15 @@ public class ShakePhoneMinigame extends Fragment implements MiniGame {
 
     private void updateData(Intent intent) {
         boolean isShaked = intent.getBooleanExtra(BackgroundServiceAccelerometer.SHAKED, false);
-        if (isShaked) {
+        if (isShaked && listener != null) {
             LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
             listener.onGameResult(true);
         }
+    }
+
+    @Override
+    public GameModel<?> getModel() {
+        return null;
     }
 }
 

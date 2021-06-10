@@ -19,7 +19,11 @@ public class ColorButtonMiniGame extends ButtonMiniGameFragment {
     static final int NUMBER_ANSWERS = 3;
 
     public ColorButtonMiniGame() {
-        super(ButtonMiniGameModel.createRandomGameModel(possibleAnswers, NUMBER_ANSWERS));
+        this(ButtonMiniGameModel.createRandomGameModel(possibleAnswers, NUMBER_ANSWERS));
+    }
+
+    public ColorButtonMiniGame(ButtonMiniGameModel gameModel) {
+        super(gameModel);
     }
 
     private static ArrayList<ButtonModel> initializeButtonModels() {
