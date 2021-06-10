@@ -90,10 +90,9 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
     }
 
     private final View.OnClickListener clickHandler = pressedButton -> {
-
-        if (textView.getText().toString().equals(text)) {
-            imageButtonMinigameModel.getGameListener()
-                    .onGameResult(pressedButton.getId() == findRightButton());
+        GameListener listener = imageButtonMinigameModel.getGameListener();
+        if (textView.getText().toString().equals(text) && listener != null) {
+            listener.onGameResult(pressedButton.getId() == findRightButton());
             setBackground(findRightButton());
         }
     };

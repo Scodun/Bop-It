@@ -6,6 +6,7 @@ import android.util.Log;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.domain.models.User;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 import com.se2.bopit.ui.DifficultyActivity;
@@ -19,7 +20,6 @@ import com.se2.bopit.ui.games.ShakePhoneMinigame;
 import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
 import com.se2.bopit.ui.games.SliderMinigame;
 import com.se2.bopit.ui.games.VolumeButtonMinigame;
-import com.se2.bopit.ui.games.SpeechRecognitionMiniGame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
 /**
@@ -274,9 +274,10 @@ public class GameEngine {
         }
     }
 
-    public void notifyGameResult(boolean result, ResponseModel responseModel, int livesLeft) {
+    public void notifyGameResult(boolean result, ResponseModel responseModel, User user) {
         timer.cancel();
-        listener.onLifeUpdate(livesLeft);
+        if(userId.equals(user.getId()))
+            listener.onLifeUpdate(user.getLives());
         if (!isMyTurn) {
             // TODO
             listener.onScoreUpdate(score);

@@ -219,7 +219,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
                         gameEngineServer.sendGameResult(endpointId, gson.fromJson(po.getPayload(), Boolean.class), null);
                         break;
                     case NearbyPayload.NOTIFY_ROUND_RESULT:
-                        gameEngineClient.notifyGameResult(false, null, gson.fromJson(po.getPayload(), Integer.class));
+                        gameEngineClient.notifyGameResult(false, null, gson.fromJson(po.getPayload(), User.class));
                         break;
                     case NearbyPayload.STOP_CURRENT_GAME:
                         gameEngineServer.stopCurrentGame(endpointId);
@@ -413,12 +413,12 @@ public class NearbyDataProvider extends DataProviderStrategy {
     }
 
     @Override
-    public void notifyGameResult(boolean result, ResponseModel responseModel, int livesLeft) {
+    public void notifyGameResult(boolean result, ResponseModel responseModel, User user) {
         if(isHost) {
             Log.d(TAG, "Broadcast notifyGameResult: " + result);
-            gameEngineClient.notifyGameResult(result, responseModel, livesLeft);
+            gameEngineClient.notifyGameResult(result, responseModel, user);
             getConnectionsClient().sendPayload(getConnectedUserIds(),
-                    wrapPayload(NearbyPayload.NOTIFY_ROUND_RESULT, livesLeft));
+                    wrapPayload(NearbyPayload.NOTIFY_ROUND_RESULT, user));
         } else {
             Log.w(TAG, "Unexpected call notifyGameResult from client!");
         }
