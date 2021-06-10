@@ -75,7 +75,7 @@ public class GameEngineTest {
 
             engine.startNewGame();
         });
-        await().atMost(5, SECONDS).until(onGameEnd());
+        await().atMost(7, SECONDS).until(onGameEnd());
         assertTrue(isGameEnd);
     }
 
