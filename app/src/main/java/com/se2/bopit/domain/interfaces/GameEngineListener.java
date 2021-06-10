@@ -32,10 +32,4 @@ public interface GameEngineListener {
      */
     void onTimeTick(long time);
 
-    /**
-     * Method called when cheat detection is true
-     *
-     * @param  lastPlayer
-     */
-    void onCheatDetected(User lastPlayer);
 }

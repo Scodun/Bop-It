@@ -63,7 +63,6 @@ public class GameActivity extends BaseActivity {
         timeBar = findViewById(R.id.timeBar);
         scoreView = findViewById(R.id.scoreView);
         cheatButton = findViewById(R.id.cheatButton);
-        detectButton = findViewById(R.id.detectButton);
 
 
         //start game Engine and register listeners
@@ -79,7 +78,6 @@ public class GameActivity extends BaseActivity {
         //set visibility of cheat and detect button to gone in singleplayer mode
         if(gameMode == GameMode.SINGLE_PLAYER){
             cheatButton.setVisibility(View.GONE);
-            detectButton.setVisibility(View.GONE);
         }
 
         engine = GameEngineProvider.getInstance().create(gameMode, gameEngineListener);
@@ -108,13 +106,6 @@ public class GameActivity extends BaseActivity {
                     engine.reportCheat();
                 }
                 return false;
-            }
-        });
-
-        detectButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                engine.detectCheating();
             }
         });
 
@@ -167,11 +158,6 @@ public class GameActivity extends BaseActivity {
             timeBar.setProgress((int) time);
         }
 
-        @Override
-        public void onCheatDetected(User lastPlayer) {
-            Log.d(TAG, "cheat detected true");
-
-        }
 
     };
 

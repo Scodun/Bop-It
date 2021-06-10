@@ -20,9 +20,7 @@ public class NearbyPayload implements Serializable {
     public static final int NOTIFY_ROUND_RESULT = 14;
     public static final int SET_CLIENT_CHEATED = 15;
     public static final int DETECT_CHEATING = 16;
-    public static final int NOTIFY_GAME_OVER = 15;
-    public static final int SET_CLIENT_CHEATED = 16;
-    public static final int DETECT_CHEATING = 17;
+    public static final int NOTIFY_GAME_OVER = 17;
     public static final int CHEATER_DETECTED = 19;
 
     private String payload;

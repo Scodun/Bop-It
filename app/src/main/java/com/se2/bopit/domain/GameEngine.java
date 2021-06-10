@@ -251,6 +251,7 @@ public class GameEngine {
             isOverTime = true;
             listener.onGameEnd(score);
             dataProvider.sendGameResult(userId, false, null);
+            Log.d(TAG, "cheater detected, game ending "+userId);
             dataProvider.disconnect();
         }
     }
