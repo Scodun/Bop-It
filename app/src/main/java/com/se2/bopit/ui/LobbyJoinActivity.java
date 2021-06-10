@@ -9,6 +9,7 @@ import android.widget.ListView;
 
 import com.se2.bopit.R;
 import com.se2.bopit.data.NearbyDataProvider;
+import com.se2.bopit.data.WebsocketDataProvider;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.data.DataProviderContext;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
@@ -60,7 +61,19 @@ public class LobbyJoinActivity extends BaseActivity {
         context = this;
 
         Intent intent = getIntent();
-        dataProvider = DataProviderContext.create(new NearbyDataProvider(this, networkListener, intent.getStringExtra("username")));
+        String networkMode = intent.getStringExtra(HostJoinActivity.NETWORK_MODE);
+        switch(networkMode) {
+            case "nearby":
+            default:
+                dataProvider = DataProviderContext.create(new NearbyDataProvider(
+                        this, networkListener, intent.getStringExtra("username")));
+                break;
+            case "websocket":
+                dataProvider = DataProviderContext.create(new WebsocketDataProvider(
+                        this, networkListener, intent.getStringExtra("username")));
+                break;
+        }
+
         dataProvider.startDiscovery();
     }
 

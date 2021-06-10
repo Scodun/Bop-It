@@ -42,12 +42,13 @@ public class GamemodeSelectActivity extends BaseActivity {
                     .putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER));
         });
 
-        localMultiplayerButton.setOnClickListener(v -> {
-        });
+        localMultiplayerButton.setOnClickListener(v ->
+            startActivity(new Intent(this, HostJoinActivity.class)
+                    .putExtra(HostJoinActivity.NETWORK_MODE, "nearby")));
 
-        onlineMultiplayerButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, HostJoinActivity.class));
-        });
+        onlineMultiplayerButton.setOnClickListener(v ->
+            startActivity(new Intent(this, HostJoinActivity.class)
+                    .putExtra(HostJoinActivity.NETWORK_MODE, "websocket")));
 
         settingsButton.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
 
