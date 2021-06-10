@@ -34,6 +34,10 @@ public class User implements Serializable {
         lives--;
     }
 
+    public void loseAllLifes() {
+        lives=0;
+    }
+
     public String getId() {
         return id;
     }

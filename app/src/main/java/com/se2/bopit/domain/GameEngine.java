@@ -305,14 +305,15 @@ public class GameEngine {
         dataProvider.detectCheating();
     }
 
-    public void cheaterDetected(String userId){
-        if(this.userId.equals(userId)) {
+    public void cheaterDetected(String userId) {
+        if (this.userId.equals(userId)) {
             isOverTime = true;
             listener.onGameEnd(score);
             dataProvider.sendGameResult(userId, false, null);
-            Log.d(TAG, "cheater detected, game ending "+userId);
+            Log.d(TAG, "cheater detected, game ending " + userId);
             dataProvider.disconnect();
         }
+    }
       
     public void loseMinigame() {
         dataProvider.sendGameResult(userId, false, null);

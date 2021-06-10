@@ -203,25 +203,24 @@ public class GameEngineServer {
     }
 
     public void detectCheating(String reporterUserId) {
-        Log.d("CHEATTERR rep",reporterUserId);
-        Log.d("CHEATTERR next",String.valueOf(activePlayers.size()));
             boolean cheated = nextPlayer.hasCheated();
             if (cheated) {
-                activePlayers.remove(nextPlayer.getId());
+                nextPlayer.loseAllLifes();
                 users.remove(nextPlayer.getId());
+                usersReady.remove(nextPlayer.getId());
                 dataProvider.cheaterDetected(nextPlayer.getId());
             } else {
                 User reporter = users.get(reporterUserId);
-                reporter.looseLife();
+                reporter.loseLife();
                 if (nextPlayer.getLife()==0){
-                    activePlayers.remove(reporterUserId);
+                    usersReady.remove(reporterUserId);
                     users.remove(reporterUserId);
                     //TODO send to all cheating detection failed player lost all lifes
                     //TODO stop game for this player
                 }
             }
 
-            if(activePlayers.size()<=1){
+            if(usersReady.size()<=1){
                 dataProvider.notifyGameOver();
             }
     }
