@@ -3,7 +3,6 @@ package com.se2.bopit.domain;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
-
 import com.se2.bopit.data.SinglePlayerGameEngineDataProvider;
 import com.se2.bopit.domain.engine.GameEngineServer;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
@@ -11,7 +10,6 @@ import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
 import com.se2.bopit.ui.providers.MiniGamesRegistry;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -21,10 +19,7 @@ import java.util.concurrent.Callable;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static org.junit.Assert.*;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest
@@ -43,7 +38,6 @@ public class GameEngineTest {
             GameEngine engine = new GameEngine(miniGamesProvider, platformFeaturesProvider, new GameEngineListener() {
                 @Override
                 public void onGameEnd(int score) {
-                    isGameEnd = true;
                     assertEquals(0, score);
                 }
 
@@ -54,7 +48,7 @@ public class GameEngineTest {
 
                 @Override
                 public void onLifeUpdate(int life) {
-
+                    isGameEnd = true;
                 }
 
                 @Override
@@ -70,12 +64,15 @@ public class GameEngineTest {
             }, dataProvider);
             String singleUserId = "Player";
             engine.userId = singleUserId;
-            GameEngineServer server = new GameEngineServer(miniGamesProvider, platformFeaturesProvider,
-                    Collections.singletonMap(singleUserId, new User(singleUserId, singleUserId)), dataProvider);
+            new GameEngineServer(
+                    miniGamesProvider,
+                    platformFeaturesProvider,
+                    Collections.singletonMap(singleUserId, new User(singleUserId, singleUserId)),
+                    dataProvider);
 
             engine.startNewGame();
         });
-        await().atMost(7, SECONDS).until(onGameEnd());
+        await().atMost(5, SECONDS).until(onGameEnd());
         assertTrue(isGameEnd);
     }
 
