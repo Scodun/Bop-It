@@ -161,6 +161,14 @@ public class WebsocketDataProvider extends DataProviderStrategy {
                 contextListener.onGameStart(unwrapPayload(payload, type));
                 lobbyListener.onGameStart();
                 break;
+            case 7:
+                lobbyListener.onReadyMessageReceived();
+                break;
+            case 8:
+                ReadyMessage msg = unwrapPayload(payload, ReadyMessage.class);
+                lobbyListener.OnReadyAnswerReceived(msg.answer, msg.username);
+                break;
+
             case NearbyPayload.READY_TO_START:
                 gameEngineServer.readyToStart(unwrapPayload(payload, String.class));
                 break;
@@ -171,7 +179,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
                 gameEngineServer.sendGameResult(endpointId, unwrapPayload(payload, Boolean.class), null);
                 break;
             case NearbyPayload.NOTIFY_ROUND_RESULT:
-                gameEngineClient.notifyGameResult(unwrapPayload(payload, Boolean.class), null);
+                gameEngineClient.notifyGameResult(false, null, unwrapPayload(payload, User.class));
                 break;
             case NearbyPayload.STOP_CURRENT_GAME:
                 gameEngineServer.stopCurrentGame(endpointId);
@@ -179,12 +187,14 @@ public class WebsocketDataProvider extends DataProviderStrategy {
             case NearbyPayload.NOTIFY_GAME_OVER:
                 gameEngineClient.stopCurrentGame();
                 break;
-            case 7:
-                lobbyListener.onReadyMessageReceived();
+            case NearbyPayload.SET_CLIENT_CHEATED:
+                gameEngineServer.setClientCheated(endpointId);
                 break;
-            case 8:
-                ReadyMessage msg = unwrapPayload(payload, ReadyMessage.class);
-                lobbyListener.OnReadyAnswerReceived(msg.answer, msg.username);
+            case NearbyPayload.DETECT_CHEATING:
+                gameEngineServer.detectCheating(endpointId);
+                break;
+            case NearbyPayload.CHEATER_DETECTED:
+                gameEngineClient.cheaterDetected(unwrapPayload(payload, String.class));
                 break;
 
                 // internal messages
@@ -296,7 +306,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
                             lobbyListener.onGameStart();
                         }
                     },
-                    3000
+                    6000
             );
         }
     }
@@ -407,12 +417,12 @@ public class WebsocketDataProvider extends DataProviderStrategy {
     }
 
     @Override
-    public void notifyGameResult(boolean result, ResponseModel responseModel) {
+    public void notifyGameResult(boolean result, ResponseModel responseModel, User user) {
         if(isHost) {
             Log.d(TAG, "Broadcast notifyGameResult: " + result);
-            gameEngineClient.notifyGameResult(result, responseModel);
+            gameEngineClient.notifyGameResult(result, responseModel, user);
             sendPayload(getConnectedUserIds(),
-                    wrapPayload(NearbyPayload.NOTIFY_ROUND_RESULT, result));
+                    wrapPayload(NearbyPayload.NOTIFY_ROUND_RESULT, user));
         } else {
             Log.w(TAG, "Unexpected call notifyGameResult from client!");
         }
@@ -448,7 +458,37 @@ public class WebsocketDataProvider extends DataProviderStrategy {
     }
 
     @Override
+    public void setClientCheated(String userId) {
+        if (isHost) {
+            gameEngineServer.setClientCheated(userId);
+        }else {
+            sendPayload(hostEndpointId,
+                    wrapPayload(NearbyPayload.SET_CLIENT_CHEATED, userId));
+        }
+    }
+
+    @Override
+    public void detectCheating() {
+        if (isHost) {
+            gameEngineServer.detectCheating(userId);
+        }else {
+            sendPayload(hostEndpointId,
+                    wrapPayload(NearbyPayload.DETECT_CHEATING));
+        }
+    }
+
+    @Override
     public String getUserId() {
         return userId;
+    }
+
+
+    @Override
+    public void cheaterDetected(String cheaterId) {
+        if(isHost) {
+            Log.d(TAG, "Broadcast cheater detected");
+            sendPayload(getConnectedUserIds(),
+                    wrapPayload(NearbyPayload.CHEATER_DETECTED, cheaterId));
+        }
     }
 }

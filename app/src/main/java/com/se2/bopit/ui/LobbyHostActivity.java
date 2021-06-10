@@ -129,7 +129,6 @@ public class LobbyHostActivity extends BaseActivity {
                                 countdownFuture.cancel(false);
                         });
             };
-
             ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
             countdownFuture = executor.scheduleAtFixedRate(countdownRunnable, 0, 1, TimeUnit.SECONDS);
         }

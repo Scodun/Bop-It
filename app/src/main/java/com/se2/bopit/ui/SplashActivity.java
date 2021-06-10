@@ -4,16 +4,11 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.Transformation;
 import android.widget.ImageView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.auth.api.Auth;
@@ -24,6 +19,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.services.BackgroundSoundService;
+import com.se2.bopit.ui.helpers.WaveAnimator;
 import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
 import java.util.ArrayList;
@@ -46,7 +42,7 @@ public class SplashActivity extends BaseActivity {
 
         startService(new Intent(this, BackgroundSoundService.class));
 
-        startLoadingAnimation(waveView);
+        new WaveAnimator(this, waveView).animate(8000, true);
 
         getPermissions();
         checkSensors();
@@ -68,34 +64,6 @@ public class SplashActivity extends BaseActivity {
 
             activityResultLauncher.launch(mGoogleSignInClient.getSignInIntent());
         }
-    }
-
-    private void startLoadingAnimation(View view) {
-        Animation a = new Animation() {
-            boolean isNextIteration = false;
-
-            @Override
-            protected void applyTransformation(float interpolatedTime, Transformation t) {
-                if (isNextIteration) {
-                    interpolatedTime = 1 - interpolatedTime;
-                    isNextIteration = (interpolatedTime > 0);
-                } else {
-                    isNextIteration = (interpolatedTime == 1);
-                }
-                ConstraintLayout.LayoutParams newLayoutParams = (ConstraintLayout.LayoutParams) waveView.getLayoutParams();
-                newLayoutParams.bottomMargin = (int) (100 * interpolatedTime);
-                DisplayMetrics metrics = new DisplayMetrics();
-                getWindowManager().getDefaultDisplay().getMetrics(metrics);
-                newLayoutParams.width = (int) (2000 * interpolatedTime + metrics.widthPixels);
-                newLayoutParams.height = (int) (interpolatedTime + metrics.heightPixels * 0.5);
-                newLayoutParams.horizontalBias = interpolatedTime;
-                waveView.setLayoutParams(newLayoutParams);
-            }
-        };
-        a.setDuration(8000); // in ms
-        a.setRepeatCount(Animation.INFINITE);
-
-        view.startAnimation(a);
     }
 
     @Override

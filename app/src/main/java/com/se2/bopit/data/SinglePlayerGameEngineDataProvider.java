@@ -40,9 +40,9 @@ public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvide
     }
 
     @Override
-    public void notifyGameResult(boolean result, ResponseModel responseModel) {
+    public void notifyGameResult(boolean result, ResponseModel responseModel, User livesLeft) {
         Log.d(TAG, "notifyGameResult: " + result);
-        client.notifyGameResult(result, responseModel);
+        client.notifyGameResult(result, responseModel, livesLeft);
     }
 
     @Override
@@ -74,7 +74,27 @@ public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvide
     }
 
     @Override
+    public void setClientCheated(String userId) {
+        //TODO server.setClientCheated(userId); or unused?
+    }
+
+    @Override
+    public void detectCheating() {
+        //TODO server.detectCheating(userId); or unused?
+    }
+
+    @Override
     public String getUserId() {
         return "player";
+    }
+
+    @Override
+    public void disconnect() {
+
+    }
+
+    @Override
+    public void cheaterDetected(String userId) {
+        //empty in singleplayer
     }
 }

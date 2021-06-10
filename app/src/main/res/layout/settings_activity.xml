@@ -161,6 +161,18 @@
         android:textColor="@color/purple"
         android:textSize="@dimen/setting_header_size" />
 
+    <TextView
+        android:id="@+id/difficultyEasy"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="-20dp"
+        android:text="Easy"
+        android:textAlignment="center"
+        android:textColor="@color/secondary_variant"
+        android:textSize="15sp" />
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -177,7 +189,6 @@
             tools:src="@drawable/ic_highscore"
             android:layout_marginRight="16dp" />
 
-
         <TextView
             android:id="@+id/textViewHighscore"
             android:layout_width="match_parent"
@@ -189,12 +200,89 @@
 
     </RelativeLayout>
 
+    <TextView
+        android:id="@+id/difficultyMedium"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="-20dp"
+        android:text="Medium"
+        android:textAlignment="center"
+        android:textColor="@color/secondary_variant"
+        android:textSize="15sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/setting_margin"
+        android:layout_marginTop="20dp"
+        android:clickable="false"
+        android:focusable="false">
+
+        <ImageView
+            android:id="@+id/iconMediumHighscore"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            tools:src="@drawable/ic_highscore"
+            android:layout_marginRight="16dp" />
+
+        <TextView
+            android:id="@+id/textViewMediumHighscore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/persHighscore"
+            android:textColor="@color/pink"
+            android:layout_toRightOf="@id/iconMediumHighscore"
+            android:textSize="@dimen/setting_header_size" />
+
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/difficultyHard"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="-20dp"
+        android:text="Hard"
+        android:textAlignment="center"
+        android:textColor="@color/secondary_variant"
+        android:textSize="15sp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/setting_margin"
+        android:layout_marginTop="20dp"
+        android:clickable="false"
+        android:focusable="false">
+
+        <ImageView
+            android:id="@+id/iconHardHighscore"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            tools:src="@drawable/ic_highscore"
+            android:layout_marginRight="16dp" />
+
+        <TextView
+            android:id="@+id/textViewHardHighscore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/persHighscore"
+            android:textColor="@color/pink"
+            android:layout_toRightOf="@id/iconHardHighscore"
+            android:textSize="@dimen/setting_header_size" />
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:paddingTop="50dp">
+        android:paddingTop="20dp">
 
         <info.hoang8f.widget.FButton
             android:id="@+id/buttonReset"

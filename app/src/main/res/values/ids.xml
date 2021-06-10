@@ -5,6 +5,8 @@
     <!--package_name-->
     <string name="package_name">com.se2.bopit</string>
     <!--leaderboard Highscore-->
-    <string name="leaderboard_highscore">CgkI1P7L9bkJEAIQAA</string>
+    <string name="leaderboard_highscore_easy">CgkI1P7L9bkJEAIQAg</string>
+    <string name="leaderboard_highscore_medium">CgkI1P7L9bkJEAIQAw</string>
+    <string name="leaderboard_highscore_hard">CgkI1P7L9bkJEAIQBA</string>
 
 </resources>

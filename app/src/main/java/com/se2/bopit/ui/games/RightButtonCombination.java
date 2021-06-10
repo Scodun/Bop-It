@@ -95,8 +95,9 @@ public class RightButtonCombination extends Fragment implements MiniGame {
      */
 
     void checkFirstClick() {
-        if (!firstClick) {
-            rightButtonCombinationModel.getGameListener().onGameResult(result);
+        GameListener listener = rightButtonCombinationModel.getGameListener();
+        if (!firstClick && listener!=null) {
+            listener.onGameResult(result);
         } else {
             setSecondOnClickListener();
         }
@@ -116,11 +117,14 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
 
     void setSecondOnClickListener() {
-        getView().findViewById(findButton()).setOnClickListener(clickedButton -> {
-            secondClick = clickedButton.getId() == findButton();
-            result = checkClick(firstClick, secondClick);
-            rightButtonCombinationModel.getGameListener().onGameResult(result);
-        });
+        GameListener listener = rightButtonCombinationModel.getGameListener();
+        if(listener != null) {
+            getView().findViewById(findButton()).setOnClickListener(clickedButton -> {
+                secondClick = clickedButton.getId() == findButton();
+                result = checkClick(firstClick, secondClick);
+                listener.onGameResult(result);
+            });
+        }
     }
 
     /**

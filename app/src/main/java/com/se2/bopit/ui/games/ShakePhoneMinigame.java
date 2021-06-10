@@ -77,7 +77,7 @@ public class ShakePhoneMinigame extends Fragment implements MiniGame {
 
     private void updateData(Intent intent) {
         boolean isShaked = intent.getBooleanExtra(BackgroundServiceAccelerometer.SHAKED, false);
-        if (isShaked) {
+        if (isShaked && listener != null) {
             LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(broadcastReceiver);
             listener.onGameResult(true);
         }

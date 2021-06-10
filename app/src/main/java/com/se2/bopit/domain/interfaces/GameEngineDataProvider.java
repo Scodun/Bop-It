@@ -31,7 +31,7 @@ public interface GameEngineDataProvider {
      * Server notifies all clients, but current, about current client response,
      * so that they can display it in UI.
      */
-    void notifyGameResult(boolean result, ResponseModel responseModel);
+    void notifyGameResult(boolean result, ResponseModel responseModel, User livesLeft);
 
     /**
      * Client stops current Game;
@@ -55,5 +55,23 @@ public interface GameEngineDataProvider {
 
     void setGameEngineServer(GameEngineServer server);
 
+
+    /**
+     * Client has cheated. Server set User hasCheated = true.
+     * @param userId
+     */
+    void setClientCheated(String userId);
+
+    /**
+     * Client detects cheating. Server stops Game for lastPlayer, if hasCheated = true.
+     * Server take away one life from currentPlayer, if hasCheated = false.
+     */
+    void detectCheating();
+
     String getUserId();
+
+    void disconnect();
+
+
+    void cheaterDetected(String userId);
 }
