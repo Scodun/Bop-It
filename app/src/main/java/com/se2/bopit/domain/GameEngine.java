@@ -8,7 +8,6 @@ import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
-import com.se2.bopit.ui.games.*;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
 import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
 import com.se2.bopit.ui.games.DrawingMinigame;
@@ -230,8 +229,9 @@ public class GameEngine {
         }
     }
 
-    public void notifyGameResult(boolean result, ResponseModel responseModel) {
+    public void notifyGameResult(boolean result, ResponseModel responseModel, int livesLeft) {
         timer.cancel();
+        listener.onLifeUpdate(livesLeft);
         if (!isMyTurn) {
             // TODO
             listener.onScoreUpdate(score);

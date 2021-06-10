@@ -53,6 +53,11 @@ public class GameEngineTest {
                 }
 
                 @Override
+                public void onLifeUpdate(int life) {
+
+                }
+
+                @Override
                 public void onGameStart(MiniGame game, long time) {
                     assertNotNull(game);
                     assertTrue(time > 0);

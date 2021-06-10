@@ -143,7 +143,7 @@ public class GameEngineServer {
             Log.d(TAG, "User " + userId + " lost the round #" + currentRound.round);
             user.loseLife();
         }
-        dataProvider.notifyGameResult(result, responseModel);
+        dataProvider.notifyGameResult(result, responseModel, user.getLives());
     }
 
     public void stopCurrentGame(String userId) {

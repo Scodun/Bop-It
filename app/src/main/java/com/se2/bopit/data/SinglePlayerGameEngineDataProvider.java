@@ -40,9 +40,9 @@ public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvide
     }
 
     @Override
-    public void notifyGameResult(boolean result, ResponseModel responseModel) {
+    public void notifyGameResult(boolean result, ResponseModel responseModel, int livesLeft) {
         Log.d(TAG, "notifyGameResult: " + result);
-        client.notifyGameResult(result, responseModel);
+        client.notifyGameResult(result, responseModel, livesLeft);
     }
 
     @Override
