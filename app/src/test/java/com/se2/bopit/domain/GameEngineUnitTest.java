@@ -235,13 +235,13 @@ public class GameEngineUnitTest {
     @Test
     public void getTimeForMinigame(){
         DifficultyActivity.setDifficulty("easy");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 6.9) + 1100), gameEngine.getTimeForMinigame(imageButtonMinigame));
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 6.9) + 1600), gameEngine.getTimeForMinigame(imageButtonMinigame));
 
         DifficultyActivity.setDifficulty("medium");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 6.9) + 700), gameEngine.getTimeForMinigame(imageButtonMinigame));
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 6.9) + 1200), gameEngine.getTimeForMinigame(imageButtonMinigame));
 
         DifficultyActivity.setDifficulty("hard");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 6.9) + 300), gameEngine.getTimeForMinigame(imageButtonMinigame));
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 6.9) + 800), gameEngine.getTimeForMinigame(imageButtonMinigame));
 
 
         DifficultyActivity.setDifficulty("easy");
@@ -265,13 +265,13 @@ public class GameEngineUnitTest {
 
 
         DifficultyActivity.setDifficulty("easy");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 7.5) + 1300), gameEngine.getTimeForMinigame(rightButtonCombination));
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 7.5) + 1800), gameEngine.getTimeForMinigame(rightButtonCombination));
 
         DifficultyActivity.setDifficulty("medium");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 7.5) + 800), gameEngine.getTimeForMinigame(rightButtonCombination));
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 7.5) + 1300), gameEngine.getTimeForMinigame(rightButtonCombination));
 
         DifficultyActivity.setDifficulty("hard");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 7.5) + 300), gameEngine.getTimeForMinigame(rightButtonCombination));
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 7.5) + 800), gameEngine.getTimeForMinigame(rightButtonCombination));
 
 
         DifficultyActivity.setDifficulty("easy");
