@@ -100,7 +100,8 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
                 if (sensorManager != null) {
                     sensorManager.unregisterListener(this);
                 }
-                listener.onGameResult(true);
+                if(listener != null)
+                    listener.onGameResult(true);
             }
         } catch (Exception ex) {
             Log.e(TAG, ex.getMessage());

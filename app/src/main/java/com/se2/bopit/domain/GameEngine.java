@@ -3,10 +3,10 @@ package com.se2.bopit.domain;
 import android.os.CountDownTimer;
 import android.util.Log;
 
-import com.se2.bopit.data.SinglePlayerGameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.domain.models.User;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 import com.se2.bopit.ui.DifficultyActivity;
@@ -20,7 +20,6 @@ import com.se2.bopit.ui.games.ShakePhoneMinigame;
 import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
 import com.se2.bopit.ui.games.SliderMinigame;
 import com.se2.bopit.ui.games.VolumeButtonMinigame;
-import com.se2.bopit.ui.games.SpeechRecognitionMiniGame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
 /**
@@ -47,9 +46,11 @@ public class GameEngine {
     MiniGamesProvider miniGamesProvider;
     PlatformFeaturesProvider platformFeaturesProvider;
 
-    public GameEngine(MiniGamesProvider miniGamesProvider,
-                      PlatformFeaturesProvider platformFeaturesProvider,
-                      GameEngineListener listener, GameEngineDataProvider dataProvider) {
+    public GameEngine(
+            MiniGamesProvider miniGamesProvider,
+            PlatformFeaturesProvider platformFeaturesProvider,
+            GameEngineListener listener,
+            GameEngineDataProvider dataProvider) {
         this.miniGamesProvider = miniGamesProvider;
         this.platformFeaturesProvider = platformFeaturesProvider;
         this.listener = listener;
@@ -78,31 +79,30 @@ public class GameEngine {
         //TODO: add getTimeForMinigame to round: long time = round.time; //(long) (Math.exp(-this.score * 0.08 + 7) + 2000);
 
         timer = startCountDown(time);
-        if (this.listener != null) {
+        if (this.listener != null)
             listener.onGameStart(minigame, time);
-        }
 
         minigame.setPlatformFeaturesProvider(platformFeaturesProvider);
-        if (isMyTurn) {
-            minigame.setGameListener(result -> {
-                timer.cancel();
-                if (listener != null) {
-                    if (result && !isOverTime && !miniGameLost) {
-                        dataProvider.sendGameResult(userId, true, null); // TODO!
-                        score++;
-                        listener.onScoreUpdate(score);
-                        //startNewGame();
-                    } else if (!lifecycleCancel) {
-                        miniGameLost = true;
-                        // TODO ?
-                        dataProvider.sendGameResult(userId, false, null);
-                        //listener.onGameEnd(score);
-                    }
-                }
-            });
-        }
+
+        if (!isMyTurn)
+            return;
+
+        minigame.setGameListener(result -> {
+            timer.cancel();
+            if (listener == null)
+                return;
+
+            if (result && !isOverTime && !miniGameLost) {
+                winMinigame();
+            } else if (!lifecycleCancel) {
+                miniGameLost = true;
+                // TODO ?
+                loseMinigame();
+            }
+        });
     }
-     /**
+
+    /**
      * Sets the Time depending on the Minigame
      *
      * @param miniGame - the Minigame which Time should be set
@@ -216,9 +216,8 @@ public class GameEngine {
     }
 
     public void onTick(long millisUntilFinished) {
-        if (listener != null) {
+        if (listener != null)
             listener.onTimeTick(millisUntilFinished);
-        }
     }
 
     public void onFinish() {
@@ -226,7 +225,7 @@ public class GameEngine {
             isOverTime = true;
             //listener.onGameEnd(score);
             Log.d(TAG, "timeout");
-            dataProvider.sendGameResult(userId, false, null);
+            loseMinigame();
         }
     }
 
@@ -275,13 +274,27 @@ public class GameEngine {
         }
     }
 
-    public void notifyGameResult(boolean result, ResponseModel responseModel) {
+    public void notifyGameResult(boolean result, ResponseModel responseModel, User user) {
         timer.cancel();
-        if(!isMyTurn) {
+        if(userId.equals(user.getId()))
+            listener.onLifeUpdate(user.getLives());
+        if (!isMyTurn) {
             // TODO
             listener.onScoreUpdate(score);
         }
-        if(!lifecycleCancel)
+        if (!lifecycleCancel)
             startNewGame();
+    }
+
+    public void loseMinigame() {
+        dataProvider.sendGameResult(userId, false, null);
+        miniGameLost = false;
+        isOverTime = false;
+    }
+
+    public void winMinigame() {
+        dataProvider.sendGameResult(userId, true, null);
+        score++;
+        listener.onScoreUpdate(score);
     }
 }

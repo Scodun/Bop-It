@@ -2,11 +2,9 @@ package com.se2.bopit.domain.engine;
 
 import android.os.Build;
 import android.util.Log;
-
 import androidx.annotation.RequiresApi;
-
 import com.google.gson.Gson;
-import com.se2.bopit.data.SinglePlayerGameEngineDataProvider;
+
 import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.GameRoundModel;
 import com.se2.bopit.domain.ResponseModel;
@@ -16,13 +14,7 @@ import com.se2.bopit.domain.models.User;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -33,11 +25,11 @@ import java.util.stream.Collectors;
  */
 public class GameEngineServer {
     static final String TAG = GameEngineServer.class.getSimpleName();
+    private final int CHANCE_TO_REPEAT = 5;
 
     final Map<String, User> users;
 
     final Set<String> usersReady = new HashSet<>();
-    final Set<String> activePlayers = new HashSet<>();
 
     public GameEngineDataProvider dataProvider;
 
@@ -57,7 +49,6 @@ public class GameEngineServer {
         this.miniGamesProvider = miniGamesProvider;
         this.platformFeaturesProvider = platformFeaturesProvider;
         this.users = new HashMap<>(users);
-        activePlayers.addAll(users.keySet());
         this.dataProvider = dataProvider;
         dataProvider.setGameEngineServer(this);
         Log.d(TAG, "init");
@@ -68,7 +59,7 @@ public class GameEngineServer {
         Log.d(TAG, "readyToStart " + userId + " round #" + round);
         usersReady.add(userId);
 
-        if(usersReady.size() == users.size()) {
+        if (usersReady.size() == users.size()) {
             Log.d(TAG, "All players ready, starting round...");
             startNewGame();
         }
@@ -92,25 +83,31 @@ public class GameEngineServer {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void startNewGame() {
         Log.d(TAG, "startNewGame round #" + round + "...");
-//        GameRoundModel lastRound = currentRound;
+        // GameRoundModel lastRound = currentRound;
+
         User nextPlayer = selectNextRoundUser();
-        if(nextPlayer == null) {
+        if (nextPlayer == null) {
             Log.d(TAG, "No active users left -> game over after " + round + " round");
             dataProvider.notifyGameOver();
             return;
         }
+
         currentRound = new GameRoundModel();
         currentRound.round = round++; // start with round 1
         currentRound.currentUserId = nextPlayer.getId();
+
         long time = (long) (Math.exp(-nextPlayer.getScore() * 0.08 + 7) + 2000);
         currentRound.time = time;
+
         MiniGame minigame = getMiniGame();
         currentRound.gameType = minigame.getClass().getSimpleName();
         currentGame = minigame.getModel();
-        if(currentGame != null) {
+
+        if (currentGame != null) {
             currentRound.modelType = currentGame.getClass().getSimpleName();
             currentRound.modelJson = gson.toJson(currentGame);
         }
+
         Log.d(TAG, "sending currentRound to data provider: " + currentRound);
         dataProvider.startNewGame(currentRound);
     }
@@ -118,14 +115,19 @@ public class GameEngineServer {
     @RequiresApi(api = Build.VERSION_CODES.N)
     User selectNextRoundUser() {
         List<User> pool = users.values().stream()
-                .filter(u -> activePlayers.contains(u.getId()))
+                .filter(u -> u.getLives() > 0)
                 .collect(Collectors.toList());
+
         usersReady.clear();
-        if(!pool.isEmpty()) {
-            Collections.shuffle(pool);
-            return pool.get(0);
-        }
-        return null;
+
+        if (pool.isEmpty())
+            return null;
+
+        if (new Random().nextInt(100) < CHANCE_TO_REPEAT && users.get(currentRound.currentUserId).getLives() > 0)
+            return users.get(currentRound.currentUserId);
+
+        Collections.shuffle(pool);
+        return pool.get(0);
     }
 
     private MiniGame getMiniGame() {
@@ -133,28 +135,26 @@ public class GameEngineServer {
     }
 
     public void sendGameResult(String userId, boolean result, ResponseModel responseModel) {
-        if(result) {
-            Log.d(TAG, "User " + userId + " did the round #" + currentRound.round);
-            users.get(userId)
-                    .addScore();
+        User user = users.get(userId);
+        if (result) {
+            Log.d(TAG, "User " + userId + " won the round #" + currentRound.round);
+            user.incrementScore();
         } else {
             Log.d(TAG, "User " + userId + " lost the round #" + currentRound.round);
-            activePlayers.remove(userId);
+            user.loseLife();
         }
-        dataProvider.notifyGameResult(result, responseModel);
+        dataProvider.notifyGameResult(result, responseModel, user);
     }
 
     public void stopCurrentGame(String userId) {
         Log.d(TAG, "Stop current game: " + userId);
-        if(users.remove(userId) != null) {
+        if (users.remove(userId) != null)
             Log.d(TAG, "User " + userId + " left after round #" + currentRound.round);
-        }
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public User[] getRoundResult() {
-        return users.values()
-                .stream()
+        return users.values().stream()
                 .sorted((u,v) -> Integer.compare(v.getScore(), u.getScore())) // sort by score
                 .toArray(User[]::new);
     }

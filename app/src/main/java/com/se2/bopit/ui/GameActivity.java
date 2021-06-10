@@ -8,20 +8,17 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
 import com.se2.bopit.R;
 import com.se2.bopit.domain.GameEngine;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.SoundEffects;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.domain.models.User;
 import com.se2.bopit.ui.providers.GameEngineProvider;
-import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
-import com.se2.bopit.ui.providers.MiniGamesRegistry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -34,7 +31,7 @@ public class GameActivity extends BaseActivity {
 
     //views
     ProgressBar timeBar;
-    TextView scoreView;
+    TextView scoreView, lifeView;
     Random rand;
     ArrayList<Integer> colors;
     GameEngine engine;
@@ -56,6 +53,7 @@ public class GameActivity extends BaseActivity {
         //get Views
         timeBar = findViewById(R.id.timeBar);
         scoreView = findViewById(R.id.scoreView);
+        lifeView = findViewById(R.id.lifeView);
 
         //start game Engine and register listeners
         Intent intent = getIntent();
@@ -77,6 +75,9 @@ public class GameActivity extends BaseActivity {
                         ContextCompat.getColor(this, R.color.secondary_variant_2)
                 )
         );
+
+        lifeView.setTextColor(colors.get(2));
+        lifeView.setText("Lives " + User.STARTING_LIVES);
 
         engine.startNewGame();
     }
@@ -104,10 +105,15 @@ public class GameActivity extends BaseActivity {
         @Override
         public void onScoreUpdate(int score) {
             scoreView.setTextColor(colors.get(rand.nextInt(colors.size())));
-            scoreView.setText(String.valueOf(score));
+            scoreView.setText("Score " + score);
             if (checkPref()) {
                 new SoundEffects(getBaseContext(), 0);
             }
+        }
+
+        @Override
+        public void onLifeUpdate(int life) {
+            lifeView.setText("Lives " + life);
         }
 
         @Override

@@ -137,12 +137,13 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
 
                 for(String res : results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)){
                     Log.println(Log.DEBUG,"Heard",res);
-                    if(res.toLowerCase().equals(correctAnswer.toLowerCase()) ){
-                        listener.onGameResult(true);
-                        speechRecognizer.stopListening();
-                    }
-                    else {
-                        speechRecognizer.startListening(intentRecognizer);
+                    if(listener != null) {
+                        if (res.toLowerCase().equals(correctAnswer.toLowerCase())) {
+                            listener.onGameResult(true);
+                            speechRecognizer.stopListening();
+                        } else {
+                            speechRecognizer.startListening(intentRecognizer);
+                        }
                     }
                 }
 

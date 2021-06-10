@@ -31,7 +31,7 @@ public interface GameEngineDataProvider {
      * Server notifies all clients, but current, about current client response,
      * so that they can display it in UI.
      */
-    void notifyGameResult(boolean result, ResponseModel responseModel);
+    void notifyGameResult(boolean result, ResponseModel responseModel, User livesLeft);
 
     /**
      * Client stops current Game;
