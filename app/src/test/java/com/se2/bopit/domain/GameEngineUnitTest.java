@@ -8,6 +8,18 @@ import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.mock.MiniGameMock;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
+import com.se2.bopit.ui.DifficultyActivity;
+import com.se2.bopit.ui.games.ColorButtonMiniGame;
+import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
+import com.se2.bopit.ui.games.DrawingMinigame;
+import com.se2.bopit.ui.games.ImageButtonMinigame;
+import com.se2.bopit.ui.games.PlacePhoneMiniGame;
+import com.se2.bopit.ui.games.RightButtonCombination;
+import com.se2.bopit.ui.games.ShakePhoneMinigame;
+import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
+import com.se2.bopit.ui.games.SliderMinigame;
+import com.se2.bopit.ui.games.VolumeButtonMinigame;
+import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
 import org.junit.After;
 import org.junit.Before;
@@ -32,6 +44,17 @@ import static org.mockito.Mockito.when;
 
 @Ignore("temporarily")
 public class GameEngineUnitTest {
+    ImageButtonMinigame imageButtonMinigame;
+    ColorButtonMiniGame colorButtonMiniGame;
+    ShakePhoneMinigame shakePhoneMinigame;
+    SliderMinigame sliderMinigame;
+    PlacePhoneMiniGame placePhoneMiniGame;
+    CoverLightSensorMiniGame coverLightSensorMiniGame;
+    VolumeButtonMinigame volumeButtonMinigame;
+    SimpleTextButtonMiniGame simpleTextButtonMiniGame;
+    WeirdTextButtonMiniGame weirdTextButtonMiniGame;
+    RightButtonCombination rightButtonCombination;
+    DrawingMinigame drawingMinigame;
 
     GameEngine gameEngine;
     MiniGamesProvider miniGamesProviderMock;
@@ -51,6 +74,18 @@ public class GameEngineUnitTest {
 
     @Before
     public void setUp() throws Exception {
+        imageButtonMinigame = new ImageButtonMinigame();
+        colorButtonMiniGame = new ColorButtonMiniGame();
+        shakePhoneMinigame = new ShakePhoneMinigame();
+        sliderMinigame = new SliderMinigame();
+        placePhoneMiniGame = new PlacePhoneMiniGame();
+        coverLightSensorMiniGame = new CoverLightSensorMiniGame();
+        volumeButtonMinigame = new VolumeButtonMinigame();
+        simpleTextButtonMiniGame = new SimpleTextButtonMiniGame();
+        weirdTextButtonMiniGame = new WeirdTextButtonMiniGame();
+        rightButtonCombination = new RightButtonCombination();
+        drawingMinigame = new DrawingMinigame();
+
         miniGamesProviderMock = mock(MiniGamesProvider.class);
         listenerMock = mock(GameEngineListener.class);
         platformProviderMock = mock(PlatformFeaturesProvider.class);
@@ -202,6 +237,67 @@ public class GameEngineUnitTest {
         assertFalse(gameEngine.isOverTime);
         assertTrue(gameEngine.miniGameLost);
         assertEquals(0, gameEngine.score);
+    }
+    @Test
+    public void getTimeForMinigame(){
+        DifficultyActivity.setDifficulty("easy");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 6.9) + 1600), gameEngine.getTimeForMinigame(imageButtonMinigame));
+
+        DifficultyActivity.setDifficulty("medium");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 6.9) + 1200), gameEngine.getTimeForMinigame(imageButtonMinigame));
+
+        DifficultyActivity.setDifficulty("hard");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 6.9) + 800), gameEngine.getTimeForMinigame(imageButtonMinigame));
+
+
+        DifficultyActivity.setDifficulty("easy");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.075 + 7) + 2000), gameEngine.getTimeForMinigame(coverLightSensorMiniGame));
+
+        DifficultyActivity.setDifficulty("medium");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.075 + 7) + 1500), gameEngine.getTimeForMinigame(coverLightSensorMiniGame));
+
+        DifficultyActivity.setDifficulty("hard");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.075 + 7) + 1000), gameEngine.getTimeForMinigame(coverLightSensorMiniGame));
+
+
+        DifficultyActivity.setDifficulty("easy");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.1 + 8) + 2000), gameEngine.getTimeForMinigame(drawingMinigame));
+
+        DifficultyActivity.setDifficulty("medium");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.1 + 8) + 1500), gameEngine.getTimeForMinigame(drawingMinigame));
+
+        DifficultyActivity.setDifficulty("hard");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.1 + 8) + 1000), gameEngine.getTimeForMinigame(drawingMinigame));
+
+
+        DifficultyActivity.setDifficulty("easy");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 7.5) + 1800), gameEngine.getTimeForMinigame(rightButtonCombination));
+
+        DifficultyActivity.setDifficulty("medium");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 7.5) + 1300), gameEngine.getTimeForMinigame(rightButtonCombination));
+
+        DifficultyActivity.setDifficulty("hard");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 7.5) + 800), gameEngine.getTimeForMinigame(rightButtonCombination));
+
+
+        DifficultyActivity.setDifficulty("easy");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.06 + 7.6) + 1400), gameEngine.getTimeForMinigame(shakePhoneMinigame));
+
+        DifficultyActivity.setDifficulty("medium");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.06 + 7.6) + 1000), gameEngine.getTimeForMinigame(shakePhoneMinigame));
+
+        DifficultyActivity.setDifficulty("hard");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.06 + 7.6) + 600), gameEngine.getTimeForMinigame(shakePhoneMinigame));
+
+
+        DifficultyActivity.setDifficulty("easy");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.08 + 7) + 3000), gameEngine.getTimeForMinigame(sliderMinigame));
+
+        DifficultyActivity.setDifficulty("medium");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.08 + 7) + 2000), gameEngine.getTimeForMinigame(sliderMinigame));
+
+        DifficultyActivity.setDifficulty("hard");
+        assertEquals((long) (Math.exp(-gameEngine.score * 0.08 + 7) + 1000), gameEngine.getTimeForMinigame(sliderMinigame));
     }
 
 }
