@@ -28,6 +28,9 @@ public abstract class DataProviderStrategy implements GameEngineDataProvider {
 
     public abstract void disconnect();
 
+    public abstract void sendReadyMessage();
+
+    public abstract void sendReadyAnswer(boolean answer, String username);
     @Override
     public void setGameEngineClient(GameEngine client) {
         this.gameEngineClient = client;

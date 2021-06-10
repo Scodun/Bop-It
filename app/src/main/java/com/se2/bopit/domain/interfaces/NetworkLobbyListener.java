@@ -17,9 +17,13 @@ public interface NetworkLobbyListener {
 
     void onEndpointConnected(String id, List<String> names);
 
-    void onUserLobbyChange(List<User> users);
+    void onUserLobbyChange(ArrayList<User> users);
 
     void onGameStart();
 
     void onGameCountdownStart();
+
+    void onReadyMessageReceived();
+
+    void OnReadyAnswerReceived(boolean answer, String username);
 }
