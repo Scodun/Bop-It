@@ -13,7 +13,7 @@ public class DifficultyActivity extends BaseActivity{
     FButton hard;
     FButton back;
 
-    public static String difficulty = "";
+    public static String difficulty = "medium";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
