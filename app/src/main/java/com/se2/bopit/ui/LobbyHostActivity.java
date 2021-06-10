@@ -111,13 +111,12 @@ public class LobbyHostActivity extends BaseActivity {
             Runnable countdownRunnable = () -> {
                 runOnUiThread(
                         () -> {
-                            // TODO CustomToast.showToast(String.valueOf(LobbyHostActivity.countdown), context);
+                            CustomToast.showToast(String.valueOf(LobbyHostActivity.countdown), context);
                             LobbyHostActivity.countdown--;
                             if (LobbyHostActivity.countdown <= 0)
                                 countdownFuture.cancel(false);
                         });
             };
-
             ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
             countdownFuture = executor.scheduleAtFixedRate(countdownRunnable, 0, 1, TimeUnit.SECONDS);
         }

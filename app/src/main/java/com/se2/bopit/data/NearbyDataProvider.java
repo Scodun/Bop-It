@@ -328,7 +328,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
                             lobbyListener.onGameStart();
                         }
                     },
-                    3000
+                    6000
             );
         }
     }
