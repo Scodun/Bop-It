@@ -3,13 +3,13 @@ package com.se2.bopit.domain;
 import android.os.CountDownTimer;
 import android.util.Log;
 
-import com.se2.bopit.data.SinglePlayerGameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
+import com.se2.bopit.ui.DifficultyActivity;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
 import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
 import com.se2.bopit.ui.games.DrawingMinigame;
@@ -18,6 +18,8 @@ import com.se2.bopit.ui.games.PlacePhoneMiniGame;
 import com.se2.bopit.ui.games.RightButtonCombination;
 import com.se2.bopit.ui.games.ShakePhoneMinigame;
 import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
+import com.se2.bopit.ui.games.SliderMinigame;
+import com.se2.bopit.ui.games.VolumeButtonMinigame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
 /**
@@ -31,6 +33,8 @@ public class GameEngine {
     public GameEngineDataProvider dataProvider;
     public String userId;
 
+    private static final String EASY = "easy";
+    private static final String MEDIUM = "medium";
 
     int score = 0;
     boolean isOverTime = false;
@@ -44,9 +48,11 @@ public class GameEngine {
     MiniGamesProvider miniGamesProvider;
     PlatformFeaturesProvider platformFeaturesProvider;
 
-    public GameEngine(MiniGamesProvider miniGamesProvider,
-                      PlatformFeaturesProvider platformFeaturesProvider,
-                      GameEngineListener listener, GameEngineDataProvider dataProvider) {
+    public GameEngine(
+            MiniGamesProvider miniGamesProvider,
+            PlatformFeaturesProvider platformFeaturesProvider,
+            GameEngineListener listener,
+            GameEngineDataProvider dataProvider) {
         this.miniGamesProvider = miniGamesProvider;
         this.platformFeaturesProvider = platformFeaturesProvider;
         this.listener = listener;
@@ -76,29 +82,27 @@ public class GameEngine {
         //TODO: add getTimeForMinigame to round: long time = round.time; //(long) (Math.exp(-this.score * 0.08 + 7) + 2000);
 
         timer = startCountDown(time);
-        if (this.listener != null) {
+        if (this.listener != null)
             listener.onGameStart(minigame, time);
-        }
 
         minigame.setPlatformFeaturesProvider(platformFeaturesProvider);
-        if (isMyTurn) {
-            minigame.setGameListener(result -> {
-                timer.cancel();
-                if (listener != null) {
-                    if (result && !isOverTime && !miniGameLost) {
-                        dataProvider.sendGameResult(userId, true, null); // TODO!
-                        score++;
-                        listener.onScoreUpdate(score);
-                        //startNewGame();
-                    } else if (!lifecycleCancel) {
-                        miniGameLost = true;
-                        // TODO ?
-                        dataProvider.sendGameResult(userId, false, null);
-                        //listener.onGameEnd(score);
-                    }
-                }
-            });
-        }
+
+        if (!isMyTurn)
+            return;
+
+        minigame.setGameListener(result -> {
+            timer.cancel();
+            if (listener == null)
+                return;
+
+            if (result && !isOverTime && !miniGameLost) {
+                winMinigame();
+            } else if (!lifecycleCancel) {
+                miniGameLost = true;
+                // TODO ?
+                loseMinigame();
+            }
+        });
     }
 
     /**
@@ -108,81 +112,99 @@ public class GameEngine {
      * @return - a specific Time to solve the Minigame
      */
     public long getTimeForMinigame(MiniGame miniGame){
-        /*
-         *Score 0   Time: 1692 ms
-         *Score 1	Time: 1625 ms
-         *Score 10	Time: 1192 ms
-         *Score 20  Time: 944 ms
-         *Score 30  Time: 821 ms
-         *Score 50	Time: 729 ms
-         *Score 100	Time: 700 ms
-         */
-        if(miniGame.getClass().equals(ImageButtonMinigame.class) ||
-                miniGame.getClass().equals(SimpleTextButtonMiniGame.class) ||
-                miniGame.getClass().equals(WeirdTextButtonMiniGame.class) ||
-                miniGame.getClass().equals(ColorButtonMiniGame.class)){
-            return (long) (Math.exp(-this.score*0.07+6.9)+700);
-        }
-        /*
-         *Score 0   Time: 2596 ms
-         *Score 1	Time: 2335 ms
-         *Score 10	Time: 1925 ms
-         *Score 20  Time: 1700 ms
-         *Score 30  Time: 1594 ms
-         *Score 50	Time: 1521 ms
-         *Score 100	Time: 1500 ms
-         */
-        else if(miniGame.getClass().equals(CoverLightSensorMiniGame.class)){
-            return (long) (Math.exp(-this.score*0.075+7)+1500);
-        }
-        /*
-         *Score 0   Time: 4480 ms
-         *Score 1	Time: 4197 ms
-         *Score 10	Time: 2596 ms
-         *Score 20  Time: 1903 ms
-         *Score 30  Time: 1648 ms
-         *Score 50	Time: 1520 ms
-         *Score 100	Time: 1500 ms
-         */
-        else if(miniGame.getClass().equals(DrawingMinigame.class) ||
-                miniGame.getClass().equals(PlacePhoneMiniGame.class)){
-            return (long) (Math.exp(-this.score*0.1+8)+1500);
-        }
-        /*
-         *Score 0   Time: 2608 ms
-         *Score 1	Time: 1930 ms
-         *Score 10	Time: 1401 ms
-         *Score 20  Time: 1098 ms
-         *Score 30  Time: 948 ms
-         *Score 50	Time: 836 ms
-         *Score 100	Time: 801 ms
-         */
-        else if(miniGame.getClass().equals(RightButtonCombination.class)){
-            return (long) (Math.exp(-this.score*0.07+7.5)+800);
-        }
-        /*
-         *Score 0   Time: 2998 ms
-         *Score 1	Time: 2881 ms
-         *Score 10	Time: 2096 ms
-         *Score 20  Time: 1601 ms
-         *Score 30  Time: 1330 ms
-         *Score 50	Time: 1099 ms
-         *Score 100	Time: 1004 ms
-         */
-        else if(miniGame.getClass().equals(ShakePhoneMinigame.class)){
-            return (long) (Math.exp(-this.score*0.06+7.6)+1000);
-        }
-        else{
             /*
-             *Score 1   Time: 3096 ms
-             *Score 10  Time: 2500 ms
-             *Score 20  Time: 2221 ms
-             *Score 30  Time: 2100 ms
-             *Score 50  Time: 2020 ms
-             *Score 100 Time: 2000 ms
+            IMAGEBUTTONMINIGAME
+            SIMPLETEXTBUTTONMINIGAME
+            WEIRDBUTTONMINIGAME
+            COLORBUTTONMINIGAME
              */
-            return (long) (Math.exp(-this.score * 0.08 + 7) + 2000);
-        }
+            if (miniGame.getClass().equals(ImageButtonMinigame.class) ||
+                    miniGame.getClass().equals(SimpleTextButtonMiniGame.class) ||
+                    miniGame.getClass().equals(WeirdTextButtonMiniGame.class) ||
+                    miniGame.getClass().equals(ColorButtonMiniGame.class)) {
+                if(DifficultyActivity.difficulty.equals(EASY)) {
+                    return (long) (Math.exp(-this.score * 0.07 + 6.9) + 1600);
+                }
+                else if(DifficultyActivity.difficulty.equals(MEDIUM)) {
+                    return (long) (Math.exp(-this.score * 0.07 + 6.9) + 1200);
+                }
+                else{
+                    return (long) (Math.exp(-this.score * 0.07 + 6.9) + 800);
+                }
+            }
+            /*
+            COVERLIGHTSENSORMINIGAME
+             */
+            else if (miniGame.getClass().equals(CoverLightSensorMiniGame.class)) {
+                if(DifficultyActivity.difficulty.equals(EASY)) {
+                    return (long) (Math.exp(-this.score * 0.075 + 7) + 2000);
+                }
+                else if(DifficultyActivity.difficulty.equals(MEDIUM)) {
+                    return (long) (Math.exp(-this.score * 0.075 + 7) + 1500);
+                }
+                else{
+                    return (long) (Math.exp(-this.score * 0.075 + 7) + 1000);
+                }
+            }
+            /*
+            DRAWINGMINIGAME
+            PLACEPHONEMINIGAME
+             */
+            else if (miniGame.getClass().equals(DrawingMinigame.class) ||
+                    miniGame.getClass().equals(PlacePhoneMiniGame.class)) {
+
+                if(DifficultyActivity.difficulty.equals(EASY)) {
+                    return (long) (Math.exp(-this.score * 0.1 + 8) + 2000);
+                }
+                else if(DifficultyActivity.difficulty.equals(MEDIUM)) {
+                    return (long) (Math.exp(-this.score * 0.1 + 8) + 1500);
+                }
+                else{
+                    return (long) (Math.exp(-this.score * 0.1 + 8) + 1000);
+                }
+            }
+            /*
+            RIGHTBUTTONCOMBINATION
+             */
+            else if (miniGame.getClass().equals(RightButtonCombination.class)) {
+                if(DifficultyActivity.difficulty.equals(EASY)) {
+                    return (long) (Math.exp(-this.score * 0.07 + 7.5) + 1800);
+
+                }
+                else if(DifficultyActivity.difficulty.equals(MEDIUM)) {
+                    return (long) (Math.exp(-this.score * 0.07 + 7.5) + 1300);
+                }
+                else{
+                    return (long) (Math.exp(-this.score * 0.07 + 7.5) + 800);
+                }
+            }
+            /*
+            SHAKEPHONEMINIGAME
+             */
+            else if (miniGame.getClass().equals(ShakePhoneMinigame.class)) {
+                if(DifficultyActivity.difficulty.equals(EASY)) {
+                    return (long) (Math.exp(-this.score * 0.06 + 7.6) + 1400);
+                }
+                else if(DifficultyActivity.difficulty.equals(MEDIUM)) {
+                    return (long) (Math.exp(-this.score * 0.06 + 7.6) + 1000);
+                }
+                else{
+                    return (long) (Math.exp(-this.score * 0.06 + 7.6) + 600);
+                }
+            /*
+            DEFAULT
+            */
+            } else {
+                if(DifficultyActivity.difficulty.equals(EASY)) {
+                    return (long) (Math.exp(-this.score * 0.08 + 7) + 3000);
+                }
+                else if(DifficultyActivity.difficulty.equals(MEDIUM)) {
+                    return (long) (Math.exp(-this.score * 0.08 + 7) + 2000);
+                }
+                else{
+                    return (long) (Math.exp(-this.score * 0.08 + 7) + 1000);
+                }
+            }
     }
 
     /**
@@ -217,7 +239,7 @@ public class GameEngine {
             isOverTime = true;
             //listener.onGameEnd(score);
             Log.d(TAG, "timeout");
-            dataProvider.sendGameResult(userId, false, null);
+            loseMinigame();
         }
     }
 
@@ -232,15 +254,52 @@ public class GameEngine {
         }
     }
 
-    public void notifyGameResult(boolean result, ResponseModel responseModel) {
+    public void setCounter(MiniGame minigame){
+        if(minigame.getClass().equals(ImageButtonMinigame.class)){
+            MinigameAchievementCounters.counterImageButtonMinigame++;
+        }
+        else if(minigame.getClass().equals(SimpleTextButtonMiniGame.class)||
+                minigame.getClass().equals(WeirdTextButtonMiniGame.class)){
+            MinigameAchievementCounters.counterTextBasedMinigame++;
+        }
+        else if(minigame.getClass().equals(ShakePhoneMinigame.class)){
+            MinigameAchievementCounters.counterShakePhoneMinigame++;
+        }
+        else if(minigame.getClass().equals(PlacePhoneMiniGame.class)){
+            MinigameAchievementCounters.counterPlacePhoneMinigame++;
+        }
+        else if(minigame.getClass().equals(CoverLightSensorMiniGame.class)){
+            MinigameAchievementCounters.counterCoverLightSensorMinigame++;
+        }
+        else if(minigame.getClass().equals(ColorButtonMiniGame.class)){
+            MinigameAchievementCounters.counterColorButtonMinigame++;
+        }
+        else if(minigame.getClass().equals(SliderMinigame.class)){
+            MinigameAchievementCounters.counterSliderMinigame++;
+        }
+        else if(minigame.getClass().equals(DrawingMinigame.class)){
+            MinigameAchievementCounters.counterDrawingMinigame++;
+        }
+        else if(minigame.getClass().equals(VolumeButtonMinigame.class)){
+            MinigameAchievementCounters.counterVolumeButtonMinigame++;
+        }
+        else if(minigame.getClass().equals(RightButtonCombination.class)){
+            MinigameAchievementCounters.counterRightButtonsMinigame++;
+        }
+    }
+
+    public void notifyGameResult(boolean result, ResponseModel responseModel, User user) {
         timer.cancel();
-        if(!isMyTurn) {
+        if(userId.equals(user.getId()))
+            listener.onLifeUpdate(user.getLives());
+        if (!isMyTurn) {
             // TODO
             listener.onScoreUpdate(score);
         }
-        if(!lifecycleCancel)
+        if (!lifecycleCancel)
             startNewGame();
     }
+
 
     public void reportCheat(){
         dataProvider.detectCheating();
@@ -254,5 +313,16 @@ public class GameEngine {
             Log.d(TAG, "cheater detected, game ending "+userId);
             dataProvider.disconnect();
         }
+      
+    public void loseMinigame() {
+        dataProvider.sendGameResult(userId, false, null);
+        miniGameLost = false;
+        isOverTime = false;
+    }
+
+    public void winMinigame() {
+        dataProvider.sendGameResult(userId, true, null);
+        score++;
+        listener.onScoreUpdate(score);
     }
 }

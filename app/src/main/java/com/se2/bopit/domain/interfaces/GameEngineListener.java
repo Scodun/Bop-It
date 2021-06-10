@@ -17,6 +17,8 @@ public interface GameEngineListener {
      */
     void onScoreUpdate(int score);
 
+    void onLifeUpdate(int life);
+
     /**
      * Method called when Minigame starts
      *

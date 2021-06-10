@@ -12,11 +12,9 @@ import android.widget.Button;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
 import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-
 import com.se2.bopit.R;
 import com.se2.bopit.domain.GameEngine;
 import com.se2.bopit.domain.GameMode;
@@ -37,7 +35,7 @@ public class GameActivity extends BaseActivity {
 
     //views
     ProgressBar timeBar;
-    TextView scoreView;
+    TextView scoreView, lifeView;
     Random rand;
     ArrayList<Integer> colors;
     GameEngine engine;
@@ -63,7 +61,7 @@ public class GameActivity extends BaseActivity {
         timeBar = findViewById(R.id.timeBar);
         scoreView = findViewById(R.id.scoreView);
         cheatButton = findViewById(R.id.cheatButton);
-
+        lifeView = findViewById(R.id.lifeView);
 
         //start game Engine and register listeners
         Intent intent = getIntent();
@@ -92,6 +90,7 @@ public class GameActivity extends BaseActivity {
                 )
         );
 
+
         cheatButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -108,6 +107,9 @@ public class GameActivity extends BaseActivity {
                 return false;
             }
         });
+
+        lifeView.setTextColor(colors.get(2));
+        lifeView.setText("Lives " + User.STARTING_LIVES);
 
         engine.startNewGame();
     }
@@ -135,10 +137,15 @@ public class GameActivity extends BaseActivity {
         @Override
         public void onScoreUpdate(int score) {
             scoreView.setTextColor(colors.get(rand.nextInt(colors.size())));
-            scoreView.setText(String.valueOf(score));
+            scoreView.setText("Score " + score);
             if (checkPref()) {
                 new SoundEffects(getBaseContext(), 0);
             }
+        }
+
+        @Override
+        public void onLifeUpdate(int life) {
+            lifeView.setText("Lives " + life);
         }
 
         @Override

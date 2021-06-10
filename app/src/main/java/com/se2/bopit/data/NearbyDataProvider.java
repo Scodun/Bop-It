@@ -3,35 +3,22 @@ package com.se2.bopit.data;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
-
 import com.google.android.gms.nearby.Nearby;
-import com.google.android.gms.nearby.connection.AdvertisingOptions;
-import com.google.android.gms.nearby.connection.ConnectionInfo;
-import com.google.android.gms.nearby.connection.ConnectionLifecycleCallback;
-import com.google.android.gms.nearby.connection.ConnectionResolution;
-import com.google.android.gms.nearby.connection.ConnectionsClient;
-import com.google.android.gms.nearby.connection.ConnectionsStatusCodes;
-import com.google.android.gms.nearby.connection.DiscoveredEndpointInfo;
-import com.google.android.gms.nearby.connection.DiscoveryOptions;
-import com.google.android.gms.nearby.connection.EndpointDiscoveryCallback;
-import com.google.android.gms.nearby.connection.Payload;
-import com.google.android.gms.nearby.connection.PayloadCallback;
-import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
+import com.google.android.gms.nearby.connection.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.se2.bopit.domain.GameEngine;
 import com.se2.bopit.domain.GameRoundModel;
 import com.se2.bopit.domain.ResponseModel;
 import com.se2.bopit.domain.data.DataProviderStrategy;
-import com.se2.bopit.domain.engine.GameEngineServer;
 import com.se2.bopit.domain.interfaces.NetworkContextListener;
 import com.se2.bopit.domain.interfaces.NetworkGameListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.NearbyPayload;
+import com.se2.bopit.domain.models.ReadyMessage;
 import com.se2.bopit.domain.models.User;
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -193,7 +180,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
                 switch (po.getType()) {
                     case 0:
-                        List<User> users = gson.fromJson(po.getPayload(), type);
+                        ArrayList<User> users = gson.fromJson(po.getPayload(), type);
                         Log.d(TAG, "lobby changed: " + users);
                         if (userId == null) {
                             users.stream()
@@ -214,6 +201,14 @@ public class NearbyDataProvider extends DataProviderStrategy {
                         contextListener.onGameStart(gson.fromJson(po.getPayload(), type));
                         lobbyListener.onGameStart();
                         break;
+                    case 7:
+                        lobbyListener.onReadyMessageReceived();
+                        break;
+                    case 8:
+                        ReadyMessage msg = gson.fromJson(po.getPayload(), ReadyMessage.class);
+                        lobbyListener.OnReadyAnswerReceived(msg.answer, msg.username);
+                        break;
+
                     case NearbyPayload.READY_TO_START:
                         gameEngineServer.readyToStart(gson.fromJson(po.getPayload(), String.class));
                         break;
@@ -224,7 +219,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
                         gameEngineServer.sendGameResult(endpointId, gson.fromJson(po.getPayload(), Boolean.class), null);
                         break;
                     case NearbyPayload.NOTIFY_ROUND_RESULT:
-                        gameEngineClient.notifyGameResult(gson.fromJson(po.getPayload(), Boolean.class), null);
+                        gameEngineClient.notifyGameResult(false, null, gson.fromJson(po.getPayload(), User.class));
                         break;
                     case NearbyPayload.STOP_CURRENT_GAME:
                         gameEngineServer.stopCurrentGame(endpointId);
@@ -337,6 +332,34 @@ public class NearbyDataProvider extends DataProviderStrategy {
             );
         }
     }
+    @Override
+    public void sendReadyMessage() {
+        if (isHost) {
+            Gson gson = new Gson();
+            Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(7, null)).getBytes());
+            Nearby.getConnectionsClient(context).sendPayload(getConnectedUserIds(), bytesPayload);
+
+
+        }
+    }
+    @Override
+    public void sendReadyAnswer(boolean answer, String username) {
+        if (!isHost) {
+            try{
+                JSONObject obj = new JSONObject();
+                obj.put("answer",answer);
+                obj.put("username",username);
+                Gson gson = new Gson();
+                Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(8, obj.toString())).getBytes());
+                Nearby.getConnectionsClient(context).sendPayload(hostEndpointId, bytesPayload);
+            }
+            catch(Exception ex){
+
+            }
+
+
+        }
+    }
 
     private ArrayList<String> getConnectedUserIds() {
         if (isHost) {
@@ -347,8 +370,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
             }
             return users;
         }
-        return new ArrayList<String>() {
-        };
+        return new ArrayList<String>();
     }
 
     ConnectionsClient getConnectionsClient() {
@@ -401,12 +423,12 @@ public class NearbyDataProvider extends DataProviderStrategy {
     }
 
     @Override
-    public void notifyGameResult(boolean result, ResponseModel responseModel) {
+    public void notifyGameResult(boolean result, ResponseModel responseModel, User user) {
         if(isHost) {
             Log.d(TAG, "Broadcast notifyGameResult: " + result);
-            gameEngineClient.notifyGameResult(result, responseModel);
+            gameEngineClient.notifyGameResult(result, responseModel, user);
             getConnectionsClient().sendPayload(getConnectedUserIds(),
-                    wrapPayload(NearbyPayload.NOTIFY_ROUND_RESULT, result));
+                    wrapPayload(NearbyPayload.NOTIFY_ROUND_RESULT, user));
         } else {
             Log.w(TAG, "Unexpected call notifyGameResult from client!");
         }
@@ -436,7 +458,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public User[] getRoundResult() {
-        
+
         // TODO
         return new User[0];
     }

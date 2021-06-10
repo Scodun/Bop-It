@@ -43,6 +43,10 @@
         <activity android:name=".ui.GamemodeSelectActivity" />
         <activity android:name=".ui.WinLossActivity" />
         <activity android:name=".ui.GameActivity" />
+        <activity android:name=".ui.DifficultyActivity"/>
+        <activity android:name=".ui.OverallAchievementsActivity"/>
+        <activity android:name=".ui.MinigameAchievementsActivity"/>
+        <activity android:name=".ui.AchievementsSelectActivity"/>
 
         <service
             android:name=".domain.services.BackgroundSoundService"

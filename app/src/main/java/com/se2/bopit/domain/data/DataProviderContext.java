@@ -17,7 +17,7 @@ public class DataProviderContext {
     private DataProviderStrategy dataProvider;
     protected ArrayList<User> users;
 //    protected String currentUserId;
-    
+
     private static DataProviderContext context;
 
     private DataProviderContext(DataProviderStrategy dataProvider){
@@ -25,7 +25,7 @@ public class DataProviderContext {
         NetworkContextListener networkListener = u -> users = u;
         this.dataProvider.setListener(networkListener);
     }
-    
+
     public static DataProviderContext create(DataProviderStrategy strategy) {
         context = new DataProviderContext(strategy);
         return context;
@@ -71,7 +71,10 @@ public class DataProviderContext {
         dataProvider.disconnect();
     }
 
+    public void sendReadyMessage() {dataProvider.sendReadyMessage(); }
 
+
+    public void sendReadyAnswer(boolean answer, String username) {dataProvider.sendReadyAnswer(answer, username); }
     public DataProviderStrategy getDataProvider() {
         return dataProvider;
     }
