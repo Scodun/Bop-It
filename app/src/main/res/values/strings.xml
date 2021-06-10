@@ -42,6 +42,11 @@
 
     <string name="challenge_cover_light_sensor">Cover light sensor!</string>
 
+
+    <!-- Button Cheating -->
+    <string name="cheatButton">Cheat</string>
+    <string name="reportButton">Report</string>
+
     <!-- Achievement -->
     <string name="easy100">0001</string>
     <string name="medium100">0002</string>
@@ -55,6 +60,5 @@
     <string name="gamesInRow10">0010</string>
     <string name="gamesInRow25">0011</string>
     <string name="gamesInRow50">0012</string>
-
 
 </resources>

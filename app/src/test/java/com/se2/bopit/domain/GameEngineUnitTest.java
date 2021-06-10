@@ -121,9 +121,7 @@ public class GameEngineUnitTest {
         reset(miniGamesProviderMock, listenerMock, platformProviderMock, timerMock);
     }
 
-    @Test
-    public void startNewGame() {
-
+    private void mockGameActivity() {
         // mock GameActivity
         doAnswer(i -> {
             MiniGame game = i.getArgument(0);
@@ -131,6 +129,11 @@ public class GameEngineUnitTest {
             // simulate run game
             return null;
         }).when(listenerMock).onGameStart(any(), anyLong());
+    }
+
+    @Test
+    public void startNewGame() {
+        mockGameActivity();
 
         // check initial state
         assertEquals(0, gameEngine.score);
@@ -298,6 +301,24 @@ public class GameEngineUnitTest {
 
         DifficultyActivity.setDifficulty("hard");
         assertEquals((long) (Math.exp(-gameEngine.score * 0.08 + 7) + 1000), gameEngine.getTimeForMinigame(sliderMinigame));
+    }
+
+    @Test
+    public void testPauseCountDown() {
+        mockGameActivity();
+
+        gameEngine.startNewGame();
+        gameEngine.pauseCountDown();
+        assertFalse(timerRunning);
+    }
+
+    @Test
+    public void testResumeCountDown() {
+        mockGameActivity();
+
+        gameEngine.startNewGame();
+        gameEngine.resumeCountDown();
+        assertTrue(timerRunning);
     }
 
 }

@@ -1,10 +1,14 @@
 package com.se2.bopit.ui;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -36,6 +40,8 @@ public class GameActivity extends BaseActivity {
     ArrayList<Integer> colors;
     GameEngine engine;
     boolean gameEnd = false;
+    Button cheatButton;
+    Button detectButton;
 
     GameMode gameMode;
 
@@ -44,6 +50,7 @@ public class GameActivity extends BaseActivity {
     private static final String PREF_KEY_EFFECT = "effect";
 
     @RequiresApi(api = Build.VERSION_CODES.N)
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         Log.d(TAG, "onCreate");
@@ -53,15 +60,22 @@ public class GameActivity extends BaseActivity {
         //get Views
         timeBar = findViewById(R.id.timeBar);
         scoreView = findViewById(R.id.scoreView);
+        cheatButton = findViewById(R.id.cheatButton);
         lifeView = findViewById(R.id.lifeView);
 
         //start game Engine and register listeners
         Intent intent = getIntent();
-        if(intent.hasExtra(GAME_MODE)) {
+        if (intent.hasExtra(GAME_MODE)) {
             gameMode = (GameMode) intent.getSerializableExtra(GAME_MODE);
         } else {
             Log.w(TAG, "Fallback to default game mode");
             gameMode = GameMode.SINGLE_PLAYER;
+
+        }
+
+        //set visibility of cheat and detect button to gone in singleplayer mode
+        if(gameMode == GameMode.SINGLE_PLAYER){
+            cheatButton.setVisibility(View.GONE);
         }
 
         engine = GameEngineProvider.getInstance().create(gameMode, gameEngineListener);
@@ -75,6 +89,24 @@ public class GameActivity extends BaseActivity {
                         ContextCompat.getColor(this, R.color.secondary_variant_2)
                 )
         );
+
+
+        cheatButton.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if(engine.isMyTurn) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        engine.pauseCountDown();
+                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                        engine.resumeCountDown();
+                    }
+                }
+                else {
+                    engine.reportCheat();
+                }
+                return false;
+            }
+        });
 
         lifeView.setTextColor(colors.get(2));
         lifeView.setText("Lives " + User.STARTING_LIVES);
@@ -119,6 +151,7 @@ public class GameActivity extends BaseActivity {
         @Override
         public void onGameStart(MiniGame game, long time) {
             Log.d(TAG, "onGameStart");
+            cheatButton.setText(engine.isMyTurn ? R.string.cheatButton : R.string.reportButton);
             scoreView.setText(engine.isMyTurn ? "YOU" : "other");
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
@@ -131,6 +164,8 @@ public class GameActivity extends BaseActivity {
         public void onTimeTick(long time) {
             timeBar.setProgress((int) time);
         }
+
+
     };
 
     @Override

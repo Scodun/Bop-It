@@ -182,7 +182,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
                     case 0:
                         ArrayList<User> users = gson.fromJson(po.getPayload(), type);
                         Log.d(TAG, "lobby changed: " + users);
-                        if(userId == null) {
+                        if (userId == null) {
                             users.stream()
                                     .filter(u -> u.getName().equals(username))
                                     .map(User::getId)
@@ -226,6 +226,15 @@ public class NearbyDataProvider extends DataProviderStrategy {
                         break;
                     case NearbyPayload.NOTIFY_GAME_OVER:
                         gameEngineClient.stopCurrentGame();
+                        break;
+                    case NearbyPayload.SET_CLIENT_CHEATED:
+                        gameEngineServer.setClientCheated(endpointId);
+                        break;
+                    case NearbyPayload.DETECT_CHEATING:
+                        gameEngineServer.detectCheating(endpointId);
+                        break;
+                    case NearbyPayload.CHEATER_DETECTED:
+                        gameEngineClient.cheaterDetected(gson.fromJson(po.getPayload(), String.class));
                         break;
 
                     default:
@@ -285,6 +294,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
         Nearby.getConnectionsClient(context).sendPayload(getConnectedUserIds(), bytesPayload);
     }
 
+    @Override
     public void disconnect() {
         if (isHost) {
             Nearby.getConnectionsClient(context).stopAdvertising();
@@ -355,7 +365,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
         if (isHost) {
             ArrayList<String> users = new ArrayList<>();
             for (User connected : connectedUsers) {
-                if(!connected.getId().equals("0"))
+                if (!connected.getId().equals("0"))
                     users.add(connected.getId());
             }
             return users;
@@ -454,7 +464,37 @@ public class NearbyDataProvider extends DataProviderStrategy {
     }
 
     @Override
+    public void setClientCheated(String userId) {
+        if (isHost) {
+            gameEngineServer.setClientCheated(userId);
+        }else {
+            getConnectionsClient().sendPayload(hostEndpointId,
+                    wrapPayload(NearbyPayload.SET_CLIENT_CHEATED, userId));
+        }
+    }
+
+    @Override
+    public void detectCheating() {
+        if (isHost) {
+            gameEngineServer.detectCheating(userId);
+        }else {
+            getConnectionsClient().sendPayload(hostEndpointId,
+                    wrapPayload(NearbyPayload.DETECT_CHEATING));
+        }
+    }
+
+    @Override
     public String getUserId() {
         return userId;
+    }
+
+
+    @Override
+    public void cheaterDetected(String cheaterId) {
+        if(isHost) {
+            Log.d(TAG, "Broadcast cheater detected");
+            getConnectionsClient().sendPayload(getConnectedUserIds(),
+                    wrapPayload(NearbyPayload.CHEATER_DETECTED, cheaterId));
+        }
     }
 }

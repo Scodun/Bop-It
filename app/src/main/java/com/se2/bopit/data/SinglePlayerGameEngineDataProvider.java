@@ -74,7 +74,27 @@ public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvide
     }
 
     @Override
+    public void setClientCheated(String userId) {
+        //TODO server.setClientCheated(userId); or unused?
+    }
+
+    @Override
+    public void detectCheating() {
+        //TODO server.detectCheating(userId); or unused?
+    }
+
+    @Override
     public String getUserId() {
         return "player";
+    }
+
+    @Override
+    public void disconnect() {
+
+    }
+
+    @Override
+    public void cheaterDetected(String userId) {
+        //empty in singleplayer
     }
 }

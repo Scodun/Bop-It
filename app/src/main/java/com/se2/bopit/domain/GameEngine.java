@@ -42,6 +42,8 @@ public class GameEngine {
     boolean lifecycleCancel = false;
     CountDownTimer timer;
     public boolean isMyTurn;
+    private long timeRemaining;
+    public String currentUserId;
 
     MiniGamesProvider miniGamesProvider;
     PlatformFeaturesProvider platformFeaturesProvider;
@@ -73,6 +75,7 @@ public class GameEngine {
 
     public void startNewGame(GameRoundModel round) {
         isMyTurn = userId.equals(round.currentUserId);
+        currentUserId = round.currentUserId;
 
         MiniGame minigame = miniGamesProvider.createMiniGame(round);
         long time = getTimeForMinigame(minigame);
@@ -215,9 +218,20 @@ public class GameEngine {
                 .start();
     }
 
+    public void pauseCountDown() {
+        timer.cancel();
+        dataProvider.setClientCheated(userId);
+    }
+
+    public void resumeCountDown(){
+        timer = startCountDown(timeRemaining);
+    }
+
     public void onTick(long millisUntilFinished) {
-        if (listener != null)
+        if (listener != null) {
             listener.onTimeTick(millisUntilFinished);
+        }
+        timeRemaining = millisUntilFinished;
     }
 
     public void onFinish() {
@@ -286,6 +300,21 @@ public class GameEngine {
             startNewGame();
     }
 
+
+    public void reportCheat(){
+        dataProvider.detectCheating();
+    }
+
+    public void cheaterDetected(String userId) {
+        if (this.userId.equals(userId)) {
+            isOverTime = true;
+            listener.onGameEnd(score);
+            dataProvider.sendGameResult(userId, false, null);
+            Log.d(TAG, "cheater detected, game ending " + userId);
+            dataProvider.disconnect();
+        }
+    }
+      
     public void loseMinigame() {
         dataProvider.sendGameResult(userId, false, null);
         miniGameLost = false;
