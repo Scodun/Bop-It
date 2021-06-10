@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.WinLossActivity">
 
     <TextView
@@ -17,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <info.hoang8f.widget.FButton
         android:layout_width="75pt"
         android:layout_height="30pt"
         android:text="Return to GameSelect"
@@ -27,9 +28,13 @@
         app:layout_constraintHorizontal_bias="0.061"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.959" />
+        app:layout_constraintVertical_bias="0.959"
 
-    <Button
+        app:fButtonColor="@color/primary"
+        fbutton:cornerRadius="100dp"
+        android:textColor="@color/white"/>
+
+    <info.hoang8f.widget.FButton
         android:layout_width="75pt"
         android:layout_height="30pt"
         android:text="Share Score"
@@ -40,9 +45,13 @@
         app:layout_constraintHorizontal_bias="0.938"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.959" />
+        app:layout_constraintVertical_bias="0.959"
 
-    <Button
+        app:fButtonColor="@color/primary"
+        fbutton:cornerRadius="100dp"
+        android:textColor="@color/white"/>
+
+    <info.hoang8f.widget.FButton
         android:id="@+id/leaderboardButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,5 +60,9 @@
         android:layout_marginTop="40dp"
         android:text="Leaderboard"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+
+        app:fButtonColor="@color/primary"
+        fbutton:cornerRadius="100dp"
+        android:textColor="@color/white"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

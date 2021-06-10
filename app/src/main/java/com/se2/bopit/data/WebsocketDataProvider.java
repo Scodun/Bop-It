@@ -6,6 +6,8 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
+import com.google.android.gms.nearby.Nearby;
+import com.google.android.gms.nearby.connection.Payload;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.se2.bopit.data.websocket.IncomingMessage;
@@ -17,7 +19,10 @@ import com.se2.bopit.domain.interfaces.NetworkContextListener;
 import com.se2.bopit.domain.interfaces.NetworkGameListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.NearbyPayload;
+import com.se2.bopit.domain.models.ReadyMessage;
 import com.se2.bopit.domain.models.User;
+
+import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -146,7 +151,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
                 type = new TypeToken<List<User>>() {}.getType();
                 List<User> users = unwrapPayload(payload, type);
                 Log.d(TAG, "lobby changed: " + users);
-                lobbyListener.onUserLobbyChange(users);
+                lobbyListener.onUserLobbyChange(new ArrayList<>(users));
                 break;
             case NearbyPayload.GAME_COUNT_DOWN:
                 lobbyListener.onGameCountdownStart();
@@ -173,6 +178,13 @@ public class WebsocketDataProvider extends DataProviderStrategy {
                 break;
             case NearbyPayload.NOTIFY_GAME_OVER:
                 gameEngineClient.stopCurrentGame();
+                break;
+            case 7:
+                lobbyListener.onReadyMessageReceived();
+                break;
+            case 8:
+                ReadyMessage msg = unwrapPayload(payload, ReadyMessage.class);
+                lobbyListener.OnReadyAnswerReceived(msg.answer, msg.username);
                 break;
 
                 // internal messages
@@ -289,11 +301,31 @@ public class WebsocketDataProvider extends DataProviderStrategy {
         }
     }
 
+    @Override
+    public void sendReadyMessage() {
+        if (isHost) {
+            List<String> to = getConnectedUserIds();
+            if(!to.isEmpty()) {
+                sendPayload(to, wrapPayload(7));
+            }
+        }
+    }
+    
+    @Override
+    public void sendReadyAnswer(boolean answer, String username) {
+        if (!isHost) {
+            ReadyMessage ready = new ReadyMessage();
+            ready.answer = answer;
+            ready.username = username;
+            sendPayload(hostEndpointId, wrapPayload(8, ready));
+        }
+    }
+
     List<String> getConnectedUserIds() {
         if (isHost) {
             List<String> users = new ArrayList<>();
             for (User connected : connectedUsers) {
-                if(!connected.getId().equals("0"))
+                if(!connected.getId().equals(userId))
                     users.add(connected.getId());
             }
             return users;

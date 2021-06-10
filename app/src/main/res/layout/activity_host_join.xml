@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.HostJoinActivity">
 
     <ImageView
@@ -22,7 +23,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_wave_1" />
 
-    <Button
+    <info.hoang8f.widget.FButton
         android:id="@+id/button_host"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -36,7 +37,12 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/waveView3"
-        app:layout_constraintVertical_bias="0.54" />
+        app:layout_constraintVertical_bias="0.54"
+        app:fButtonColor="@color/primary"
+        fbutton:cornerRadius="100dp"
+        fbutton:shadowEnabled="true"
+        fbutton:shadowHeight="5dp"
+        android:textColor="@color/white"/>
 
     <EditText
         android:id="@+id/editTextUsername"
@@ -62,7 +68,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
+    <info.hoang8f.widget.FButton
         android:id="@+id/button_join"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -76,7 +82,12 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/button_host"
-        app:layout_constraintVertical_bias="0.426" />
+        app:layout_constraintVertical_bias="0.426"
+        app:fButtonColor="@color/primary"
+        fbutton:cornerRadius="100dp"
+        fbutton:shadowEnabled="true"
+        fbutton:shadowHeight="5dp"
+        android:textColor="@color/white"/>
 
     <TextView
         android:id="@+id/textView8"

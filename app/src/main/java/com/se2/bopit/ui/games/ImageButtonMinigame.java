@@ -67,8 +67,13 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
 
     public void initializeButtons(View view) {
         view.findViewById(R.id.imageButton).setOnClickListener(clickHandler);
+        view.findViewById(R.id.imageButton).setBackgroundColor(View.INVISIBLE);
+
         view.findViewById(R.id.imageButton2).setOnClickListener(clickHandler);
+        view.findViewById(R.id.imageButton2).setBackgroundColor(View.INVISIBLE);
+
         view.findViewById(R.id.imageButton3).setOnClickListener(clickHandler);
+        view.findViewById(R.id.imageButton3).setBackgroundColor(View.INVISIBLE);
     }
 
     /**
@@ -99,6 +104,8 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
      * @param buttonToSetBackground - id of the ImageButton from which the background should be changed
      */
     void setBackground(int buttonToSetBackground) {
+        getView().findViewById(buttonToSetBackground)
+                .setBackgroundColor(View.VISIBLE);
         getView().findViewById(buttonToSetBackground)
                 .setBackground(ResourcesCompat.getDrawable(getResources(),
                         R.drawable.pressed_button_green, null));
