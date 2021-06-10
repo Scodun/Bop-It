@@ -17,6 +17,7 @@ import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.SoundEffects;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.domain.models.User;
 import com.se2.bopit.ui.providers.GameEngineProvider;
 
 import java.util.ArrayList;
@@ -76,6 +77,7 @@ public class GameActivity extends BaseActivity {
         );
 
         lifeView.setTextColor(colors.get(2));
+        lifeView.setText("Lives " + User.STARTING_LIVES);
 
         engine.startNewGame();
     }
@@ -103,7 +105,7 @@ public class GameActivity extends BaseActivity {
         @Override
         public void onScoreUpdate(int score) {
             scoreView.setTextColor(colors.get(rand.nextInt(colors.size())));
-            scoreView.setText("Score " + String.valueOf(score));
+            scoreView.setText("Score " + score);
             if (checkPref()) {
                 new SoundEffects(getBaseContext(), 0);
             }
