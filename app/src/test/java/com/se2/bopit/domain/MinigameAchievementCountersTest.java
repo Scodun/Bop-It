@@ -1,5 +1,6 @@
 package com.se2.bopit.domain;
 
+import com.se2.bopit.data.SinglePlayerGameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.mock.MiniGameMock;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
@@ -67,8 +68,8 @@ public class MinigameAchievementCountersTest {
         gameMock = new MiniGameMock();
         when(miniGamesProviderMock.createRandomMiniGame())
                 .thenReturn(gameMock);
-
-        gameEngine = new GameEngine(miniGamesProviderMock, platformProviderMock, listenerMock);
+        SinglePlayerGameEngineDataProvider dataProvider = new SinglePlayerGameEngineDataProvider();
+        gameEngine = new GameEngine(miniGamesProviderMock, platformProviderMock, listenerMock, dataProvider);
     }
 
     @After
