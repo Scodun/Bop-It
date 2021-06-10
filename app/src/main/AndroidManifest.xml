@@ -10,6 +10,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/logobopitmix"
@@ -17,7 +18,7 @@
         android:roundIcon="@drawable/logobopitmix"
         android:supportsRtl="true"
         android:theme="@style/Theme.BopIt">
-        <activity android:name=".ui.LobbyHostActivity"></activity>
+        <activity android:name=".ui.LobbyHostActivity" />
         <activity android:name=".ui.HostJoinActivity" />
         <activity android:name=".ui.LobbyJoinActivity" />
 

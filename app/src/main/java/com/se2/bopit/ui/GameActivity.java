@@ -97,10 +97,15 @@ public class GameActivity extends BaseActivity {
         cheatButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                    engine.pauseCountDown();
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    engine.resumeCountDown();
+                if(engine.isMyTurn) {
+                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                        engine.pauseCountDown();
+                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                        engine.resumeCountDown();
+                    }
+                }
+                else {
+                    engine.reportCheat();
                 }
                 return false;
             }
@@ -148,6 +153,7 @@ public class GameActivity extends BaseActivity {
         @Override
         public void onGameStart(MiniGame game, long time) {
             Log.d(TAG, "onGameStart");
+            cheatButton.setText(engine.isMyTurn ? R.string.cheatButton : R.string.reportButton);
             scoreView.setText(engine.isMyTurn ? "YOU" : "other");
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)

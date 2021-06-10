@@ -22,9 +22,11 @@ import com.google.android.gms.nearby.connection.PayloadCallback;
 import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.se2.bopit.domain.GameEngine;
 import com.se2.bopit.domain.GameRoundModel;
 import com.se2.bopit.domain.ResponseModel;
 import com.se2.bopit.domain.data.DataProviderStrategy;
+import com.se2.bopit.domain.engine.GameEngineServer;
 import com.se2.bopit.domain.interfaces.NetworkContextListener;
 import com.se2.bopit.domain.interfaces.NetworkGameListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
@@ -231,15 +233,14 @@ public class NearbyDataProvider extends DataProviderStrategy {
                         gameEngineClient.stopCurrentGame();
                         break;
                     case NearbyPayload.SET_CLIENT_CHEATED:
-                        gameEngineServer.setClientCheated();
+                        gameEngineServer.setClientCheated(endpointId);
                         break;
-                    case NearbyPayload.SEND_DETECT_CHEATING:
-                        gameEngineServer.detectCheating(userId, gson.fromJson(po.getPayload(), Boolean.class), gson.fromJson(po.getPayload(), GameRoundModel.class));
+                    case NearbyPayload.DETECT_CHEATING:
+                        gameEngineServer.detectCheating(endpointId);
                         break;
-                    case NearbyPayload.NOTIFY_CHEAT_DETECTED:
-                        gameEngineClient.notifyCheatDetected(gson.fromJson(po.getPayload(),User.class));
+                    case NearbyPayload.CHEATER_DETECTED:
+                        gameEngineClient.cheaterDetected(gson.fromJson(po.getPayload(), String.class));
                         break;
-
 
                     default:
                         Log.e(TAG, "Unknown payload [from " + endpointId + "]: " + po);
@@ -298,6 +299,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
         Nearby.getConnectionsClient(context).sendPayload(getConnectedUserIds(), bytesPayload);
     }
 
+    @Override
     public void disconnect() {
         if (isHost) {
             Nearby.getConnectionsClient(context).stopAdvertising();
@@ -364,7 +366,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void readyToStart(String userId) {
-        if (isHost) {
+        if(isHost) {
             Log.d(TAG, "Host readyToStart");
             gameEngineServer.readyToStart(userId);
         } else {
@@ -376,7 +378,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public void startNewGame(GameRoundModel roundModel) {
-        if (isHost) {
+        if(isHost) {
             Log.d(TAG, "Broadcast startNewGame " + roundModel);
             gameEngineClient.startNewGame(roundModel);
             getConnectionsClient().sendPayload(getConnectedUserIds(),
@@ -388,7 +390,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public void sendGameResult(String userId, boolean result, ResponseModel responseModel) {
-        if (isHost) {
+        if(isHost) {
             Log.d(TAG, "Host sendGameResult: " + userId + ": " + result);
             gameEngineServer.sendGameResult(userId, result, responseModel);
         } else {
@@ -400,7 +402,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public void notifyGameResult(boolean result, ResponseModel responseModel) {
-        if (isHost) {
+        if(isHost) {
             Log.d(TAG, "Broadcast notifyGameResult: " + result);
             gameEngineClient.notifyGameResult(result, responseModel);
             getConnectionsClient().sendPayload(getConnectedUserIds(),
@@ -412,7 +414,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public void stopCurrentGame(String userId) {
-        if (isHost) {
+        if(isHost) {
             Log.d(TAG, "Host stopCurrentGame: " + userId);
             gameEngineServer.stopCurrentGame(userId);
         } else {
@@ -424,7 +426,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public void notifyGameOver() {
-        if (isHost) {
+        if(isHost) {
             Log.d(TAG, "Broadcast game over");
             getConnectionsClient().sendPayload(getConnectedUserIds(),
                     wrapPayload(NearbyPayload.NOTIFY_GAME_OVER));
@@ -434,9 +436,29 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public User[] getRoundResult() {
-
+        
         // TODO
         return new User[0];
+    }
+
+    @Override
+    public void setClientCheated(String userId) {
+        if (isHost) {
+            gameEngineServer.setClientCheated(userId);
+        }else {
+            getConnectionsClient().sendPayload(hostEndpointId,
+                    wrapPayload(NearbyPayload.SET_CLIENT_CHEATED, userId));
+        }
+    }
+
+    @Override
+    public void detectCheating() {
+        if (isHost) {
+            gameEngineServer.detectCheating(userId);
+        }else {
+            getConnectionsClient().sendPayload(hostEndpointId,
+                    wrapPayload(NearbyPayload.DETECT_CHEATING));
+        }
     }
 
     @Override
@@ -444,36 +466,13 @@ public class NearbyDataProvider extends DataProviderStrategy {
         return userId;
     }
 
-    @Override
-    public void setClientCheated() {
-        if (isHost) {
-            gameEngineServer.setClientCheated();
-        } else {
-            getConnectionsClient().sendPayload(getConnectedUserIds(),
-                    wrapPayload(NearbyPayload.SET_CLIENT_CHEATED));
-        }
-    }
 
     @Override
-    public void detectCheating(String userID, boolean cheatDetected, GameRoundModel gameRoundModel) {
-        if (isHost) {
-            gameEngineServer.detectCheating(userID, cheatDetected, gameRoundModel);
-        } else {
+    public void cheaterDetected(String cheaterId) {
+        if(isHost) {
+            Log.d(TAG, "Broadcast cheater detected");
             getConnectionsClient().sendPayload(getConnectedUserIds(),
-                    wrapPayload(NearbyPayload.SEND_DETECT_CHEATING));
+                    wrapPayload(NearbyPayload.CHEATER_DETECTED, cheaterId));
         }
     }
-
-    @Override
-    public void notifyCheatDetected(User lastPlayer) {
-        if (isHost) {
-            Log.d(TAG, "Broadcast notifyCheatDetected: " + lastPlayer.getName());
-            gameEngineClient.notifyCheatDetected(lastPlayer);
-            getConnectionsClient().sendPayload(getConnectedUserIds(),
-                    wrapPayload(NearbyPayload.NOTIFY_CHEAT_DETECTED));
-        } else {
-            Log.w(TAG, "Unexpected call notifyCheatDetected from client!");
-        }
-    }
-
 }

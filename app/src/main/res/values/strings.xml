@@ -44,5 +44,5 @@
 
     <!-- Button Cheating -->
     <string name="cheatButton">Cheat</string>
-    <string name="detectButton">Detect</string>
+    <string name="reportButton">Report</string>
 </resources>
