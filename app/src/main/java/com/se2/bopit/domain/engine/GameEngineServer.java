@@ -202,8 +202,6 @@ public class GameEngineServer {
     }
 
     public void detectCheating(String reporterUserId) {
-        Log.d("CHEATTERR rep",reporterUserId);
-        Log.d("CHEATTERR next",String.valueOf(activePlayers.size()));
             boolean cheated = nextPlayer.hasCheated();
             if (cheated) {
                 activePlayers.remove(nextPlayer.getId());
