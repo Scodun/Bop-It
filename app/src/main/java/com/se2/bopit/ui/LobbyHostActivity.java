@@ -18,6 +18,7 @@ import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.data.DataProviderContext;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.User;
+import com.se2.bopit.ui.helpers.CustomToast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -112,7 +113,7 @@ public class LobbyHostActivity extends BaseActivity {
             Runnable countdownRunnable = () -> {
                 runOnUiThread(
                         () -> {
-                            // TODO CustomToast.showToast(String.valueOf(LobbyHostActivity.countdown), context);
+                            CustomToast.showToast(String.valueOf(LobbyHostActivity.countdown), context);
                             LobbyHostActivity.countdown--;
                             if (LobbyHostActivity.countdown <= 0)
                                 countdownFuture.cancel(false);
