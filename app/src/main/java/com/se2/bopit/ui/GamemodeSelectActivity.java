@@ -21,16 +21,16 @@ import info.hoang8f.widget.FButton;
 public class GamemodeSelectActivity extends BaseActivity {
 
     private ActivityResultLauncher<Intent> activityResultLauncher;
-
     private FButton
             singleplayerButton,
             localMultiplayerButton,
-            onlineMultiplayerButton,
-            googlePlayAchievements;
+            onlineMultiplayerButton;
     private ImageButton
             settingsButton,
-            achievementButton;
+            achievementButton,
+            leaderboardButton;
     private ConstraintLayout customRulesButton;
+    private static final int RC_LEADERBOARD_UI = 9004;
 
 
     @Override
@@ -51,8 +51,7 @@ public class GamemodeSelectActivity extends BaseActivity {
         settingsButton = findViewById(R.id.settingsButton);
         customRulesButton = findViewById(R.id.customRulesButton);
         achievementButton = findViewById(R.id.achievments);
-
-        googlePlayAchievements = findViewById(R.id.googlePlayAchievements);
+        leaderboardButton = findViewById(R.id.leaderboardsButton);
     }
 
     private void initializeListeners() {
@@ -73,28 +72,27 @@ public class GamemodeSelectActivity extends BaseActivity {
 
         achievementButton.setOnClickListener(v -> startActivity(new Intent(this, AchievementsSelectActivity.class)));
 
-        googlePlayAchievements.setOnClickListener(onAchievements);
+        leaderboardButton.setOnClickListener(v->  {
+            if (!BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
+                Games.getLeaderboardsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                        .getAllLeaderboardsIntent()
+                        .addOnSuccessListener(intent -> activityResultLauncher.launch(intent));
+            }
+        });
 
-    }
-    private final View.OnClickListener onAchievements = v -> {
-        if (!BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
-            Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
-                    .getAchievementsIntent()
-                    .addOnSuccessListener(intent -> activityResultLauncher.launch(intent));
-        }
-    };
-
-    private void initActivityLauncher() {
-        activityResultLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                });
     }
 
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         this.finishAffinity();
+    }
+
+    private void initActivityLauncher() {
+        activityResultLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                });
     }
 
 }
