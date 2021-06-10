@@ -5,14 +5,14 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 import com.google.gson.Gson;
 
-import com.se2.bopit.domain.GameModel;
+import com.se2.bopit.domain.gamemodel.GameModel;
 import com.se2.bopit.domain.GameRoundModel;
-import com.se2.bopit.domain.ResponseModel;
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.models.User;
-import com.se2.bopit.domain.providers.MiniGamesProvider;
-import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
+import com.se2.bopit.domain.interfaces.MiniGamesProvider;
+import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
 
 import java.util.*;
 import java.util.stream.Collectors;

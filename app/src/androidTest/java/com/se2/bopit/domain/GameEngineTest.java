@@ -3,7 +3,8 @@ package com.se2.bopit.domain;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
-import com.se2.bopit.data.SinglePlayerGameEngineDataProvider;
+import com.se2.bopit.domain.data.SinglePlayerGameEngineDataProvider;
+import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.engine.GameEngineServer;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;

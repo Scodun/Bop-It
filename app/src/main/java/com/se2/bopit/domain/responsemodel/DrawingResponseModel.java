@@ -1,8 +1,7 @@
-package com.se2.bopit.domain.drawingminigame;
+package com.se2.bopit.domain.responsemodel;
 
 import android.graphics.Bitmap;
 import android.graphics.Path;
-import com.se2.bopit.domain.ResponseModel;
 
 public class DrawingResponseModel extends ResponseModel {
     public final Bitmap solution;

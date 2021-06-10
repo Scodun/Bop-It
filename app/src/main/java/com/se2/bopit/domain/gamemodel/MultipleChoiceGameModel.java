@@ -1,4 +1,6 @@
-package com.se2.bopit.domain;
+package com.se2.bopit.domain.gamemodel;
+
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,7 +31,7 @@ public abstract class MultipleChoiceGameModel<M extends ResponseModel> extends G
     }
 
     @Override
-    protected boolean checkResponse(M response) {
+    public boolean checkResponse(M response) {
         return response.isCorrect;
     }
 

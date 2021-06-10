@@ -1,8 +1,8 @@
 package com.se2.bopit.domain;
 
 import com.se2.bopit.domain.mock.GameListenerMock;
-import com.se2.bopit.domain.sliderminigame.SliderGameModel;
-import com.se2.bopit.domain.sliderminigame.SliderResponseModel;
+import com.se2.bopit.domain.gamemodel.SliderGameModel;
+import com.se2.bopit.domain.responsemodel.SliderResponseModel;
 import org.junit.Before;
 import org.junit.Test;
 

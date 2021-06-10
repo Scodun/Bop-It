@@ -3,7 +3,7 @@ package com.se2.bopit.ui.games;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.domain.VolumeButton;
-import com.se2.bopit.domain.VolumeButtonGameModel;
+import com.se2.bopit.domain.gamemodel.VolumeButtonGameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 
 import org.junit.After;

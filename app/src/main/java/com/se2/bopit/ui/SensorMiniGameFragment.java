@@ -1,6 +1,6 @@
 package com.se2.bopit.ui;
 
-import com.se2.bopit.domain.SensorMiniGameModel;
+import com.se2.bopit.domain.gamemodel.SensorMiniGameModel;
 
 public abstract class SensorMiniGameFragment<M extends SensorMiniGameModel> extends MiniGameFragment<M> {
     protected SensorMiniGameFragment(M gameModel) {
