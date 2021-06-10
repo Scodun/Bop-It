@@ -10,7 +10,9 @@ import java.io.Serializable;
  */
 public class NearbyPayload implements Serializable {
     // lobby
-    public static final int USER_UPDATE = 0;
+    public static final int USER_LOBBY_UPDATE = 0;
+    public static final int GAME_COUNT_DOWN = 1;
+    public static final int GAME_START = 2;
 
     // game rounds
     public static final int READY_TO_START = 10;
