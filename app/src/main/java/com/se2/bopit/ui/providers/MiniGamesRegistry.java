@@ -41,6 +41,7 @@ public class MiniGamesRegistry implements MiniGamesProvider {
             PlacePhoneMiniGame.class,
             CoverLightSensorMiniGame.class,
             VolumeButtonMinigame.class,
+            DrawingMinigame.class,
             SpeechRecognitionMiniGame.class
     };
 
