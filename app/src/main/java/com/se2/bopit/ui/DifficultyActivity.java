@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.GameMode;
 
 import info.hoang8f.widget.FButton;
 
@@ -24,7 +25,7 @@ public class DifficultyActivity extends BaseActivity{
         initializeOnClickListeners();
 
         back.setOnClickListener(v -> {
-            startActivity(new Intent(this, GamemodeSelectActivity.class));
+            startActivity(new Intent(this, GamemodeSelectActivity.class).putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER));
         });
 
 
