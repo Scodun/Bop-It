@@ -9,11 +9,11 @@ public class User implements Serializable {
     private int score = 0;
     private boolean cheated;
     private int life = 3;
+    private int currentRound = 0;
 
     public User(String id, String name) {
         this.id = id;
         this.name = name;
-        cheated = false;
     }
 
     public void addScore() {
@@ -47,5 +47,12 @@ public class User implements Serializable {
 
     public int getLife() {
         return life;
+    }
+
+    public void setCurrentRound(int round){
+        this.currentRound = round;
+    }
+    public int getCurrentRound(){
+        return currentRound;
     }
 }

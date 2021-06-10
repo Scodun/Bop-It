@@ -45,9 +45,6 @@ public class GameEngineServer {
     GameRoundModel currentRound;
     GameModel<? extends ResponseModel> currentGame;
 
-    boolean isOverTime = false;
-    boolean miniGameLost = false;
-    boolean lifecycleCancel = false;
     //    CountDownTimer timer;
     //for cheatfunction
     private User lastPlayer;
@@ -110,9 +107,11 @@ public class GameEngineServer {
         currentRound = new GameRoundModel();
         currentRound.round = round++; // start with round 1
         nextPlayer = selectNextRoundUser();
+        nextPlayer.setCurrentRound(round);
         //for cheatfunction
-        nextPlayer.setCheated(false);
+        //nextPlayer.setCheated(false);
         currentRound.currentUserId = nextPlayer.getId();
+        Log.d(TAG, "cheat currentUser: " + nextPlayer.getName());
         long time = (long) (Math.exp(-nextPlayer.getScore() * 0.08 + 7) + 2000);
         currentRound.time = time;
         MiniGame minigame = getMiniGame();
@@ -123,8 +122,7 @@ public class GameEngineServer {
             currentRound.modelJson = gson.toJson(currentGame);
         }
         Log.d(TAG, "sending currentRound to data provider: " + currentRound);
-        //for cheatfunction
-        lastPlayer = nextPlayer;
+        //for cheatdetection function
         dataProvider.startNewGame(currentRound);
     }
 
@@ -177,19 +175,33 @@ public class GameEngineServer {
         Log.d(TAG, "set cheated " + nextPlayer.getId() + " " + nextPlayer.getName() + " " + nextPlayer.hasCheated());
     }
 
-    public void detectCheating() {
-        boolean cheated = lastPlayer.hasCheated();
-        if (cheated) {
-            //TODO send to all cheating of player detected
-            //TODO stop game for cheating player
-        } else {
-            nextPlayer.looseLife();
-            //TODO send to all cheating detection failed
-            if (nextPlayer.getLife() == 0) {
-                //TODO send to all cheating detection failed player lost all lifes
-                //TODO stop game for this player
+    public void detectCheating(String userID, boolean cheatDetected, GameRoundModel gameRoundModel) {
+        boolean cheated;
+        for (User u : users.values()) {
+            Log.d(TAG, "cheat u.getCurrentRound= "+u.hasCheated()+" "+u.getCurrentRound()+" vs. "+round);
+            if (u.getCurrentRound() == round - 1) {
+                cheated = u.hasCheated();
+                Log.d(TAG, "cheat last player " + u.getName() + " u cheated: " + cheated);
+                if (cheated) {
+                    String lastPlayerID = lastPlayer.getId();
+                    Log.d(TAG, "cheat lastplayerID: " + lastPlayerID);
+                    dataProvider.notifyCheatDetected(lastPlayer);
+                    //stopCurrentGame(lastPlayerID);
+                } else {
+                    Log.d(TAG, "cheat lifes before loose: " + nextPlayer.getLife());
+                    nextPlayer.looseLife();
+                    Log.d(TAG, "cheat lifes after loose: " + nextPlayer.getLife());
+                    //TODO send to all cheating detection failed
+                    if (nextPlayer.getLife() == 0) {
+                        Log.d(TAG, "cheat lifes should be 0: " + nextPlayer.getLife());
+
+                        //TODO send to all cheating detection failed player lost all lifes
+                        //TODO stop game for this player
+                    }
+                }
             }
         }
+
     }
 
 }

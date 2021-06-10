@@ -23,6 +23,7 @@ import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.SoundEffects;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.domain.models.User;
 import com.se2.bopit.ui.providers.GameEngineProvider;
 
 import java.util.ArrayList;
@@ -105,12 +106,10 @@ public class GameActivity extends BaseActivity {
             }
         });
 
-        detectButton.setOnTouchListener(new View.OnTouchListener(){
-
+        detectButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                engine.cheatDetected();
-                return false;
+            public void onClick(View v) {
+                engine.detectCheating();
             }
         });
 
@@ -161,6 +160,13 @@ public class GameActivity extends BaseActivity {
         public void onTimeTick(long time) {
             timeBar.setProgress((int) time);
         }
+
+        @Override
+        public void onCheatDetected(User lastPlayer) {
+            Log.d(TAG, "cheat detected true");
+
+        }
+
     };
 
     @Override

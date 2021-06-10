@@ -6,6 +6,7 @@ import android.util.Log;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.domain.models.User;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 
@@ -72,7 +73,7 @@ public class GameEngine {
         }
 
         minigame.setPlatformFeaturesProvider(platformFeaturesProvider);
-        if(isMyTurn) {
+        if (isMyTurn) {
             minigame.setGameListener(result -> {
                 timer.cancel();
                 if (listener != null) {
@@ -113,7 +114,7 @@ public class GameEngine {
         dataProvider.setClientCheated();
     }
 
-    public void resumeCountDown(){
+    public void resumeCountDown() {
         timer = startCountDown(timeRemaining);
     }
 
@@ -124,9 +125,6 @@ public class GameEngine {
         timeRemaining = millisUntilFinished;
     }
 
-    public void cheatDetected(){
-
-    }
 
     public void onFinish() {
         if (isMyTurn && listener != null) {
@@ -150,11 +148,23 @@ public class GameEngine {
 
     public void notifyGameResult(boolean result, ResponseModel responseModel) {
         timer.cancel();
-        if(!isMyTurn) {
+        if (!isMyTurn) {
             // TODO
             listener.onScoreUpdate(score);
         }
-        if(!lifecycleCancel)
+        if (!lifecycleCancel)
             startNewGame();
     }
+
+    public void detectCheating(){
+        Log.d(TAG, "detectCheating started");
+        timer.cancel();
+        dataProvider.detectCheating(userId, true, null);
+    }
+
+    public void notifyCheatDetected(User lastPlayer){
+        Log.d(TAG, "notifyCheatDetectd started "+lastPlayer.getName());
+        listener.onCheatDetected(lastPlayer);
+    }
+
 }

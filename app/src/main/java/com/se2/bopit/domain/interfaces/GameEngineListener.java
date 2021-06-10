@@ -1,5 +1,7 @@
 package com.se2.bopit.domain.interfaces;
 
+import com.se2.bopit.domain.models.User;
+
 public interface GameEngineListener {
     /**
      * Method called when game Ends (time end, miss click)
@@ -29,4 +31,11 @@ public interface GameEngineListener {
      * @param time - Time (in ms) left
      */
     void onTimeTick(long time);
+
+    /**
+     * Method called when cheat detection is true
+     *
+     * @param  lastPlayer
+     */
+    void onCheatDetected(User lastPlayer);
 }
