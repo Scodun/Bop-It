@@ -11,5 +11,6 @@
     fbutton:cornerRadius="100dp"
     fbutton:fButtonColor="@color/primary"
     fbutton:shadowEnabled="true"
-    fbutton:shadowHeight="6dp"/><!--    app:layout_constraintEnd_toEndOf="parent"-->
+    fbutton:shadowHeight="6dp"
+    android:textColor="@color/white"/><!--    app:layout_constraintEnd_toEndOf="parent"-->
     <!--    app:layout_constraintStart_toStartOf="parent"-->

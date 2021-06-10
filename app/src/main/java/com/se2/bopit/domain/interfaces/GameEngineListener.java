@@ -1,5 +1,7 @@
 package com.se2.bopit.domain.interfaces;
 
+import com.se2.bopit.domain.models.User;
+
 public interface GameEngineListener {
     /**
      * Method called when game Ends (time end, miss click)
@@ -15,6 +17,8 @@ public interface GameEngineListener {
      */
     void onScoreUpdate(int score);
 
+    void onLifeUpdate(int life);
+
     /**
      * Method called when Minigame starts
      *
@@ -29,4 +33,5 @@ public interface GameEngineListener {
      * @param time - Time (in ms) left
      */
     void onTimeTick(long time);
+
 }

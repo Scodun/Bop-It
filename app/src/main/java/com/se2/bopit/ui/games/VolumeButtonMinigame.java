@@ -76,8 +76,9 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
      * Checks if the right button was pressed or not
      */
     public void checkPressedKey() {
-        if (isCorrect != null) {
-            gameModel.getGameListener().onGameResult(isCorrect);
+        GameListener listener = gameModel.getGameListener();
+        if (isCorrect != null && listener != null) {
+            listener.onGameResult(isCorrect);
         }
     }
 
