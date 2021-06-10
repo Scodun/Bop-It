@@ -33,11 +33,10 @@ public class GameActivity extends BaseActivity {
     //views
     ProgressBar timeBar;
     TextView scoreView;
-    TextView scoreView, lifeView;
+    TextView lifeView;
     GameEngine engine;
     boolean gameEnd = false;
     Button cheatButton;
-    Button detectButton;
 
     GameMode gameMode;
 
@@ -96,7 +95,6 @@ public class GameActivity extends BaseActivity {
             }
         });
 
-        lifeView.setTextColor(colors.get(2));
         lifeView.setText("Lives " + User.STARTING_LIVES);
 
         engine.startNewGame();

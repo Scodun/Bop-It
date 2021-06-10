@@ -30,35 +30,15 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-///feature/wave_animator
         app:layout_constraintTop_toBottomOf="@id/scoreLayout" />
-=======
-        app:layout_constraintTop_toBottomOf="@+id/scoreView" />
 
     <Button
         android:id="@+id/cheatButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/cheatButton"
-        app:layout_constraintTop_toBottomOf="@id/timeBar"
-        app:layout_constraintRight_toRightOf="@id/timeBar"/>
-
-
-    <TextView
-        android:id="@+id/scoreView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:fontFamily="sans-serif"
-        android:textAllCaps="false"
-        android:textColor="@color/primary_variant"
-        android:textSize="35sp"
-        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/timeBar" />
-/// develop
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/scoreLayout"
@@ -70,7 +50,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-//// feature/wave_animator
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -92,6 +71,22 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView6"
             app:layout_constraintVertical_bias="0.0" />
+
+        <TextView
+            android:id="@+id/lifeView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="sans-serif"
+            android:gravity="center"
+            android:textAllCaps="false"
+            android:textColor="@color/primary_variant"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/textView6"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ProgressBar
             android:id="@+id/timeBar"
@@ -120,40 +115,5 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/timeBar" />
     </androidx.constraintlayout.widget.ConstraintLayout>
-////
-        app:layout_constraintTop_toTopOf="parent" />
-    <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintTop_toBottomOf="@+id/timeBar" android:id="@+id/textViews"
-            android:gravity="center">
-        <TextView
-                android:id="@+id/scoreView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="sans-serif"
-                android:textAllCaps="false"
-                android:textColor="@color/primary_variant"
-                android:textSize="35sp"
-                android:textStyle="bold"
-                tools:layout_weight="1" android:layout_weight="1" android:gravity="center"/>
-        <TextView
-                android:id="@+id/lifeView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"
-                android:fontFamily="sans-serif"
-                android:textAllCaps="false"
-                android:textColor="@color/primary_variant"
-                android:textSize="35sp"
-                android:textStyle="bold"
-                android:layout_weight="1" android:gravity="center"/>
-    </LinearLayout>
-//// develop
 
 </androidx.constraintlayout.widget.ConstraintLayout>
