@@ -7,6 +7,17 @@
     tools:context=".ui.LobbyJoinActivity">
 
     <ImageView
+        android:id="@+id/waveView10"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/wave_bg"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_wave_2" />
+
+    <ImageView
         android:id="@+id/waveView4"
         android:layout_width="match_parent"
         android:layout_height="200dp"
@@ -21,6 +32,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_wave_1" />
+
+    <ImageView
+        android:id="@+id/waveView9"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/wave_bg"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView4"
+        app:srcCompat="@drawable/ic_bg" />
 
     <TextView
         android:id="@+id/textView3"
@@ -41,11 +65,12 @@
     <ListView
         android:id="@+id/userList"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
+        android:layout_height="220dp"
         android:layout_marginStart="10dp"
         android:layout_marginEnd="10dp"
+        android:translationY="-20dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/waveView4" />
 
@@ -67,12 +92,14 @@
         android:id="@+id/openEndpointLists"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:translationY="-20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView4" />
+        app:layout_constraintTop_toBottomOf="@+id/waveView9"
+        app:layout_constraintVertical_bias="0.0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

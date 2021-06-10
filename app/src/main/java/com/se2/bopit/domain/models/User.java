@@ -9,7 +9,7 @@ public class User implements Serializable {
     private final String name;
     private int score = 0;
 
-    private boolean cheated;
+    private boolean cheated = false;
     private int life = 3;
     private int currentRound = 0;
 

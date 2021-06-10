@@ -13,7 +13,6 @@ import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.RequiresApi;
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.GameEngine;
@@ -21,12 +20,10 @@ import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.SoundEffects;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.ui.helpers.WaveAnimator;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.ui.providers.GameEngineProvider;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Random;
 
 public class GameActivity extends BaseActivity {
     static final String TAG = GameActivity.class.getSimpleName();
@@ -35,13 +32,11 @@ public class GameActivity extends BaseActivity {
 
     //views
     ProgressBar timeBar;
-    TextView scoreView, lifeView;
-    Random rand;
-    ArrayList<Integer> colors;
+    TextView scoreView;
+    TextView lifeView;
     GameEngine engine;
     boolean gameEnd = false;
     Button cheatButton;
-    Button detectButton;
 
     GameMode gameMode;
 
@@ -78,17 +73,9 @@ public class GameActivity extends BaseActivity {
             cheatButton.setVisibility(View.GONE);
         }
 
-        engine = GameEngineProvider.getInstance().create(gameMode, gameEngineListener);
+        new WaveAnimator(this, findViewById(R.id.waveView8)).animate(10000, true);
 
-        rand = new Random();
-        colors = new ArrayList<>(
-                Arrays.asList(
-                        ContextCompat.getColor(this, R.color.primary),
-                        ContextCompat.getColor(this, R.color.secondary),
-                        ContextCompat.getColor(this, R.color.primary_variant),
-                        ContextCompat.getColor(this, R.color.secondary_variant_2)
-                )
-        );
+        engine = GameEngineProvider.getInstance().create(gameMode, gameEngineListener);
 
 
         cheatButton.setOnTouchListener(new View.OnTouchListener() {
@@ -108,7 +95,6 @@ public class GameActivity extends BaseActivity {
             }
         });
 
-        lifeView.setTextColor(colors.get(2));
         lifeView.setText("Lives " + User.STARTING_LIVES);
 
         engine.startNewGame();
@@ -136,8 +122,7 @@ public class GameActivity extends BaseActivity {
 
         @Override
         public void onScoreUpdate(int score) {
-            scoreView.setTextColor(colors.get(rand.nextInt(colors.size())));
-            scoreView.setText("Score " + score);
+            scoreView.setText(String.valueOf(score));
             if (checkPref()) {
                 new SoundEffects(getBaseContext(), 0);
             }

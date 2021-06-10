@@ -14,6 +14,7 @@ import com.google.android.gms.games.Games;
 import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.GameMode;
+import com.se2.bopit.ui.helpers.WaveAnimator;
 
 import java.util.Objects;
 
@@ -38,6 +39,8 @@ public class GamemodeSelectActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gamemode_select);
+
+        new WaveAnimator(this, findViewById(R.id.waveView6)).animate(5000, true);
 
         initializeButtons();
         initializeListeners();

@@ -198,13 +198,13 @@ public class GameEngineServer {
 
     public void setClientCheated(String userId) {
         if (userId.equals(currentRound.currentUserId)) {
+            Log.d("CHEATER", "CHEATER");
             nextPlayer.setCheated(true);
         }
     }
 
     public void detectCheating(String reporterUserId) {
-            boolean cheated = nextPlayer.hasCheated();
-            if (cheated) {
+            if (nextPlayer.hasCheated()) {
                 nextPlayer.loseAllLifes();
                 users.remove(nextPlayer.getId());
                 usersReady.remove(nextPlayer.getId());
@@ -212,7 +212,7 @@ public class GameEngineServer {
             } else {
                 User reporter = users.get(reporterUserId);
                 reporter.loseLife();
-                if (nextPlayer.getLife()==0){
+                if (reporter.getLife() == 0){
                     usersReady.remove(reporterUserId);
                     users.remove(reporterUserId);
                     //TODO send to all cheating detection failed player lost all lifes
@@ -220,7 +220,7 @@ public class GameEngineServer {
                 }
             }
 
-            if(usersReady.size()<=1){
+            if(users.size()<=1){
                 dataProvider.notifyGameOver();
             }
     }
