@@ -13,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.games.Games;
 import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
+import com.se2.bopit.domain.GameMode;
 
 import java.util.Objects;
 
@@ -56,7 +57,8 @@ public class GamemodeSelectActivity extends BaseActivity {
 
     private void initializeListeners() {
         singleplayerButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, DifficultyActivity.class));
+            startActivity(new Intent(this, DifficultyActivity.class)
+                          .putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER));
         });
 
         localMultiplayerButton.setOnClickListener(v -> {

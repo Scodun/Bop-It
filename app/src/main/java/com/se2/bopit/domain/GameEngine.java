@@ -1,7 +1,10 @@
 package com.se2.bopit.domain;
 
 import android.os.CountDownTimer;
+import android.util.Log;
 
+import com.se2.bopit.data.SinglePlayerGameEngineDataProvider;
+import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.providers.MiniGamesProvider;
@@ -17,10 +20,19 @@ import com.se2.bopit.ui.games.ShakePhoneMinigame;
 import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
 import com.se2.bopit.ui.games.SliderMinigame;
 import com.se2.bopit.ui.games.VolumeButtonMinigame;
+import com.se2.bopit.ui.games.SpeechRecognitionMiniGame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
+/**
+ * GameEngine Client used by UI on each device.
+ * Depending on gameMode GameEngine connects to local or remote server.
+ */
 public class GameEngine {
+    static final String TAG = GameEngine.class.getSimpleName();
+
     GameEngineListener listener;
+    public GameEngineDataProvider dataProvider;
+    public String userId;
 
     private static final String EASY = "easy";
     private static final String MEDIUM = "medium";
@@ -30,16 +42,20 @@ public class GameEngine {
     boolean miniGameLost = false;
     boolean lifecycleCancel = false;
     CountDownTimer timer;
+    public boolean isMyTurn;
 
     MiniGamesProvider miniGamesProvider;
     PlatformFeaturesProvider platformFeaturesProvider;
 
     public GameEngine(MiniGamesProvider miniGamesProvider,
                       PlatformFeaturesProvider platformFeaturesProvider,
-                      GameEngineListener listener) {
+                      GameEngineListener listener, GameEngineDataProvider dataProvider) {
         this.miniGamesProvider = miniGamesProvider;
         this.platformFeaturesProvider = platformFeaturesProvider;
         this.listener = listener;
+        this.dataProvider = dataProvider;
+        dataProvider.setGameEngineClient(this);
+        this.userId = dataProvider.getUserId();
     }
 
     /**
@@ -51,31 +67,42 @@ public class GameEngine {
      * Sets the GameListener for the Minigame
      */
     public void startNewGame() {
-        MiniGame minigame = getMiniGame();
+        dataProvider.readyToStart(userId);
+    }
+
+    public void startNewGame(GameRoundModel round) {
+        isMyTurn = userId.equals(round.currentUserId);
+
+        MiniGame minigame = miniGamesProvider.createMiniGame(round);
         long time = getTimeForMinigame(minigame);
+        //TODO: add getTimeForMinigame to round: long time = round.time; //(long) (Math.exp(-this.score * 0.08 + 7) + 2000);
+
         timer = startCountDown(time);
         if (this.listener != null) {
             listener.onGameStart(minigame, time);
         }
+
         minigame.setPlatformFeaturesProvider(platformFeaturesProvider);
-        minigame.setGameListener(result -> {
-            timer.cancel();
-            if (listener != null) {
-                if (result && !isOverTime && !miniGameLost) {
-                    setCounter(minigame);
-                    score++;
-                    listener.onScoreUpdate(score);
-                    startNewGame();
-                } else if (!lifecycleCancel) {
-                    miniGameLost = true;
-                    listener.onGameEnd(score);
+        if (isMyTurn) {
+            minigame.setGameListener(result -> {
+                timer.cancel();
+                if (listener != null) {
+                    if (result && !isOverTime && !miniGameLost) {
+                        dataProvider.sendGameResult(userId, true, null); // TODO!
+                        score++;
+                        listener.onScoreUpdate(score);
+                        //startNewGame();
+                    } else if (!lifecycleCancel) {
+                        miniGameLost = true;
+                        // TODO ?
+                        dataProvider.sendGameResult(userId, false, null);
+                        //listener.onGameEnd(score);
+                    }
                 }
-            }
-
-        });
+            });
+        }
     }
-
-    /**
+     /**
      * Sets the Time depending on the Minigame
      *
      * @param miniGame - the Minigame which Time should be set
@@ -177,10 +204,6 @@ public class GameEngine {
             }
     }
 
-    private MiniGame getMiniGame() {
-        return miniGamesProvider.createRandomMiniGame();
-    }
-
     /**
      * @param time - countdown time in ms
      *             Starts a new countdown
@@ -193,25 +216,31 @@ public class GameEngine {
     }
 
     public void onTick(long millisUntilFinished) {
-        if (listener != null)
+        if (listener != null) {
             listener.onTimeTick(millisUntilFinished);
+        }
     }
 
     public void onFinish() {
-        isOverTime = true;
-        if (listener != null)
-            listener.onGameEnd(score);
+        if (isMyTurn && listener != null) {
+            isOverTime = true;
+            //listener.onGameEnd(score);
+            Log.d(TAG, "timeout");
+            dataProvider.sendGameResult(userId, false, null);
+        }
     }
 
 
     public void stopCurrentGame() {
-        if (!lifecycleCancel && !miniGameLost) {
+        Log.d(TAG, "stopCurrentGame");
+        if (!lifecycleCancel) {
             lifecycleCancel = true;
             timer.cancel();
-            miniGameLost = true;
+            dataProvider.stopCurrentGame(userId);
             listener.onGameEnd(score);
         }
     }
+
     public void setCounter(MiniGame minigame){
         if(minigame.getClass().equals(ImageButtonMinigame.class)){
             MinigameAchievementCounters.counterImageButtonMinigame++;
@@ -244,5 +273,15 @@ public class GameEngine {
         else if(minigame.getClass().equals(RightButtonCombination.class)){
             MinigameAchievementCounters.counterRightButtonsMinigame++;
         }
+    }
+
+    public void notifyGameResult(boolean result, ResponseModel responseModel) {
+        timer.cancel();
+        if(!isMyTurn) {
+            // TODO
+            listener.onScoreUpdate(score);
+        }
+        if(!lifecycleCancel)
+            startNewGame();
     }
 }
