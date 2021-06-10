@@ -68,7 +68,6 @@ public class WinLossActivity extends BaseActivity {
         initializeFields();
         initActivityLauncher();
         showScore();
-        updateHighscore();
         setPrefHighscore();
     }
 
@@ -123,6 +122,7 @@ public class WinLossActivity extends BaseActivity {
             case "easy":
                 scoreEasy+=score;
                 editor.putInt(KEY_SCORE_MINIGAMES_EASY, scoreEasy);
+                updateHighscore(getString(R.string.leaderboard_highscore_easy),score);
                 if(scoreEasy>=counter100) {
                     if (!BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
                         Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
@@ -145,6 +145,7 @@ public class WinLossActivity extends BaseActivity {
             case "medium":
                 scoreMedium+=score;
                 editor.putInt(KEY_SCORE_MINIGAMES_MEDIUM, scoreMedium);
+                updateHighscore(getString(R.string.leaderboard_highscore_medium),score);
                 if(scoreMedium>=counter100) {
                     if (!BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
                         Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
@@ -167,6 +168,7 @@ public class WinLossActivity extends BaseActivity {
             case "hard":
                 scoreHard+=score;
                 editor.putInt(KEY_SCORE_MINIGAMES_HARD, scoreHard);
+                updateHighscore(getString(R.string.leaderboard_highscore_hard),score);
                 if(scoreHard>=counter100) {
                     if (!BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
                         Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
@@ -219,10 +221,10 @@ public class WinLossActivity extends BaseActivity {
         editor.apply();
     }
 
-    private void updateHighscore() {
+    private void updateHighscore(String leaderboard, int score) {
         if (!BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
             Games.getLeaderboardsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
-                    .submitScore(getString(R.string.leaderboard_highscore), score);
+                    .submitScore(leaderboard, score);
         }
     }
 
@@ -234,10 +236,9 @@ public class WinLossActivity extends BaseActivity {
     private void initializeListeners() {
         bu_share.setOnClickListener(onShare);
         bu_return.setOnClickListener(onReturnToGameSelectMode);
-        bu_leaderboardEasy.setOnClickListener(onLeaderboardSelect);
-
-        bu_leaderboardMedium.setOnClickListener(onLeaderboardSelect);
-        bu_leaderboardHard.setOnClickListener(onLeaderboardSelect);
+        bu_leaderboardEasy.setOnClickListener(onEasyLeaderboardSelect);
+        bu_leaderboardMedium.setOnClickListener(onMediumLeaderboardSelect);
+        bu_leaderboardHard.setOnClickListener(onHardLeaderboardSelect);
     }
 
     private void initializeButtons() {
@@ -268,14 +269,28 @@ public class WinLossActivity extends BaseActivity {
         startActivity(gmSelectActivityIntent);
     };
 
-    private final View.OnClickListener onLeaderboardSelect = v -> {
+    private final View.OnClickListener onEasyLeaderboardSelect = v -> {
         if (!BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
             Games.getLeaderboardsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
-                    .getLeaderboardIntent(getString(R.string.leaderboard_highscore))
+                    .getLeaderboardIntent(getString(R.string.leaderboard_highscore_easy))
                     .addOnSuccessListener(intent -> activityResultLauncher.launch(intent));
         }
     };
 
+    private final View.OnClickListener onMediumLeaderboardSelect = v -> {
+        if (!BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
+            Games.getLeaderboardsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                    .getLeaderboardIntent(getString(R.string.leaderboard_highscore_medium))
+                    .addOnSuccessListener(intent -> activityResultLauncher.launch(intent));
+        }
+    };
+    private final View.OnClickListener onHardLeaderboardSelect = v -> {
+        if (!BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
+            Games.getLeaderboardsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                    .getLeaderboardIntent(getString(R.string.leaderboard_highscore_hard))
+                    .addOnSuccessListener(intent -> activityResultLauncher.launch(intent));
+        }
+    };
     private void initActivityLauncher() {
         activityResultLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),

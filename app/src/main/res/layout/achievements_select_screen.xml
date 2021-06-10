@@ -7,6 +7,24 @@
     xmlns:fbutton="http://schemas.android.com/apk/res-auto">
 
     <info.hoang8f.widget.FButton
+        android:id="@+id/googlePlayAchievements"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="100dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="25dp"
+        android:text="Google Play Achievements"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/backtoHome"
+        app:layout_constraintTop_toTopOf="parent"
+        fbutton:cornerRadius="100dp"
+        fbutton:fButtonColor="@color/primary_variant"
+        fbutton:shadowEnabled="true"
+        fbutton:shadowHeight="5dp" />
+
+    <info.hoang8f.widget.FButton
         android:id="@+id/backtoHome"
         android:layout_width="60dp"
         android:layout_height="wrap_content"
