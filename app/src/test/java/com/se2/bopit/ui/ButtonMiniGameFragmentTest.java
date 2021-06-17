@@ -4,14 +4,13 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.se2.bopit.domain.ButtonColor;
-import com.se2.bopit.domain.ButtonMiniGameModel;
-import com.se2.bopit.domain.ButtonModel;
+import com.se2.bopit.domain.gamemodel.ButtonMiniGameModel;
+import com.se2.bopit.domain.responsemodel.ButtonModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 
 import org.junit.After;

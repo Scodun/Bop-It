@@ -1,6 +1,6 @@
 package com.se2.bopit.domain.mock;
 
-import com.se2.bopit.domain.GameModel;
+import com.se2.bopit.domain.gamemodel.GameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 

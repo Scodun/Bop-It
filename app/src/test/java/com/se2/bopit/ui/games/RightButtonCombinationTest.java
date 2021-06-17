@@ -2,8 +2,8 @@ package com.se2.bopit.ui.games;
 
 import com.se2.bopit.R;
 import com.se2.bopit.domain.RightButton;
-import com.se2.bopit.domain.RightButtonCombinationModel;
-import com.se2.bopit.domain.RightButtonModel;
+import com.se2.bopit.domain.gamemodel.RightButtonCombinationModel;
+import com.se2.bopit.domain.responsemodel.RightButtonModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 
 import org.junit.After;

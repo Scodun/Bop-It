@@ -1,5 +1,7 @@
 package com.se2.bopit.domain;
 
+import com.se2.bopit.domain.gamemodel.CoverLightSensorMiniGameModel;
+import com.se2.bopit.domain.responsemodel.SensorResponseModel;
 import org.junit.Before;
 import org.junit.Test;
 

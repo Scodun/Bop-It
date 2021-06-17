@@ -1,7 +1,6 @@
-package com.se2.bopit.domain.providers;
+package com.se2.bopit.domain.interfaces;
 
 import com.se2.bopit.domain.GameRoundModel;
-import com.se2.bopit.domain.interfaces.MiniGame;
 
 public interface MiniGamesProvider {
     MiniGame createRandomMiniGame();

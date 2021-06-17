@@ -1,10 +1,8 @@
-package com.se2.bopit.domain.providers;
+package com.se2.bopit.domain.interfaces;
 
 import android.content.Context;
 import android.hardware.SensorManager;
 import android.os.CountDownTimer;
-
-import com.se2.bopit.domain.interfaces.SensorEventModelListener;
 
 import java.util.function.LongConsumer;
 

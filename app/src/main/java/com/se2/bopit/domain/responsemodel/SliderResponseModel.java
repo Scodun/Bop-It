@@ -1,7 +1,6 @@
-package com.se2.bopit.domain.sliderminigame;
+package com.se2.bopit.domain.responsemodel;
 
 import android.widget.SeekBar;
-import com.se2.bopit.domain.ResponseModel;
 
 public class SliderResponseModel extends ResponseModel {
 

@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.se2.bopit.R;
-import com.se2.bopit.domain.drawingminigame.DrawingResponseModel;
+import com.se2.bopit.domain.responsemodel.DrawingResponseModel;
 import com.se2.bopit.ui.games.DrawingMinigame;
 
 import java.util.Random;

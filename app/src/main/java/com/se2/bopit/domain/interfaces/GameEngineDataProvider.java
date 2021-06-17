@@ -1,8 +1,8 @@
 package com.se2.bopit.domain.interfaces;
 
-import com.se2.bopit.domain.GameEngine;
+import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.GameRoundModel;
-import com.se2.bopit.domain.ResponseModel;
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 import com.se2.bopit.domain.engine.GameEngineServer;
 import com.se2.bopit.domain.models.User;
 

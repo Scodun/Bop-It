@@ -17,8 +17,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
-import com.se2.bopit.domain.GameModel;
-import com.se2.bopit.domain.ResponseModel;
+import com.se2.bopit.domain.gamemodel.GameModel;
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
