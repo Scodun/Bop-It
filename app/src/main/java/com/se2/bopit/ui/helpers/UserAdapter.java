@@ -18,8 +18,8 @@ import java.util.ArrayList;
 
 public class UserAdapter extends ArrayAdapter<User> {
     private static final String TAG = "UserAdapter";
-    private Context mContext;
-    private int mResource;
+    private final Context mContext;
+    private final int mResource;
 
     /**
      * Constructor

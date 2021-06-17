@@ -26,7 +26,7 @@ public class SplashActivity extends BaseActivity {
     private ImageView waveView;
     private GoogleSignInClient mGoogleSignInClient;
     private List<String> listPermissionsNeeded;
-    private boolean loginDone = false;
+    private final boolean loginDone = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

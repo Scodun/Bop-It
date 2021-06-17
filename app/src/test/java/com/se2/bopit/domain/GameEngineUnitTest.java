@@ -137,9 +137,9 @@ public class GameEngineUnitTest {
         mockGameActivity();
 
         // check initial state
-        assertEquals(0, gameEngine.score);
-        assertFalse(gameEngine.isOverTime);
-        assertFalse(gameEngine.miniGameLost);
+        assertEquals(0, gameEngine.getScore());
+        assertFalse(gameEngine.isOverTime());
+        assertFalse(gameEngine.isMiniGameLost());
         assertFalse(timerRunning);
 
         gameEngine.startNewGame();
@@ -152,9 +152,9 @@ public class GameEngineUnitTest {
         assertNotNull(mockTimerOnTickHandler);
         assertNotNull(mockTimerOnFinishHandler);
         assertNotNull(gameMock.listener);
-        assertEquals(0, gameEngine.score);
-        assertFalse(gameEngine.isOverTime);
-        assertFalse(gameEngine.miniGameLost);
+        assertEquals(0, gameEngine.getScore());
+        assertFalse(gameEngine.isOverTime());
+        assertFalse(gameEngine.isMiniGameLost());
 
 
         // user gives 10 correct answers
@@ -168,19 +168,19 @@ public class GameEngineUnitTest {
 
             gameMock.listener.onGameResult(true);
 
-            assertEquals(i + 1, gameEngine.score);
+            assertEquals(i + 1, gameEngine.getScore());
             verify(timerMock, times(i + 1)).cancel();
             verify(timerMock, times(i + 2)).start();
             //verifyNoMoreInteractions(timerMock);
-            assertFalse(gameEngine.isOverTime);
+            assertFalse(gameEngine.isOverTime());
         }
 
         // user fails to answer in time
         //reset(timerMock);
         mockTimerOnFinishHandler.run();
         verify(timerMock, times(10)).cancel();
-        assertTrue(gameEngine.isOverTime);
-        assertEquals(10, gameEngine.score);
+        assertTrue(gameEngine.isOverTime());
+        assertEquals(10, gameEngine.getScore());
     }
 
     // TODO this test checks status quo. Reconsider if game engine without listener should work at all
@@ -227,9 +227,9 @@ public class GameEngineUnitTest {
         }).when(listenerMock).onGameStart(any(), anyLong());
 
         // check initial state
-        assertEquals(0, gameEngine.score);
-        assertFalse(gameEngine.isOverTime);
-        assertFalse(gameEngine.miniGameLost);
+        assertEquals(0, gameEngine.getScore());
+        assertFalse(gameEngine.isOverTime());
+        assertFalse(gameEngine.isMiniGameLost());
         assertFalse(timerRunning);
 
         gameEngine.startNewGame();
@@ -238,71 +238,71 @@ public class GameEngineUnitTest {
 
         gameMock.listener.onGameResult(false);
 
-        assertFalse(gameEngine.isOverTime);
-        assertTrue(gameEngine.miniGameLost);
-        assertEquals(0, gameEngine.score);
+        assertFalse(gameEngine.isOverTime());
+        assertTrue(gameEngine.isMiniGameLost());
+        assertEquals(0, gameEngine.getScore());
     }
 
     @Test
     public void getTimeForMinigame() {
         DifficultyActivity.setDifficulty("easy");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 6.9) + 1600), gameEngine.getTimeForMinigame(imageButtonMinigame));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.07 + 6.9) + 1600), gameEngine.getTimeForMinigame(imageButtonMinigame));
 
         DifficultyActivity.setDifficulty("medium");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 6.9) + 1200), gameEngine.getTimeForMinigame(imageButtonMinigame));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.07 + 6.9) + 1200), gameEngine.getTimeForMinigame(imageButtonMinigame));
 
         DifficultyActivity.setDifficulty("hard");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 6.9) + 800), gameEngine.getTimeForMinigame(imageButtonMinigame));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.07 + 6.9) + 800), gameEngine.getTimeForMinigame(imageButtonMinigame));
 
 
         DifficultyActivity.setDifficulty("easy");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.075 + 7) + 2000), gameEngine.getTimeForMinigame(coverLightSensorMiniGame));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.075 + 7) + 2000), gameEngine.getTimeForMinigame(coverLightSensorMiniGame));
 
         DifficultyActivity.setDifficulty("medium");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.075 + 7) + 1500), gameEngine.getTimeForMinigame(coverLightSensorMiniGame));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.075 + 7) + 1500), gameEngine.getTimeForMinigame(coverLightSensorMiniGame));
 
         DifficultyActivity.setDifficulty("hard");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.075 + 7) + 1000), gameEngine.getTimeForMinigame(coverLightSensorMiniGame));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.075 + 7) + 1000), gameEngine.getTimeForMinigame(coverLightSensorMiniGame));
 
 
         DifficultyActivity.setDifficulty("easy");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.1 + 8) + 2000), gameEngine.getTimeForMinigame(drawingMinigame));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.1 + 8) + 2000), gameEngine.getTimeForMinigame(drawingMinigame));
 
         DifficultyActivity.setDifficulty("medium");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.1 + 8) + 1500), gameEngine.getTimeForMinigame(drawingMinigame));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.1 + 8) + 1500), gameEngine.getTimeForMinigame(drawingMinigame));
 
         DifficultyActivity.setDifficulty("hard");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.1 + 8) + 1000), gameEngine.getTimeForMinigame(drawingMinigame));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.1 + 8) + 1000), gameEngine.getTimeForMinigame(drawingMinigame));
 
 
         DifficultyActivity.setDifficulty("easy");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 7.5) + 1800), gameEngine.getTimeForMinigame(rightButtonCombination));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.07 + 7.5) + 1800), gameEngine.getTimeForMinigame(rightButtonCombination));
 
         DifficultyActivity.setDifficulty("medium");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 7.5) + 1300), gameEngine.getTimeForMinigame(rightButtonCombination));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.07 + 7.5) + 1300), gameEngine.getTimeForMinigame(rightButtonCombination));
 
         DifficultyActivity.setDifficulty("hard");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 7.5) + 800), gameEngine.getTimeForMinigame(rightButtonCombination));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.07 + 7.5) + 800), gameEngine.getTimeForMinigame(rightButtonCombination));
 
 
         DifficultyActivity.setDifficulty("easy");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.06 + 7.6) + 1400), gameEngine.getTimeForMinigame(shakePhoneMinigame));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.06 + 7.6) + 1400), gameEngine.getTimeForMinigame(shakePhoneMinigame));
 
         DifficultyActivity.setDifficulty("medium");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.06 + 7.6) + 1000), gameEngine.getTimeForMinigame(shakePhoneMinigame));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.06 + 7.6) + 1000), gameEngine.getTimeForMinigame(shakePhoneMinigame));
 
         DifficultyActivity.setDifficulty("hard");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.06 + 7.6) + 600), gameEngine.getTimeForMinigame(shakePhoneMinigame));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.06 + 7.6) + 600), gameEngine.getTimeForMinigame(shakePhoneMinigame));
 
 
         DifficultyActivity.setDifficulty("easy");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.08 + 7) + 3000), gameEngine.getTimeForMinigame(sliderMinigame));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.08 + 7) + 3000), gameEngine.getTimeForMinigame(sliderMinigame));
 
         DifficultyActivity.setDifficulty("medium");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.08 + 7) + 2000), gameEngine.getTimeForMinigame(sliderMinigame));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.08 + 7) + 2000), gameEngine.getTimeForMinigame(sliderMinigame));
 
         DifficultyActivity.setDifficulty("hard");
-        assertEquals((long) (Math.exp(-gameEngine.score * 0.08 + 7) + 1000), gameEngine.getTimeForMinigame(sliderMinigame));
+        assertEquals((long) (Math.exp(-gameEngine.getScore() * 0.08 + 7) + 1000), gameEngine.getTimeForMinigame(sliderMinigame));
     }
 
     @Test

@@ -102,21 +102,21 @@ public class GameEngineServer {
         }
 
         currentRound = new GameRoundModel();
-        currentRound.round = round++; // start with round 1
+        currentRound.setRound(round++); // start with round 1
         //for cheatfunction
         nextPlayer.setCheated(false);
-        currentRound.currentUserId = nextPlayer.getId();
+        currentRound.setCurrentUserId(nextPlayer.getId());
 
         long time = (long) (Math.exp(-nextPlayer.getScore() * 0.08 + 7) + 2000);
-        currentRound.time = time;
+        currentRound.setTime(time);
 
         MiniGame minigame = getMiniGame();
-        currentRound.gameType = minigame.getClass().getSimpleName();
+        currentRound.setGameType(minigame.getClass().getSimpleName());
         currentGame = minigame.getModel();
 
         if (currentGame != null) {
-            currentRound.modelType = currentGame.getClass().getSimpleName();
-            currentRound.modelJson = gson.toJson(currentGame);
+            currentRound.setModelType(currentGame.getClass().getSimpleName());
+            currentRound.setModelJson(gson.toJson(currentGame));
         }
 
         //for cheatfunction
@@ -137,8 +137,8 @@ public class GameEngineServer {
         if (pool.isEmpty())
             return null;
 
-        if (new Random().nextInt(100) < CHANCE_TO_REPEAT && users.get(currentRound.currentUserId).getLives() > 0)
-            return users.get(currentRound.currentUserId);
+        if (new Random().nextInt(100) < CHANCE_TO_REPEAT && users.get(currentRound.getCurrentUserId()).getLives() > 0)
+            return users.get(currentRound.getCurrentUserId());
 
         Collections.shuffle(pool);
         return pool.get(0);
@@ -184,10 +184,10 @@ public class GameEngineServer {
     public void sendGameResult(String userId, boolean result, ResponseModel responseModel) {
         User user = users.get(userId);
         if (result) {
-            Log.d(TAG, "User " + userId + " won the round #" + (currentRound != null ? currentRound.round : "null"));
+            Log.d(TAG, "User " + userId + " won the round #" + (currentRound != null ? currentRound.getRound() : "null"));
             user.incrementScore();
         } else {
-            Log.d(TAG, "User " + userId + " lost the round #" + (currentRound != null ? currentRound.round : "null"));
+            Log.d(TAG, "User " + userId + " lost the round #" + (currentRound != null ? currentRound.getRound() : "null"));
             user.loseLife();
         }
         dataProvider.notifyGameResult(result, responseModel, user);
@@ -196,7 +196,7 @@ public class GameEngineServer {
     public void stopCurrentGame(String userId) {
         Log.d(TAG, "Stop current game: " + userId);
         if (users.remove(userId) != null && currentRound != null)
-            Log.d(TAG, "User " + userId + " left after round #" + currentRound.round);
+            Log.d(TAG, "User " + userId + " left after round #" + currentRound.getRound());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -208,7 +208,7 @@ public class GameEngineServer {
     }
 
     public void setClientCheated(String userId) {
-        if (userId.equals(currentRound.currentUserId)) {
+        if (userId.equals(currentRound.getCurrentUserId())) {
             Log.d("CHEATER", "CHEATER");
             nextPlayer.setCheated(true);
         }

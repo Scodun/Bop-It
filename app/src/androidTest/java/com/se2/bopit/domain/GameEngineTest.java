@@ -71,7 +71,7 @@ public class GameEngineTest {
 
             }, dataProvider);
             String singleUserId = "Player";
-            engine.userId = singleUserId;
+            engine.setUserId(singleUserId);
             new GameEngineServer(
                     miniGamesProvider,
                     platformFeaturesProvider,

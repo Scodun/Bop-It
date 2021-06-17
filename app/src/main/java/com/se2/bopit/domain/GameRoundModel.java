@@ -1,26 +1,74 @@
 package com.se2.bopit.domain;
 
 public class GameRoundModel {
-    public int round;
+    private int round;
 
-    public String currentUserId;
+    private String currentUserId;
 
-    public long time;
+    private long time;
 
-    public String gameType;
+    private String gameType;
 
-    public String modelType;
+    private String modelType;
 
-    public String modelJson;
+    private String modelJson;
 
     @Override
     public String toString() {
         return "GameRoundModel{" +
-                "round=" + round +
-                ", currentUserId='" + currentUserId + '\'' +
-                ", time=" + time +
-                ", gameType='" + gameType + '\'' +
-                ", gameModel=" + modelJson +
+                "round=" + getRound() +
+                ", currentUserId='" + getCurrentUserId() + '\'' +
+                ", time=" + getTime() +
+                ", gameType='" + getGameType() + '\'' +
+                ", gameModel=" + getModelJson() +
                 '}';
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
+    }
+
+    public String getCurrentUserId() {
+        return currentUserId;
+    }
+
+    public void setCurrentUserId(String currentUserId) {
+        this.currentUserId = currentUserId;
+    }
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    public String getGameType() {
+        return gameType;
+    }
+
+    public void setGameType(String gameType) {
+        this.gameType = gameType;
+    }
+
+    public String getModelType() {
+        return modelType;
+    }
+
+    public void setModelType(String modelType) {
+        this.modelType = modelType;
+    }
+
+    public String getModelJson() {
+        return modelJson;
+    }
+
+    public void setModelJson(String modelJson) {
+        this.modelJson = modelJson;
     }
 }

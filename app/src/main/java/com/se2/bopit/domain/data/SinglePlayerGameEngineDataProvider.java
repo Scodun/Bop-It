@@ -75,12 +75,12 @@ public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvide
 
     @Override
     public void setClientCheated(String userId) {
-        //TODO server.setClientCheated(userId); or unused?
+        //Empty in singleplayer
     }
 
     @Override
     public void detectCheating() {
-        //TODO server.detectCheating(userId); or unused?
+        //Empty in singleplayer
     }
 
     @Override
@@ -90,7 +90,7 @@ public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvide
 
     @Override
     public void disconnect() {
-
+        //Empty in singleplayer
     }
 
     @Override

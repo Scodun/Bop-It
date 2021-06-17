@@ -32,7 +32,7 @@ public class LobbyHostActivity extends BaseActivity {
 
     private DataProviderContext dataProvider;
     private ArrayList<User> userItems = new ArrayList<>();
-    private ArrayList<User> readyUsers = new ArrayList<>();
+    private final ArrayList<User> readyUsers = new ArrayList<>();
     private ListView lobbyUserList;
     private Button startGameButton;
     private Context context;
