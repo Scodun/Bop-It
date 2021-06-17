@@ -83,7 +83,11 @@ public class GameEngineServer {
     public void startNewGame() {
         Log.d(TAG, "startNewGame round #" + round + "...");
         // GameRoundModel lastRound = currentRound;
-        nextPlayer = selectNextRoundUser();
+        if(users.size() > 1)
+            nextPlayer = selectNextRoundUser();
+        else
+            nextPlayer = users.entrySet().iterator().next().getValue();
+
         if (nextPlayer == null) {
             Log.d(TAG, "No active users left -> game over after " + round + " round");
             dataProvider.notifyGameOver();
@@ -172,19 +176,19 @@ public class GameEngineServer {
 
     public void sendGameResult(String userId, boolean result, ResponseModel responseModel) {
         User user = users.get(userId);
-        if (result) {
-            Log.d(TAG, "User " + userId + " won the round #" + currentRound.round);
-            user.incrementScore();
-        } else {
-            Log.d(TAG, "User " + userId + " lost the round #" + currentRound.round);
-            user.loseLife();
-        }
+            if (result) {
+                Log.d(TAG, "User " + userId + " won the round #" + (currentRound!=null?currentRound.round:"null"));
+                user.incrementScore();
+            } else {
+                Log.d(TAG, "User " + userId + " lost the round #" + (currentRound!=null?currentRound.round:"null"));
+                user.loseLife();
+            }
         dataProvider.notifyGameResult(result, responseModel, user);
     }
 
     public void stopCurrentGame(String userId) {
         Log.d(TAG, "Stop current game: " + userId);
-        if (users.remove(userId) != null)
+        if (users.remove(userId) != null && currentRound != null)
             Log.d(TAG, "User " + userId + " left after round #" + currentRound.round);
     }
 

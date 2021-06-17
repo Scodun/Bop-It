@@ -251,7 +251,8 @@ public class GameEngine {
         Log.d(TAG, "stopCurrentGame");
         if (!lifecycleCancel) {
             lifecycleCancel = true;
-            timer.cancel();
+            if( timer != null)
+                timer.cancel();
             dataProvider.stopCurrentGame(userId);
             listener.onGameEnd(score);
         }
