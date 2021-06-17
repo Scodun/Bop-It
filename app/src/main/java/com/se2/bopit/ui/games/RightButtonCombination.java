@@ -150,14 +150,17 @@ public class RightButtonCombination extends Fragment implements MiniGame {
         double maxExponent = 7.5;
         double multiplier = 0.07;
 
-        int base = 1800;
+        int base;
         switch (DifficultyActivity.difficulty) {
             case EASY:
                 base = 1800;
-            case MEDIUM:
-                base = 1300;
+                break;
             case HARD:
                 base = 800;
+                break;
+            default:
+                base = 1300;
+                break;
         }
 
         return generateTime(maxExponent, multiplier, base, score);

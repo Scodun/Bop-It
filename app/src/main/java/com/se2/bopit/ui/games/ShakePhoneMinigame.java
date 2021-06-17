@@ -93,14 +93,16 @@ public class ShakePhoneMinigame extends Fragment implements MiniGame {
         double maxExponent = 7.6;
         double multiplier = 0.06;
 
-        int base = 1400;
+        int base;
         switch (DifficultyActivity.difficulty) {
             case EASY:
                 base = 1400;
-            case MEDIUM:
-                base = 1000;
+                break;
             case HARD:
                 base = 600;
+                break;
+            default:
+                base = 1000;
         }
 
         return generateTime(maxExponent, multiplier, base, score);

@@ -139,14 +139,17 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
         double maxExponent = 6.9;
         double multiplier = 0.07;
 
-        int base = 1600;
+        int base;
         switch (DifficultyActivity.difficulty) {
             case EASY:
                 base = 1600;
-            case MEDIUM:
-                base = 1200;
+                break;
             case HARD:
                 base = 800;
+                break;
+            default:
+                base = 1200;
+                break;
         }
 
         return generateTime(maxExponent, multiplier, base, score);

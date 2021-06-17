@@ -28,14 +28,17 @@ public interface MiniGame {
         double maxExponent = 7;
         double multiplier = 0.08;
 
-        int base = 3000;
+        int base;
         switch (DifficultyActivity.difficulty) {
             case EASY:
                 base = 3000;
-            case MEDIUM:
-                base = 2000;
+                break;
             case HARD:
                 base = 1000;
+                break;
+            default:
+                base = 2000;
+                break;
         }
 
         return generateTime(maxExponent, multiplier, base, score);

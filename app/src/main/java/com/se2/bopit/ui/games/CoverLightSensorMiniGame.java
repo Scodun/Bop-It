@@ -46,14 +46,17 @@ public class CoverLightSensorMiniGame extends SensorMiniGameFragment<CoverLightS
         double maxExponent = 7;
         double multiplier = 0.075;
 
-        int base = 2000;
+        int base;
         switch (DifficultyActivity.difficulty) {
             case EASY:
                 base = 2000;
-            case MEDIUM:
-                base = 1500;
+                break;
             case HARD:
                 base = 1000;
+                break;
+            default:
+                base = 1500;
+                break;
         }
 
         return generateTime(maxExponent, multiplier, base, score);

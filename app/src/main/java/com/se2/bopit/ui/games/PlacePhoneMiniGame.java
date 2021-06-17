@@ -168,14 +168,17 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
         double maxExponent = 8;
         double multiplier = 0.1;
 
-        int base = 2000;
+        int base;
         switch (DifficultyActivity.difficulty) {
             case EASY:
                 base = 2000;
-            case MEDIUM:
-                base = 1500;
+                break;
             case HARD:
                 base = 1000;
+                break;
+            default:
+                base = 1500;
+                break;
         }
 
         return generateTime(maxExponent, multiplier, base, score);
