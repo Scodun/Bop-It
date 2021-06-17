@@ -22,6 +22,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 
@@ -29,24 +30,24 @@ public class LobbyJoinActivity extends BaseActivity {
     static final String TAG = LobbyJoinActivity.class.getSimpleName();
 
     private DataProviderContext dataProvider;
-    private ListView openEndpointsList;
     private final ArrayList<String> endpointItems = new ArrayList<>();
     private final ArrayList<String> userItems = new ArrayList<>();
     private String endpointId;
-    private ListView lobbyUserList;
     private Context context;
-    private static int countdown;
     static ScheduledFuture<?> countdownFuture;
 
     private ArrayAdapter<String> endPointAdapter;
     private ArrayAdapter<String> userAdapter;
 
+    private final String USERNAME = "username";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby_join);
+        ListView lobbyUserList;
 
-        openEndpointsList = findViewById(R.id.openEndpointLists);
+        ListView openEndpointsList = findViewById(R.id.openEndpointLists);
         lobbyUserList = findViewById(R.id.userList);
         endPointAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
@@ -61,7 +62,7 @@ public class LobbyJoinActivity extends BaseActivity {
         context = this;
 
         Intent intent = getIntent();
-        dataProvider = DataProviderContext.create(new NearbyDataProvider(this, networkListener, intent.getStringExtra("username")));
+        dataProvider = DataProviderContext.create(new NearbyDataProvider(this, networkListener, intent.getStringExtra(USERNAME)));
         dataProvider.startDiscovery();
     }
 
@@ -87,7 +88,7 @@ public class LobbyJoinActivity extends BaseActivity {
 
         @Override
         public void onEndpointConnected(String id, List<String> names) {
-
+            //Ingore
         }
 
         @Override
@@ -107,17 +108,17 @@ public class LobbyJoinActivity extends BaseActivity {
 
         @Override
         public void onReadyMessageReceived() {
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which) {
-                        case DialogInterface.BUTTON_POSITIVE:
-                            dataProvider.sendReadyAnswer(true, getIntent().getStringExtra("username"));
-                            break;
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            dataProvider.sendReadyAnswer(false, getIntent().getStringExtra("username"));
-                            break;
-                    }
+            DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        dataProvider.sendReadyAnswer(true, getIntent().getStringExtra(USERNAME));
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        dataProvider.sendReadyAnswer(false, getIntent().getStringExtra(USERNAME));
+                        break;
+                    default:
+                        Log.d(TAG, "Unknown Message Type");
+                        break;
                 }
             };
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -127,18 +128,18 @@ public class LobbyJoinActivity extends BaseActivity {
 
         @Override
         public void OnReadyAnswerReceived(boolean answer, String username) {
-
+            //Ingore
         }
 
         @Override
         public void onGameCountdownStart() {
-            LobbyJoinActivity.countdown = 3;
+            AtomicInteger countdown = new AtomicInteger(3);
             Runnable countdownRunnable = () -> {
                 runOnUiThread(
                         () -> {
-                            CustomToast.showToast(String.valueOf(LobbyJoinActivity.countdown), context);
-                            LobbyJoinActivity.countdown--;
-                            if (LobbyJoinActivity.countdown <= 0)
+                            CustomToast.showToast(String.valueOf(countdown.get()), context);
+                            countdown.getAndDecrement();
+                            if (countdown.get() <= 0)
                                 countdownFuture.cancel(false);
                         });
             };

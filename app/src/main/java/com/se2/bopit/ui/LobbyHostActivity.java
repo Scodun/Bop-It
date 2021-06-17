@@ -6,7 +6,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import androidx.annotation.RequiresApi;
 import com.se2.bopit.R;
@@ -24,18 +23,17 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 
 public class LobbyHostActivity extends BaseActivity {
 
     private DataProviderContext dataProvider;
     private ArrayList<User> userItems = new ArrayList<>();
-    private final ArrayList<User> readyUsers = new ArrayList<>();
-    private ListView lobbyUserList;
-    private Button startGameButton;
+    private String TAG = "LobbyHostActivity";
+
+
     private Context context;
-    private static int countdown;
-    private static int ready;
     static ScheduledFuture<?> countdownFuture;
 
     private UserAdapter userAdapter;
@@ -44,9 +42,9 @@ public class LobbyHostActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby_host);
+        ListView lobbyUserList;
 
         lobbyUserList = findViewById(R.id.userList);
-        startGameButton = findViewById(R.id.button_start);
         userAdapter = new UserAdapter(this, R.layout.custom_listview_layout, userItems);
 
         lobbyUserList.setAdapter(userAdapter);
@@ -70,7 +68,7 @@ public class LobbyHostActivity extends BaseActivity {
 
         @Override
         public void onError(String error) {
-            Log.e("Network", error);
+            Log.e(TAG, error);
         }
 
         @Override
@@ -81,13 +79,13 @@ public class LobbyHostActivity extends BaseActivity {
         @Override
         public void onEndpointDiscovered(String id, String name) {
             //Listener for Endpoint Discovered
-            Log.d("Network", "endpoint discovered: " + id + " " + name);
+            Log.d(TAG, "endpoint discovered: " + id + " " + name);
         }
 
         @Override
         public void onEndpointConnected(String id, List<String> names) {
             //Listener for Endpoint Connection
-            Log.d("Network", "endpoint connected: " + id + " " + names);
+            Log.d(TAG, "endpoint connected: " + id + " " + names);
         }
 
         @RequiresApi(api = Build.VERSION_CODES.N)
@@ -103,13 +101,14 @@ public class LobbyHostActivity extends BaseActivity {
 
         @Override
         public void onGameCountdownStart() {
-            LobbyHostActivity.countdown = 3;
+            AtomicInteger countdown = new AtomicInteger(3);
+
             Runnable countdownRunnable = () -> {
                 runOnUiThread(
                         () -> {
-                            CustomToast.showToast(String.valueOf(LobbyHostActivity.countdown), context);
-                            LobbyHostActivity.countdown--;
-                            if (LobbyHostActivity.countdown <= 0)
+                            CustomToast.showToast(String.valueOf(countdown.get()), context);
+                            countdown.getAndDecrement();
+                            if (countdown.get() <= 0)
                                 countdownFuture.cancel(false);
                         });
             };
@@ -119,7 +118,7 @@ public class LobbyHostActivity extends BaseActivity {
 
         @Override
         public void onReadyMessageReceived() {
-
+            //Ignore
         }
 
         @Override
@@ -128,11 +127,9 @@ public class LobbyHostActivity extends BaseActivity {
                 if (usr.getName().equals(username)) {
                     if (answer) {
                         usr.setReady(true);
-                        readyUsers.add(usr);
 
                     } else {
                         usr.setReady(false);
-                        readyUsers.remove(usr);
                     }
                 }
             }
