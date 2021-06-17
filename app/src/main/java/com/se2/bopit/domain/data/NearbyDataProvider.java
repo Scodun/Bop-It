@@ -6,7 +6,18 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import com.google.android.gms.nearby.Nearby;
-import com.google.android.gms.nearby.connection.*;
+import com.google.android.gms.nearby.connection.AdvertisingOptions;
+import com.google.android.gms.nearby.connection.ConnectionInfo;
+import com.google.android.gms.nearby.connection.ConnectionLifecycleCallback;
+import com.google.android.gms.nearby.connection.ConnectionResolution;
+import com.google.android.gms.nearby.connection.ConnectionsClient;
+import com.google.android.gms.nearby.connection.ConnectionsStatusCodes;
+import com.google.android.gms.nearby.connection.DiscoveredEndpointInfo;
+import com.google.android.gms.nearby.connection.DiscoveryOptions;
+import com.google.android.gms.nearby.connection.EndpointDiscoveryCallback;
+import com.google.android.gms.nearby.connection.Payload;
+import com.google.android.gms.nearby.connection.PayloadCallback;
+import com.google.android.gms.nearby.connection.PayloadTransferUpdate;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.se2.bopit.domain.GameRoundModel;
@@ -331,6 +342,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
             );
         }
     }
+
     @Override
     public void sendReadyMessage() {
         if (isHost) {
@@ -341,18 +353,18 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
         }
     }
+
     @Override
     public void sendReadyAnswer(boolean answer, String username) {
         if (!isHost) {
-            try{
+            try {
                 JSONObject obj = new JSONObject();
-                obj.put("answer",answer);
-                obj.put("username",username);
+                obj.put("answer", answer);
+                obj.put("username", username);
                 Gson gson = new Gson();
                 Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(8, obj.toString())).getBytes());
                 Nearby.getConnectionsClient(context).sendPayload(hostEndpointId, bytesPayload);
-            }
-            catch(Exception ex){
+            } catch (Exception ex) {
 
             }
 
@@ -387,7 +399,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void readyToStart(String userId) {
-        if(isHost) {
+        if (isHost) {
             Log.d(TAG, "Host readyToStart");
             gameEngineServer.readyToStart(userId);
         } else {
@@ -399,7 +411,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public void startNewGame(GameRoundModel roundModel) {
-        if(isHost) {
+        if (isHost) {
             Log.d(TAG, "Broadcast startNewGame " + roundModel);
             gameEngineClient.startNewGame(roundModel);
             getConnectionsClient().sendPayload(getConnectedUserIds(),
@@ -411,7 +423,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public void sendGameResult(String userId, boolean result, ResponseModel responseModel) {
-        if(isHost) {
+        if (isHost) {
             Log.d(TAG, "Host sendGameResult: " + userId + ": " + result);
             gameEngineServer.sendGameResult(userId, result, responseModel);
         } else {
@@ -423,7 +435,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public void notifyGameResult(boolean result, ResponseModel responseModel, User user) {
-        if(isHost) {
+        if (isHost) {
             Log.d(TAG, "Broadcast notifyGameResult: " + result);
             gameEngineClient.notifyGameResult(result, responseModel, user);
             getConnectionsClient().sendPayload(getConnectedUserIds(),
@@ -435,7 +447,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public void stopCurrentGame(String userId) {
-        if(isHost) {
+        if (isHost) {
             Log.d(TAG, "Host stopCurrentGame: " + userId);
             gameEngineServer.stopCurrentGame(userId);
         } else {
@@ -447,7 +459,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public void notifyGameOver() {
-        if(isHost) {
+        if (isHost) {
             Log.d(TAG, "Broadcast game over");
             getConnectionsClient().sendPayload(getConnectedUserIds(),
                     wrapPayload(NearbyPayload.NOTIFY_GAME_OVER));
@@ -466,7 +478,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
     public void setClientCheated(String userId) {
         if (isHost) {
             gameEngineServer.setClientCheated(userId);
-        }else {
+        } else {
             getConnectionsClient().sendPayload(hostEndpointId,
                     wrapPayload(NearbyPayload.SET_CLIENT_CHEATED, userId));
         }
@@ -476,7 +488,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
     public void detectCheating() {
         if (isHost) {
             gameEngineServer.detectCheating(userId);
-        }else {
+        } else {
             getConnectionsClient().sendPayload(hostEndpointId,
                     wrapPayload(NearbyPayload.DETECT_CHEATING));
         }
@@ -490,7 +502,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public void cheaterDetected(String cheaterId) {
-        if(isHost) {
+        if (isHost) {
             Log.d(TAG, "Broadcast cheater detected");
             getConnectionsClient().sendPayload(getConnectedUserIds(),
                     wrapPayload(NearbyPayload.CHEATER_DETECTED, cheaterId));

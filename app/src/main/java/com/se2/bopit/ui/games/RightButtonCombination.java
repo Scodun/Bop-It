@@ -96,7 +96,7 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     void checkFirstClick() {
         GameListener listener = rightButtonCombinationModel.getGameListener();
-        if (!firstClick && listener!=null) {
+        if (!firstClick && listener != null) {
             listener.onGameResult(result);
         } else {
             setSecondOnClickListener();
@@ -118,7 +118,7 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     void setSecondOnClickListener() {
         GameListener listener = rightButtonCombinationModel.getGameListener();
-        if(listener != null) {
+        if (listener != null) {
             getView().findViewById(findButton()).setOnClickListener(clickedButton -> {
                 secondClick = clickedButton.getId() == findButton();
                 result = checkClick(firstClick, secondClick);

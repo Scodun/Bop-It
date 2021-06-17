@@ -6,6 +6,7 @@ import com.se2.bopit.domain.gamemodel.SensorMiniGameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
 import com.se2.bopit.domain.responsemodel.SensorResponseModel;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

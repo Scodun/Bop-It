@@ -68,62 +68,62 @@ public class MinigameAchievementCountersTest {
     @Test
     public void getImageButtonMinigameCounter() {
         gameEngine.setCounter(imageButtonMinigame);
-        assertEquals(1,MinigameAchievementCounters.getImageButtonMinigameCounter());
+        assertEquals(1, MinigameAchievementCounters.getImageButtonMinigameCounter());
     }
 
     @Test
     public void getCounterColorButtonMinigame() {
         gameEngine.setCounter(colorButtonMiniGame);
-        assertEquals(1,MinigameAchievementCounters.getCounterColorButtonMinigame());
+        assertEquals(1, MinigameAchievementCounters.getCounterColorButtonMinigame());
     }
 
     @Test
     public void getCounterShakePhoneMinigame() {
         gameEngine.setCounter(shakePhoneMinigame);
-        assertEquals(1,MinigameAchievementCounters.getCounterShakePhoneMinigame());
+        assertEquals(1, MinigameAchievementCounters.getCounterShakePhoneMinigame());
     }
 
     @Test
     public void getCounterTextBasedMinigame() {
         gameEngine.setCounter(simpleTextButtonMiniGame);
         gameEngine.setCounter(weirdTextButtonMiniGame);
-        assertEquals(2,MinigameAchievementCounters.getCounterTextBasedMinigame());
+        assertEquals(2, MinigameAchievementCounters.getCounterTextBasedMinigame());
     }
 
     @Test
     public void getCounterPlacePhoneMinigame() {
         gameEngine.setCounter(placePhoneMiniGame);
-        assertEquals(1,MinigameAchievementCounters.getCounterPlacePhoneMinigame());
+        assertEquals(1, MinigameAchievementCounters.getCounterPlacePhoneMinigame());
     }
 
     @Test
     public void getCounterRightButtonsMinigame() {
         gameEngine.setCounter(rightButtonCombination);
-        assertEquals(1,MinigameAchievementCounters.getCounterRightButtonsMinigame());
+        assertEquals(1, MinigameAchievementCounters.getCounterRightButtonsMinigame());
     }
 
     @Test
     public void getCounterCoverLightSensorMinigame() {
         gameEngine.setCounter(coverLightSensorMiniGame);
-        assertEquals(1,MinigameAchievementCounters.getCounterCoverLightSensorMinigame());
+        assertEquals(1, MinigameAchievementCounters.getCounterCoverLightSensorMinigame());
     }
 
     @Test
     public void getCounterSliderMinigame() {
         gameEngine.setCounter(sliderMinigame);
-        assertEquals(1,MinigameAchievementCounters.getCounterSliderMinigame());
+        assertEquals(1, MinigameAchievementCounters.getCounterSliderMinigame());
     }
 
     @Test
     public void getCounterVolumeButtonMinigame() {
         gameEngine.setCounter(volumeButtonMinigame);
-        assertEquals(1,MinigameAchievementCounters.getCounterVolumeButtonMinigame());
+        assertEquals(1, MinigameAchievementCounters.getCounterVolumeButtonMinigame());
     }
 
     @Test
     public void getCounterDrawingMinigame() {
         gameEngine.setCounter(drawingMinigame);
-        assertEquals(1,MinigameAchievementCounters.getCounterDrawingMinigame());
+        assertEquals(1, MinigameAchievementCounters.getCounterDrawingMinigame());
     }
 
     @Test
@@ -134,15 +134,15 @@ public class MinigameAchievementCountersTest {
         gameEngine.setCounter(coverLightSensorMiniGame);
 
         MinigameAchievementCounters.resetCounter();
-        assertEquals(0,MinigameAchievementCounters.counterColorButtonMinigame);
-        assertEquals(0,MinigameAchievementCounters.counterCoverLightSensorMinigame);
-        assertEquals(0,MinigameAchievementCounters.counterShakePhoneMinigame);
-        assertEquals(0,MinigameAchievementCounters.counterSliderMinigame);
-        assertEquals(0,MinigameAchievementCounters.counterDrawingMinigame);
-        assertEquals(0,MinigameAchievementCounters.counterImageButtonMinigame);
-        assertEquals(0,MinigameAchievementCounters.counterPlacePhoneMinigame);
-        assertEquals(0,MinigameAchievementCounters.counterTextBasedMinigame);
-        assertEquals(0,MinigameAchievementCounters.counterRightButtonsMinigame);
-        assertEquals(0,MinigameAchievementCounters.counterVolumeButtonMinigame);
+        assertEquals(0, MinigameAchievementCounters.counterColorButtonMinigame);
+        assertEquals(0, MinigameAchievementCounters.counterCoverLightSensorMinigame);
+        assertEquals(0, MinigameAchievementCounters.counterShakePhoneMinigame);
+        assertEquals(0, MinigameAchievementCounters.counterSliderMinigame);
+        assertEquals(0, MinigameAchievementCounters.counterDrawingMinigame);
+        assertEquals(0, MinigameAchievementCounters.counterImageButtonMinigame);
+        assertEquals(0, MinigameAchievementCounters.counterPlacePhoneMinigame);
+        assertEquals(0, MinigameAchievementCounters.counterTextBasedMinigame);
+        assertEquals(0, MinigameAchievementCounters.counterRightButtonsMinigame);
+        assertEquals(0, MinigameAchievementCounters.counterVolumeButtonMinigame);
     }
 }

@@ -27,16 +27,17 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
     private GameListener listener;
     private SpeechRecognizer speechRecognizer;
     private Intent intentRecognizer;
-    private String[] possibleAnswers = {"apple","forest", "sunday", "guitar", "piano"};
+    private String[] possibleAnswers = {"apple", "forest", "sunday", "guitar", "piano"};
     private String correctAnswer = getRandomAnswer();
 
 
-    public SpeechRecognitionMiniGame(){
+    public SpeechRecognitionMiniGame() {
         super(R.layout.fragment_action_component);
     }
+
     /**
      * @param listener - Game listener
-     * Sets Game Listener
+     *                 Sets Game Listener
      */
     @Override
     public void setGameListener(GameListener listener) {
@@ -51,10 +52,9 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
     /**
      * @param inflater
      * @param container
-     * @param savedInstanceState
-     * Binds view to game
-     * injects image into view
-     * sets up speech recognizer
+     * @param savedInstanceState Binds view to game
+     *                           injects image into view
+     *                           sets up speech recognizer
      */
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,14 +63,15 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
         imageView.setImageResource(R.drawable.speaking);
 
         TextView messageText = view.findViewById(R.id.actionText);
-        messageText.setText("Say \"" + correctAnswer+"\"!");
+        messageText.setText("Say \"" + correctAnswer + "\"!");
         intentRecognizer = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intentRecognizer.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(view.getContext());
         RecognizeSpeech();
         return view;
     }
-    public void RecognizeSpeech(){
+
+    public void RecognizeSpeech() {
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
             /**
              * @param params
@@ -133,9 +134,9 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
             @Override
             public void onResults(Bundle results) {
 
-                for(String res : results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)){
-                    Log.println(Log.DEBUG,"Heard",res);
-                    if(listener != null) {
+                for (String res : results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)) {
+                    Log.println(Log.DEBUG, "Heard", res);
+                    if (listener != null) {
                         if (res.toLowerCase().equals(correctAnswer.toLowerCase())) {
                             listener.onGameResult(true);
                             speechRecognizer.stopListening();
@@ -168,11 +169,12 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
         });
         speechRecognizer.startListening(intentRecognizer);
     }
+
     /**
      * returns a random string from the
      * answer set.
      */
-    private String getRandomAnswer(){
+    private String getRandomAnswer() {
         int rnd = new Random().nextInt(possibleAnswers.length);
         return possibleAnswers[rnd];
     }

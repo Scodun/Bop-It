@@ -1,6 +1,7 @@
 package com.se2.bopit.domain.gamemodel;
 
 import android.graphics.RectF;
+
 import com.se2.bopit.domain.responsemodel.DrawingResponseModel;
 
 public class DrawingGameModel extends GameModel<DrawingResponseModel> {
@@ -20,7 +21,7 @@ public class DrawingGameModel extends GameModel<DrawingResponseModel> {
 
     @Override
     public boolean handleResponse(Object response) {
-        boolean result = checkResponse((DrawingResponseModel)response);
+        boolean result = checkResponse((DrawingResponseModel) response);
 
         if (result && listener != null)
             listener.onGameResult(true);

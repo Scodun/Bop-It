@@ -3,6 +3,7 @@ package com.se2.bopit.domain;
 import com.se2.bopit.domain.gamemodel.SliderGameModel;
 import com.se2.bopit.domain.mock.GameListenerMock;
 import com.se2.bopit.domain.responsemodel.SliderResponseModel;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -80,7 +81,7 @@ public class SliderGameModelTest {
         // Test if the random number are as expected 1000 times
         boolean success = true;
 
-        for (int i=0; i<1000; i++) {
+        for (int i = 0; i < 1000; i++) {
             int progress = SliderGameModel.generateProgress();
             if (progress != 7 && progress != 8 && progress != 9) {
                 success = false;
@@ -95,7 +96,7 @@ public class SliderGameModelTest {
         // Test if the random number are as expected 1000 times
         boolean success = true;
 
-        for (int i=0; i<1000; i++) {
+        for (int i = 0; i < 1000; i++) {
             int target = SliderGameModel.generateTarget();
             System.out.println(target);
             if (target <= 0 || (7 <= target && target <= 9) || 15 <= target) {

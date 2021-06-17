@@ -12,8 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+
 import com.se2.bopit.R;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.SoundEffects;
@@ -69,7 +71,7 @@ public class GameActivity extends BaseActivity {
         }
 
         //set visibility of cheat and detect button to gone in singleplayer mode
-        if(gameMode == GameMode.SINGLE_PLAYER){
+        if (gameMode == GameMode.SINGLE_PLAYER) {
             cheatButton.setVisibility(View.GONE);
         }
 
@@ -81,14 +83,13 @@ public class GameActivity extends BaseActivity {
         cheatButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(engine.isMyTurn) {
+                if (engine.isMyTurn) {
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         engine.pauseCountDown();
                     } else if (event.getAction() == MotionEvent.ACTION_UP) {
                         engine.resumeCountDown();
                     }
-                }
-                else {
+                } else {
                     engine.reportCheat();
                 }
                 return false;

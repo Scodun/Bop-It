@@ -12,34 +12,43 @@ public class MinigameAchievementCounters {
     public static int counterVolumeButtonMinigame = 0;
     public static int counterDrawingMinigame = 0;
 
-    public static int getImageButtonMinigameCounter(){
+    public static int getImageButtonMinigameCounter() {
         return counterImageButtonMinigame;
     }
-    public static int getCounterColorButtonMinigame(){
+
+    public static int getCounterColorButtonMinigame() {
         return counterColorButtonMinigame;
     }
-    public static int getCounterShakePhoneMinigame(){
+
+    public static int getCounterShakePhoneMinigame() {
         return counterShakePhoneMinigame;
     }
-    public static int getCounterTextBasedMinigame(){
+
+    public static int getCounterTextBasedMinigame() {
         return counterTextBasedMinigame;
     }
-    public static int getCounterPlacePhoneMinigame(){
+
+    public static int getCounterPlacePhoneMinigame() {
         return counterPlacePhoneMinigame;
     }
-    public static int getCounterRightButtonsMinigame(){
+
+    public static int getCounterRightButtonsMinigame() {
         return counterRightButtonsMinigame;
     }
-    public static int getCounterCoverLightSensorMinigame(){
+
+    public static int getCounterCoverLightSensorMinigame() {
         return counterCoverLightSensorMinigame;
     }
-    public static int getCounterSliderMinigame(){
+
+    public static int getCounterSliderMinigame() {
         return counterSliderMinigame;
     }
-    public static int getCounterVolumeButtonMinigame(){
+
+    public static int getCounterVolumeButtonMinigame() {
         return counterVolumeButtonMinigame;
     }
-    public static int getCounterDrawingMinigame(){
+
+    public static int getCounterDrawingMinigame() {
         return counterDrawingMinigame;
     }
 

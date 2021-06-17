@@ -21,8 +21,9 @@ public class GameEngineProvider {
     static final String TAG = GameEngineProvider.class.getSimpleName();
 
     static GameEngineProvider instance;
+
     public static GameEngineProvider getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new GameEngineProvider();
         }
         return instance;
@@ -67,8 +68,8 @@ public class GameEngineProvider {
     }
 
     GameEngine createMultiPlayerClient(MiniGamesProvider gamesProvider,
-                                 PlatformFeaturesProvider platformFeaturesProvider,
-                                 GameEngineListener gameListener) {
+                                       PlatformFeaturesProvider platformFeaturesProvider,
+                                       GameEngineListener gameListener) {
         DataProviderContext context = DataProviderContext.getContext();
         return new GameEngine(gamesProvider, platformFeaturesProvider, gameListener, context.getDataProvider());
     }

@@ -13,7 +13,7 @@ import info.hoang8f.widget.FButton;
 
 import java.util.Objects;
 
-public class AchievementsSelectActivity extends BaseActivity{
+public class AchievementsSelectActivity extends BaseActivity {
 
     private ActivityResultLauncher<Intent> activityResultLauncher;
 

@@ -124,15 +124,13 @@ public class LobbyHostActivity extends BaseActivity {
 
         @Override
         public void OnReadyAnswerReceived(boolean answer, String username) {
-            for (User usr : userItems)
-            {
-                if(usr.getName().equals(username)){
-                    if(answer){
+            for (User usr : userItems) {
+                if (usr.getName().equals(username)) {
+                    if (answer) {
                         usr.setReady(true);
                         readyUsers.add(usr);
 
-                    }
-                    else{
+                    } else {
                         usr.setReady(false);
                         readyUsers.remove(usr);
                     }

@@ -105,7 +105,7 @@ public class GameEngine {
         dataProvider.setClientCheated(userId);
     }
 
-    public void resumeCountDown(){
+    public void resumeCountDown() {
         timer = startCountDown(timeRemaining);
     }
 
@@ -130,50 +130,41 @@ public class GameEngine {
         Log.d(TAG, "stopCurrentGame");
         if (!lifecycleCancel) {
             lifecycleCancel = true;
-            if( timer != null)
+            if (timer != null)
                 timer.cancel();
             dataProvider.stopCurrentGame(userId);
             listener.onGameEnd(score);
         }
     }
 
-    public void setCounter(MiniGame minigame){
-        if(minigame.getClass().equals(ImageButtonMinigame.class)){
+    public void setCounter(MiniGame minigame) {
+        if (minigame.getClass().equals(ImageButtonMinigame.class)) {
             MinigameAchievementCounters.counterImageButtonMinigame++;
-        }
-        else if(minigame.getClass().equals(SimpleTextButtonMiniGame.class)||
-                minigame.getClass().equals(WeirdTextButtonMiniGame.class)){
+        } else if (minigame.getClass().equals(SimpleTextButtonMiniGame.class) ||
+                minigame.getClass().equals(WeirdTextButtonMiniGame.class)) {
             MinigameAchievementCounters.counterTextBasedMinigame++;
-        }
-        else if(minigame.getClass().equals(ShakePhoneMinigame.class)){
+        } else if (minigame.getClass().equals(ShakePhoneMinigame.class)) {
             MinigameAchievementCounters.counterShakePhoneMinigame++;
-        }
-        else if(minigame.getClass().equals(PlacePhoneMiniGame.class)){
+        } else if (minigame.getClass().equals(PlacePhoneMiniGame.class)) {
             MinigameAchievementCounters.counterPlacePhoneMinigame++;
-        }
-        else if(minigame.getClass().equals(CoverLightSensorMiniGame.class)){
+        } else if (minigame.getClass().equals(CoverLightSensorMiniGame.class)) {
             MinigameAchievementCounters.counterCoverLightSensorMinigame++;
-        }
-        else if(minigame.getClass().equals(ColorButtonMiniGame.class)){
+        } else if (minigame.getClass().equals(ColorButtonMiniGame.class)) {
             MinigameAchievementCounters.counterColorButtonMinigame++;
-        }
-        else if(minigame.getClass().equals(SliderMinigame.class)){
+        } else if (minigame.getClass().equals(SliderMinigame.class)) {
             MinigameAchievementCounters.counterSliderMinigame++;
-        }
-        else if(minigame.getClass().equals(DrawingMinigame.class)){
+        } else if (minigame.getClass().equals(DrawingMinigame.class)) {
             MinigameAchievementCounters.counterDrawingMinigame++;
-        }
-        else if(minigame.getClass().equals(VolumeButtonMinigame.class)){
+        } else if (minigame.getClass().equals(VolumeButtonMinigame.class)) {
             MinigameAchievementCounters.counterVolumeButtonMinigame++;
-        }
-        else if(minigame.getClass().equals(RightButtonCombination.class)){
+        } else if (minigame.getClass().equals(RightButtonCombination.class)) {
             MinigameAchievementCounters.counterRightButtonsMinigame++;
         }
     }
 
     public void notifyGameResult(boolean result, ResponseModel responseModel, User user) {
         timer.cancel();
-        if(userId.equals(user.getId()))
+        if (userId.equals(user.getId()))
             listener.onLifeUpdate(user.getLives());
         if (!isMyTurn) {
             // TODO
@@ -184,7 +175,7 @@ public class GameEngine {
     }
 
 
-    public void reportCheat(){
+    public void reportCheat() {
         dataProvider.detectCheating();
     }
 
@@ -197,7 +188,7 @@ public class GameEngine {
             dataProvider.disconnect();
         }
     }
-      
+
     public void loseMinigame() {
         dataProvider.sendGameResult(userId, false, null);
         miniGameLost = false;

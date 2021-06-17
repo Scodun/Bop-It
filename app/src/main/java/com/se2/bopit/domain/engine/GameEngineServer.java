@@ -142,13 +142,13 @@ public class GameEngineServer {
 
     public void sendGameResult(String userId, boolean result, ResponseModel responseModel) {
         User user = users.get(userId);
-            if (result) {
-                Log.d(TAG, "User " + userId + " won the round #" + (currentRound!=null?currentRound.round:"null"));
-                user.incrementScore();
-            } else {
-                Log.d(TAG, "User " + userId + " lost the round #" + (currentRound!=null?currentRound.round:"null"));
-                user.loseLife();
-            }
+        if (result) {
+            Log.d(TAG, "User " + userId + " won the round #" + (currentRound != null ? currentRound.round : "null"));
+            user.incrementScore();
+        } else {
+            Log.d(TAG, "User " + userId + " lost the round #" + (currentRound != null ? currentRound.round : "null"));
+            user.loseLife();
+        }
         dataProvider.notifyGameResult(result, responseModel, user);
     }
 

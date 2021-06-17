@@ -51,7 +51,7 @@ public class DrawingGameModelInstrumentedTest {
     public void testCheckPathMinPath() {
         Bitmap square = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.RGB_565);
 
-        DrawingResponseModel response = new DrawingResponseModel(square, getSquarePath(bitmapSize-error));
+        DrawingResponseModel response = new DrawingResponseModel(square, getSquarePath(bitmapSize - error));
 
         assertTrue(model.checkResponse(response));
     }
@@ -60,7 +60,7 @@ public class DrawingGameModelInstrumentedTest {
     public void testCheckPathTooSmallPath() {
         Bitmap square = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.RGB_565);
 
-        DrawingResponseModel response = new DrawingResponseModel(square, getSquarePath(bitmapSize-error-1));
+        DrawingResponseModel response = new DrawingResponseModel(square, getSquarePath(bitmapSize - error - 1));
 
         assertFalse(model.checkResponse(response));
     }
@@ -69,7 +69,7 @@ public class DrawingGameModelInstrumentedTest {
     public void testCheckPathTooBigPath() {
         Bitmap square = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.RGB_565);
 
-        DrawingResponseModel response = new DrawingResponseModel(square, getSquarePath(bitmapSize+error+1));
+        DrawingResponseModel response = new DrawingResponseModel(square, getSquarePath(bitmapSize + error + 1));
 
         assertFalse(model.checkResponse(response));
     }
@@ -93,7 +93,7 @@ public class DrawingGameModelInstrumentedTest {
     public void testHandleResponseIncorrect() {
         Bitmap square = Bitmap.createBitmap(bitmapSize, bitmapSize, Bitmap.Config.RGB_565);
 
-        DrawingResponseModel response = new DrawingResponseModel(square, getSquarePath(bitmapSize-error-1));
+        DrawingResponseModel response = new DrawingResponseModel(square, getSquarePath(bitmapSize - error - 1));
 
         GameListenerMock listener = new GameListenerMock();
 
@@ -110,11 +110,11 @@ public class DrawingGameModelInstrumentedTest {
 
     private Path getRectPath(int height, int width) {
         Path path = new Path();
-        path.moveTo(0,0);
-        path.lineTo(0,height);
-        path.lineTo(width,height);
-        path.lineTo(width,0);
-        path.lineTo(0,0);
+        path.moveTo(0, 0);
+        path.lineTo(0, height);
+        path.lineTo(width, height);
+        path.lineTo(width, 0);
+        path.lineTo(0, 0);
 
         return path;
     }

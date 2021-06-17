@@ -18,7 +18,7 @@ public class DataProviderContext {
 
     private static DataProviderContext context;
 
-    private DataProviderContext(DataProviderStrategy dataProvider){
+    private DataProviderContext(DataProviderStrategy dataProvider) {
         this.dataProvider = dataProvider;
         NetworkContextListener networkListener = u -> users = u;
         this.dataProvider.setListener(networkListener);
@@ -33,29 +33,29 @@ public class DataProviderContext {
         return context;
     }
 
-    public void setDataProvider(DataProviderStrategy dataProvider){
+    public void setDataProvider(DataProviderStrategy dataProvider) {
         this.dataProvider = dataProvider;
     }
 
-    public void connectToEndpoint(String endpointId){
+    public void connectToEndpoint(String endpointId) {
         Log.d(TAG, "connectToEndpoint: " + endpointId);
         dataProvider.connectToEndpoint(endpointId);
     }
 
-    public void startDiscovery(){
+    public void startDiscovery() {
         dataProvider.startDiscovery();
     }
 
-    public void startAdvertising(){
+    public void startAdvertising() {
         dataProvider.startAdvertising();
     }
 
-    public void setListener(NetworkGameListener listener){
+    public void setListener(NetworkGameListener listener) {
         Log.d(TAG, "setNetworkGameListener");
         dataProvider.setListener(listener);
     }
 
-    public void setListener(NetworkLobbyListener listener){
+    public void setListener(NetworkLobbyListener listener) {
         Log.d(TAG, "setNetworkLobbyListener");
         dataProvider.setListener(listener);
     }
@@ -65,14 +65,19 @@ public class DataProviderContext {
         dataProvider.startGameCountdown();
     }
 
-    public void disconnect(){
+    public void disconnect() {
         dataProvider.disconnect();
     }
 
-    public void sendReadyMessage() {dataProvider.sendReadyMessage(); }
+    public void sendReadyMessage() {
+        dataProvider.sendReadyMessage();
+    }
 
 
-    public void sendReadyAnswer(boolean answer, String username) {dataProvider.sendReadyAnswer(answer, username); }
+    public void sendReadyAnswer(boolean answer, String username) {
+        dataProvider.sendReadyAnswer(answer, username);
+    }
+
     public DataProviderStrategy getDataProvider() {
         return dataProvider;
     }

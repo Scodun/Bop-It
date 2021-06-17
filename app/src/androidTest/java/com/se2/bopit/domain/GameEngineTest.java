@@ -3,6 +3,7 @@ package com.se2.bopit.domain;
 
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.SmallTest;
+
 import com.se2.bopit.domain.data.SinglePlayerGameEngineDataProvider;
 import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.engine.GameEngineServer;
@@ -11,6 +12,7 @@ import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
 import com.se2.bopit.ui.providers.MiniGamesRegistry;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
@@ -20,7 +22,10 @@ import java.util.concurrent.Callable;
 import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 @RunWith(AndroidJUnit4.class)
 @SmallTest

@@ -6,7 +6,9 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+
 import androidx.core.content.ContextCompat;
+
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;

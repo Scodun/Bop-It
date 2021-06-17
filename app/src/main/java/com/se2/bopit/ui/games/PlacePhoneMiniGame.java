@@ -26,7 +26,7 @@ import com.se2.bopit.ui.DifficultyActivity;
 
 /**
  * Minigame
- *
+ * <p>
  * Goal: Place Phone on a flat surface.
  * Calls the MainActivity onGameStart Listener to display the Fragment
  * Sets the GameListener for the Minigame
@@ -100,7 +100,7 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
                 if (sensorManager != null) {
                     sensorManager.unregisterListener(this);
                 }
-                if(listener != null)
+                if (listener != null)
                     listener.onGameResult(true);
             }
         } catch (Exception ex) {

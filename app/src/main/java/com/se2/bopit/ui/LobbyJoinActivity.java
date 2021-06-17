@@ -110,7 +110,7 @@ public class LobbyJoinActivity extends BaseActivity {
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    switch (which){
+                    switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
                             dataProvider.sendReadyAnswer(true, getIntent().getStringExtra("username"));
                             break;

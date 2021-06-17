@@ -50,7 +50,9 @@ public class User implements Serializable {
         return name;
     }
 
-    public boolean isReady(){return ready;}
+    public boolean isReady() {
+        return ready;
+    }
 
     public int getScore() {
         return score;
@@ -68,12 +70,12 @@ public class User implements Serializable {
     public void setCurrentRound(int round){
         this.currentRound = round;
     }
-  
-    public int getCurrentRound(){
+
+    public int getCurrentRound() {
         return currentRound;
     }
 
-    public void setReady(boolean ready){
+    public void setReady(boolean ready) {
         this.ready = ready;
     }
 

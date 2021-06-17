@@ -1,6 +1,7 @@
 package com.se2.bopit.domain.gamemodel;
 
 import android.content.Context;
+
 import com.se2.bopit.domain.SensorEventModel;
 import com.se2.bopit.domain.interfaces.SensorEventModelListener;
 import com.se2.bopit.domain.responsemodel.SensorResponseModel;
