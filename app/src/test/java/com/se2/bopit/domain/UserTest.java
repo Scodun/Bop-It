@@ -65,6 +65,8 @@ public class UserTest {
 
     @Test
     public void testHasCheatedFalse(){
+        user1.setReady(true);
+        user1.setCheated(false);
         Assert.assertFalse(user1.hasCheated());
     }
 
