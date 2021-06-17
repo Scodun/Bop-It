@@ -14,7 +14,6 @@ public class DataProviderContext {
 
     private DataProviderStrategy dataProvider;
     protected ArrayList<User> users;
-//    protected String currentUserId;
 
     private static DataProviderContext context;
 
@@ -49,11 +48,7 @@ public class DataProviderContext {
     public void startAdvertising() {
         dataProvider.startAdvertising();
     }
-
-    public void setListener(NetworkGameListener listener) {
-        Log.d(TAG, "setNetworkGameListener");
-        dataProvider.setListener(listener);
-    }
+    
 
     public void setListener(NetworkLobbyListener listener) {
         Log.d(TAG, "setNetworkLobbyListener");
@@ -81,13 +76,6 @@ public class DataProviderContext {
     public DataProviderStrategy getDataProvider() {
         return dataProvider;
     }
-
-//    public String getUserId() {
-//
-//        String userId = users.get(0).getId(); // FIXME
-//        Log.d(TAG, "getUserId("+users+") => " + userId);
-//        return userId;
-//    }
 
     public List<User> getUsers() {
         return users;

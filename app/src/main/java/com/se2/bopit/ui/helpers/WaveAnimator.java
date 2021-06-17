@@ -9,8 +9,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 
 public class WaveAnimator {
 
-    private View waveView;
-    private AppCompatActivity activity;
+    private final View waveView;
+    private final AppCompatActivity activity;
 
     public WaveAnimator(AppCompatActivity activity, View waveView) {
         this.waveView = waveView;

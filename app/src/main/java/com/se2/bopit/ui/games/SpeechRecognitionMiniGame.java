@@ -27,8 +27,8 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
     private GameListener listener;
     private SpeechRecognizer speechRecognizer;
     private Intent intentRecognizer;
-    private String[] possibleAnswers = {"apple", "forest", "sunday", "guitar", "piano"};
-    private String correctAnswer = getRandomAnswer();
+    private final String[] possibleAnswers = {"apple", "forest", "sunday", "guitar", "piano"};
+    private final String correctAnswer = getRandomAnswer();
 
 
     public SpeechRecognitionMiniGame() {

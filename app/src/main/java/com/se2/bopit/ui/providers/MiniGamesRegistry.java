@@ -105,12 +105,14 @@ public class MiniGamesRegistry implements MiniGamesProvider {
     @Override
     public MiniGame createMiniGame(GameRoundModel round) {
         try {
-            Class<?> cls = Class.forName("com.se2.bopit.ui.games." + round.gameType);
-            Object model = null;
-            if (round.modelType != null && round.modelJson != null) {
-                Class<?> modelType = Class.forName("com.se2.bopit.domain.gamemodel." + round.modelType);
+            Class<?> cls = Class.forName("com.se2.bopit.ui.games." + round.getGameType());
+            Object model;
+            if (round.getModelType() != null && round.getModelJson() != null) {
+                Class<?> modelType = Class.forName("com.se2.bopit.domain.gamemodel." + round.getModelType());
                 Gson gson = new Gson();
-                model = gson.fromJson(round.modelJson, modelType);
+                model = gson.fromJson(round.getModelJson(), modelType);
+            } else {
+                model = null;
             }
 
             Constructor<?> constructor = null;
@@ -127,7 +129,7 @@ public class MiniGamesRegistry implements MiniGamesProvider {
             // fallback with drawback - games may be not the same!!!
             return (MiniGame) cls.getDeclaredConstructor().newInstance();
         } catch (Exception ex) {
-            String msg = "Error creating minigame from model: " + round.gameType;
+            String msg = "Error creating minigame from model: " + round.getGameType();
             Log.e(TAG, msg, ex);
             throw new GameCreationException(msg, ex);
         }

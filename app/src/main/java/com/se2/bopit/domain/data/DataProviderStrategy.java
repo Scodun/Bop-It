@@ -18,8 +18,6 @@ public abstract class DataProviderStrategy implements GameEngineDataProvider {
 
     public abstract void startAdvertising();
 
-    public abstract void setListener(NetworkGameListener listener);
-
     public abstract void setListener(NetworkLobbyListener listener);
 
     public abstract void setListener(NetworkContextListener listener);
