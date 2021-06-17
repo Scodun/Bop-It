@@ -3,7 +3,7 @@ package com.se2.bopit.domain.models;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    public static int STARTING_LIVES = 3;
+    private static int STARTING_LIVES = 3;
 
     private final String id;
     private final String name;
@@ -75,5 +75,13 @@ public class User implements Serializable {
 
     public void setReady(boolean ready){
         this.ready = ready;
+    }
+
+    public static int getStartingLives() {
+        return STARTING_LIVES;
+    }
+
+    public static void setStartingLives(int startingLives) {
+        STARTING_LIVES = startingLives;
     }
 }
