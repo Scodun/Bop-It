@@ -1,7 +1,6 @@
 package com.se2.bopit.ui;
 
 import androidx.fragment.app.Fragment;
-
 import com.se2.bopit.domain.gamemodel.GameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;

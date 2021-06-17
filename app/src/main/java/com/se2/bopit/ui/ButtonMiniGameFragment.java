@@ -8,20 +8,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.graphics.drawable.DrawableCompat;
-
 import com.se2.bopit.R;
 import com.se2.bopit.domain.ButtonColor;
 import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.gamemodel.ButtonMiniGameModel;
 import com.se2.bopit.domain.responsemodel.ButtonModel;
+import info.hoang8f.widget.FButton;
 
 import java.util.Random;
-
-import info.hoang8f.widget.FButton;
 
 public abstract class ButtonMiniGameFragment extends MiniGameFragment<ButtonMiniGameModel> {
     protected ButtonMiniGameFragment(ButtonMiniGameModel gameModel) {

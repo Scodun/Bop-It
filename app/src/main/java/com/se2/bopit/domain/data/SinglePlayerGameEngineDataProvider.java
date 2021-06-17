@@ -2,9 +2,7 @@ package com.se2.bopit.domain.data;
 
 import android.os.Build;
 import android.util.Log;
-
 import androidx.annotation.RequiresApi;
-
 import com.se2.bopit.domain.GameRoundModel;
 import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.engine.GameEngineServer;

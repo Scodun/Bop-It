@@ -1,7 +1,6 @@
 package com.se2.bopit.domain.data;
 
 import android.util.Log;
-
 import com.se2.bopit.domain.interfaces.NetworkContextListener;
 import com.se2.bopit.domain.interfaces.NetworkGameListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;

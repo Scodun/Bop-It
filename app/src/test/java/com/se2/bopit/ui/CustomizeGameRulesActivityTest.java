@@ -1,12 +1,9 @@
 package com.se2.bopit.ui;
 
 import android.content.Context;
-
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.lifecycle.Lifecycle;
-
 import com.se2.bopit.ui.providers.MiniGamesRegistry;
-
 import org.junit.Before;
 import org.junit.Test;
 

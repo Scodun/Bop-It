@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.view.MotionEvent;
 import android.view.View;
-
 import com.se2.bopit.R;
 import com.se2.bopit.domain.responsemodel.DrawingResponseModel;
 import com.se2.bopit.ui.games.DrawingMinigame;
@@ -18,7 +17,7 @@ public class DrawTouchPathCanvas extends View {
 
     private static final Random random = new Random();
 
-    private Paint pathLinePaint;
+    private final Paint pathLinePaint;
     private Path drawnPath;
 
     private Bitmap background;
@@ -33,7 +32,7 @@ public class DrawTouchPathCanvas extends View {
         this.minigame = minigame;
         drawnPath = new Path();
 
-        initializePathLinePaint();
+        pathLinePaint = getPathLinePaint();
     }
 
     @Override
@@ -87,12 +86,36 @@ public class DrawTouchPathCanvas extends View {
         canvas.drawPath(drawnPath, pathLinePaint);
     }
 
-    private void initializePathLinePaint() {
-        pathLinePaint = new Paint();
-        pathLinePaint.setColor(getResources().getColor(R.color.primary));
-        pathLinePaint.setAntiAlias(true);
-        pathLinePaint.setStyle(Paint.Style.STROKE);
-        pathLinePaint.setStrokeWidth(25);
+    private Paint getPathLinePaint() {
+        Paint paint = new Paint();
+        paint.setColor(getRandomColor());
+        paint.setAntiAlias(true);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(25);
+        return paint;
+    }
+
+    private int getRandomColor() {
+        int n = random.nextInt(7);
+
+        switch (n) {
+            case 0:
+                return getResources().getColor(R.color.red);
+            case 1:
+                return getResources().getColor(R.color.green);
+            case 2:
+                return getResources().getColor(R.color.blue);
+            case 3:
+                return getResources().getColor(R.color.purple);
+            case 4:
+                return getResources().getColor(R.color.yellow);
+            case 5:
+                return getResources().getColor(R.color.orange);
+            case 6:
+                return getResources().getColor(R.color.pink);
+            default:
+                return getResources().getColor(R.color.primary);
+        }
     }
 
     private int getRandomAngle() {

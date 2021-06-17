@@ -3,14 +3,11 @@ package com.se2.bopit.domain;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
 import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 public class GameRulesTest {
 

@@ -2,28 +2,13 @@ package com.se2.bopit.domain.engine;
 
 import android.os.CountDownTimer;
 import android.util.Log;
-
 import com.se2.bopit.domain.GameRoundModel;
 import com.se2.bopit.domain.MinigameAchievementCounters;
-import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
-import com.se2.bopit.domain.interfaces.GameEngineListener;
-import com.se2.bopit.domain.interfaces.MiniGame;
-import com.se2.bopit.domain.interfaces.MiniGamesProvider;
-import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
+import com.se2.bopit.domain.interfaces.*;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.domain.responsemodel.ResponseModel;
 import com.se2.bopit.ui.DifficultyActivity;
-import com.se2.bopit.ui.games.ColorButtonMiniGame;
-import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
-import com.se2.bopit.ui.games.DrawingMinigame;
-import com.se2.bopit.ui.games.ImageButtonMinigame;
-import com.se2.bopit.ui.games.PlacePhoneMiniGame;
-import com.se2.bopit.ui.games.RightButtonCombination;
-import com.se2.bopit.ui.games.ShakePhoneMinigame;
-import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
-import com.se2.bopit.ui.games.SliderMinigame;
-import com.se2.bopit.ui.games.VolumeButtonMinigame;
-import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
+import com.se2.bopit.ui.games.*;
 
 /**
  * GameEngine Client used by UI on each device.
@@ -42,6 +27,7 @@ public class GameEngine {
     private int score = 0;
     private boolean isOverTime = false;
     private boolean miniGameLost = false;
+  
     boolean lifecycleCancel = false;
     CountDownTimer timer;
     private boolean isMyTurn;
@@ -81,7 +67,7 @@ public class GameEngine {
         setCurrentUserId(round.getCurrentUserId());
 
         MiniGame minigame = miniGamesProvider.createMiniGame(round);
-        long time = getTimeForMinigame(minigame);
+        long time = minigame.getTime(DifficultyActivity.difficulty, score);
 
         timer = startCountDown(time);
         if (this.listener != null)
@@ -104,119 +90,6 @@ public class GameEngine {
                 loseMinigame();
             }
         });
-    }
-
-    /**
-     * Sets the Time depending on the MiniGame
-     *
-     * @param miniGame - the MiniGame which Time should be set
-     * @return - a specific Time to solve the MiniGame
-     */
-    public long getTimeForMinigame(MiniGame miniGame) {
-            /*
-            IMAGEBUTTONMINIGAME
-            SIMPLETEXTBUTTONMINIGAME
-            WEIRDBUTTONMINIGAME
-            COLORBUTTONMINIGAME
-             */
-        if (miniGame.getClass().equals(ImageButtonMinigame.class) ||
-                miniGame.getClass().equals(SimpleTextButtonMiniGame.class) ||
-                miniGame.getClass().equals(WeirdTextButtonMiniGame.class) ||
-                miniGame.getClass().equals(ColorButtonMiniGame.class)) {
-            return getTimeForDifficultyButtonMiniGame();
-        }
-            /*
-            COVERLIGHTSENSORMINIGAME
-             */
-        else if (miniGame.getClass().equals(CoverLightSensorMiniGame.class)) {
-            return getTimeForDifficultyCoverLightSensorMiniGame();
-        }
-            /*
-            DRAWINGMINIGAME
-            PLACEPHONEMINIGAME
-             */
-        else if (miniGame.getClass().equals(DrawingMinigame.class) ||
-                miniGame.getClass().equals(PlacePhoneMiniGame.class)) {
-            return getTimeForDifficultyDrawAndPlaceMiniGame();
-        }
-            /*
-            RIGHTBUTTONCOMBINATION
-             */
-        else if (miniGame.getClass().equals(RightButtonCombination.class)) {
-            return getTimeForDifficultyForRightButtonCombination();
-        }
-            /*
-            SHAKEPHONEMINIGAME
-             */
-        else if (miniGame.getClass().equals(ShakePhoneMinigame.class)) {
-            return getTimeForDifficultyShakeMiniGame();
-            /*
-            DEFAULT
-            */
-        } else {
-            return getTimeForDifficultyDefault();
-        }
-    }
-
-    private long getTimeForDifficultyButtonMiniGame(){
-        if (DifficultyActivity.difficulty.equals(EASY)) {
-            return (long) (Math.exp(-this.getScore() * 0.07 + 6.9) + 1600);
-        } else if (DifficultyActivity.difficulty.equals(MEDIUM)) {
-            return (long) (Math.exp(-this.getScore() * 0.07 + 6.9) + 1200);
-        } else {
-            return (long) (Math.exp(-this.getScore() * 0.07 + 6.9) + 800);
-        }
-    }
-
-    private long getTimeForDifficultyCoverLightSensorMiniGame(){
-        if (DifficultyActivity.difficulty.equals(EASY)) {
-            return (long) (Math.exp(-this.getScore() * 0.075 + 7) + 2000);
-        } else if (DifficultyActivity.difficulty.equals(MEDIUM)) {
-            return (long) (Math.exp(-this.getScore() * 0.075 + 7) + 1500);
-        } else {
-            return (long) (Math.exp(-this.getScore() * 0.075 + 7) + 1000);
-        }
-    }
-
-    private long getTimeForDifficultyDrawAndPlaceMiniGame(){
-        if (DifficultyActivity.difficulty.equals(EASY)) {
-            return (long) (Math.exp(-this.getScore() * 0.1 + 8) + 2000);
-        } else if (DifficultyActivity.difficulty.equals(MEDIUM)) {
-            return (long) (Math.exp(-this.getScore() * 0.1 + 8) + 1500);
-        } else {
-            return (long) (Math.exp(-this.getScore() * 0.1 + 8) + 1000);
-        }
-    }
-
-    private long getTimeForDifficultyForRightButtonCombination(){
-        if (DifficultyActivity.difficulty.equals(EASY)) {
-            return (long) (Math.exp(-this.getScore() * 0.07 + 7.5) + 1800);
-
-        } else if (DifficultyActivity.difficulty.equals(MEDIUM)) {
-            return (long) (Math.exp(-this.getScore() * 0.07 + 7.5) + 1300);
-        } else {
-            return (long) (Math.exp(-this.getScore() * 0.07 + 7.5) + 800);
-        }
-    }
-
-    private long getTimeForDifficultyShakeMiniGame(){
-        if (DifficultyActivity.difficulty.equals(EASY)) {
-            return (long) (Math.exp(-this.getScore() * 0.06 + 7.6) + 1400);
-        } else if (DifficultyActivity.difficulty.equals(MEDIUM)) {
-            return (long) (Math.exp(-this.getScore() * 0.06 + 7.6) + 1000);
-        } else {
-            return (long) (Math.exp(-this.getScore() * 0.06 + 7.6) + 600);
-        }
-    }
-
-    private long getTimeForDifficultyDefault(){
-        if (DifficultyActivity.difficulty.equals(EASY)) {
-            return (long) (Math.exp(-this.getScore() * 0.08 + 7) + 3000);
-        } else if (DifficultyActivity.difficulty.equals(MEDIUM)) {
-            return (long) (Math.exp(-this.getScore() * 0.08 + 7) + 2000);
-        } else {
-            return (long) (Math.exp(-this.getScore() * 0.08 + 7) + 1000);
-        }
     }
 
     /**

@@ -2,9 +2,7 @@ package com.se2.bopit.domain.engine;
 
 import android.os.Build;
 import android.util.Log;
-
 import androidx.annotation.RequiresApi;
-
 import com.google.gson.Gson;
 import com.se2.bopit.domain.GameRoundModel;
 import com.se2.bopit.domain.gamemodel.GameModel;
@@ -15,13 +13,7 @@ import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.domain.responsemodel.ResponseModel;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -44,7 +36,6 @@ public class GameEngineServer {
     GameRoundModel currentRound;
     GameModel<? extends ResponseModel> currentGame;
 
-    boolean isOverTime = false;
     boolean miniGameLost = false;
     boolean lifecycleCancel = false;
 
@@ -82,7 +73,7 @@ public class GameEngineServer {
 
     /**
      * Starts a new Minigame
-     * <p>
+     *
      * Calls the MainActivity onGameStart Listener to display the Fragment
      * Sets the GameListener for the Minigame
      */
@@ -90,10 +81,8 @@ public class GameEngineServer {
     public void startNewGame() {
         Log.d(TAG, "startNewGame round #" + round + "...");
         // GameRoundModel lastRound = currentRound;
-        if (users.size() > 1)
-            nextPlayer = selectNextRoundUser();
-        else
-            nextPlayer = users.entrySet().iterator().next().getValue();
+
+        nextPlayer = selectNextRoundUser();
 
         if (nextPlayer == null) {
             Log.d(TAG, "No active users left -> game over after " + round + " round");
@@ -110,7 +99,7 @@ public class GameEngineServer {
         long time = (long) (Math.exp(-nextPlayer.getScore() * 0.08 + 7) + 2000);
         currentRound.setTime(time);
 
-        MiniGame minigame = getMiniGame();
+        MiniGame minigame = miniGamesProvider.createRandomMiniGame();;
         currentRound.setGameType(minigame.getClass().getSimpleName());
         currentGame = minigame.getModel();
 
@@ -119,7 +108,7 @@ public class GameEngineServer {
             currentRound.setModelJson(gson.toJson(currentGame));
         }
 
-        //for cheatfunction
+        //for cheat function
         lastPlayer = nextPlayer;
 
         Log.d(TAG, "sending currentRound to data provider: " + currentRound);
@@ -144,40 +133,10 @@ public class GameEngineServer {
         return pool.get(0);
     }
 
-    private MiniGame getMiniGame() {
-        return miniGamesProvider.createRandomMiniGame();
-    }
-
-//    /**
-//     * @param time - countdown time in ms
-//     *             Starts a new countdown
-//     *             Calls the MainActivity onTimeTick, onFinish listener to display the time
-//     */
-//    private CountDownTimer startCountDown(long time) {
-//        return platformFeaturesProvider.createCountDownTimer(
-//                time, 5, this::onTick, this::onFinish)
-//                .start();
-//    }
-
-//    public void onTick(long millisUntilFinished) {
-//        // unused
-//    }
-
-//    public void onFinish() {
-//        isOverTime = true;
-////        if (listener != null)
-////            listener.onGameEnd(score);
-//        Log.d(TAG, "timeout");
-//        dataProvider.notifyGameResult(false, null);
-//    }
-
-
     public void stopCurrentGame() {
         if (!lifecycleCancel && !miniGameLost) {
             lifecycleCancel = true;
-//            timer.cancel();
             miniGameLost = true;
-            //listener.onGameEnd(score);
         }
     }
 
@@ -216,14 +175,14 @@ public class GameEngineServer {
 
     public void detectCheating(String reporterUserId) {
         if (nextPlayer.hasCheated()) {
-            nextPlayer.loseAllLifes();
+            nextPlayer.loseAllLives();
             users.remove(nextPlayer.getId());
             usersReady.remove(nextPlayer.getId());
             dataProvider.cheaterDetected(nextPlayer.getId());
         } else {
             User reporter = users.get(reporterUserId);
             reporter.loseLife();
-            if (reporter.getLife() == 0) {
+            if (reporter.getLives() == 0){
                 usersReady.remove(reporterUserId);
                 users.remove(reporterUserId);
                 //TODO send to all cheating detection failed player lost all lifes
@@ -231,10 +190,7 @@ public class GameEngineServer {
             }
         }
 
-        if (users.size() <= 1) {
+        if (users.size() <= 1)
             dataProvider.notifyGameOver();
-        }
     }
-
-
 }

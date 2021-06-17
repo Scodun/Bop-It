@@ -1,13 +1,11 @@
 package com.se2.bopit.ui.games;
 
 import android.util.Log;
-
 import com.se2.bopit.R;
 import com.se2.bopit.domain.ButtonImage;
 import com.se2.bopit.domain.gamemodel.ImageButtonMinigameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.responsemodel.ImageButtonModel;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

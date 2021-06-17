@@ -2,18 +2,14 @@ package com.se2.bopit.domain;
 
 import android.annotation.SuppressLint;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GameRules {
     final Class<?>[] gameTypes;
     final Map<Class<?>, GameRuleItemModel> gameTypeModels;
 
-    public boolean avoidRepeatingGameTypes;
+    public boolean avoidRepeatingGameTypes = true;
 
     public GameRules(Class<?>... gameTypes) {
         this.gameTypes = gameTypes;

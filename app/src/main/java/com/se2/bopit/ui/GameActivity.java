@@ -96,7 +96,7 @@ public class GameActivity extends BaseActivity {
             }
         });
 
-        lifeView.setText("Lives " + User.STARTING_LIVES);
+        lifeView.setText("Lives " + User.getStartingLives());
 
         engine.startNewGame();
     }

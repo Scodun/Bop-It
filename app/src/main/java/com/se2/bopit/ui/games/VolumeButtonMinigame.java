@@ -5,18 +5,15 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.se2.bopit.R;
 import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.gamemodel.GameModel;
 import com.se2.bopit.domain.gamemodel.VolumeButtonGameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
-
 import pl.droidsonroids.gif.GifImageView;
 
 public class VolumeButtonMinigame extends Fragment implements MiniGame {
