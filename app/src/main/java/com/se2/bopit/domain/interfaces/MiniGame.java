@@ -1,8 +1,10 @@
 package com.se2.bopit.domain.interfaces;
 
+import com.se2.bopit.domain.Difficulty;
 import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.ResponseModel;
 import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
+import com.se2.bopit.ui.DifficultyActivity;
 
 public interface MiniGame {
     /**
@@ -22,4 +24,25 @@ public interface MiniGame {
     }
 
     GameModel<? extends ResponseModel> getModel();
+
+    default long getTime(Difficulty difficulty, int score) {
+        double maxExponent = 7;
+        double multiplier = 0.08;
+
+        int base = 3000;
+        switch (DifficultyActivity.difficulty) {
+            case EASY:
+                base = 3000;
+            case MEDIUM:
+                base = 2000;
+            case HARD:
+                base = 1000;
+        }
+
+        return generateTime(maxExponent, multiplier, base, score);
+    }
+
+    default long generateTime(double maxExponent, double scoreMultiplier, int base, int score) {
+        return (long) (Math.exp(maxExponent - score * scoreMultiplier) + base);
+    }
 }

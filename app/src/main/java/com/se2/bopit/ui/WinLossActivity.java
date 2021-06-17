@@ -7,19 +7,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.games.Games;
 import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.MinigameAchievementCounters;
+import info.hoang8f.widget.FButton;
 
 import java.util.Objects;
-
-import info.hoang8f.widget.FButton;
 
 public class WinLossActivity extends BaseActivity {
     private Button bu_return;
@@ -119,7 +116,7 @@ public class WinLossActivity extends BaseActivity {
         MinigameAchievementCounters.resetCounter();
 
         switch (DifficultyActivity.difficulty) {
-            case "easy":
+            case EASY:
                 scoreEasy+=score;
                 editor.putInt(KEY_SCORE_MINIGAMES_EASY, scoreEasy);
                 updateHighscore(getString(R.string.leaderboard_highscore_easy),score);
@@ -142,7 +139,7 @@ public class WinLossActivity extends BaseActivity {
                     }
                 }
                 break;
-            case "medium":
+            case MEDIUM:
                 scoreMedium+=score;
                 editor.putInt(KEY_SCORE_MINIGAMES_MEDIUM, scoreMedium);
                 updateHighscore(getString(R.string.leaderboard_highscore_medium),score);
@@ -165,7 +162,7 @@ public class WinLossActivity extends BaseActivity {
                     }
                 }
                 break;
-            case "hard":
+            case HARD:
                 scoreHard+=score;
                 editor.putInt(KEY_SCORE_MINIGAMES_HARD, scoreHard);
                 updateHighscore(getString(R.string.leaderboard_highscore_hard),score);

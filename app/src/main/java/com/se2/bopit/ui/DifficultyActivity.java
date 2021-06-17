@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.Difficulty;
 import com.se2.bopit.domain.GameMode;
 
 import info.hoang8f.widget.FButton;
@@ -14,7 +15,7 @@ public class DifficultyActivity extends BaseActivity{
     FButton hard;
     FButton back;
 
-    public static String difficulty = "medium";
+    public static Difficulty difficulty = Difficulty.MEDIUM;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,17 +41,17 @@ public class DifficultyActivity extends BaseActivity{
 
     private void initializeOnClickListeners() {
         easy.setOnClickListener(v -> {
-            setDifficulty("easy");
+            setDifficulty(Difficulty.EASY);
             startActivity(new Intent(this, GameActivity.class));
         });
 
         medium.setOnClickListener(v -> {
-            setDifficulty("medium");
+            setDifficulty(Difficulty.MEDIUM);
             startActivity(new Intent(this, GameActivity.class));
         });
 
         hard.setOnClickListener(v -> {
-            setDifficulty("hard");
+            setDifficulty(Difficulty.HARD);
             startActivity(new Intent(this, GameActivity.class));
         });
     }
@@ -61,7 +62,7 @@ public class DifficultyActivity extends BaseActivity{
         this.finishAffinity();
     }
 
-    public static void setDifficulty(String difficulty) {
+    public static void setDifficulty(Difficulty difficulty) {
         DifficultyActivity.difficulty = difficulty;
     }
 }

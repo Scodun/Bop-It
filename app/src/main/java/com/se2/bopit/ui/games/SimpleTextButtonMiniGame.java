@@ -2,7 +2,9 @@ package com.se2.bopit.ui.games;
 
 import com.se2.bopit.domain.ButtonMiniGameModel;
 import com.se2.bopit.domain.ButtonModel;
+import com.se2.bopit.domain.Difficulty;
 import com.se2.bopit.ui.ButtonMiniGameFragment;
+import com.se2.bopit.ui.DifficultyActivity;
 
 import java.util.ArrayList;
 
@@ -28,5 +30,23 @@ public class SimpleTextButtonMiniGame extends ButtonMiniGameFragment {
         buttonModelsTmp.add(new ButtonModel("HOP"));
         buttonModelsTmp.add(new ButtonModel("MOP"));
         return buttonModelsTmp;
+    }
+
+    @Override
+    public long getTime(Difficulty difficulty, int score) {
+        double maxExponent = 6.9;
+        double multiplier = 0.07;
+
+        int base = 1600;
+        switch (DifficultyActivity.difficulty) {
+            case EASY:
+                base = 1600;
+            case MEDIUM:
+                base = 1200;
+            case HARD:
+                base = 800;
+        }
+
+        return generateTime(maxExponent, multiplier, base, score);
     }
 }

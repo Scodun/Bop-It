@@ -9,7 +9,6 @@ public enum ButtonColor {
     PINK,
     YELLOW,
     BLACK,
-    // TODO add more colors and templates
 
     DEFAULT,
     RANDOM, // Random has to be last otherwise ButtonMiniGameFragment.getTintFromButtonColor may run forever

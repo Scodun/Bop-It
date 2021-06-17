@@ -10,12 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
-import com.se2.bopit.domain.GameModel;
-import com.se2.bopit.domain.RightButton;
-import com.se2.bopit.domain.RightButtonCombinationModel;
-import com.se2.bopit.domain.TextToSpeech;
+import com.se2.bopit.domain.*;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.ui.DifficultyActivity;
 
 public class RightButtonCombination extends Fragment implements MiniGame {
 
@@ -145,4 +143,21 @@ public class RightButtonCombination extends Fragment implements MiniGame {
         return rightButtonCombinationModel;
     }
 
+    @Override
+    public long getTime(Difficulty difficulty, int score) {
+        double maxExponent = 7.5;
+        double multiplier = 0.07;
+
+        int base = 1800;
+        switch (DifficultyActivity.difficulty) {
+            case EASY:
+                base = 1800;
+            case MEDIUM:
+                base = 1300;
+            case HARD:
+                base = 800;
+        }
+
+        return generateTime(maxExponent, multiplier, base, score);
+    }
 }

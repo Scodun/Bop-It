@@ -11,9 +11,11 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.se2.bopit.R;
+import com.se2.bopit.domain.Difficulty;
 import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.drawingminigame.DrawingGameModel;
+import com.se2.bopit.ui.DifficultyActivity;
 import com.se2.bopit.ui.DrawTouchPathCanvas;
 import com.se2.bopit.ui.MiniGameFragment;
 
@@ -58,6 +60,24 @@ public class DrawingMinigame extends MiniGameFragment<DrawingGameModel> {
     @Override
     public GameModel<?> getModel() {
         return null;
+    }
+
+    @Override
+    public long getTime(Difficulty difficulty, int score) {
+        double maxExponent = 8;
+        double multiplier = 0.1;
+
+        int base = 2000;
+        switch (DifficultyActivity.difficulty) {
+            case EASY:
+                base = 2000;
+            case MEDIUM:
+                base = 1500;
+            case HARD:
+                base = 1000;
+        }
+
+        return generateTime(maxExponent, multiplier, base, score);
     }
 
 }
