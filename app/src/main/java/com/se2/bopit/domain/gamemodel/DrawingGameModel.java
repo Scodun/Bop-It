@@ -1,7 +1,7 @@
-package com.se2.bopit.domain.drawingminigame;
+package com.se2.bopit.domain.gamemodel;
 
 import android.graphics.RectF;
-import com.se2.bopit.domain.GameModel;
+import com.se2.bopit.domain.responsemodel.DrawingResponseModel;
 
 public class DrawingGameModel extends GameModel<DrawingResponseModel> {
 

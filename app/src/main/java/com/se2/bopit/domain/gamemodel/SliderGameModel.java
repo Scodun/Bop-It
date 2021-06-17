@@ -1,7 +1,7 @@
-package com.se2.bopit.domain.sliderminigame;
+package com.se2.bopit.domain.gamemodel;
 
 import android.widget.SeekBar;
-import com.se2.bopit.domain.GameModel;
+import com.se2.bopit.domain.responsemodel.SliderResponseModel;
 import com.se2.bopit.ui.SliderMinigameFragment;
 
 import java.util.Random;

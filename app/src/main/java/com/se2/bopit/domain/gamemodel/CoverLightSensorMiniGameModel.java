@@ -1,8 +1,7 @@
-package com.se2.bopit.domain;
+package com.se2.bopit.domain.gamemodel;
 
 import android.hardware.Sensor;
-
-import com.google.gson.Gson;
+import com.se2.bopit.domain.responsemodel.SensorResponseModel;
 
 public class CoverLightSensorMiniGameModel extends SensorMiniGameModel {
 
@@ -14,7 +13,7 @@ public class CoverLightSensorMiniGameModel extends SensorMiniGameModel {
     }
 
     @Override
-    protected boolean checkResponse(SensorResponseModel response) {
+    public boolean checkResponse(SensorResponseModel response) {
         return response.values[0] < expectedResponse.values[0];
     }
 

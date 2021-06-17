@@ -1,4 +1,4 @@
-package com.se2.bopit.domain;
+package com.se2.bopit.domain.responsemodel;
 
 public class SensorResponseModel extends ResponseModel {
     public final int sensorType;

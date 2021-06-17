@@ -1,16 +1,16 @@
 package com.se2.bopit.domain;
 
 public class MinigameAchievementCounters {
-    static int counterImageButtonMinigame = 0;
-    static int counterColorButtonMinigame = 0;
-    static int counterShakePhoneMinigame = 0;
-    static int counterTextBasedMinigame = 0;
-    static int counterPlacePhoneMinigame = 0;
-    static int counterRightButtonsMinigame = 0;
-    static int counterCoverLightSensorMinigame = 0;
-    static int counterSliderMinigame = 0;
-    static int counterVolumeButtonMinigame = 0;
-    static int counterDrawingMinigame = 0;
+    public static int counterImageButtonMinigame = 0;
+    public static int counterColorButtonMinigame = 0;
+    public static int counterShakePhoneMinigame = 0;
+    public static int counterTextBasedMinigame = 0;
+    public static int counterPlacePhoneMinigame = 0;
+    public static int counterRightButtonsMinigame = 0;
+    public static int counterCoverLightSensorMinigame = 0;
+    public static int counterSliderMinigame = 0;
+    public static int counterVolumeButtonMinigame = 0;
+    public static int counterDrawingMinigame = 0;
 
     public static int getImageButtonMinigameCounter(){
         return counterImageButtonMinigame;
@@ -43,7 +43,7 @@ public class MinigameAchievementCounters {
         return counterDrawingMinigame;
     }
 
-    public static void resetCounter(){
+    public static void resetCounter() {
         counterImageButtonMinigame = 0;
         counterColorButtonMinigame = 0;
         counterShakePhoneMinigame = 0;

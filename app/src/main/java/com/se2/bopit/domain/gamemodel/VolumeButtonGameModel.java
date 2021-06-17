@@ -1,4 +1,7 @@
-package com.se2.bopit.domain;
+package com.se2.bopit.domain.gamemodel;
+
+import com.se2.bopit.domain.VolumeButton;
+import com.se2.bopit.domain.responsemodel.VolumeButtonModel;
 
 import java.util.Arrays;
 import java.util.Collections;

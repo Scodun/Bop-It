@@ -10,8 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.se2.bopit.R;
-import com.se2.bopit.domain.GameModel;
-import com.se2.bopit.domain.sliderminigame.SliderGameModel;
+import com.se2.bopit.domain.gamemodel.GameModel;
+import com.se2.bopit.domain.gamemodel.SliderGameModel;
 import com.se2.bopit.ui.SliderMinigameFragment;
 
 public class SliderMinigame extends SliderMinigameFragment {

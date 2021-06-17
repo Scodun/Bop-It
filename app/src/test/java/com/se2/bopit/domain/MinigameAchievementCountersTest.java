@@ -1,10 +1,11 @@
 package com.se2.bopit.domain;
 
-import com.se2.bopit.data.SinglePlayerGameEngineDataProvider;
+import com.se2.bopit.domain.data.SinglePlayerGameEngineDataProvider;
+import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.mock.MiniGameMock;
-import com.se2.bopit.domain.providers.MiniGamesProvider;
-import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
+import com.se2.bopit.domain.interfaces.MiniGamesProvider;
+import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
 import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
 import com.se2.bopit.ui.games.DrawingMinigame;
