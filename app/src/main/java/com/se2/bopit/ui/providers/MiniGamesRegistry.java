@@ -4,11 +4,8 @@ import android.content.Context;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.util.Log;
-
 import androidx.annotation.RequiresApi;
-
 import com.google.gson.Gson;
-import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.GameRoundModel;
 import com.se2.bopit.domain.GameRuleItemModel;
 import com.se2.bopit.domain.GameRules;
@@ -19,11 +16,7 @@ import com.se2.bopit.exception.GameCreationException;
 import com.se2.bopit.ui.games.*;
 
 import java.lang.reflect.Constructor;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 
 public class MiniGamesRegistry implements MiniGamesProvider {
     static final String TAG = MiniGamesRegistry.class.getSimpleName();
@@ -51,16 +44,16 @@ public class MiniGamesRegistry implements MiniGamesProvider {
 
     public final GameRules gameRules;
 
+    GameRuleItemModel lastGameType;
+
     protected MiniGamesRegistry(GameRules gameRules) {
         this.gameRules = gameRules;
         Log.d(TAG, "MiniGamesRegistry created");
     }
 
     public static MiniGamesRegistry getInstance() {
-        if (instance == null) {
-            instance = new MiniGamesRegistry(
-                    new GameRules(GAME_TYPES));
-        }
+        if (instance == null)
+            instance = new MiniGamesRegistry(new GameRules(GAME_TYPES));
         return instance;
     }
 
@@ -73,26 +66,25 @@ public class MiniGamesRegistry implements MiniGamesProvider {
 
         for (Class<?> type : GAME_TYPES) {
             RequireSensor requireSensor = type.getAnnotation(RequireSensor.class);
-            if (requireSensor != null) {
-                int sensorType = requireSensor.value();
-                boolean available = availableSensorTypes.computeIfAbsent(sensorType,
-                        s -> !sensorManager.getSensorList(s).isEmpty());
-                if (!available) {
-                    gameRules.disablePermanently(type);
-                    Log.d(TAG, "Sensor " + sensorType
-                            + " is not available => disabling game type " + type.getSimpleName());
-                }
+            if (requireSensor == null)
+                return;
+
+            int sensorType = requireSensor.value();
+            boolean available = availableSensorTypes.computeIfAbsent(sensorType,
+                    s -> !sensorManager.getSensorList(s).isEmpty());
+            if (!available) {
+                gameRules.disablePermanently(type);
+                Log.d(TAG, "Sensor " + sensorType
+                        + " is not available => disabling game type " + type.getSimpleName());
             }
         }
     }
-
-    GameRuleItemModel lastGameType;
 
     @Override
     public MiniGame createRandomMiniGame() {
         List<GameRuleItemModel> items = gameRules.getEnabledItems();
         int itemsSize = items.size();
-        boolean avoidRepeating = gameRules.avoidRepeatingGameTypes && itemsSize > 2;
+        boolean avoidRepeating = gameRules.avoidRepeatingGameTypes && itemsSize > 1;
 
         if (itemsSize == 0) {
             // ignore invalid settings
@@ -114,30 +106,26 @@ public class MiniGamesRegistry implements MiniGamesProvider {
     public MiniGame createMiniGame(GameRoundModel round) {
         try {
             Class<?> cls = Class.forName("com.se2.bopit.ui.games." + round.gameType);
-            Object model;
-            if(round.modelType != null && round.modelJson != null) {
+            Object model = null;
+            if (round.modelType != null && round.modelJson != null) {
                 Class<?> modelType = Class.forName("com.se2.bopit.domain." + round.modelType);
                 Gson gson = new Gson();
                 model = gson.fromJson(round.modelJson, modelType);
-            } else {
-                model = null;
             }
 
             Constructor<?> constructor = null;
-            if(model != null) {
+            if (model != null) {
+                Object finalModel = model;
                 constructor = Arrays.stream(cls.getConstructors())
                         .filter(c -> c.getParameterTypes().length == 1
-                                && c.getParameterTypes()[0].isInstance(model))
+                                && c.getParameterTypes()[0].isInstance(finalModel))
                         .findFirst().orElse(null);
             }
-            if(constructor != null) {
+            if (constructor != null)
                 return (MiniGame) constructor.newInstance(model);
-            }
 
             // fallback with drawback - games may be not the same!!!
-            return (MiniGame) cls
-                    .getDeclaredConstructor()
-                    .newInstance();
+            return (MiniGame) cls.getDeclaredConstructor().newInstance();
         } catch (Exception ex) {
             String msg = "Error creating minigame from model: " + round.gameType;
             Log.e(TAG, msg, ex);

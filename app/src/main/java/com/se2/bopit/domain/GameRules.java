@@ -13,7 +13,7 @@ public class GameRules {
     final Class<?>[] gameTypes;
     final Map<Class<?>, GameRuleItemModel> gameTypeModels;
 
-    public boolean avoidRepeatingGameTypes;
+    public boolean avoidRepeatingGameTypes = true;
 
     public GameRules(Class<?>... gameTypes) {
         this.gameTypes = gameTypes;

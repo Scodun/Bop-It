@@ -6,10 +6,8 @@ import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.appcompat.widget.Toolbar;
-
 import com.se2.bopit.R;
 import com.se2.bopit.domain.GameRuleItemModel;
 import com.se2.bopit.domain.GameRules;
@@ -42,8 +40,9 @@ public class CustomizeGameRulesActivity extends BaseActivity {
         toolbar = findViewById(R.id.toolbar_game_rules);
 
         switchAvoidRepeatingTypes = findViewById(R.id.switch_avoid_repeating_game);
-        switchAvoidRepeatingTypes.setOnClickListener(
-                v -> model.avoidRepeatingGameTypes = v.isSelected());
+        switchAvoidRepeatingTypes.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> model.avoidRepeatingGameTypes = isChecked
+        );
 
         LinearLayout rulesLayout = findViewById(R.id.rules_layout);
 
