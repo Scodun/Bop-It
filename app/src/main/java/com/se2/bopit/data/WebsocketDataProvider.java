@@ -6,14 +6,12 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
-import com.google.android.gms.nearby.Nearby;
-import com.google.android.gms.nearby.connection.Payload;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.se2.bopit.data.websocket.IncomingMessage;
 import com.se2.bopit.data.websocket.OutgoingMessage;
 import com.se2.bopit.domain.GameRoundModel;
-import com.se2.bopit.domain.ResponseModel;
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 import com.se2.bopit.domain.data.DataProviderStrategy;
 import com.se2.bopit.domain.interfaces.NetworkContextListener;
 import com.se2.bopit.domain.interfaces.NetworkGameListener;
@@ -21,8 +19,6 @@ import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.NearbyPayload;
 import com.se2.bopit.domain.models.ReadyMessage;
 import com.se2.bopit.domain.models.User;
-
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -60,14 +56,12 @@ public class WebsocketDataProvider extends DataProviderStrategy {
     WebSocketConnection connection;
 
     public WebsocketDataProvider(Context context, NetworkLobbyListener networkLobbyListener, String username) {
-//        this.context = context;
         this.lobbyListener = networkLobbyListener;
         this.username = username;
         Log.d(TAG, "created for username: " + username);
     }
 
     public WebsocketDataProvider(Context context, NetworkGameListener networkGameListener, String username) {
-//        this.context = context;
         this.gameListener = networkGameListener;
         this.username = username;
     }
