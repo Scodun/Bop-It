@@ -8,13 +8,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.games.Games;
 import com.se2.bopit.R;
-
-import java.util.Objects;
-
 import info.hoang8f.widget.FButton;
 
     public class MinigameAchievementsActivity extends BaseActivity implements SharedPreferences.OnSharedPreferenceChangeListener{

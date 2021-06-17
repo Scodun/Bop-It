@@ -1,11 +1,9 @@
 package com.se2.bopit.ui.helpers;
 
-import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.Transformation;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 

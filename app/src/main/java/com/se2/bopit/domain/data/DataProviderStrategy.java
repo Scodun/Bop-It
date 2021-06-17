@@ -1,6 +1,6 @@
 package com.se2.bopit.domain.data;
 
-import com.se2.bopit.domain.GameEngine;
+import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.engine.GameEngineServer;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.NetworkContextListener;

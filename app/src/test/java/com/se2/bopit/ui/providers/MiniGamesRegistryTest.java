@@ -3,13 +3,11 @@ package com.se2.bopit.ui.providers;
 import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
-
 import com.se2.bopit.domain.GameRuleItemModel;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.exception.GameCreationException;
 import com.se2.bopit.ui.ButtonMiniGameFragment;
 import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,15 +17,9 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.*;
 
 public class MiniGamesRegistryTest {
 

@@ -11,7 +11,7 @@ import com.se2.bopit.domain.GameRuleItemModel;
 import com.se2.bopit.domain.GameRules;
 import com.se2.bopit.domain.annotations.RequireSensor;
 import com.se2.bopit.domain.interfaces.MiniGame;
-import com.se2.bopit.domain.providers.MiniGamesProvider;
+import com.se2.bopit.domain.interfaces.MiniGamesProvider;
 import com.se2.bopit.exception.GameCreationException;
 import com.se2.bopit.ui.games.*;
 
@@ -108,7 +108,7 @@ public class MiniGamesRegistry implements MiniGamesProvider {
             Class<?> cls = Class.forName("com.se2.bopit.ui.games." + round.gameType);
             Object model = null;
             if (round.modelType != null && round.modelJson != null) {
-                Class<?> modelType = Class.forName("com.se2.bopit.domain." + round.modelType);
+                Class<?> modelType = Class.forName("com.se2.bopit.domain.gamemodel." + round.modelType);
                 Gson gson = new Gson();
                 model = gson.fromJson(round.modelJson, modelType);
             }

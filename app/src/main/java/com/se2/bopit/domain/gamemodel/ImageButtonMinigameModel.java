@@ -1,5 +1,8 @@
-package com.se2.bopit.domain;
+package com.se2.bopit.domain.gamemodel;
 
+
+import com.se2.bopit.domain.ButtonImage;
+import com.se2.bopit.domain.responsemodel.ImageButtonModel;
 
 import java.util.Arrays;
 import java.util.Collections;

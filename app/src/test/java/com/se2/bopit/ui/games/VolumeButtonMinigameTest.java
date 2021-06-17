@@ -1,18 +1,14 @@
 package com.se2.bopit.ui.games;
 
 import androidx.fragment.app.Fragment;
-
 import com.se2.bopit.domain.VolumeButton;
-import com.se2.bopit.domain.VolumeButtonGameModel;
+import com.se2.bopit.domain.gamemodel.VolumeButtonGameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertSame;
+import static org.junit.Assert.*;
 
 public class VolumeButtonMinigameTest extends Fragment {
 

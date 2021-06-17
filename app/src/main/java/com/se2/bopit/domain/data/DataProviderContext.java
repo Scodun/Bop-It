@@ -1,7 +1,6 @@
 package com.se2.bopit.domain.data;
 
 import android.util.Log;
-
 import com.se2.bopit.domain.interfaces.NetworkContextListener;
 import com.se2.bopit.domain.interfaces.NetworkGameListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
@@ -9,7 +8,6 @@ import com.se2.bopit.domain.models.User;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class DataProviderContext {
     static final String TAG = DataProviderContext.class.getSimpleName();

@@ -8,11 +8,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import com.se2.bopit.R;
-import com.se2.bopit.data.NearbyDataProvider;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.data.DataProviderContext;
+import com.se2.bopit.domain.data.NearbyDataProvider;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.ui.helpers.CustomToast;

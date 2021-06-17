@@ -1,12 +1,9 @@
 package com.se2.bopit.domain;
 
 import android.os.CountDownTimer;
-import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
-import com.se2.bopit.domain.interfaces.GameEngineListener;
-import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.domain.engine.GameEngine;
+import com.se2.bopit.domain.interfaces.*;
 import com.se2.bopit.domain.mock.MiniGameMock;
-import com.se2.bopit.domain.providers.MiniGamesProvider;
-import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
 import com.se2.bopit.ui.games.*;
 import org.junit.After;
 import org.junit.Before;

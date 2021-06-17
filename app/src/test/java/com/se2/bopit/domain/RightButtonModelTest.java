@@ -1,5 +1,6 @@
 package com.se2.bopit.domain;
 
+import com.se2.bopit.domain.responsemodel.RightButtonModel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

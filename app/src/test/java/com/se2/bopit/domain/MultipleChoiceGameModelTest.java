@@ -1,7 +1,9 @@
 package com.se2.bopit.domain;
 
+import com.se2.bopit.domain.gamemodel.ButtonMiniGameModel;
+import com.se2.bopit.domain.gamemodel.MultipleChoiceGameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
-
+import com.se2.bopit.domain.responsemodel.ButtonModel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,12 +13,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 public class MultipleChoiceGameModelTest {
 

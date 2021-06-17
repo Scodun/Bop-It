@@ -1,30 +1,18 @@
 package com.se2.bopit.domain;
 
-import com.se2.bopit.data.SinglePlayerGameEngineDataProvider;
+import com.se2.bopit.domain.data.SinglePlayerGameEngineDataProvider;
+import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
+import com.se2.bopit.domain.interfaces.MiniGamesProvider;
+import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
 import com.se2.bopit.domain.mock.MiniGameMock;
-import com.se2.bopit.domain.providers.MiniGamesProvider;
-import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
-import com.se2.bopit.ui.games.ColorButtonMiniGame;
-import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
-import com.se2.bopit.ui.games.DrawingMinigame;
-import com.se2.bopit.ui.games.ImageButtonMinigame;
-import com.se2.bopit.ui.games.PlacePhoneMiniGame;
-import com.se2.bopit.ui.games.RightButtonCombination;
-import com.se2.bopit.ui.games.ShakePhoneMinigame;
-import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
-import com.se2.bopit.ui.games.SliderMinigame;
-import com.se2.bopit.ui.games.VolumeButtonMinigame;
-import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
-
+import com.se2.bopit.ui.games.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.when;
+import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.*;
 
 public class MinigameAchievementCountersTest {
 

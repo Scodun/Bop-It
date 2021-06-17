@@ -1,26 +1,14 @@
-package com.se2.bopit.domain;
+package com.se2.bopit.domain.engine;
 
 import android.os.CountDownTimer;
 import android.util.Log;
-
-import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
-import com.se2.bopit.domain.interfaces.GameEngineListener;
-import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.domain.GameRoundModel;
+import com.se2.bopit.domain.MinigameAchievementCounters;
+import com.se2.bopit.domain.interfaces.*;
 import com.se2.bopit.domain.models.User;
-import com.se2.bopit.domain.providers.MiniGamesProvider;
-import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 import com.se2.bopit.ui.DifficultyActivity;
-import com.se2.bopit.ui.games.ColorButtonMiniGame;
-import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
-import com.se2.bopit.ui.games.DrawingMinigame;
-import com.se2.bopit.ui.games.ImageButtonMinigame;
-import com.se2.bopit.ui.games.PlacePhoneMiniGame;
-import com.se2.bopit.ui.games.RightButtonCombination;
-import com.se2.bopit.ui.games.ShakePhoneMinigame;
-import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
-import com.se2.bopit.ui.games.SliderMinigame;
-import com.se2.bopit.ui.games.VolumeButtonMinigame;
-import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
+import com.se2.bopit.ui.games.*;
 
 /**
  * GameEngine Client used by UI on each device.
@@ -33,9 +21,9 @@ public class GameEngine {
     public GameEngineDataProvider dataProvider;
     public String userId;
 
-    int score = 0;
-    boolean isOverTime = false;
-    boolean miniGameLost = false;
+    public int score = 0;
+    public boolean isOverTime = false;
+    public boolean miniGameLost = false;
     boolean lifecycleCancel = false;
     CountDownTimer timer;
     public boolean isMyTurn;
@@ -142,7 +130,8 @@ public class GameEngine {
         Log.d(TAG, "stopCurrentGame");
         if (!lifecycleCancel) {
             lifecycleCancel = true;
-            timer.cancel();
+            if( timer != null)
+                timer.cancel();
             dataProvider.stopCurrentGame(userId);
             listener.onGameEnd(score);
         }

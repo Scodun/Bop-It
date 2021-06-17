@@ -4,15 +4,14 @@ import android.os.Build;
 import android.util.Log;
 import androidx.annotation.RequiresApi;
 import com.google.gson.Gson;
-
-import com.se2.bopit.domain.GameModel;
 import com.se2.bopit.domain.GameRoundModel;
-import com.se2.bopit.domain.ResponseModel;
+import com.se2.bopit.domain.gamemodel.GameModel;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.domain.interfaces.MiniGamesProvider;
+import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
 import com.se2.bopit.domain.models.User;
-import com.se2.bopit.domain.providers.MiniGamesProvider;
-import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -82,7 +81,9 @@ public class GameEngineServer {
     public void startNewGame() {
         Log.d(TAG, "startNewGame round #" + round + "...");
         // GameRoundModel lastRound = currentRound;
+
         nextPlayer = selectNextRoundUser();
+
         if (nextPlayer == null) {
             Log.d(TAG, "No active users left -> game over after " + round + " round");
             dataProvider.notifyGameOver();
@@ -141,19 +142,19 @@ public class GameEngineServer {
 
     public void sendGameResult(String userId, boolean result, ResponseModel responseModel) {
         User user = users.get(userId);
-        if (result) {
-            Log.d(TAG, "User " + userId + " won the round #" + currentRound.round);
-            user.incrementScore();
-        } else {
-            Log.d(TAG, "User " + userId + " lost the round #" + currentRound.round);
-            user.loseLife();
-        }
+            if (result) {
+                Log.d(TAG, "User " + userId + " won the round #" + (currentRound!=null?currentRound.round:"null"));
+                user.incrementScore();
+            } else {
+                Log.d(TAG, "User " + userId + " lost the round #" + (currentRound!=null?currentRound.round:"null"));
+                user.loseLife();
+            }
         dataProvider.notifyGameResult(result, responseModel, user);
     }
 
     public void stopCurrentGame(String userId) {
         Log.d(TAG, "Stop current game: " + userId);
-        if (users.remove(userId) != null)
+        if (users.remove(userId) != null && currentRound != null)
             Log.d(TAG, "User " + userId + " left after round #" + currentRound.round);
     }
 

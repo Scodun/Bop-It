@@ -1,4 +1,6 @@
-package com.se2.bopit.domain;
+package com.se2.bopit.domain.responsemodel;
+
+import com.se2.bopit.domain.ButtonImage;
 
 public class ImageButtonModel extends ResponseModel {
 

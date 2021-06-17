@@ -1,16 +1,14 @@
-package com.se2.bopit.data;
+package com.se2.bopit.domain.data;
 
 import android.os.Build;
 import android.util.Log;
-
 import androidx.annotation.RequiresApi;
-
-import com.se2.bopit.domain.GameEngine;
 import com.se2.bopit.domain.GameRoundModel;
-import com.se2.bopit.domain.ResponseModel;
+import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.engine.GameEngineServer;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.models.User;
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 
 public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvider {
 

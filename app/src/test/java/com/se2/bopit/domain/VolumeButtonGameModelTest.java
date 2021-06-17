@@ -1,5 +1,7 @@
 package com.se2.bopit.domain;
 
+import com.se2.bopit.domain.gamemodel.VolumeButtonGameModel;
+import com.se2.bopit.domain.responsemodel.VolumeButtonModel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -7,9 +9,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class VolumeButtonGameModelTest {
 

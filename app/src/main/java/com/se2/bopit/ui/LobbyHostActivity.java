@@ -6,16 +6,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-
 import androidx.annotation.RequiresApi;
-
 import com.se2.bopit.R;
-import com.se2.bopit.data.NearbyDataProvider;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.data.DataProviderContext;
+import com.se2.bopit.domain.data.NearbyDataProvider;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.ui.helpers.CustomToast;
@@ -27,7 +24,6 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 
 public class LobbyHostActivity extends BaseActivity {

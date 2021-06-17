@@ -2,10 +2,10 @@ package com.se2.bopit.domain;
 
 import android.content.Context;
 import android.hardware.Sensor;
-
+import com.se2.bopit.domain.gamemodel.SensorMiniGameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
-import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
-
+import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
+import com.se2.bopit.domain.responsemodel.SensorResponseModel;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,10 +14,7 @@ import java.util.LinkedList;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.reset;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.*;
 
 public class SensorMiniGameModelTest {
 
@@ -101,7 +98,7 @@ class TestSensorMiniGameModel extends SensorMiniGameModel {
     }
 
     @Override
-    protected boolean checkResponse(SensorResponseModel response) {
+    public boolean checkResponse(SensorResponseModel response) {
         history.add(response);
         return response.values[0] < expectedResponse.values[0];
     }

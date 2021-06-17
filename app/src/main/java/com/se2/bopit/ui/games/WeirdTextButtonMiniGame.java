@@ -1,9 +1,9 @@
 package com.se2.bopit.ui.games;
 
-import com.se2.bopit.domain.ButtonMiniGameModel;
-import com.se2.bopit.domain.ButtonModel;
 import com.se2.bopit.domain.Difficulty;
 import com.se2.bopit.domain.annotations.MiniGameType;
+import com.se2.bopit.domain.gamemodel.ButtonMiniGameModel;
+import com.se2.bopit.domain.responsemodel.ButtonModel;
 import com.se2.bopit.ui.ButtonMiniGameFragment;
 import com.se2.bopit.ui.DifficultyActivity;
 

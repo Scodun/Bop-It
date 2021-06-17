@@ -5,21 +5,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.se2.bopit.R;
 import com.se2.bopit.domain.models.User;
-import com.se2.bopit.ui.LobbyHostActivity;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class UserAdapter extends ArrayAdapter<User> {
     private static final String TAG = "UserAdapter";

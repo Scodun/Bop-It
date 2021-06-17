@@ -1,9 +1,8 @@
 package com.se2.bopit.domain.interfaces;
 
 import com.se2.bopit.domain.Difficulty;
-import com.se2.bopit.domain.GameModel;
-import com.se2.bopit.domain.ResponseModel;
-import com.se2.bopit.domain.providers.PlatformFeaturesProvider;
+import com.se2.bopit.domain.gamemodel.GameModel;
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 import com.se2.bopit.ui.DifficultyActivity;
 
 public interface MiniGame {

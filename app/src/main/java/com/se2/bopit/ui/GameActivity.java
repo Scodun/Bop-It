@@ -6,22 +6,22 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import com.se2.bopit.R;
-import com.se2.bopit.domain.GameEngine;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.SoundEffects;
+import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
-import com.se2.bopit.ui.helpers.WaveAnimator;
 import com.se2.bopit.domain.models.User;
+import com.se2.bopit.ui.helpers.WaveAnimator;
 import com.se2.bopit.ui.providers.GameEngineProvider;
 
 

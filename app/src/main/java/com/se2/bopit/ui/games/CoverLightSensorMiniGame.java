@@ -9,10 +9,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.se2.bopit.R;
-import com.se2.bopit.domain.CoverLightSensorMiniGameModel;
 import com.se2.bopit.domain.Difficulty;
 import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.annotations.RequireSensor;
+import com.se2.bopit.domain.gamemodel.CoverLightSensorMiniGameModel;
 import com.se2.bopit.ui.DifficultyActivity;
 import com.se2.bopit.ui.SensorMiniGameFragment;
 

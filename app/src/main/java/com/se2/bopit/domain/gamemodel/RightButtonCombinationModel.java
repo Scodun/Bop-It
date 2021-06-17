@@ -1,4 +1,7 @@
-package com.se2.bopit.domain;
+package com.se2.bopit.domain.gamemodel;
+
+import com.se2.bopit.domain.RightButton;
+import com.se2.bopit.domain.responsemodel.RightButtonModel;
 
 import java.util.ArrayList;
 import java.util.Arrays;

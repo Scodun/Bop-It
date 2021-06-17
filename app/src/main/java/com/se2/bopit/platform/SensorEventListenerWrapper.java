@@ -4,7 +4,6 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.util.Log;
-
 import com.se2.bopit.domain.SensorEventModel;
 import com.se2.bopit.domain.interfaces.SensorEventModelListener;
 
