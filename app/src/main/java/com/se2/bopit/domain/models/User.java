@@ -54,7 +54,6 @@ public class User implements Serializable {
         return score;
     }
 
-
     public boolean hasCheated() {
         return cheated;
     }
