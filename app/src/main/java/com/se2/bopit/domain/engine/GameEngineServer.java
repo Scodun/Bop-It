@@ -37,7 +37,6 @@ public class GameEngineServer {
     GameRoundModel currentRound;
     GameModel<? extends ResponseModel> currentGame;
 
-    boolean isOverTime = false;
     boolean miniGameLost = false;
     boolean lifecycleCancel = false;
 
@@ -92,14 +91,14 @@ public class GameEngineServer {
 
         currentRound = new GameRoundModel();
         currentRound.round = round++; // start with round 1
-        //for cheatfunction
+
+        //for cheat function
         nextPlayer.setCheated(false);
         currentRound.currentUserId = nextPlayer.getId();
 
-        long time = (long) (Math.exp(-nextPlayer.getScore() * 0.08 + 7) + 2000);
-        currentRound.time = time;
+        currentRound.time = (long) (Math.exp(7 - nextPlayer.getScore() * 0.08 ) + 2000);
 
-        MiniGame minigame = getMiniGame();
+        MiniGame minigame = miniGamesProvider.createRandomMiniGame();;
         currentRound.gameType = minigame.getClass().getSimpleName();
         currentGame = minigame.getModel();
 
@@ -108,7 +107,7 @@ public class GameEngineServer {
             currentRound.modelJson = gson.toJson(currentGame);
         }
 
-        //for cheatfunction
+        //for cheat function
         lastPlayer = nextPlayer;
 
         Log.d(TAG, "sending currentRound to data provider: " + currentRound);
@@ -133,40 +132,10 @@ public class GameEngineServer {
         return pool.get(0);
     }
 
-    private MiniGame getMiniGame() {
-        return miniGamesProvider.createRandomMiniGame();
-    }
-
-//    /**
-//     * @param time - countdown time in ms
-//     *             Starts a new countdown
-//     *             Calls the MainActivity onTimeTick, onFinish listener to display the time
-//     */
-//    private CountDownTimer startCountDown(long time) {
-//        return platformFeaturesProvider.createCountDownTimer(
-//                time, 5, this::onTick, this::onFinish)
-//                .start();
-//    }
-
-//    public void onTick(long millisUntilFinished) {
-//        // unused
-//    }
-
-//    public void onFinish() {
-//        isOverTime = true;
-////        if (listener != null)
-////            listener.onGameEnd(score);
-//        Log.d(TAG, "timeout");
-//        dataProvider.notifyGameResult(false, null);
-//    }
-
-
     public void stopCurrentGame() {
         if (!lifecycleCancel && !miniGameLost) {
             lifecycleCancel = true;
-//            timer.cancel();
             miniGameLost = true;
-            //listener.onGameEnd(score);
         }
     }
 
@@ -204,26 +173,23 @@ public class GameEngineServer {
     }
 
     public void detectCheating(String reporterUserId) {
-            if (nextPlayer.hasCheated()) {
-                nextPlayer.loseAllLifes();
-                users.remove(nextPlayer.getId());
-                usersReady.remove(nextPlayer.getId());
-                dataProvider.cheaterDetected(nextPlayer.getId());
-            } else {
-                User reporter = users.get(reporterUserId);
-                reporter.loseLife();
-                if (reporter.getLife() == 0){
-                    usersReady.remove(reporterUserId);
-                    users.remove(reporterUserId);
-                    //TODO send to all cheating detection failed player lost all lifes
-                    //TODO stop game for this player
-                }
+        if (nextPlayer.hasCheated()) {
+            nextPlayer.loseAllLives();
+            users.remove(nextPlayer.getId());
+            usersReady.remove(nextPlayer.getId());
+            dataProvider.cheaterDetected(nextPlayer.getId());
+        } else {
+            User reporter = users.get(reporterUserId);
+            reporter.loseLife();
+            if (reporter.getLives() == 0){
+                usersReady.remove(reporterUserId);
+                users.remove(reporterUserId);
+                //TODO send to all cheating detection failed player lost all lifes
+                //TODO stop game for this player
             }
+        }
 
-            if(users.size()<=1){
-                dataProvider.notifyGameOver();
-            }
+        if (users.size() <= 1)
+            dataProvider.notifyGameOver();
     }
-
-
 }

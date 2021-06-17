@@ -10,7 +10,6 @@ public class User implements Serializable {
     private int score = 0;
 
     private boolean cheated = false;
-    private int life = 3;
     private int currentRound = 0;
 
     private int lives;
@@ -19,6 +18,7 @@ public class User implements Serializable {
     public User(String id, String name) {
         this(id, name, false);
     }
+
     public User(String id, String name, boolean ready) {
         this.id = id;
         this.name = name;
@@ -34,8 +34,8 @@ public class User implements Serializable {
         lives--;
     }
 
-    public void loseAllLifes() {
-        lives=0;
+    public void loseAllLives() {
+        lives = 0;
     }
 
     public String getId() {
@@ -63,14 +63,6 @@ public class User implements Serializable {
 
     public void setCheated(boolean cheated) {
         this.cheated = cheated;
-    }
-
-    public void looseLife() {
-        life--;
-    }
-
-    public int getLife() {
-        return life;
     }
 
     public void setCurrentRound(int round){
