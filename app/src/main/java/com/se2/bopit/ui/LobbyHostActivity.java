@@ -96,6 +96,10 @@ public class LobbyHostActivity extends BaseActivity {
 
         @RequiresApi(api = Build.VERSION_CODES.N)
         @Override
+        /**
+         * @param users  - list of current users
+         *               this param needs to be an ArrayList, do not change
+         */
         public void onUserLobbyChange(ArrayList<User> users) {
             if (users != null) {
                 userItems = users;
@@ -122,6 +126,10 @@ public class LobbyHostActivity extends BaseActivity {
         }
 
         @Override
+        /**
+         *  This needs to be empty, the host does not receive the
+         *  Ready Message, he sends it.
+         */
         public void onReadyMessageReceived() {
 
         }
