@@ -1,4 +1,4 @@
-package com.se2.bopit.data;
+package com.se2.bopit.domain.data;
 
 import android.content.Context;
 import android.os.Build;
@@ -10,8 +10,7 @@ import com.google.android.gms.nearby.connection.*;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.se2.bopit.domain.GameRoundModel;
-import com.se2.bopit.domain.ResponseModel;
-import com.se2.bopit.domain.data.DataProviderStrategy;
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 import com.se2.bopit.domain.interfaces.NetworkContextListener;
 import com.se2.bopit.domain.interfaces.NetworkGameListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;

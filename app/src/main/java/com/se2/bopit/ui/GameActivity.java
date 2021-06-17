@@ -15,7 +15,7 @@ import android.widget.TextView;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import com.se2.bopit.R;
-import com.se2.bopit.domain.GameEngine;
+import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.SoundEffects;
 import com.se2.bopit.domain.interfaces.GameEngineListener;

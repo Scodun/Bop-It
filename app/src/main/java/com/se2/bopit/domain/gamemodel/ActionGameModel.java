@@ -1,4 +1,6 @@
-package com.se2.bopit.domain;
+package com.se2.bopit.domain.gamemodel;
+
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 
 public abstract class ActionGameModel<R extends ResponseModel> extends GameModel<R> {
     protected R expectedResponse;

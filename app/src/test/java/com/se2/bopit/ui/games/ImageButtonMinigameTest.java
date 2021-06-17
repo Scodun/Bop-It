@@ -4,8 +4,8 @@ import android.util.Log;
 
 import com.se2.bopit.R;
 import com.se2.bopit.domain.ButtonImage;
-import com.se2.bopit.domain.ImageButtonMinigameModel;
-import com.se2.bopit.domain.ImageButtonModel;
+import com.se2.bopit.domain.gamemodel.ImageButtonMinigameModel;
+import com.se2.bopit.domain.responsemodel.ImageButtonModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 
 import org.junit.After;
