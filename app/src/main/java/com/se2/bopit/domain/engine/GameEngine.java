@@ -8,9 +8,9 @@ import com.se2.bopit.domain.MinigameAchievementCounters;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
-import com.se2.bopit.domain.models.User;
 import com.se2.bopit.domain.interfaces.MiniGamesProvider;
 import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
+import com.se2.bopit.domain.models.User;
 import com.se2.bopit.domain.responsemodel.ResponseModel;
 import com.se2.bopit.ui.DifficultyActivity;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
@@ -114,100 +114,88 @@ public class GameEngine {
      * @param miniGame - the Minigame which Time should be set
      * @return - a specific Time to solve the Minigame
      */
-    public long getTimeForMinigame(MiniGame miniGame){
+    public long getTimeForMinigame(MiniGame miniGame) {
             /*
             IMAGEBUTTONMINIGAME
             SIMPLETEXTBUTTONMINIGAME
             WEIRDBUTTONMINIGAME
             COLORBUTTONMINIGAME
              */
-            if (miniGame.getClass().equals(ImageButtonMinigame.class) ||
-                    miniGame.getClass().equals(SimpleTextButtonMiniGame.class) ||
-                    miniGame.getClass().equals(WeirdTextButtonMiniGame.class) ||
-                    miniGame.getClass().equals(ColorButtonMiniGame.class)) {
-                if(DifficultyActivity.difficulty.equals(EASY)) {
-                    return (long) (Math.exp(-this.score * 0.07 + 6.9) + 1600);
-                }
-                else if(DifficultyActivity.difficulty.equals(MEDIUM)) {
-                    return (long) (Math.exp(-this.score * 0.07 + 6.9) + 1200);
-                }
-                else{
-                    return (long) (Math.exp(-this.score * 0.07 + 6.9) + 800);
-                }
+        if (miniGame.getClass().equals(ImageButtonMinigame.class) ||
+                miniGame.getClass().equals(SimpleTextButtonMiniGame.class) ||
+                miniGame.getClass().equals(WeirdTextButtonMiniGame.class) ||
+                miniGame.getClass().equals(ColorButtonMiniGame.class)) {
+            if (DifficultyActivity.difficulty.equals(EASY)) {
+                return (long) (Math.exp(-this.score * 0.07 + 6.9) + 1600);
+            } else if (DifficultyActivity.difficulty.equals(MEDIUM)) {
+                return (long) (Math.exp(-this.score * 0.07 + 6.9) + 1200);
+            } else {
+                return (long) (Math.exp(-this.score * 0.07 + 6.9) + 800);
             }
+        }
             /*
             COVERLIGHTSENSORMINIGAME
              */
-            else if (miniGame.getClass().equals(CoverLightSensorMiniGame.class)) {
-                if(DifficultyActivity.difficulty.equals(EASY)) {
-                    return (long) (Math.exp(-this.score * 0.075 + 7) + 2000);
-                }
-                else if(DifficultyActivity.difficulty.equals(MEDIUM)) {
-                    return (long) (Math.exp(-this.score * 0.075 + 7) + 1500);
-                }
-                else{
-                    return (long) (Math.exp(-this.score * 0.075 + 7) + 1000);
-                }
+        else if (miniGame.getClass().equals(CoverLightSensorMiniGame.class)) {
+            if (DifficultyActivity.difficulty.equals(EASY)) {
+                return (long) (Math.exp(-this.score * 0.075 + 7) + 2000);
+            } else if (DifficultyActivity.difficulty.equals(MEDIUM)) {
+                return (long) (Math.exp(-this.score * 0.075 + 7) + 1500);
+            } else {
+                return (long) (Math.exp(-this.score * 0.075 + 7) + 1000);
             }
+        }
             /*
             DRAWINGMINIGAME
             PLACEPHONEMINIGAME
              */
-            else if (miniGame.getClass().equals(DrawingMinigame.class) ||
-                    miniGame.getClass().equals(PlacePhoneMiniGame.class)) {
+        else if (miniGame.getClass().equals(DrawingMinigame.class) ||
+                miniGame.getClass().equals(PlacePhoneMiniGame.class)) {
 
-                if(DifficultyActivity.difficulty.equals(EASY)) {
-                    return (long) (Math.exp(-this.score * 0.1 + 8) + 2000);
-                }
-                else if(DifficultyActivity.difficulty.equals(MEDIUM)) {
-                    return (long) (Math.exp(-this.score * 0.1 + 8) + 1500);
-                }
-                else{
-                    return (long) (Math.exp(-this.score * 0.1 + 8) + 1000);
-                }
+            if (DifficultyActivity.difficulty.equals(EASY)) {
+                return (long) (Math.exp(-this.score * 0.1 + 8) + 2000);
+            } else if (DifficultyActivity.difficulty.equals(MEDIUM)) {
+                return (long) (Math.exp(-this.score * 0.1 + 8) + 1500);
+            } else {
+                return (long) (Math.exp(-this.score * 0.1 + 8) + 1000);
             }
+        }
             /*
             RIGHTBUTTONCOMBINATION
              */
-            else if (miniGame.getClass().equals(RightButtonCombination.class)) {
-                if(DifficultyActivity.difficulty.equals(EASY)) {
-                    return (long) (Math.exp(-this.score * 0.07 + 7.5) + 1800);
+        else if (miniGame.getClass().equals(RightButtonCombination.class)) {
+            if (DifficultyActivity.difficulty.equals(EASY)) {
+                return (long) (Math.exp(-this.score * 0.07 + 7.5) + 1800);
 
-                }
-                else if(DifficultyActivity.difficulty.equals(MEDIUM)) {
-                    return (long) (Math.exp(-this.score * 0.07 + 7.5) + 1300);
-                }
-                else{
-                    return (long) (Math.exp(-this.score * 0.07 + 7.5) + 800);
-                }
+            } else if (DifficultyActivity.difficulty.equals(MEDIUM)) {
+                return (long) (Math.exp(-this.score * 0.07 + 7.5) + 1300);
+            } else {
+                return (long) (Math.exp(-this.score * 0.07 + 7.5) + 800);
             }
+        }
             /*
             SHAKEPHONEMINIGAME
              */
-            else if (miniGame.getClass().equals(ShakePhoneMinigame.class)) {
-                if(DifficultyActivity.difficulty.equals(EASY)) {
-                    return (long) (Math.exp(-this.score * 0.06 + 7.6) + 1400);
-                }
-                else if(DifficultyActivity.difficulty.equals(MEDIUM)) {
-                    return (long) (Math.exp(-this.score * 0.06 + 7.6) + 1000);
-                }
-                else{
-                    return (long) (Math.exp(-this.score * 0.06 + 7.6) + 600);
-                }
+        else if (miniGame.getClass().equals(ShakePhoneMinigame.class)) {
+            if (DifficultyActivity.difficulty.equals(EASY)) {
+                return (long) (Math.exp(-this.score * 0.06 + 7.6) + 1400);
+            } else if (DifficultyActivity.difficulty.equals(MEDIUM)) {
+                return (long) (Math.exp(-this.score * 0.06 + 7.6) + 1000);
+            } else {
+                return (long) (Math.exp(-this.score * 0.06 + 7.6) + 600);
+            }
             /*
             DEFAULT
             */
+        } else {
+            if (DifficultyActivity.difficulty.equals(EASY)) {
+                return (long) (Math.exp(-this.score * 0.08 + 7) + 3000);
+            } else if (DifficultyActivity.difficulty.equals(MEDIUM)) {
+                return (long) (Math.exp(-this.score * 0.08 + 7) + 2000);
             } else {
-                if(DifficultyActivity.difficulty.equals(EASY)) {
-                    return (long) (Math.exp(-this.score * 0.08 + 7) + 3000);
-                }
-                else if(DifficultyActivity.difficulty.equals(MEDIUM)) {
-                    return (long) (Math.exp(-this.score * 0.08 + 7) + 2000);
-                }
-                else{
-                    return (long) (Math.exp(-this.score * 0.08 + 7) + 1000);
-                }
+                return (long) (Math.exp(-this.score * 0.08 + 7) + 1000);
             }
+        }
     }
 
     /**
@@ -226,7 +214,7 @@ public class GameEngine {
         dataProvider.setClientCheated(userId);
     }
 
-    public void resumeCountDown(){
+    public void resumeCountDown() {
         timer = startCountDown(timeRemaining);
     }
 
@@ -251,50 +239,41 @@ public class GameEngine {
         Log.d(TAG, "stopCurrentGame");
         if (!lifecycleCancel) {
             lifecycleCancel = true;
-            if( timer != null)
+            if (timer != null)
                 timer.cancel();
             dataProvider.stopCurrentGame(userId);
             listener.onGameEnd(score);
         }
     }
 
-    public void setCounter(MiniGame minigame){
-        if(minigame.getClass().equals(ImageButtonMinigame.class)){
+    public void setCounter(MiniGame minigame) {
+        if (minigame.getClass().equals(ImageButtonMinigame.class)) {
             MinigameAchievementCounters.counterImageButtonMinigame++;
-        }
-        else if(minigame.getClass().equals(SimpleTextButtonMiniGame.class)||
-                minigame.getClass().equals(WeirdTextButtonMiniGame.class)){
+        } else if (minigame.getClass().equals(SimpleTextButtonMiniGame.class) ||
+                minigame.getClass().equals(WeirdTextButtonMiniGame.class)) {
             MinigameAchievementCounters.counterTextBasedMinigame++;
-        }
-        else if(minigame.getClass().equals(ShakePhoneMinigame.class)){
+        } else if (minigame.getClass().equals(ShakePhoneMinigame.class)) {
             MinigameAchievementCounters.counterShakePhoneMinigame++;
-        }
-        else if(minigame.getClass().equals(PlacePhoneMiniGame.class)){
+        } else if (minigame.getClass().equals(PlacePhoneMiniGame.class)) {
             MinigameAchievementCounters.counterPlacePhoneMinigame++;
-        }
-        else if(minigame.getClass().equals(CoverLightSensorMiniGame.class)){
+        } else if (minigame.getClass().equals(CoverLightSensorMiniGame.class)) {
             MinigameAchievementCounters.counterCoverLightSensorMinigame++;
-        }
-        else if(minigame.getClass().equals(ColorButtonMiniGame.class)){
+        } else if (minigame.getClass().equals(ColorButtonMiniGame.class)) {
             MinigameAchievementCounters.counterColorButtonMinigame++;
-        }
-        else if(minigame.getClass().equals(SliderMinigame.class)){
+        } else if (minigame.getClass().equals(SliderMinigame.class)) {
             MinigameAchievementCounters.counterSliderMinigame++;
-        }
-        else if(minigame.getClass().equals(DrawingMinigame.class)){
+        } else if (minigame.getClass().equals(DrawingMinigame.class)) {
             MinigameAchievementCounters.counterDrawingMinigame++;
-        }
-        else if(minigame.getClass().equals(VolumeButtonMinigame.class)){
+        } else if (minigame.getClass().equals(VolumeButtonMinigame.class)) {
             MinigameAchievementCounters.counterVolumeButtonMinigame++;
-        }
-        else if(minigame.getClass().equals(RightButtonCombination.class)){
+        } else if (minigame.getClass().equals(RightButtonCombination.class)) {
             MinigameAchievementCounters.counterRightButtonsMinigame++;
         }
     }
 
     public void notifyGameResult(boolean result, ResponseModel responseModel, User user) {
         timer.cancel();
-        if(userId.equals(user.getId()))
+        if (userId.equals(user.getId()))
             listener.onLifeUpdate(user.getLives());
         if (!isMyTurn) {
             // TODO
@@ -305,7 +284,7 @@ public class GameEngine {
     }
 
 
-    public void reportCheat(){
+    public void reportCheat() {
         dataProvider.detectCheating();
     }
 
@@ -318,7 +297,7 @@ public class GameEngine {
             dataProvider.disconnect();
         }
     }
-      
+
     public void loseMinigame() {
         dataProvider.sendGameResult(userId, false, null);
         miniGameLost = false;

@@ -2,9 +2,12 @@ package com.se2.bopit.domain;
 
 import android.content.Context;
 import android.widget.SeekBar;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
+
 import com.se2.bopit.domain.gamemodel.SliderGameModel;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

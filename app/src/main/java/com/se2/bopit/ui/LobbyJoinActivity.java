@@ -10,9 +10,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.se2.bopit.R;
-import com.se2.bopit.domain.data.NearbyDataProvider;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.data.DataProviderContext;
+import com.se2.bopit.domain.data.NearbyDataProvider;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.ui.helpers.CustomToast;
@@ -111,7 +111,7 @@ public class LobbyJoinActivity extends BaseActivity {
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    switch (which){
+                    switch (which) {
                         case DialogInterface.BUTTON_POSITIVE:
                             dataProvider.sendReadyAnswer(true, getIntent().getStringExtra("username"));
                             break;

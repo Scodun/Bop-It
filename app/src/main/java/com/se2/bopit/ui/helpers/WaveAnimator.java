@@ -1,6 +1,5 @@
 package com.se2.bopit.ui.helpers;
 
-import android.content.Context;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.Animation;
@@ -14,12 +13,12 @@ public class WaveAnimator {
     private View waveView;
     private AppCompatActivity activity;
 
-    public WaveAnimator(AppCompatActivity activity, View waveView){
+    public WaveAnimator(AppCompatActivity activity, View waveView) {
         this.waveView = waveView;
         this.activity = activity;
     }
 
-    public void animate(double time, boolean isBottom){
+    public void animate(double time, boolean isBottom) {
         Animation a = new Animation() {
             boolean isNextIteration = false;
 
@@ -33,7 +32,7 @@ public class WaveAnimator {
                 }
                 ConstraintLayout.LayoutParams newLayoutParams = (ConstraintLayout.LayoutParams) waveView.getLayoutParams();
 
-                if(isBottom)
+                if (isBottom)
                     newLayoutParams.bottomMargin = (int) (100 * interpolatedTime);
                 else
                     newLayoutParams.topMargin = (int) (100 * interpolatedTime);

@@ -2,7 +2,6 @@ package com.se2.bopit.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -61,7 +60,7 @@ public class GamemodeSelectActivity extends BaseActivity {
     private void initializeListeners() {
         singleplayerButton.setOnClickListener(v -> {
             startActivity(new Intent(this, DifficultyActivity.class)
-                          .putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER));
+                    .putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER));
         });
 
         localMultiplayerButton.setOnClickListener(v -> {
@@ -77,7 +76,7 @@ public class GamemodeSelectActivity extends BaseActivity {
 
         achievementButton.setOnClickListener(v -> startActivity(new Intent(this, AchievementsSelectActivity.class)));
 
-        leaderboardButton.setOnClickListener(v->  {
+        leaderboardButton.setOnClickListener(v -> {
             if (!BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
                 Games.getLeaderboardsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
                         .getAllLeaderboardsIntent()

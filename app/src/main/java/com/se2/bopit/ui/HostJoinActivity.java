@@ -29,7 +29,7 @@ public class HostJoinActivity extends BaseActivity {
         String username = customSharedPreferences.getString(PREF_KEY_NAME, "");
         if (username.equals("")) {
             Faker fk = new Faker();
-            username = StringUtils.capitalize(fk.color().name())+"_"+ StringUtils.capitalize(fk.animal().name());
+            username = StringUtils.capitalize(fk.color().name()) + "_" + StringUtils.capitalize(fk.animal().name());
         }
         userInput.setText(username);
 

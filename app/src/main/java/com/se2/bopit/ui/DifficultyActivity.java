@@ -8,7 +8,7 @@ import com.se2.bopit.domain.GameMode;
 
 import info.hoang8f.widget.FButton;
 
-public class DifficultyActivity extends BaseActivity{
+public class DifficultyActivity extends BaseActivity {
     FButton easy;
     FButton medium;
     FButton hard;

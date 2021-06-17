@@ -15,7 +15,17 @@ import com.se2.bopit.domain.annotations.RequireSensor;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.interfaces.MiniGamesProvider;
 import com.se2.bopit.exception.GameCreationException;
-import com.se2.bopit.ui.games.*;
+import com.se2.bopit.ui.games.ColorButtonMiniGame;
+import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
+import com.se2.bopit.ui.games.DrawingMinigame;
+import com.se2.bopit.ui.games.ImageButtonMinigame;
+import com.se2.bopit.ui.games.PlacePhoneMiniGame;
+import com.se2.bopit.ui.games.RightButtonCombination;
+import com.se2.bopit.ui.games.ShakePhoneMinigame;
+import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
+import com.se2.bopit.ui.games.SpeechRecognitionMiniGame;
+import com.se2.bopit.ui.games.VolumeButtonMinigame;
+import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
@@ -114,7 +124,7 @@ public class MiniGamesRegistry implements MiniGamesProvider {
         try {
             Class<?> cls = Class.forName("com.se2.bopit.ui.games." + round.gameType);
             Object model;
-            if(round.modelType != null && round.modelJson != null) {
+            if (round.modelType != null && round.modelJson != null) {
                 Class<?> modelType = Class.forName("com.se2.bopit.domain.gamemodel." + round.modelType);
                 Gson gson = new Gson();
                 model = gson.fromJson(round.modelJson, modelType);
@@ -123,13 +133,13 @@ public class MiniGamesRegistry implements MiniGamesProvider {
             }
 
             Constructor<?> constructor = null;
-            if(model != null) {
+            if (model != null) {
                 constructor = Arrays.stream(cls.getConstructors())
                         .filter(c -> c.getParameterTypes().length == 1
                                 && c.getParameterTypes()[0].isInstance(model))
                         .findFirst().orElse(null);
             }
-            if(constructor != null) {
+            if (constructor != null) {
                 return (MiniGame) constructor.newInstance(model);
             }
 

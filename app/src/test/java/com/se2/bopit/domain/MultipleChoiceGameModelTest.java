@@ -3,8 +3,8 @@ package com.se2.bopit.domain;
 import com.se2.bopit.domain.gamemodel.ButtonMiniGameModel;
 import com.se2.bopit.domain.gamemodel.MultipleChoiceGameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
-
 import com.se2.bopit.domain.responsemodel.ButtonModel;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

@@ -6,9 +6,9 @@ import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
-import com.se2.bopit.domain.mock.MiniGameMock;
 import com.se2.bopit.domain.interfaces.MiniGamesProvider;
 import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
+import com.se2.bopit.domain.mock.MiniGameMock;
 import com.se2.bopit.ui.DifficultyActivity;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
 import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
@@ -242,8 +242,9 @@ public class GameEngineUnitTest {
         assertTrue(gameEngine.miniGameLost);
         assertEquals(0, gameEngine.score);
     }
+
     @Test
-    public void getTimeForMinigame(){
+    public void getTimeForMinigame() {
         DifficultyActivity.setDifficulty("easy");
         assertEquals((long) (Math.exp(-gameEngine.score * 0.07 + 6.9) + 1600), gameEngine.getTimeForMinigame(imageButtonMinigame));
 

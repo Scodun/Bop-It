@@ -11,9 +11,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.se2.bopit.R;
-import com.se2.bopit.domain.gamemodel.CoverLightSensorMiniGameModel;
 import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.annotations.RequireSensor;
+import com.se2.bopit.domain.gamemodel.CoverLightSensorMiniGameModel;
 import com.se2.bopit.ui.SensorMiniGameFragment;
 
 @RequireSensor(CoverLightSensorMiniGameModel.SENSOR_TYPE)

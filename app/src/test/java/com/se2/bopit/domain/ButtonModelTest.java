@@ -1,6 +1,7 @@
 package com.se2.bopit.domain;
 
 import com.se2.bopit.domain.responsemodel.ButtonModel;
+
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

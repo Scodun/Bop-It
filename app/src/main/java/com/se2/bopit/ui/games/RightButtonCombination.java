@@ -10,10 +10,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
-import com.se2.bopit.domain.gamemodel.GameModel;
 import com.se2.bopit.domain.RightButton;
-import com.se2.bopit.domain.gamemodel.RightButtonCombinationModel;
 import com.se2.bopit.domain.TextToSpeech;
+import com.se2.bopit.domain.gamemodel.GameModel;
+import com.se2.bopit.domain.gamemodel.RightButtonCombinationModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 
@@ -96,7 +96,7 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     void checkFirstClick() {
         GameListener listener = rightButtonCombinationModel.getGameListener();
-        if (!firstClick && listener!=null) {
+        if (!firstClick && listener != null) {
             listener.onGameResult(result);
         } else {
             setSecondOnClickListener();
@@ -118,7 +118,7 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     void setSecondOnClickListener() {
         GameListener listener = rightButtonCombinationModel.getGameListener();
-        if(listener != null) {
+        if (listener != null) {
             getView().findViewById(findButton()).setOnClickListener(clickedButton -> {
                 secondClick = clickedButton.getId() == findButton();
                 result = checkClick(firstClick, secondClick);

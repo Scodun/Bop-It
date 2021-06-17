@@ -2,19 +2,26 @@ package com.se2.bopit.domain.engine;
 
 import android.os.Build;
 import android.util.Log;
-import androidx.annotation.RequiresApi;
-import com.google.gson.Gson;
 
-import com.se2.bopit.domain.gamemodel.GameModel;
+import androidx.annotation.RequiresApi;
+
+import com.google.gson.Gson;
 import com.se2.bopit.domain.GameRoundModel;
-import com.se2.bopit.domain.responsemodel.ResponseModel;
+import com.se2.bopit.domain.gamemodel.GameModel;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.MiniGame;
-import com.se2.bopit.domain.models.User;
 import com.se2.bopit.domain.interfaces.MiniGamesProvider;
 import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
+import com.se2.bopit.domain.models.User;
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -75,7 +82,7 @@ public class GameEngineServer {
 
     /**
      * Starts a new Minigame
-     *
+     * <p>
      * Calls the MainActivity onGameStart Listener to display the Fragment
      * Sets the GameListener for the Minigame
      */
@@ -83,7 +90,7 @@ public class GameEngineServer {
     public void startNewGame() {
         Log.d(TAG, "startNewGame round #" + round + "...");
         // GameRoundModel lastRound = currentRound;
-        if(users.size() > 1)
+        if (users.size() > 1)
             nextPlayer = selectNextRoundUser();
         else
             nextPlayer = users.entrySet().iterator().next().getValue();
@@ -176,13 +183,13 @@ public class GameEngineServer {
 
     public void sendGameResult(String userId, boolean result, ResponseModel responseModel) {
         User user = users.get(userId);
-            if (result) {
-                Log.d(TAG, "User " + userId + " won the round #" + (currentRound!=null?currentRound.round:"null"));
-                user.incrementScore();
-            } else {
-                Log.d(TAG, "User " + userId + " lost the round #" + (currentRound!=null?currentRound.round:"null"));
-                user.loseLife();
-            }
+        if (result) {
+            Log.d(TAG, "User " + userId + " won the round #" + (currentRound != null ? currentRound.round : "null"));
+            user.incrementScore();
+        } else {
+            Log.d(TAG, "User " + userId + " lost the round #" + (currentRound != null ? currentRound.round : "null"));
+            user.loseLife();
+        }
         dataProvider.notifyGameResult(result, responseModel, user);
     }
 
@@ -208,25 +215,25 @@ public class GameEngineServer {
     }
 
     public void detectCheating(String reporterUserId) {
-            if (nextPlayer.hasCheated()) {
-                nextPlayer.loseAllLifes();
-                users.remove(nextPlayer.getId());
-                usersReady.remove(nextPlayer.getId());
-                dataProvider.cheaterDetected(nextPlayer.getId());
-            } else {
-                User reporter = users.get(reporterUserId);
-                reporter.loseLife();
-                if (reporter.getLife() == 0){
-                    usersReady.remove(reporterUserId);
-                    users.remove(reporterUserId);
-                    //TODO send to all cheating detection failed player lost all lifes
-                    //TODO stop game for this player
-                }
+        if (nextPlayer.hasCheated()) {
+            nextPlayer.loseAllLifes();
+            users.remove(nextPlayer.getId());
+            usersReady.remove(nextPlayer.getId());
+            dataProvider.cheaterDetected(nextPlayer.getId());
+        } else {
+            User reporter = users.get(reporterUserId);
+            reporter.loseLife();
+            if (reporter.getLife() == 0) {
+                usersReady.remove(reporterUserId);
+                users.remove(reporterUserId);
+                //TODO send to all cheating detection failed player lost all lifes
+                //TODO stop game for this player
             }
+        }
 
-            if(users.size()<=1){
-                dataProvider.notifyGameOver();
-            }
+        if (users.size() <= 1) {
+            dataProvider.notifyGameOver();
+        }
     }
 
 

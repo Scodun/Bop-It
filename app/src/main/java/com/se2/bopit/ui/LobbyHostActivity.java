@@ -12,9 +12,9 @@ import android.widget.ListView;
 import androidx.annotation.RequiresApi;
 
 import com.se2.bopit.R;
-import com.se2.bopit.domain.data.NearbyDataProvider;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.data.DataProviderContext;
+import com.se2.bopit.domain.data.NearbyDataProvider;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.ui.helpers.CustomToast;
@@ -126,15 +126,13 @@ public class LobbyHostActivity extends BaseActivity {
 
         @Override
         public void OnReadyAnswerReceived(boolean answer, String username) {
-            for (User usr : userItems)
-            {
-                if(usr.getName().equals(username)){
-                    if(answer){
+            for (User usr : userItems) {
+                if (usr.getName().equals(username)) {
+                    if (answer) {
                         usr.setReady(true);
                         readyUsers.add(usr);
 
-                    }
-                    else{
+                    } else {
                         usr.setReady(false);
                         readyUsers.remove(usr);
                     }

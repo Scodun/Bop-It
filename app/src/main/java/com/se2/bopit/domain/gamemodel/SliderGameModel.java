@@ -1,6 +1,7 @@
 package com.se2.bopit.domain.gamemodel;
 
 import android.widget.SeekBar;
+
 import com.se2.bopit.domain.responsemodel.SliderResponseModel;
 import com.se2.bopit.ui.SliderMinigameFragment;
 
@@ -18,7 +19,7 @@ public class SliderGameModel extends GameModel<SliderResponseModel> {
 
     @Override
     public boolean handleResponse(Object response) {
-        boolean result = checkResponse((SliderResponseModel)response);
+        boolean result = checkResponse((SliderResponseModel) response);
         if (result && listener != null)
             listener.onGameResult(true);
         return result;

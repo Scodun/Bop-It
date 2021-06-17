@@ -19,6 +19,7 @@ public class User implements Serializable {
     public User(String id, String name) {
         this(id, name, false);
     }
+
     public User(String id, String name, boolean ready) {
         this.id = id;
         this.name = name;
@@ -35,7 +36,7 @@ public class User implements Serializable {
     }
 
     public void loseAllLifes() {
-        lives=0;
+        lives = 0;
     }
 
     public String getId() {
@@ -50,7 +51,9 @@ public class User implements Serializable {
         return name;
     }
 
-    public boolean isReady(){return ready;}
+    public boolean isReady() {
+        return ready;
+    }
 
     public int getScore() {
         return score;
@@ -73,15 +76,15 @@ public class User implements Serializable {
         return life;
     }
 
-    public void setCurrentRound(int round){
+    public void setCurrentRound(int round) {
         this.currentRound = round;
     }
-  
-    public int getCurrentRound(){
+
+    public int getCurrentRound() {
         return currentRound;
     }
 
-    public void setReady(boolean ready){
+    public void setReady(boolean ready) {
         this.ready = ready;
     }
 }

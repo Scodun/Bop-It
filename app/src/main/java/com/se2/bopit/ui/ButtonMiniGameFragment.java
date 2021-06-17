@@ -15,9 +15,9 @@ import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.se2.bopit.R;
 import com.se2.bopit.domain.ButtonColor;
+import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.gamemodel.ButtonMiniGameModel;
 import com.se2.bopit.domain.responsemodel.ButtonModel;
-import com.se2.bopit.domain.TextToSpeech;
 
 import java.util.Random;
 
