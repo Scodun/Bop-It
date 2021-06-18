@@ -7,9 +7,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.services.BackgroundSoundService;
@@ -26,7 +31,7 @@ public class SplashActivity extends BaseActivity {
     private ImageView waveView;
     private GoogleSignInClient mGoogleSignInClient;
     private List<String> listPermissionsNeeded;
-    private final boolean loginDone = false;
+    private boolean loginDone = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,24 @@ public class SplashActivity extends BaseActivity {
 
         getPermissions();
         checkSensors();
+
+        if (!BuildConfig.DEBUG) {
+            mGoogleSignInClient = GoogleSignIn.getClient(this,
+                    new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).requestId().requestProfile().build());
+
+            ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        Auth.GoogleSignInApi.getSignInResultFromIntent(result.getData());
+                        loginDone = true;
+                        if (listPermissionsNeeded.isEmpty()) {
+                            startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
+                            finish();
+                        }
+                    });
+
+            activityResultLauncher.launch(mGoogleSignInClient.getSignInIntent());
+        }
 
         startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
     }
