@@ -1,6 +1,7 @@
 package com.se2.bopit.domain.gamemodel;
 
 import android.hardware.Sensor;
+
 import com.se2.bopit.domain.responsemodel.SensorResponseModel;
 
 public class CoverLightSensorMiniGameModel extends SensorMiniGameModel {

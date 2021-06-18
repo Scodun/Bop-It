@@ -3,7 +3,8 @@ package com.se2.bopit.domain.models;
 import java.io.Serializable;
 
 public class User implements Serializable {
-    public static final int STARTING_LIVES = 3;
+
+    private static int STARTING_LIVES = 3;
 
     private final String id;
     private final String name;
@@ -17,6 +18,7 @@ public class User implements Serializable {
     public User(String id, String name) {
         this(id, name, false);
     }
+
     public User(String id, String name, boolean ready) {
         this.id = id;
         this.name = name;
@@ -32,8 +34,8 @@ public class User implements Serializable {
         lives--;
     }
 
-    public void loseAllLifes() {
-        lives=0;
+    public void loseAllLives() {
+        lives = 0;
     }
 
     public String getId() {
@@ -48,7 +50,9 @@ public class User implements Serializable {
         return name;
     }
 
-    public boolean isReady(){return ready;}
+    public boolean isReady() {
+        return ready;
+    }
 
     public int getScore() {
         return score;
@@ -62,7 +66,15 @@ public class User implements Serializable {
         this.cheated = cheated;
     }
 
-    public void setReady(boolean ready){
+    public void setReady(boolean ready) {
         this.ready = ready;
+    }
+
+    public static int getStartingLives() {
+        return STARTING_LIVES;
+    }
+
+    public static void setStartingLives(int startingLives) {
+        STARTING_LIVES = startingLives;
     }
 }

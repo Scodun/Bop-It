@@ -1,9 +1,10 @@
 package com.se2.bopit.domain.gamemodel;
 
 import android.content.Context;
+
 import com.se2.bopit.domain.SensorEventModel;
-import com.se2.bopit.domain.responsemodel.SensorResponseModel;
 import com.se2.bopit.domain.interfaces.SensorEventModelListener;
+import com.se2.bopit.domain.responsemodel.SensorResponseModel;
 
 public abstract class SensorMiniGameModel extends ActionGameModel<SensorResponseModel>
         implements SensorEventModelListener {

@@ -1,7 +1,5 @@
 package com.se2.bopit.domain.interfaces;
 
-import com.se2.bopit.domain.models.User;
-
 public interface GameEngineListener {
     /**
      * Method called when game Ends (time end, miss click)

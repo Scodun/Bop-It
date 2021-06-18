@@ -4,7 +4,6 @@ import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.engine.GameEngineServer;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.NetworkContextListener;
-import com.se2.bopit.domain.interfaces.NetworkGameListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 
 public abstract class DataProviderStrategy implements GameEngineDataProvider {
@@ -18,8 +17,6 @@ public abstract class DataProviderStrategy implements GameEngineDataProvider {
 
     public abstract void startAdvertising();
 
-    public abstract void setListener(NetworkGameListener listener);
-
     public abstract void setListener(NetworkLobbyListener listener);
 
     public abstract void setListener(NetworkContextListener listener);
@@ -31,6 +28,7 @@ public abstract class DataProviderStrategy implements GameEngineDataProvider {
     public abstract void sendReadyMessage();
 
     public abstract void sendReadyAnswer(boolean answer, String username);
+
     @Override
     public void setGameEngineClient(GameEngine client) {
         this.gameEngineClient = client;

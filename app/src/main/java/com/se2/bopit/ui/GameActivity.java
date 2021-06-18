@@ -6,22 +6,24 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.util.Log;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
+
 import com.se2.bopit.R;
-import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.SoundEffects;
+import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
-import com.se2.bopit.ui.helpers.WaveAnimator;
 import com.se2.bopit.domain.models.User;
+import com.se2.bopit.ui.helpers.WaveAnimator;
 import com.se2.bopit.ui.providers.GameEngineProvider;
 
 
@@ -69,7 +71,7 @@ public class GameActivity extends BaseActivity {
         }
 
         //set visibility of cheat and detect button to gone in singleplayer mode
-        if(gameMode == GameMode.SINGLE_PLAYER){
+        if (gameMode == GameMode.SINGLE_PLAYER) {
             cheatButton.setVisibility(View.GONE);
         }
 
@@ -81,21 +83,20 @@ public class GameActivity extends BaseActivity {
         cheatButton.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(engine.isMyTurn) {
+                if (engine.isMyTurn()) {
                     if (event.getAction() == MotionEvent.ACTION_DOWN) {
                         engine.pauseCountDown();
                     } else if (event.getAction() == MotionEvent.ACTION_UP) {
                         engine.resumeCountDown();
                     }
-                }
-                else {
+                } else {
                     engine.reportCheat();
                 }
                 return false;
             }
         });
 
-        lifeView.setText("Lives " + User.STARTING_LIVES);
+        lifeView.setText("Lives " + User.getStartingLives());
 
         engine.startNewGame();
     }
@@ -136,8 +137,8 @@ public class GameActivity extends BaseActivity {
         @Override
         public void onGameStart(MiniGame game, long time) {
             Log.d(TAG, "onGameStart");
-            cheatButton.setText(engine.isMyTurn ? R.string.cheatButton : R.string.reportButton);
-            scoreView.setText(engine.isMyTurn ? "YOU" : "other");
+            cheatButton.setText(engine.isMyTurn() ? R.string.cheatButton : R.string.reportButton);
+            scoreView.setText(engine.isMyTurn() ? "YOU" : "other");
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
                     .replace(R.id.fragment_container_view, (Fragment) game, null)

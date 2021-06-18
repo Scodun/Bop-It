@@ -37,8 +37,8 @@ public abstract class MultipleChoiceGameModel<M extends ResponseModel> extends G
 
     @Override
     public boolean handleResponse(Object response) {
-        boolean result = response != null && checkResponse((M)response);
-        if(listener != null) {
+        boolean result = response != null && checkResponse((M) response);
+        if (listener != null) {
             listener.onGameResult(result);
         }
         return result;

@@ -42,8 +42,9 @@ public class CustomizeGameRulesActivity extends BaseActivity {
         toolbar = findViewById(R.id.toolbar_game_rules);
 
         switchAvoidRepeatingTypes = findViewById(R.id.switch_avoid_repeating_game);
-        switchAvoidRepeatingTypes.setOnClickListener(
-                v -> model.avoidRepeatingGameTypes = v.isSelected());
+        switchAvoidRepeatingTypes.setOnCheckedChangeListener(
+                (buttonView, isChecked) -> model.setAvoidRepeatingGameTypes(isChecked)
+        );
 
         LinearLayout rulesLayout = findViewById(R.id.rules_layout);
 
@@ -112,7 +113,7 @@ public class CustomizeGameRulesActivity extends BaseActivity {
     }
 
     void applyModel() {
-        switchAvoidRepeatingTypes.setSelected(model.avoidRepeatingGameTypes);
+        switchAvoidRepeatingTypes.setSelected(model.isAvoidRepeatingGameTypes());
         uiModelsMap.forEach((k, v) -> k.setChecked(v.enabled));
     }
 }

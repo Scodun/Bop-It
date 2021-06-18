@@ -2,19 +2,26 @@ package com.se2.bopit.domain.engine;
 
 import android.os.Build;
 import android.util.Log;
-import androidx.annotation.RequiresApi;
-import com.google.gson.Gson;
 
-import com.se2.bopit.domain.gamemodel.GameModel;
+import androidx.annotation.RequiresApi;
+
+import com.google.gson.Gson;
 import com.se2.bopit.domain.GameRoundModel;
-import com.se2.bopit.domain.responsemodel.ResponseModel;
+import com.se2.bopit.domain.gamemodel.GameModel;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.MiniGame;
-import com.se2.bopit.domain.models.User;
 import com.se2.bopit.domain.interfaces.MiniGamesProvider;
 import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
+import com.se2.bopit.domain.models.User;
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -37,7 +44,6 @@ public class GameEngineServer {
     GameRoundModel currentRound;
     GameModel<? extends ResponseModel> currentGame;
 
-    boolean isOverTime = false;
     boolean miniGameLost = false;
     boolean lifecycleCancel = false;
 
@@ -75,7 +81,7 @@ public class GameEngineServer {
 
     /**
      * Starts a new Minigame
-     *
+     * <p>
      * Calls the MainActivity onGameStart Listener to display the Fragment
      * Sets the GameListener for the Minigame
      */
@@ -83,10 +89,8 @@ public class GameEngineServer {
     public void startNewGame() {
         Log.d(TAG, "startNewGame round #" + round + "...");
         // GameRoundModel lastRound = currentRound;
-        if(users.size() > 1)
-            nextPlayer = selectNextRoundUser();
-        else
-            nextPlayer = users.entrySet().iterator().next().getValue();
+
+        nextPlayer = selectNextRoundUser();
 
         if (nextPlayer == null) {
             Log.d(TAG, "No active users left -> game over after " + round + " round");
@@ -95,24 +99,24 @@ public class GameEngineServer {
         }
 
         currentRound = new GameRoundModel();
-        currentRound.round = round++; // start with round 1
+        currentRound.setRound(round++); // start with round 1
         //for cheatfunction
         nextPlayer.setCheated(false);
-        currentRound.currentUserId = nextPlayer.getId();
+        currentRound.setCurrentUserId(nextPlayer.getId());
 
         long time = (long) (Math.exp(-nextPlayer.getScore() * 0.08 + 7) + 2000);
-        currentRound.time = time;
+        currentRound.setTime(time);
 
-        MiniGame minigame = getMiniGame();
-        currentRound.gameType = minigame.getClass().getSimpleName();
+        MiniGame minigame = miniGamesProvider.createRandomMiniGame();
+        currentRound.setGameType(minigame.getClass().getSimpleName());
         currentGame = minigame.getModel();
 
         if (currentGame != null) {
-            currentRound.modelType = currentGame.getClass().getSimpleName();
-            currentRound.modelJson = gson.toJson(currentGame);
+            currentRound.setModelType(currentGame.getClass().getSimpleName());
+            currentRound.setModelJson(gson.toJson(currentGame));
         }
 
-        //for cheatfunction
+        //for cheat function
         lastPlayer = nextPlayer;
 
         Log.d(TAG, "sending currentRound to data provider: " + currentRound);
@@ -130,66 +134,36 @@ public class GameEngineServer {
         if (pool.isEmpty())
             return null;
 
-        if (new Random().nextInt(100) < CHANCE_TO_REPEAT && users.get(currentRound.currentUserId).getLives() > 0)
-            return users.get(currentRound.currentUserId);
+        if (new Random().nextInt(100) < CHANCE_TO_REPEAT && users.get(currentRound.getCurrentUserId()).getLives() > 0)
+            return users.get(currentRound.getCurrentUserId());
 
         Collections.shuffle(pool);
         return pool.get(0);
     }
 
-    private MiniGame getMiniGame() {
-        return miniGamesProvider.createRandomMiniGame();
-    }
-
-//    /**
-//     * @param time - countdown time in ms
-//     *             Starts a new countdown
-//     *             Calls the MainActivity onTimeTick, onFinish listener to display the time
-//     */
-//    private CountDownTimer startCountDown(long time) {
-//        return platformFeaturesProvider.createCountDownTimer(
-//                time, 5, this::onTick, this::onFinish)
-//                .start();
-//    }
-
-//    public void onTick(long millisUntilFinished) {
-//        // unused
-//    }
-
-//    public void onFinish() {
-//        isOverTime = true;
-////        if (listener != null)
-////            listener.onGameEnd(score);
-//        Log.d(TAG, "timeout");
-//        dataProvider.notifyGameResult(false, null);
-//    }
-
-
     public void stopCurrentGame() {
         if (!lifecycleCancel && !miniGameLost) {
             lifecycleCancel = true;
-//            timer.cancel();
             miniGameLost = true;
-            //listener.onGameEnd(score);
         }
     }
 
     public void sendGameResult(String userId, boolean result, ResponseModel responseModel) {
         User user = users.get(userId);
-            if (result) {
-                Log.d(TAG, "User " + userId + " won the round #" + (currentRound!=null?currentRound.round:"null"));
-                user.incrementScore();
-            } else {
-                Log.d(TAG, "User " + userId + " lost the round #" + (currentRound!=null?currentRound.round:"null"));
-                user.loseLife();
-            }
+        if (result) {
+            Log.d(TAG, "User " + userId + " won the round #" + (currentRound != null ? currentRound.getRound() : "null"));
+            user.incrementScore();
+        } else {
+            Log.d(TAG, "User " + userId + " lost the round #" + (currentRound != null ? currentRound.getRound() : "null"));
+            user.loseLife();
+        }
         dataProvider.notifyGameResult(result, responseModel, user);
     }
 
     public void stopCurrentGame(String userId) {
         Log.d(TAG, "Stop current game: " + userId);
         if (users.remove(userId) != null && currentRound != null)
-            Log.d(TAG, "User " + userId + " left after round #" + currentRound.round);
+            Log.d(TAG, "User " + userId + " left after round #" + currentRound.getRound());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -201,33 +175,31 @@ public class GameEngineServer {
     }
 
     public void setClientCheated(String userId) {
-        if (userId.equals(currentRound.currentUserId)) {
+        if (userId.equals(currentRound.getCurrentUserId())) {
             Log.d("CHEATER", "CHEATER");
             nextPlayer.setCheated(true);
         }
     }
 
     public void detectCheating(String reporterUserId) {
-            if (nextPlayer.hasCheated()) {
-                nextPlayer.loseAllLifes();
-                users.remove(nextPlayer.getId());
-                usersReady.remove(nextPlayer.getId());
-                dataProvider.cheaterDetected(nextPlayer.getId());
-            } else {
-                User reporter = users.get(reporterUserId);
-                reporter.loseLife();
-                if (reporter.getLives() == 0){
-                    usersReady.remove(reporterUserId);
-                    users.remove(reporterUserId);
-                    //TODO send to all cheating detection failed player lost all lifes
-                    //TODO stop game for this player
-                }
+        if (nextPlayer.hasCheated()) {
+            nextPlayer.loseAllLives();
+            users.remove(nextPlayer.getId());
+            usersReady.remove(nextPlayer.getId());
+            dataProvider.cheaterDetected(nextPlayer.getId());
+        } else {
+            User reporter = users.get(reporterUserId);
+            reporter.loseLife();
+            if (reporter.getLives() == 0) {
+                usersReady.remove(reporterUserId);
+                users.remove(reporterUserId);
+                //TODO send to all cheating detection failed player lost all lifes
+                //TODO stop game for this player
             }
+        }
 
-            if(users.size()<=1){
-                dataProvider.notifyGameOver();
-            }
+        if (users.size() <= 1)
+            dataProvider.notifyGameOver();
+
     }
-
-
 }
