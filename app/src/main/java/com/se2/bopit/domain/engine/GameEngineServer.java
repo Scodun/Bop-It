@@ -2,7 +2,9 @@ package com.se2.bopit.domain.engine;
 
 import android.os.Build;
 import android.util.Log;
+
 import androidx.annotation.RequiresApi;
+
 import com.google.gson.Gson;
 import com.se2.bopit.domain.GameRoundModel;
 import com.se2.bopit.domain.gamemodel.GameModel;
@@ -13,7 +15,13 @@ import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.domain.responsemodel.ResponseModel;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -73,7 +81,7 @@ public class GameEngineServer {
 
     /**
      * Starts a new Minigame
-     *
+     * <p>
      * Calls the MainActivity onGameStart Listener to display the Fragment
      * Sets the GameListener for the Minigame
      */
@@ -99,7 +107,7 @@ public class GameEngineServer {
         long time = (long) (Math.exp(-nextPlayer.getScore() * 0.08 + 7) + 2000);
         currentRound.setTime(time);
 
-        MiniGame minigame = miniGamesProvider.createRandomMiniGame();;
+        MiniGame minigame = miniGamesProvider.createRandomMiniGame();
         currentRound.setGameType(minigame.getClass().getSimpleName());
         currentGame = minigame.getModel();
 
@@ -182,7 +190,7 @@ public class GameEngineServer {
         } else {
             User reporter = users.get(reporterUserId);
             reporter.loseLife();
-            if (reporter.getLives() == 0){
+            if (reporter.getLives() == 0) {
                 usersReady.remove(reporterUserId);
                 users.remove(reporterUserId);
                 //TODO send to all cheating detection failed player lost all lifes

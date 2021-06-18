@@ -3,7 +3,9 @@ package com.se2.bopit.ui.games;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.util.Log;
+
 import com.se2.bopit.domain.interfaces.GameListener;
+
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;

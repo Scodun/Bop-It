@@ -3,11 +3,14 @@ package com.se2.bopit.domain;
 import com.se2.bopit.ui.games.ColorButtonMiniGame;
 import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class GameRulesTest {
 
@@ -29,10 +32,10 @@ public class GameRulesTest {
 
     @Test
     public void resetToDefault() {
-        gameRules.avoidRepeatingGameTypes = true;
+        gameRules.setAvoidRepeatingGameTypes(true);
         gameRules.resetToDefault();
 
-        assertFalse(gameRules.avoidRepeatingGameTypes);
+        assertFalse(gameRules.isAvoidRepeatingGameTypes());
     }
 
     @Test

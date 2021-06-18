@@ -3,15 +3,18 @@ package com.se2.bopit.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.games.Games;
 import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
-import info.hoang8f.widget.FButton;
 
 import java.util.Objects;
+
+import info.hoang8f.widget.FButton;
 
 public class AchievementsSelectActivity extends BaseActivity {
 

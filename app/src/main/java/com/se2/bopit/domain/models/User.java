@@ -67,7 +67,7 @@ public class User implements Serializable {
         this.cheated = cheated;
     }
 
-    public void setCurrentRound(int round){
+    public void setCurrentRound(int round) {
         this.currentRound = round;
     }
 

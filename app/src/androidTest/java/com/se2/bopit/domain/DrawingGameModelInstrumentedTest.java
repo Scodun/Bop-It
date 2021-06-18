@@ -3,11 +3,14 @@ package com.se2.bopit.domain;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Path;
+
 import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.platform.app.InstrumentationRegistry;
+
 import com.se2.bopit.domain.gamemodel.DrawingGameModel;
 import com.se2.bopit.domain.mock.GameListenerMock;
 import com.se2.bopit.domain.responsemodel.DrawingResponseModel;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

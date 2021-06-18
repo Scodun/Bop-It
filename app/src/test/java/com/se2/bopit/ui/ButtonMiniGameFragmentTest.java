@@ -4,13 +4,15 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
+
 import androidx.annotation.Nullable;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
+
 import com.se2.bopit.domain.ButtonColor;
 import com.se2.bopit.domain.gamemodel.ButtonMiniGameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.responsemodel.ButtonModel;
-import info.hoang8f.widget.FButton;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -19,9 +21,17 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
+import info.hoang8f.widget.FButton;
+
 import static org.junit.Assert.assertSame;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyBoolean;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 public class ButtonMiniGameFragmentTest {
 

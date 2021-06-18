@@ -1,8 +1,8 @@
 package com.se2.bopit.domain.data;
 
 import android.util.Log;
+
 import com.se2.bopit.domain.interfaces.NetworkContextListener;
-import com.se2.bopit.domain.interfaces.NetworkGameListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.User;
 
@@ -48,7 +48,7 @@ public class DataProviderContext {
     public void startAdvertising() {
         dataProvider.startAdvertising();
     }
-    
+
 
     public void setListener(NetworkLobbyListener listener) {
         Log.d(TAG, "setNetworkLobbyListener");

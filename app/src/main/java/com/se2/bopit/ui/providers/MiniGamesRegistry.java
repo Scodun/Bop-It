@@ -4,7 +4,9 @@ import android.content.Context;
 import android.hardware.SensorManager;
 import android.os.Build;
 import android.util.Log;
+
 import androidx.annotation.RequiresApi;
+
 import com.google.gson.Gson;
 import com.se2.bopit.domain.GameRoundModel;
 import com.se2.bopit.domain.GameRuleItemModel;
@@ -13,10 +15,24 @@ import com.se2.bopit.domain.annotations.RequireSensor;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.interfaces.MiniGamesProvider;
 import com.se2.bopit.exception.GameCreationException;
-import com.se2.bopit.ui.games.*;
+import com.se2.bopit.ui.games.ColorButtonMiniGame;
+import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
+import com.se2.bopit.ui.games.DrawingMinigame;
+import com.se2.bopit.ui.games.ImageButtonMinigame;
+import com.se2.bopit.ui.games.PlacePhoneMiniGame;
+import com.se2.bopit.ui.games.RightButtonCombination;
+import com.se2.bopit.ui.games.ShakePhoneMinigame;
+import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
+import com.se2.bopit.ui.games.SpeechRecognitionMiniGame;
+import com.se2.bopit.ui.games.VolumeButtonMinigame;
+import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
 import java.lang.reflect.Constructor;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 
 public class MiniGamesRegistry implements MiniGamesProvider {
     static final String TAG = MiniGamesRegistry.class.getSimpleName();
@@ -84,7 +100,7 @@ public class MiniGamesRegistry implements MiniGamesProvider {
     public MiniGame createRandomMiniGame() {
         List<GameRuleItemModel> items = gameRules.getEnabledItems();
         int itemsSize = items.size();
-        boolean avoidRepeating = gameRules.avoidRepeatingGameTypes && itemsSize > 1;
+        boolean avoidRepeating = gameRules.isAvoidRepeatingGameTypes() && itemsSize > 1;
 
         if (itemsSize == 0) {
             // ignore invalid settings

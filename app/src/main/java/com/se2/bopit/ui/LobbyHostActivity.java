@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
+
 import androidx.annotation.RequiresApi;
+
 import com.se2.bopit.R;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.data.DataProviderContext;
@@ -30,7 +32,7 @@ public class LobbyHostActivity extends BaseActivity {
 
     private DataProviderContext dataProvider;
     private ArrayList<User> userItems = new ArrayList<>();
-    private String TAG = "LobbyHostActivity";
+    private final String TAG = "LobbyHostActivity";
 
 
     private Context context;
@@ -125,12 +127,7 @@ public class LobbyHostActivity extends BaseActivity {
         public void OnReadyAnswerReceived(boolean answer, String username) {
             for (User usr : userItems) {
                 if (usr.getName().equals(username)) {
-                    if (answer) {
-                        usr.setReady(true);
-
-                    } else {
-                        usr.setReady(false);
-                    }
+                    usr.setReady(answer);
                 }
             }
             userAdapter.clear();

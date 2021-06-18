@@ -6,10 +6,12 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
+
 import com.se2.bopit.R;
 import com.se2.bopit.domain.Difficulty;
 import com.se2.bopit.domain.TextToSpeech;

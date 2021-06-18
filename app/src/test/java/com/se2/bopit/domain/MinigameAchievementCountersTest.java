@@ -6,13 +6,26 @@ import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGamesProvider;
 import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
 import com.se2.bopit.domain.mock.MiniGameMock;
-import com.se2.bopit.ui.games.*;
+import com.se2.bopit.ui.games.ColorButtonMiniGame;
+import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
+import com.se2.bopit.ui.games.DrawingMinigame;
+import com.se2.bopit.ui.games.ImageButtonMinigame;
+import com.se2.bopit.ui.games.PlacePhoneMiniGame;
+import com.se2.bopit.ui.games.RightButtonCombination;
+import com.se2.bopit.ui.games.ShakePhoneMinigame;
+import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
+import com.se2.bopit.ui.games.SliderMinigame;
+import com.se2.bopit.ui.games.VolumeButtonMinigame;
+import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.reset;
+import static org.mockito.Mockito.when;
 
 public class MinigameAchievementCountersTest {
 

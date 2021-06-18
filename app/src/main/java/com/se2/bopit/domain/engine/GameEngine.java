@@ -2,13 +2,28 @@ package com.se2.bopit.domain.engine;
 
 import android.os.CountDownTimer;
 import android.util.Log;
+
 import com.se2.bopit.domain.GameRoundModel;
 import com.se2.bopit.domain.MinigameAchievementCounters;
-import com.se2.bopit.domain.interfaces.*;
+import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
+import com.se2.bopit.domain.interfaces.GameEngineListener;
+import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.domain.interfaces.MiniGamesProvider;
+import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.domain.responsemodel.ResponseModel;
 import com.se2.bopit.ui.DifficultyActivity;
-import com.se2.bopit.ui.games.*;
+import com.se2.bopit.ui.games.ColorButtonMiniGame;
+import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
+import com.se2.bopit.ui.games.DrawingMinigame;
+import com.se2.bopit.ui.games.ImageButtonMinigame;
+import com.se2.bopit.ui.games.PlacePhoneMiniGame;
+import com.se2.bopit.ui.games.RightButtonCombination;
+import com.se2.bopit.ui.games.ShakePhoneMinigame;
+import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
+import com.se2.bopit.ui.games.SliderMinigame;
+import com.se2.bopit.ui.games.VolumeButtonMinigame;
+import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
 /**
  * GameEngine Client used by UI on each device.
@@ -27,7 +42,7 @@ public class GameEngine {
     private int score = 0;
     private boolean isOverTime = false;
     private boolean miniGameLost = false;
-  
+
     boolean lifecycleCancel = false;
     CountDownTimer timer;
     private boolean isMyTurn;

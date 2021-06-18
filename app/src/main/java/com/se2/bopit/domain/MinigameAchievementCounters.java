@@ -2,7 +2,8 @@ package com.se2.bopit.domain;
 
 public class MinigameAchievementCounters {
 
-    private MinigameAchievementCounters() {}
+    private MinigameAchievementCounters() {
+    }
 
     private static int counterImageButtonMinigame = 0;
     private static int counterColorButtonMinigame = 0;

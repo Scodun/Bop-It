@@ -3,8 +3,10 @@ package com.se2.bopit.domain.data;
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
+
 import com.google.android.gms.nearby.Nearby;
 import com.google.android.gms.nearby.connection.AdvertisingOptions;
 import com.google.android.gms.nearby.connection.ConnectionInfo;
@@ -27,6 +29,7 @@ import com.se2.bopit.domain.models.NearbyPayload;
 import com.se2.bopit.domain.models.ReadyMessage;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.domain.responsemodel.ResponseModel;
+
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
@@ -346,7 +349,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
                 Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(8, obj.toString())).getBytes());
                 Nearby.getConnectionsClient(context).sendPayload(hostEndpointId, bytesPayload);
             } catch (Exception ex) {
-                Log.d(TAG,"Error When ReadAnswer");
+                Log.d(TAG, "Error When ReadAnswer");
             }
 
 

@@ -8,17 +8,20 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.games.Games;
 import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.Difficulty;
 import com.se2.bopit.domain.MinigameAchievementCounters;
-import info.hoang8f.widget.FButton;
 
 import java.util.Objects;
+
+import info.hoang8f.widget.FButton;
 
 public class WinLossActivity extends BaseActivity {
     private Button buReturn;
@@ -137,46 +140,46 @@ public class WinLossActivity extends BaseActivity {
                         .unlock(getString(R.string.gamesInRow10));
             }
             if (score >= counter25) {
-                    Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
-                            .unlock(getString(R.string.gamesInRow25));
+                Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                        .unlock(getString(R.string.gamesInRow25));
             }
 
             if (score >= counter50) {
-                    Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
-                            .unlock(getString(R.string.gamesInRow50));
+                Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                        .unlock(getString(R.string.gamesInRow50));
             }
         }
 
-            if (score > lastHighscoreEasy && DifficultyActivity.difficulty == Difficulty.EASY) {
-                editor.putInt(PREF_KEY_SCORE, score);
-            } else if (score > lastHighscoreMedium && DifficultyActivity.difficulty == Difficulty.MEDIUM) {
-                editor.putInt(PREF_KEY_SCORE_MEDIUM, score);
-            } else if (score > lastHighscoreHard && DifficultyActivity.difficulty == Difficulty.HARD) {
-                editor.putInt(PREF_KEY_SCORE_HARD, score);
-            }
-            editor.apply();
+        if (score > lastHighscoreEasy && DifficultyActivity.difficulty == Difficulty.EASY) {
+            editor.putInt(PREF_KEY_SCORE, score);
+        } else if (score > lastHighscoreMedium && DifficultyActivity.difficulty == Difficulty.MEDIUM) {
+            editor.putInt(PREF_KEY_SCORE_MEDIUM, score);
+        } else if (score > lastHighscoreHard && DifficultyActivity.difficulty == Difficulty.HARD) {
+            editor.putInt(PREF_KEY_SCORE_HARD, score);
+        }
+        editor.apply();
 
     }
 
-        private void easyScoreHandler(int scoreEasy, SharedPreferences.Editor editor){
-            scoreEasy += score;
-            editor.putInt(KEY_SCORE_MINIGAMES_EASY, scoreEasy);
-            updateHighscore(getString(R.string.leaderboard_highscore_easy), score);
-            if (scoreEasy >= counter100 && !BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
-                Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
-                        .unlock(getString(R.string.easy100));
-            }
-            if (scoreEasy >= counter1000 && !BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
-                Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
-                        .unlock(getString(R.string.easy1000));
-            }
-            if (scoreEasy >= counter10000 && !BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
-                Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
-                        .unlock(getString(R.string.easy10000));
-            }
+    private void easyScoreHandler(int scoreEasy, SharedPreferences.Editor editor) {
+        scoreEasy += score;
+        editor.putInt(KEY_SCORE_MINIGAMES_EASY, scoreEasy);
+        updateHighscore(getString(R.string.leaderboard_highscore_easy), score);
+        if (scoreEasy >= counter100 && !BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
+            Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                    .unlock(getString(R.string.easy100));
+        }
+        if (scoreEasy >= counter1000 && !BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
+            Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                    .unlock(getString(R.string.easy1000));
+        }
+        if (scoreEasy >= counter10000 && !BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
+            Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
+                    .unlock(getString(R.string.easy10000));
+        }
     }
 
-    private void mediumScoreHandler(int scoreMedium, SharedPreferences.Editor editor){
+    private void mediumScoreHandler(int scoreMedium, SharedPreferences.Editor editor) {
         scoreMedium += score;
         editor.putInt(KEY_SCORE_MINIGAMES_MEDIUM, scoreMedium);
         updateHighscore(getString(R.string.leaderboard_highscore_medium), score);
@@ -195,7 +198,7 @@ public class WinLossActivity extends BaseActivity {
     }
 
 
-    private void hardScoreHandler(int scoreHard, SharedPreferences.Editor editor){
+    private void hardScoreHandler(int scoreHard, SharedPreferences.Editor editor) {
         scoreHard += score;
         editor.putInt(KEY_SCORE_MINIGAMES_HARD, scoreHard);
         updateHighscore(getString(R.string.leaderboard_highscore_hard), score);

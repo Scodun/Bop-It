@@ -7,6 +7,9 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.view.MotionEvent;
 import android.view.View;
+
+import androidx.core.content.ContextCompat;
+
 import com.se2.bopit.R;
 import com.se2.bopit.domain.responsemodel.DrawingResponseModel;
 import com.se2.bopit.ui.games.DrawingMinigame;
@@ -100,21 +103,21 @@ public class DrawTouchPathCanvas extends View {
 
         switch (n) {
             case 0:
-                return getResources().getColor(R.color.red);
+                return ContextCompat.getColor(this.getContext(), R.color.red);
             case 1:
-                return getResources().getColor(R.color.green);
+                return ContextCompat.getColor(this.getContext(), R.color.green);
             case 2:
-                return getResources().getColor(R.color.blue);
+                return ContextCompat.getColor(this.getContext(), R.color.blue);
             case 3:
-                return getResources().getColor(R.color.purple);
+                return ContextCompat.getColor(this.getContext(), R.color.purple);
             case 4:
-                return getResources().getColor(R.color.yellow);
+                return ContextCompat.getColor(this.getContext(), R.color.yellow);
             case 5:
-                return getResources().getColor(R.color.orange);
+                return ContextCompat.getColor(this.getContext(), R.color.orange);
             case 6:
-                return getResources().getColor(R.color.pink);
+                return ContextCompat.getColor(this.getContext(), R.color.pink);
             default:
-                return getResources().getColor(R.color.primary);
+                return ContextCompat.getColor(this.getContext(), R.color.primary);
         }
     }
 

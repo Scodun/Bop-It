@@ -3,18 +3,21 @@ package com.se2.bopit.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageButton;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.games.Games;
 import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.ui.helpers.WaveAnimator;
-import info.hoang8f.widget.FButton;
 
 import java.util.Objects;
+
+import info.hoang8f.widget.FButton;
 
 public class GamemodeSelectActivity extends BaseActivity {
 

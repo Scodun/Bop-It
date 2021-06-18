@@ -2,9 +2,11 @@ package com.se2.bopit.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import com.se2.bopit.R;
 import com.se2.bopit.domain.Difficulty;
 import com.se2.bopit.domain.GameMode;
+
 import info.hoang8f.widget.FButton;
 
 public class DifficultyActivity extends BaseActivity {

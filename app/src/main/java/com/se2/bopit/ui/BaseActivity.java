@@ -2,7 +2,9 @@ package com.se2.bopit.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
+
 import com.se2.bopit.domain.services.BackgroundSoundService;
 
 public class BaseActivity extends AppCompatActivity {
