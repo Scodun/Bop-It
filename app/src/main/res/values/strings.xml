@@ -60,5 +60,15 @@
     <string name="gamesInRow10">0010</string>
     <string name="gamesInRow25">0011</string>
     <string name="gamesInRow50">0012</string>
+    <string name="KEY_SCORE_IMAGEBUTTONMINIGAME">minigameScore</string>
+    <string name="KEY_SCORE_COLORBUTTONMINIGAME">minigameScore1</string>
+    <string name="KEY_SCORE_PLACEPHONEMINIGAME">minigameScore2</string>
+    <string name="KEY_SCORE_SHAKEPHONEMINIGAME">minigameScore3</string>
+    <string name="KEY_SCORE_COVERLIGHTSENSORMINIGAME">minigameScore4</string>
+    <string name="KEY_SCORE_RIGHTBUTTONCOMBINATION">minigameScore5</string>
+    <string name="KEY_SCORE_SLIDERMINIGAME">minigameScore6</string>
+    <string name="KEY_SCORE_DRAWINGMINIGAME">minigameScore7</string>
+    <string name="KEY_SCORE_VOLUMEBUTTON">minigameScore8</string>
+    <string name="KEY_SCORE_TEXTBASEDMINIGAME">minigameScore9</string>
 
 </resources>
