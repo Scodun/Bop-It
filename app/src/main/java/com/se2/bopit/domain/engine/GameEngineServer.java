@@ -216,7 +216,7 @@ public class GameEngineServer {
             } else {
                 User reporter = users.get(reporterUserId);
                 reporter.loseLife();
-                if (reporter.getLife() == 0){
+                if (reporter.getLives() == 0){
                     usersReady.remove(reporterUserId);
                     users.remove(reporterUserId);
                     //TODO send to all cheating detection failed player lost all lifes
