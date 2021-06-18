@@ -15,11 +15,16 @@ import androidx.fragment.app.Fragment;
 import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.se2.bopit.R;
-import com.se2.bopit.domain.gamemodel.GameModel;
+import com.se2.bopit.domain.Difficulty;
 import com.se2.bopit.domain.TextToSpeech;
+import com.se2.bopit.domain.gamemodel.GameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.services.BackgroundServiceAccelerometer;
+import com.se2.bopit.ui.DifficultyActivity;
+
+import static com.se2.bopit.domain.Difficulty.EASY;
+import static com.se2.bopit.domain.Difficulty.HARD;
 
 
 public class ShakePhoneMinigame extends Fragment implements MiniGame {
@@ -86,6 +91,16 @@ public class ShakePhoneMinigame extends Fragment implements MiniGame {
     @Override
     public GameModel<?> getModel() {
         return null;
+    }
+
+    @Override
+    public long getTime(Difficulty difficulty, int score) {
+        if(DifficultyActivity.difficulty == EASY)
+            return generateTime(7.6, 0.06, 1400, score);
+        else if(DifficultyActivity.difficulty == HARD)
+            return generateTime(7.6, 0.06, 600, score);
+        else
+            return generateTime(7.6, 0.06, 1000, score);
     }
 }
 

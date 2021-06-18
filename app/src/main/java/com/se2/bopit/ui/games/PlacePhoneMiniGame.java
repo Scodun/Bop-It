@@ -18,15 +18,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
-import com.se2.bopit.domain.gamemodel.GameModel;
+import com.se2.bopit.domain.Difficulty;
 import com.se2.bopit.domain.TextToSpeech;
+import com.se2.bopit.domain.gamemodel.GameModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.ui.DifficultyActivity;
+
+import static com.se2.bopit.domain.Difficulty.EASY;
+import static com.se2.bopit.domain.Difficulty.HARD;
 
 
 /**
  * Minigame
- *
+ * <p>
  * Goal: Place Phone on a flat surface.
  * Calls the MainActivity onGameStart Listener to display the Fragment
  * Sets the GameListener for the Minigame
@@ -100,7 +105,7 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
                 if (sensorManager != null) {
                     sensorManager.unregisterListener(this);
                 }
-                if(listener != null)
+                if (listener != null)
                     listener.onGameResult(true);
             }
         } catch (Exception ex) {
@@ -163,4 +168,13 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
         return null;
     }
 
+    @Override
+    public long getTime(Difficulty difficulty, int score) {
+        if(DifficultyActivity.difficulty == EASY)
+            return generateTime(8, 0.01, 2000, score);
+        else if(DifficultyActivity.difficulty == HARD)
+            return generateTime(8, 0.01, 1000, score);
+        else
+            return generateTime(8, 0.01, 1500, score);
+    }
 }

@@ -1,21 +1,23 @@
 package com.se2.bopit.domain.interfaces;
 
-import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.GameRoundModel;
-import com.se2.bopit.domain.responsemodel.ResponseModel;
+import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.engine.GameEngineServer;
 import com.se2.bopit.domain.models.User;
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 
 public interface GameEngineDataProvider {
 
     /**
      * Client reports to server the readiness to start.
+     *
      * @param userId user ID
      */
     void readyToStart(String userId);
 
     /**
      * After all clients are ready, Server notifies all clients about new round.
+     *
      * @param roundModel game round model
      */
     void startNewGame(GameRoundModel roundModel);
@@ -23,6 +25,7 @@ public interface GameEngineDataProvider {
     /**
      * Client sends Game result;
      * Server returns earned score;
+     *
      * @param result
      */
     void sendGameResult(String userId, boolean result, ResponseModel responseModel);
@@ -36,6 +39,7 @@ public interface GameEngineDataProvider {
     /**
      * Client stops current Game;
      * Server counts surrender if not lost yet and removes user from the list.
+     *
      * @param userId
      */
     void stopCurrentGame(String userId);
@@ -47,6 +51,7 @@ public interface GameEngineDataProvider {
 
     /**
      * Client polls the current round result. This call is expected between sendGameResult and startNewGame
+     *
      * @return
      */
     User[] getRoundResult();
@@ -58,6 +63,7 @@ public interface GameEngineDataProvider {
 
     /**
      * Client has cheated. Server set User hasCheated = true.
+     *
      * @param userId
      */
     void setClientCheated(String userId);

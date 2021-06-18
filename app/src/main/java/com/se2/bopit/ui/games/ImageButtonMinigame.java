@@ -13,15 +13,20 @@ import androidx.core.content.res.ResourcesCompat;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
+import com.se2.bopit.domain.Difficulty;
+import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.gamemodel.GameModel;
 import com.se2.bopit.domain.gamemodel.ImageButtonMinigameModel;
-import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
+import com.se2.bopit.ui.DifficultyActivity;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import static com.se2.bopit.domain.Difficulty.EASY;
+import static com.se2.bopit.domain.Difficulty.HARD;
 
 public class ImageButtonMinigame extends Fragment implements MiniGame {
 
@@ -134,4 +139,13 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
         return imageButtonMinigameModel;
     }
 
+    @Override
+    public long getTime(Difficulty difficulty, int score) {
+        if(DifficultyActivity.difficulty == EASY)
+            return generateTime(6.9, 0.07, 1600, score);
+        else if(DifficultyActivity.difficulty == HARD)
+            return generateTime(6.9, 0.07, 800, score);
+        else
+            return generateTime(6.9, 0.07, 1200, score);
+    }
 }

@@ -11,10 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.se2.bopit.R;
-import com.se2.bopit.domain.gamemodel.CoverLightSensorMiniGameModel;
+import com.se2.bopit.domain.Difficulty;
 import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.annotations.RequireSensor;
+import com.se2.bopit.domain.gamemodel.CoverLightSensorMiniGameModel;
+import com.se2.bopit.ui.DifficultyActivity;
 import com.se2.bopit.ui.SensorMiniGameFragment;
+
+import static com.se2.bopit.domain.Difficulty.EASY;
+import static com.se2.bopit.domain.Difficulty.HARD;
 
 @RequireSensor(CoverLightSensorMiniGameModel.SENSOR_TYPE)
 public class CoverLightSensorMiniGame extends SensorMiniGameFragment<CoverLightSensorMiniGameModel> {
@@ -39,5 +44,15 @@ public class CoverLightSensorMiniGame extends SensorMiniGameFragment<CoverLightS
         new TextToSpeech().sayText("Dark!", this.getContext());
 
         return view;
+    }
+
+    @Override
+    public long getTime(Difficulty difficulty, int score) {
+        if(DifficultyActivity.difficulty == EASY)
+            return generateTime(7, 0.075, 2000, score);
+        else if(DifficultyActivity.difficulty == HARD)
+            return generateTime(7, 0.075, 1000, score);
+        else
+            return generateTime(7, 0.075, 1500, score);
     }
 }

@@ -10,8 +10,8 @@ import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
 
 import com.se2.bopit.domain.ButtonColor;
 import com.se2.bopit.domain.gamemodel.ButtonMiniGameModel;
-import com.se2.bopit.domain.responsemodel.ButtonModel;
 import com.se2.bopit.domain.interfaces.GameListener;
+import com.se2.bopit.domain.responsemodel.ButtonModel;
 
 import org.junit.After;
 import org.junit.Before;

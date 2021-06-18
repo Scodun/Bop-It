@@ -1,10 +1,11 @@
 package com.se2.bopit.ui;
 
 import android.widget.SeekBar;
+
 import com.se2.bopit.domain.gamemodel.SliderGameModel;
 import com.se2.bopit.domain.responsemodel.SliderResponseModel;
 
-public class SliderMinigameFragment extends MiniGameFragment<SliderGameModel>{
+public class SliderMinigameFragment extends MiniGameFragment<SliderGameModel> {
 
     private static SliderGameModel sliderGameModel = new SliderGameModel();
 

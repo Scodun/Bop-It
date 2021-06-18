@@ -5,12 +5,12 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
-import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.GameRoundModel;
-import com.se2.bopit.domain.responsemodel.ResponseModel;
+import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.engine.GameEngineServer;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.models.User;
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 
 public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvider {
 
@@ -75,12 +75,12 @@ public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvide
 
     @Override
     public void setClientCheated(String userId) {
-        //TODO server.setClientCheated(userId); or unused?
+        //Empty in singleplayer
     }
 
     @Override
     public void detectCheating() {
-        //TODO server.detectCheating(userId); or unused?
+        //Empty in singleplayer
     }
 
     @Override
@@ -90,7 +90,7 @@ public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvide
 
     @Override
     public void disconnect() {
-
+        //Empty in singleplayer
     }
 
     @Override
