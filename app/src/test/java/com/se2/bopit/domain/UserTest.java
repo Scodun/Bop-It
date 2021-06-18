@@ -39,8 +39,8 @@ public class UserTest {
     }
 
     @Test
-    public void testLoseAllLifes(){
-        user1.loseAllLifes();
+    public void testLoseAllLives(){
+        user1.loseAllLives();
         Assert.assertEquals(0,user1.getLives());
     }
 
