@@ -32,13 +32,17 @@ public class LobbyHostActivity extends BaseActivity {
 
     private DataProviderContext dataProvider;
     private ArrayList<User> userItems = new ArrayList<>();
-    private final String TAG = "LobbyHostActivity";
+    private static final String TAG = "LobbyHostActivity";
 
 
     private Context context;
-    static ScheduledFuture<?> countdownFuture;
+    private static ScheduledFuture<?> countdownFuture;
 
     private UserAdapter userAdapter;
+
+    public static void setCountdownFuture(ScheduledFuture<?> countdownFuture) {
+        LobbyHostActivity.countdownFuture = countdownFuture;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,10 +64,12 @@ public class LobbyHostActivity extends BaseActivity {
 
     public void onStartClick(View view) {
         dataProvider.startGameCountdown();
+        Log.d(TAG, "Start game click on: " + view.getTransitionName());
     }
 
     public void onReadyClick(View view) {
         dataProvider.sendReadyMessage();
+        Log.d(TAG, "Ready game click on: " + view.getTransitionName());
     }
 
     private final NetworkLobbyListener networkListener = new NetworkLobbyListener() {
@@ -105,7 +111,7 @@ public class LobbyHostActivity extends BaseActivity {
         public void onGameCountdownStart() {
             AtomicInteger countdown = new AtomicInteger(3);
 
-            Runnable countdownRunnable = () -> {
+            Runnable countdownRunnable = () ->
                 runOnUiThread(
                         () -> {
                             CustomToast.showToast(String.valueOf(countdown.get()), context);
@@ -113,9 +119,8 @@ public class LobbyHostActivity extends BaseActivity {
                             if (countdown.get() <= 0)
                                 countdownFuture.cancel(false);
                         });
-            };
             ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
-            countdownFuture = executor.scheduleAtFixedRate(countdownRunnable, 0, 1, TimeUnit.SECONDS);
+            setCountdownFuture(executor.scheduleAtFixedRate(countdownRunnable, 0, 1, TimeUnit.SECONDS));
         }
 
         @Override
@@ -137,7 +142,7 @@ public class LobbyHostActivity extends BaseActivity {
 
         @Override
         public void onGameStart() {
-            Log.d("LobbyHostActivity", "onGameStart");
+            Log.d(TAG, "onGameStart");
 
             startGame();
         }
@@ -155,7 +160,7 @@ public class LobbyHostActivity extends BaseActivity {
     }
 
     void startGame() {
-        Log.d("LobbyHostActivity", "startGame");
+        Log.d(TAG, "startGame");
         startActivity(new Intent(this, GameActivity.class)
                 .putExtra(GameActivity.GAME_MODE, GameMode.MULTI_PLAYER_SERVER));
     }

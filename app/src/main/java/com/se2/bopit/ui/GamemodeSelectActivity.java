@@ -22,17 +22,16 @@ import info.hoang8f.widget.FButton;
 public class GamemodeSelectActivity extends BaseActivity {
 
     private ActivityResultLauncher<Intent> activityResultLauncher;
-    private FButton
-            singleplayerButton,
-            localMultiplayerButton,
-            onlineMultiplayerButton;
-    private ImageButton
-            settingsButton,
-            achievementButton,
-            leaderboardButton;
-    private ConstraintLayout customRulesButton;
-    private static final int RC_LEADERBOARD_UI = 9004;
 
+    private FButton singleplayerButton;
+    private FButton localMultiplayerButton;
+    private FButton onlineMultiplayerButton;
+
+    private ImageButton settingsButton;
+    private ImageButton achievementButton;
+    private ImageButton leaderboardButton;
+
+    private ConstraintLayout customRulesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,17 +57,15 @@ public class GamemodeSelectActivity extends BaseActivity {
     }
 
     private void initializeListeners() {
-        singleplayerButton.setOnClickListener(v -> {
+        singleplayerButton.setOnClickListener(v ->
             startActivity(new Intent(this, DifficultyActivity.class)
-                    .putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER));
-        });
+                    .putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER))
+        );
 
         localMultiplayerButton.setOnClickListener(v -> {
         });
 
-        onlineMultiplayerButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, HostJoinActivity.class));
-        });
+        onlineMultiplayerButton.setOnClickListener(v -> startActivity(new Intent(this, HostJoinActivity.class)));
 
         settingsButton.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
 

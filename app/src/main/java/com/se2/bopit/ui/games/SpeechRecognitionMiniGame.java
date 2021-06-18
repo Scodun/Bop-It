@@ -25,7 +25,6 @@ import com.se2.bopit.domain.responsemodel.ResponseModel;
 import java.util.Random;
 
 public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
-    private static final String TAG = "SpeechRecognitionMiniGame";
     private GameListener listener;
     private SpeechRecognizer speechRecognizer;
     private Intent intentRecognizer;
@@ -69,11 +68,11 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
         intentRecognizer = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
         intentRecognizer.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         speechRecognizer = SpeechRecognizer.createSpeechRecognizer(view.getContext());
-        RecognizeSpeech();
+        recognizeSpeech();
         return view;
     }
 
-    public void RecognizeSpeech() {
+    public void recognizeSpeech() {
         speechRecognizer.setRecognitionListener(new RecognitionListener() {
             /**
              * @param params
@@ -81,7 +80,7 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
              */
             @Override
             public void onReadyForSpeech(Bundle params) {
-
+                //not needed
             }
 
             /**
@@ -89,7 +88,7 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
              */
             @Override
             public void onBeginningOfSpeech() {
-
+                //not needed
             }
 
             /**
@@ -98,7 +97,7 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
              */
             @Override
             public void onRmsChanged(float rmsdB) {
-
+                //not needed
             }
 
             /**
@@ -106,7 +105,7 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
              */
             @Override
             public void onBufferReceived(byte[] buffer) {
-
+                //not needed
             }
 
             /**
@@ -114,7 +113,7 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
              */
             @Override
             public void onEndOfSpeech() {
-
+                //not needed
             }
 
             /**
@@ -123,7 +122,7 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
              */
             @Override
             public void onError(int error) {
-
+                //not needed
             }
 
             /**
@@ -139,7 +138,7 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
                 for (String res : results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)) {
                     Log.println(Log.DEBUG, "Heard", res);
                     if (listener != null) {
-                        if (res.toLowerCase().equals(correctAnswer.toLowerCase())) {
+                        if (res.equalsIgnoreCase(correctAnswer)) {
                             listener.onGameResult(true);
                             speechRecognizer.stopListening();
                         } else {
@@ -156,7 +155,7 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
              */
             @Override
             public void onPartialResults(Bundle partialResults) {
-
+                //not needed
             }
 
             /**
@@ -166,7 +165,7 @@ public class SpeechRecognitionMiniGame extends Fragment implements MiniGame {
              */
             @Override
             public void onEvent(int eventType, Bundle params) {
-
+                //not needed
             }
         });
         speechRecognizer.startListening(intentRecognizer);

@@ -15,9 +15,9 @@ import com.se2.bopit.R;
 import com.se2.bopit.domain.models.User;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class UserAdapter extends ArrayAdapter<User> {
-    private static final String TAG = "UserAdapter";
     private final Context mContext;
     private final int mResource;
 
@@ -30,7 +30,7 @@ public class UserAdapter extends ArrayAdapter<User> {
      * @param list     The objects to represent in the ListView.
      */
 
-    public UserAdapter(Context context, int resource, ArrayList<User> list) {
+    public UserAdapter(Context context, int resource, List<User> list) {
         super(context, resource, list);
         mContext = context;
         mResource = resource;
@@ -40,25 +40,14 @@ public class UserAdapter extends ArrayAdapter<User> {
     @Override
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
 
-        String id = getItem(position).getId();
         String username = getItem(position).getName();
         boolean ready = getItem(position).isReady();
-
-        User user = new User(id, username, ready);
 
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View newView = inflater.inflate(mResource, parent, false);
 
         TextView usernameTV = (TextView) newView.findViewById(R.id.userNameTV);
         ImageView readyIV = (ImageView) newView.findViewById(R.id.readySign);
-//        Button kickButton = (Button) convertView.findViewById(R.id.kickButton);
-//        kickButton.setOnClickListener(new View.OnClickListener() {
-//
-//            @Override
-//            public void onClick(View view) {
-//
-//            }
-//        });
 
         usernameTV.setText(username);
 

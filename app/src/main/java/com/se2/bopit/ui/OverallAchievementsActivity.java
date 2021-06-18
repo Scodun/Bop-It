@@ -21,10 +21,10 @@ public class OverallAchievementsActivity extends BaseActivity implements SharedP
 
     SharedPreferences customSharedPreferences;
 
-    ImageView
-            checkEasy,
-            checkMedium,
-            checkHard;
+    ImageView checkEasy;
+    ImageView checkMedium;
+    ImageView checkHard;
+
     FButton backButton;
     Button reset;
 
@@ -48,9 +48,7 @@ public class OverallAchievementsActivity extends BaseActivity implements SharedP
         setPreferences();
         checkIsTrue();
 
-        backButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, AchievementsSelectActivity.class));
-        });
+        backButton.setOnClickListener(v -> startActivity(new Intent(this, AchievementsSelectActivity.class)));
         reset.setOnClickListener(v -> resetPreferences());
     }
 
@@ -115,13 +113,10 @@ public class OverallAchievementsActivity extends BaseActivity implements SharedP
         customSharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        //ignore
     }
 
     private void resetPreferences() {

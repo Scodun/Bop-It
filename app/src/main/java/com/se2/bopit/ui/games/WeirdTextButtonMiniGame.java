@@ -14,10 +14,10 @@ public class WeirdTextButtonMiniGame extends ButtonMiniGameFragment {
 
     private static final ArrayList<ButtonModel> possibleAnswers = initializeButtonModels();
 
-    private static final int numberAnswers = 3;
+    private static final int NUMBER_ANSWERS = 3;
 
     public WeirdTextButtonMiniGame() {
-        this(ButtonMiniGameModel.createRandomGameModel(possibleAnswers, numberAnswers));
+        this(ButtonMiniGameModel.createRandomGameModel(possibleAnswers, NUMBER_ANSWERS));
     }
 
     public WeirdTextButtonMiniGame(ButtonMiniGameModel gameModel) {

@@ -20,11 +20,10 @@ public class AchievementsSelectActivity extends BaseActivity {
 
     private ActivityResultLauncher<Intent> activityResultLauncher;
 
-    private FButton
-            overallAchievements,
-            minigameAchievements,
-            googlePlayAchievements,
-            backButton;
+    private FButton overallAchievements;
+    private FButton minigameAchievements;
+    private FButton googlePlayAchievements;
+    private FButton backButton;
 
 
     @Override
@@ -45,17 +44,11 @@ public class AchievementsSelectActivity extends BaseActivity {
     }
 
     private void initializeListeners() {
-        overallAchievements.setOnClickListener(v -> {
-            startActivity(new Intent(this, OverallAchievementsActivity.class));
-        });
+        overallAchievements.setOnClickListener(v -> startActivity(new Intent(this, OverallAchievementsActivity.class)));
 
-        minigameAchievements.setOnClickListener(v -> {
-            startActivity(new Intent(this, MinigameAchievementsActivity.class));
-        });
+        minigameAchievements.setOnClickListener(v -> startActivity(new Intent(this, MinigameAchievementsActivity.class)));
 
-        backButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, GamemodeSelectActivity.class));
-        });
+        backButton.setOnClickListener(v -> startActivity(new Intent(this, GamemodeSelectActivity.class)));
 
         googlePlayAchievements.setOnClickListener(onAchievements);
     }
