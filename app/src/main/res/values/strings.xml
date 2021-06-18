@@ -48,18 +48,18 @@
     <string name="reportButton">Report</string>
 
     <!-- Achievement -->
-    <string name="easy100">0001</string>
-    <string name="medium100">0002</string>
-    <string name="hard100">0003</string>
-    <string name="easy1000">0004</string>
-    <string name="medium1000">0005</string>
-    <string name="hard1000">0006</string>
-    <string name="easy10000">0007</string>
-    <string name="medium10000">0008</string>
-    <string name="hard10000">0009</string>
-    <string name="gamesInRow10">0010</string>
-    <string name="gamesInRow25">0011</string>
-    <string name="gamesInRow50">0012</string>
+    <string name="easy100">CgkI1P7L9bkJEAIQCA</string>
+    <string name="medium100">CgkI1P7L9bkJEAIQCw</string>
+    <string name="hard100">CgkI1P7L9bkJEAIQDg</string>
+    <string name="easy1000">CgkI1P7L9bkJEAIQCQ</string>
+    <string name="medium1000">CgkI1P7L9bkJEAIQDA</string>
+    <string name="hard1000">CgkI1P7L9bkJEAIQDw</string>
+    <string name="easy10000">CgkI1P7L9bkJEAIQCg</string>
+    <string name="medium10000">CgkI1P7L9bkJEAIQDQ</string>
+    <string name="hard10000">CgkI1P7L9bkJEAIQEA</string>
+    <string name="gamesInRow10">CgkI1P7L9bkJEAIQBQ</string>
+    <string name="gamesInRow25">CgkI1P7L9bkJEAIQBg</string>
+    <string name="gamesInRow50">CgkI1P7L9bkJEAIQBw</string>
     <string name="KEY_SCORE_IMAGEBUTTONMINIGAME">minigameScore</string>
     <string name="KEY_SCORE_COLORBUTTONMINIGAME">minigameScore1</string>
     <string name="KEY_SCORE_PLACEPHONEMINIGAME">minigameScore2</string>
