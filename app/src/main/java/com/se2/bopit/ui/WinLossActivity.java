@@ -42,17 +42,6 @@ public class WinLossActivity extends BaseActivity {
     private static final String KEY_SCORE_MINIGAMES_MEDIUM = "score2";
     private static final String KEY_SCORE_MINIGAMES_HARD = "score3";
 
-    private static final String KEY_SCORE_IMAGEBUTTONMINIGAME = "minigameScore";
-    private static final String KEY_SCORE_COLORBUTTONMINIGAME = "minigameScore1";
-    private static final String KEY_SCORE_PLACEPHONEMINIGAME = "minigameScore2";
-    private static final String KEY_SCORE_SHAKEPHONEMINIGAME = "minigameScore3";
-    private static final String KEY_SCORE_COVERLIGHTSENSORMINIGAME = "minigameScore4";
-    private static final String KEY_SCORE_RIGHTBUTTONCOMBINATION = "minigameScore5";
-    private static final String KEY_SCORE_SLIDERMINIGAME = "minigameScore6";
-    private static final String KEY_SCORE_DRAWINGMINIGAME = "minigameScore7";
-    private static final String KEY_SCORE_VOLUMEBUTTON = "minigameScore8";
-    private static final String KEY_SCORE_TEXTBASEDMINIGAME = "minigameScore9";
-
     int counter10 = 10;
     int counter25 = 25;
     int counter50 = 50;
@@ -83,16 +72,16 @@ public class WinLossActivity extends BaseActivity {
         int scoreMedium = customSharedPreferences.getInt(KEY_SCORE_MINIGAMES_MEDIUM, 0);
         int scoreHard = customSharedPreferences.getInt(KEY_SCORE_MINIGAMES_HARD, 0);
 
-        int scoreImageButtonMinigame = customSharedPreferences.getInt(KEY_SCORE_IMAGEBUTTONMINIGAME, 0);
-        int scoreColorButtonMinigame = customSharedPreferences.getInt(KEY_SCORE_COLORBUTTONMINIGAME, 0);
-        int scoreCoverlightSensorMinigame = customSharedPreferences.getInt(KEY_SCORE_COVERLIGHTSENSORMINIGAME, 0);
-        int scoreSliderMinigame = customSharedPreferences.getInt(KEY_SCORE_SLIDERMINIGAME, 0);
-        int scorePlacePhoneMinigame = customSharedPreferences.getInt(KEY_SCORE_PLACEPHONEMINIGAME, 0);
-        int scoreShakePhoneMinigame = customSharedPreferences.getInt(KEY_SCORE_SHAKEPHONEMINIGAME, 0);
-        int scoreRightButtonCombinationMinigame = customSharedPreferences.getInt(KEY_SCORE_RIGHTBUTTONCOMBINATION, 0);
-        int scoreVolumeButtonMinigame = customSharedPreferences.getInt(KEY_SCORE_VOLUMEBUTTON, 0);
-        int scoreDrawingMinigame = customSharedPreferences.getInt(KEY_SCORE_DRAWINGMINIGAME, 0);
-        int scoreTextBasedMinigame = customSharedPreferences.getInt(KEY_SCORE_TEXTBASEDMINIGAME, 0);
+        int scoreImageButtonMinigame = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_IMAGEBUTTONMINIGAME), 0);
+        int scoreColorButtonMinigame = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_COLORBUTTONMINIGAME), 0);
+        int scoreCoverlightSensorMinigame = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_COVERLIGHTSENSORMINIGAME), 0);
+        int scoreSliderMinigame = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_SLIDERMINIGAME), 0);
+        int scorePlacePhoneMinigame = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_PLACEPHONEMINIGAME), 0);
+        int scoreShakePhoneMinigame = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_SHAKEPHONEMINIGAME), 0);
+        int scoreRightButtonCombinationMinigame = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_RIGHTBUTTONCOMBINATION), 0);
+        int scoreVolumeButtonMinigame = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_VOLUMEBUTTON), 0);
+        int scoreDrawingMinigame = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_DRAWINGMINIGAME), 0);
+        int scoreTextBasedMinigame = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_TEXTBASEDMINIGAME), 0);
 
         SharedPreferences.Editor editor = customSharedPreferences.edit();
 
@@ -107,16 +96,16 @@ public class WinLossActivity extends BaseActivity {
         scoreTextBasedMinigame += MinigameAchievementCounters.getCounterTextBasedMinigame();
         scoreRightButtonCombinationMinigame += MinigameAchievementCounters.getCounterRightButtonsMinigame();
 
-        editor.putInt(KEY_SCORE_IMAGEBUTTONMINIGAME, scoreImageButtonMinigame);
-        editor.putInt(KEY_SCORE_COLORBUTTONMINIGAME, scoreColorButtonMinigame);
-        editor.putInt(KEY_SCORE_COVERLIGHTSENSORMINIGAME, scoreCoverlightSensorMinigame);
-        editor.putInt(KEY_SCORE_RIGHTBUTTONCOMBINATION, scoreRightButtonCombinationMinigame);
-        editor.putInt(KEY_SCORE_PLACEPHONEMINIGAME, scorePlacePhoneMinigame);
-        editor.putInt(KEY_SCORE_SLIDERMINIGAME, scoreSliderMinigame);
-        editor.putInt(KEY_SCORE_SHAKEPHONEMINIGAME, scoreShakePhoneMinigame);
-        editor.putInt(KEY_SCORE_DRAWINGMINIGAME, scoreDrawingMinigame);
-        editor.putInt(KEY_SCORE_TEXTBASEDMINIGAME, scoreTextBasedMinigame);
-        editor.putInt(KEY_SCORE_VOLUMEBUTTON, scoreVolumeButtonMinigame);
+        editor.putInt(this.getString(R.string.KEY_SCORE_IMAGEBUTTONMINIGAME), scoreImageButtonMinigame);
+        editor.putInt(this.getString(R.string.KEY_SCORE_COLORBUTTONMINIGAME), scoreColorButtonMinigame);
+        editor.putInt(this.getString(R.string.KEY_SCORE_COVERLIGHTSENSORMINIGAME), scoreCoverlightSensorMinigame);
+        editor.putInt(this.getString(R.string.KEY_SCORE_RIGHTBUTTONCOMBINATION), scoreRightButtonCombinationMinigame);
+        editor.putInt(this.getString(R.string.KEY_SCORE_PLACEPHONEMINIGAME), scorePlacePhoneMinigame);
+        editor.putInt(this.getString(R.string.KEY_SCORE_SLIDERMINIGAME), scoreSliderMinigame);
+        editor.putInt(this.getString(R.string.KEY_SCORE_SHAKEPHONEMINIGAME), scoreShakePhoneMinigame);
+        editor.putInt(this.getString(R.string.KEY_SCORE_DRAWINGMINIGAME), scoreDrawingMinigame);
+        editor.putInt(this.getString(R.string.KEY_SCORE_TEXTBASEDMINIGAME), scoreTextBasedMinigame);
+        editor.putInt(this.getString(R.string.KEY_SCORE_VOLUMEBUTTON), scoreVolumeButtonMinigame);
 
         MinigameAchievementCounters.resetCounter();
 

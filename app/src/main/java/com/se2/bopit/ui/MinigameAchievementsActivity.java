@@ -16,16 +16,6 @@ import info.hoang8f.widget.FButton;
 public class MinigameAchievementsActivity extends BaseActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     private static final String MYPREF = "myCustomSharedPref";
-    private static final String KEY_SCORE_IMAGEBUTTONMINIGAME = "minigameScore";
-    private static final String KEY_SCORE_COLORBUTTONMINIGAME = "minigameScore1";
-    private static final String KEY_SCORE_PLACEPHONEMINIGAME = "minigameScore2";
-    private static final String KEY_SCORE_SHAKEPHONEMINIGAME = "minigameScore3";
-    private static final String KEY_SCORE_COVERLIGHTSENSORMINIGAME = "minigameScore4";
-    private static final String KEY_SCORE_RIGHTBUTTONCOMBINATION = "minigameScore5";
-    private static final String KEY_SCORE_SLIDERMINIGAME = "minigameScore6";
-    private static final String KEY_SCORE_DRAWINGMINIGAME = "minigameScore7";
-    private static final String KEY_SCORE_VOLUMEBUTTON = "minigameScore8";
-    private static final String KEY_SCORE_TEXTBASEDMINIGAME = "minigameScore9";
 
     SharedPreferences customSharedPreferences;
 
@@ -125,27 +115,27 @@ public class MinigameAchievementsActivity extends BaseActivity implements Shared
     }
 
     private void setPrefValues() {
-        imageButtonAchievement.setText(String.valueOf(customSharedPreferences.getInt(KEY_SCORE_IMAGEBUTTONMINIGAME, 0)));
-        colorButtonAchievement.setText(String.valueOf(customSharedPreferences.getInt(KEY_SCORE_COLORBUTTONMINIGAME, 0)));
-        shakePhoneAchievement.setText(String.valueOf(customSharedPreferences.getInt(KEY_SCORE_SHAKEPHONEMINIGAME, 0)));
-        placePhoneAchievement.setText(String.valueOf(customSharedPreferences.getInt(KEY_SCORE_PLACEPHONEMINIGAME, 0)));
-        rightButtonCombinationAchievement.setText(String.valueOf(customSharedPreferences.getInt(KEY_SCORE_RIGHTBUTTONCOMBINATION, 0)));
-        sliderAchievement.setText(String.valueOf(customSharedPreferences.getInt(KEY_SCORE_SLIDERMINIGAME, 0)));
-        drawingAchievement.setText(String.valueOf(customSharedPreferences.getInt(KEY_SCORE_DRAWINGMINIGAME, 0)));
-        textBasedAchievement.setText(String.valueOf(customSharedPreferences.getInt(KEY_SCORE_TEXTBASEDMINIGAME, 0)));
-        volumeButtonAchievement.setText(String.valueOf(customSharedPreferences.getInt(KEY_SCORE_VOLUMEBUTTON, 0)));
-        coverLightSensorAchievement.setText(String.valueOf(customSharedPreferences.getInt(KEY_SCORE_COVERLIGHTSENSORMINIGAME, 0)));
+        imageButtonAchievement.setText(String.valueOf(customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_IMAGEBUTTONMINIGAME), 0)));
+        colorButtonAchievement.setText(String.valueOf(customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_COLORBUTTONMINIGAME), 0)));
+        shakePhoneAchievement.setText(String.valueOf(customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_SHAKEPHONEMINIGAME), 0)));
+        placePhoneAchievement.setText(String.valueOf(customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_PLACEPHONEMINIGAME), 0)));
+        rightButtonCombinationAchievement.setText(String.valueOf(customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_RIGHTBUTTONCOMBINATION), 0)));
+        sliderAchievement.setText(String.valueOf(customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_SLIDERMINIGAME), 0)));
+        drawingAchievement.setText(String.valueOf(customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_DRAWINGMINIGAME), 0)));
+        textBasedAchievement.setText(String.valueOf(customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_TEXTBASEDMINIGAME), 0)));
+        volumeButtonAchievement.setText(String.valueOf(customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_VOLUMEBUTTON), 0)));
+        coverLightSensorAchievement.setText(String.valueOf(customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_COVERLIGHTSENSORMINIGAME), 0)));
 
-        checkImageButtonScore = customSharedPreferences.getInt(KEY_SCORE_IMAGEBUTTONMINIGAME, 0);
-        checkColorButtonScore = customSharedPreferences.getInt(KEY_SCORE_COLORBUTTONMINIGAME, 0);
-        checkCoverLightSensorScore = customSharedPreferences.getInt(KEY_SCORE_COVERLIGHTSENSORMINIGAME, 0);
-        checkTextBasedScore = customSharedPreferences.getInt(KEY_SCORE_TEXTBASEDMINIGAME, 0);
-        checkShakePhoneScore = customSharedPreferences.getInt(KEY_SCORE_SHAKEPHONEMINIGAME, 0);
-        checkPlacePhoneScore = customSharedPreferences.getInt(KEY_SCORE_PLACEPHONEMINIGAME, 0);
-        checkSliderScore = customSharedPreferences.getInt(KEY_SCORE_SLIDERMINIGAME, 0);
-        checkDrawingScore = customSharedPreferences.getInt(KEY_SCORE_DRAWINGMINIGAME, 0);
-        checkVolumeButtonScore = customSharedPreferences.getInt(KEY_SCORE_VOLUMEBUTTON, 0);
-        checkRightButtonsScore = customSharedPreferences.getInt(KEY_SCORE_RIGHTBUTTONCOMBINATION, 0);
+        checkImageButtonScore = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_IMAGEBUTTONMINIGAME), 0);
+        checkColorButtonScore = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_COLORBUTTONMINIGAME), 0);
+        checkCoverLightSensorScore = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_COVERLIGHTSENSORMINIGAME), 0);
+        checkTextBasedScore = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_TEXTBASEDMINIGAME), 0);
+        checkShakePhoneScore = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_SHAKEPHONEMINIGAME), 0);
+        checkPlacePhoneScore = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_PLACEPHONEMINIGAME), 0);
+        checkSliderScore = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_SLIDERMINIGAME), 0);
+        checkDrawingScore = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_DRAWINGMINIGAME), 0);
+        checkVolumeButtonScore = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_VOLUMEBUTTON), 0);
+        checkRightButtonsScore = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_RIGHTBUTTONCOMBINATION), 0);
     }
 
     private void checkAchievement() {
@@ -217,16 +207,16 @@ public class MinigameAchievementsActivity extends BaseActivity implements Shared
     private void resetPreferences() {
         customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = customSharedPreferences.edit();
-        editor.putInt(KEY_SCORE_IMAGEBUTTONMINIGAME, 0);
-        editor.putInt(KEY_SCORE_RIGHTBUTTONCOMBINATION, 0);
-        editor.putInt(KEY_SCORE_VOLUMEBUTTON, 0);
-        editor.putInt(KEY_SCORE_PLACEPHONEMINIGAME, 0);
-        editor.putInt(KEY_SCORE_DRAWINGMINIGAME, 0);
-        editor.putInt(KEY_SCORE_COVERLIGHTSENSORMINIGAME, 0);
-        editor.putInt(KEY_SCORE_COLORBUTTONMINIGAME, 0);
-        editor.putInt(KEY_SCORE_SHAKEPHONEMINIGAME, 0);
-        editor.putInt(KEY_SCORE_SLIDERMINIGAME, 0);
-        editor.putInt(KEY_SCORE_TEXTBASEDMINIGAME, 0);
+        editor.putInt(this.getString(R.string.KEY_SCORE_IMAGEBUTTONMINIGAME), 0);
+        editor.putInt(this.getString(R.string.KEY_SCORE_RIGHTBUTTONCOMBINATION), 0);
+        editor.putInt(this.getString(R.string.KEY_SCORE_VOLUMEBUTTON), 0);
+        editor.putInt(this.getString(R.string.KEY_SCORE_PLACEPHONEMINIGAME), 0);
+        editor.putInt(this.getString(R.string.KEY_SCORE_DRAWINGMINIGAME), 0);
+        editor.putInt(this.getString(R.string.KEY_SCORE_COVERLIGHTSENSORMINIGAME), 0);
+        editor.putInt(this.getString(R.string.KEY_SCORE_COLORBUTTONMINIGAME), 0);
+        editor.putInt(this.getString(R.string.KEY_SCORE_SHAKEPHONEMINIGAME), 0);
+        editor.putInt(this.getString(R.string.KEY_SCORE_SLIDERMINIGAME), 0);
+        editor.putInt(this.getString(R.string.KEY_SCORE_TEXTBASEDMINIGAME), 0);
 
         setVisibility();
 
@@ -247,5 +237,6 @@ public class MinigameAchievementsActivity extends BaseActivity implements Shared
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+            //ignore
     }
 }
