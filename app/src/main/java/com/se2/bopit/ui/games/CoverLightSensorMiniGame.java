@@ -18,6 +18,9 @@ import com.se2.bopit.domain.gamemodel.CoverLightSensorMiniGameModel;
 import com.se2.bopit.ui.DifficultyActivity;
 import com.se2.bopit.ui.SensorMiniGameFragment;
 
+import static com.se2.bopit.domain.Difficulty.EASY;
+import static com.se2.bopit.domain.Difficulty.HARD;
+
 @RequireSensor(CoverLightSensorMiniGameModel.SENSOR_TYPE)
 public class CoverLightSensorMiniGame extends SensorMiniGameFragment<CoverLightSensorMiniGameModel> {
 
@@ -45,22 +48,11 @@ public class CoverLightSensorMiniGame extends SensorMiniGameFragment<CoverLightS
 
     @Override
     public long getTime(Difficulty difficulty, int score) {
-        double maxExponent = 7;
-        double multiplier = 0.075;
-
-        int base;
-        switch (DifficultyActivity.difficulty) {
-            case EASY:
-                base = 2000;
-                break;
-            case HARD:
-                base = 1000;
-                break;
-            default:
-                base = 1500;
-                break;
-        }
-
-        return generateTime(maxExponent, multiplier, base, score);
+        if(DifficultyActivity.difficulty == EASY)
+            return generateTime(7, 0.075, 2000, score);
+        else if(DifficultyActivity.difficulty == HARD)
+            return generateTime(7, 0.075, 1000, score);
+        else
+            return generateTime(7, 0.075, 1500, score);
     }
 }

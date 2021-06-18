@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 import static com.se2.bopit.domain.ButtonColor.DEFAULT;
 import static com.se2.bopit.domain.ButtonColor.RANDOM;
+import static com.se2.bopit.domain.Difficulty.EASY;
+import static com.se2.bopit.domain.Difficulty.HARD;
 
 @MiniGameType(name = "Color Buttons")
 public class ColorButtonMiniGame extends ButtonMiniGameFragment {
@@ -40,22 +42,11 @@ public class ColorButtonMiniGame extends ButtonMiniGameFragment {
 
     @Override
     public long getTime(Difficulty difficulty, int score) {
-        double maxExponent = 6.9;
-        double multiplier = 0.07;
-
-        int base;
-        switch (DifficultyActivity.difficulty) {
-            case EASY:
-                base = 1600;
-                break;
-            case HARD:
-                base = 800;
-                break;
-            default:
-                base = 1200;
-                break;
-        }
-
-        return generateTime(maxExponent, multiplier, base, score);
+        if(DifficultyActivity.difficulty == EASY)
+            return generateTime(6.9, 0.07, 1600, score);
+        else if(DifficultyActivity.difficulty == HARD)
+            return generateTime(6.9, 0.07, 800, score);
+        else
+            return generateTime(6.9, 0.07, 1200, score);
     }
 }

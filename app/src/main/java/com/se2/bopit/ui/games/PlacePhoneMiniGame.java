@@ -25,6 +25,9 @@ import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.ui.DifficultyActivity;
 
+import static com.se2.bopit.domain.Difficulty.EASY;
+import static com.se2.bopit.domain.Difficulty.HARD;
+
 
 /**
  * Minigame
@@ -167,22 +170,11 @@ public class PlacePhoneMiniGame extends Fragment implements SensorEventListener,
 
     @Override
     public long getTime(Difficulty difficulty, int score) {
-        double maxExponent = 8;
-        double multiplier = 0.1;
-
-        int base;
-        switch (DifficultyActivity.difficulty) {
-            case EASY:
-                base = 2000;
-                break;
-            case HARD:
-                base = 1000;
-                break;
-            default:
-                base = 1500;
-                break;
-        }
-
-        return generateTime(maxExponent, multiplier, base, score);
+        if(DifficultyActivity.difficulty == EASY)
+            return generateTime(8, 0.01, 2000, score);
+        else if(DifficultyActivity.difficulty == HARD)
+            return generateTime(8, 0.01, 1000, score);
+        else
+            return generateTime(8, 0.01, 1500, score);
     }
 }

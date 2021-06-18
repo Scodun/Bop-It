@@ -8,6 +8,9 @@ import com.se2.bopit.ui.DifficultyActivity;
 
 import java.util.ArrayList;
 
+import static com.se2.bopit.domain.Difficulty.EASY;
+import static com.se2.bopit.domain.Difficulty.HARD;
+
 public class SimpleTextButtonMiniGame extends ButtonMiniGameFragment {
 
     private static final ArrayList<ButtonModel> possibleAnswers = initializeButtonModels();
@@ -34,21 +37,11 @@ public class SimpleTextButtonMiniGame extends ButtonMiniGameFragment {
 
     @Override
     public long getTime(Difficulty difficulty, int score) {
-        double maxExponent = 6.9;
-        double multiplier = 0.07;
-
-        int base;
-        switch (DifficultyActivity.difficulty) {
-            case EASY:
-                base = 1600;
-                break;
-            case HARD:
-                base = 800;
-                break;
-            default:
-                base = 1200;
-        }
-
-        return generateTime(maxExponent, multiplier, base, score);
+        if(DifficultyActivity.difficulty == EASY)
+            return generateTime(6.9, 0.07, 1601, score);
+        else if(DifficultyActivity.difficulty == HARD)
+            return generateTime(6.9, 0.07, 801, score);
+        else
+            return generateTime(6.9, 0.07, 1201, score);
     }
 }

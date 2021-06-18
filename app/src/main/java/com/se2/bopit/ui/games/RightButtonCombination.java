@@ -19,6 +19,9 @@ import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.ui.DifficultyActivity;
 
+import static com.se2.bopit.domain.Difficulty.EASY;
+import static com.se2.bopit.domain.Difficulty.HARD;
+
 public class RightButtonCombination extends Fragment implements MiniGame {
 
     RightButtonCombinationModel rightButtonCombinationModel;
@@ -149,22 +152,11 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     @Override
     public long getTime(Difficulty difficulty, int score) {
-        double maxExponent = 7.5;
-        double multiplier = 0.07;
-
-        int base;
-        switch (DifficultyActivity.difficulty) {
-            case EASY:
-                base = 1800;
-                break;
-            case HARD:
-                base = 800;
-                break;
-            default:
-                base = 1300;
-                break;
-        }
-
-        return generateTime(maxExponent, multiplier, base, score);
+        if(DifficultyActivity.difficulty == EASY)
+            return generateTime(7.5, 0.07, 1802, score);
+        else if(DifficultyActivity.difficulty == HARD)
+            return generateTime(7.5, 0.07, 802, score);
+        else
+            return generateTime(7.5, 0.07, 1302, score);
     }
 }

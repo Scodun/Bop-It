@@ -5,6 +5,9 @@ import com.se2.bopit.domain.gamemodel.GameModel;
 import com.se2.bopit.domain.responsemodel.ResponseModel;
 import com.se2.bopit.ui.DifficultyActivity;
 
+import static com.se2.bopit.domain.Difficulty.EASY;
+import static com.se2.bopit.domain.Difficulty.HARD;
+
 public interface MiniGame {
     /**
      * Method to set Listener in engine to listen for Minigame Events
@@ -25,23 +28,12 @@ public interface MiniGame {
     GameModel<? extends ResponseModel> getModel();
 
     default long getTime(Difficulty difficulty, int score) {
-        double maxExponent = 7;
-        double multiplier = 0.08;
-
-        int base;
-        switch (DifficultyActivity.difficulty) {
-            case EASY:
-                base = 3000;
-                break;
-            case HARD:
-                base = 1000;
-                break;
-            default:
-                base = 2000;
-                break;
-        }
-
-        return generateTime(maxExponent, multiplier, base, score);
+        if(DifficultyActivity.difficulty == EASY)
+            return generateTime(7, 0.08, 3000, score);
+        else if(DifficultyActivity.difficulty == HARD)
+            return generateTime(6.9, 0.07, 1000, score);
+        else
+            return generateTime(6.9, 0.07, 2000, score);
     }
 
     default long generateTime(double maxExponent, double scoreMultiplier, int base, int score) {
