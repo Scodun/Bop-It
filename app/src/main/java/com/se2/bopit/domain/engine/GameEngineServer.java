@@ -182,19 +182,20 @@ public class GameEngineServer {
     }
 
     public void detectCheating(String reporterUserId) {
-        if (nextPlayer.hasCheated()) {
-            nextPlayer.loseAllLives();
-            users.remove(nextPlayer.getId());
-            usersReady.remove(nextPlayer.getId());
-            dataProvider.cheaterDetected(nextPlayer.getId());
-        } else {
-            User reporter = users.get(reporterUserId);
-            reporter.loseLife();
-            if (reporter.getLives() == 0) {
-                usersReady.remove(reporterUserId);
-                users.remove(reporterUserId);
-                //TODO send to all cheating detection failed player lost all lifes
-                //TODO stop game for this player
+            if (nextPlayer.hasCheated()) {
+                nextPlayer.loseAllLifes();
+                users.remove(nextPlayer.getId());
+                usersReady.remove(nextPlayer.getId());
+                dataProvider.cheaterDetected(nextPlayer.getId());
+            } else {
+                User reporter = users.get(reporterUserId);
+                reporter.loseLife();
+                if (reporter.getLives() == 0){
+                    usersReady.remove(reporterUserId);
+                    users.remove(reporterUserId);
+                    //TODO send to all cheating detection failed player lost all lifes
+                    //TODO stop game for this player
+                }
             }
         }
 
