@@ -4,12 +4,16 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -35,7 +39,9 @@ public class GameActivity extends BaseActivity {
     //views
     ProgressBar timeBar;
     TextView scoreView;
-    TextView lifeView;
+    ImageView life1;
+    ImageView life2;
+    ImageView life3;
     GameEngine engine;
     boolean gameEnd = false;
     Button cheatButton;
@@ -58,7 +64,9 @@ public class GameActivity extends BaseActivity {
         timeBar = findViewById(R.id.timeBar);
         scoreView = findViewById(R.id.scoreView);
         cheatButton = findViewById(R.id.cheatButton);
-        lifeView = findViewById(R.id.lifeView);
+        life1 = findViewById(R.id.life1);
+        life2 = findViewById(R.id.life2);
+        life3 = findViewById(R.id.life3);
 
         //start game Engine and register listeners
         Intent intent = getIntent();
@@ -80,23 +88,19 @@ public class GameActivity extends BaseActivity {
         engine = GameEngineProvider.getInstance().create(gameMode, gameEngineListener);
 
 
-        cheatButton.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (engine.isMyTurn()) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        engine.pauseCountDown();
-                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                        engine.resumeCountDown();
-                    }
-                } else {
-                    engine.reportCheat();
+        cheatButton.setOnTouchListener((v, event) -> {
+            if (engine.isMyTurn()) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    engine.pauseCountDown();
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    engine.resumeCountDown();
                 }
-                return false;
+            } else {
+                engine.reportCheat();
             }
+            return false;
         });
 
-        lifeView.setText("Lives " + User.getStartingLives());
 
         engine.startNewGame();
     }
@@ -131,7 +135,23 @@ public class GameActivity extends BaseActivity {
 
         @Override
         public void onLifeUpdate(int life) {
-            lifeView.setText("Lives " + life);
+            ImageView lifeToFade = null;
+            if(life == 2){
+                lifeToFade = life1;
+            }
+            else if(life == 1){
+                lifeToFade = life2;
+            }
+            else if(life == 0){
+                lifeToFade = life3;
+            }
+            if(lifeToFade != null) {
+                ColorMatrix matrix = new ColorMatrix();
+                matrix.setSaturation(0);
+                ColorMatrixColorFilter cf = new ColorMatrixColorFilter(matrix);
+                lifeToFade.setColorFilter(cf);
+                lifeToFade.setImageAlpha(128);
+            }
         }
 
         @Override
