@@ -154,17 +154,17 @@ public class WinLossActivity extends BaseActivity {
         scoreEasy += score;
         editor.putInt(KEY_SCORE_MINIGAMES_EASY, scoreEasy);
         updateHighscore(getString(R.string.leaderboard_highscore_easy), score);
-        if (scoreEasy >= counter100 && !BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
+        if (!BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
             Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
-                    .unlock(getString(R.string.easy100));
+                    .increment(getString(R.string.easy100), score);
         }
-        if (scoreEasy >= counter1000 && !BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
+        if (!BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
             Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
-                    .unlock(getString(R.string.easy1000));
+                    .increment(getString(R.string.easy1000), score);
         }
-        if (scoreEasy >= counter10000 && !BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
+        if (!BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
             Games.getAchievementsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
-                    .unlock(getString(R.string.easy10000));
+                    .increment(getString(R.string.easy10000), score);
         }
     }
 
