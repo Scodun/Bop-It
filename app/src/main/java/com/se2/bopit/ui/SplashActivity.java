@@ -43,7 +43,6 @@ public class SplashActivity extends BaseActivity {
 
         new WaveAnimator(this, waveView).animate(8000, true);
 
-        getPermissions();
         checkSensors();
 
         if (!BuildConfig.DEBUG) {
@@ -56,6 +55,7 @@ public class SplashActivity extends BaseActivity {
                         Auth.GoogleSignInApi.getSignInResultFromIntent(result.getData());
                         loginDone = true;
                         if (listPermissionsNeeded.isEmpty()) {
+                            Log.d(TAG, "Start on login");
                             startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
                             finish();
                         }
@@ -63,8 +63,7 @@ public class SplashActivity extends BaseActivity {
 
             activityResultLauncher.launch(mGoogleSignInClient.getSignInIntent());
         }
-
-        startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
+        getPermissions();
     }
 
     @Override
@@ -105,7 +104,9 @@ public class SplashActivity extends BaseActivity {
         if (!listPermissionsNeeded.isEmpty()) {
             requestPermissions(listPermissionsNeeded.toArray
                     (new String[listPermissionsNeeded.size()]), 1);
+            Log.d(TAG, "Request new Permission");
         } else if ((loginDone || BuildConfig.DEBUG)) {
+            Log.d(TAG, "All Permissions set already");
             startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
             finish();
         }
@@ -123,6 +124,7 @@ public class SplashActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.d(TAG, "New Permission granted");
 
         if (grantResults.length > 0 &&
                 grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -130,6 +132,7 @@ public class SplashActivity extends BaseActivity {
         }
 
         if (listPermissionsNeeded.isEmpty() && (loginDone || BuildConfig.DEBUG)) {
+
             startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
             finish();
         }

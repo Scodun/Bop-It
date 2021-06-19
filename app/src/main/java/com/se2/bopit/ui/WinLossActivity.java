@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.games.Games;
@@ -18,10 +20,14 @@ import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.Difficulty;
 import com.se2.bopit.domain.MinigameAchievementCounters;
+import com.se2.bopit.ui.helpers.WaveAnimator;
 
 import java.util.Objects;
 
 import info.hoang8f.widget.FButton;
+import nl.dionsegijn.konfetti.KonfettiView;
+import nl.dionsegijn.konfetti.models.Shape;
+import nl.dionsegijn.konfetti.models.Size;
 
 public class WinLossActivity extends BaseActivity {
     private Button buReturn;
@@ -53,6 +59,27 @@ public class WinLossActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_win_loss);
+
+        new WaveAnimator(this, findViewById(R.id.waveViewWinLoss)).animate(5000, true);
+        KonfettiView konfettiView = findViewById(R.id.viewKonfetti);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+
+        konfettiView.build()
+                .addColors(
+                        ContextCompat.getColor(this, R.color.red),
+                        ContextCompat.getColor(this, R.color.blue),
+                        ContextCompat.getColor(this, R.color.primary),
+                        ContextCompat.getColor(this, R.color.primary_variant)
+                        )
+                .setDirection(0.0, 359.0)
+                .setSpeed(1f, 3f)
+                .setFadeOutEnabled(true)
+                .setTimeToLive(5000L)
+                .addShapes(Shape.Square.INSTANCE, Shape.Circle.INSTANCE)
+                .addSizes(new Size(12, 5f))
+                .setPosition(-50f, displayMetrics.widthPixels + 50f, -50f, -50f)
+                .streamFor(100, 2000L);
 
         initializeButtons();
         initializeListeners();
@@ -238,7 +265,7 @@ public class WinLossActivity extends BaseActivity {
 
     private void showScore() {
         tvScore = findViewById(R.id.tv_score);
-        tvScore.setText("Score: " + score);
+        tvScore.setText("Score\n" + score);
     }
 
     private final View.OnClickListener onShare = v -> {
