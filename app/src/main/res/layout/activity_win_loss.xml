@@ -6,21 +6,30 @@
     android:layout_height="match_parent"
     xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.WinLossActivity">
+
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/viewKonfetti"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:translationZ="2000dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <ImageView
         android:id="@+id/waveViewWinLoss"
         android:layout_width="match_parent"
         android:layout_height="200dp"
+        android:layout_marginTop="124dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/wave_bg"
-        android:rotation="180"
         android:scaleType="fitXY"
-        android:scaleY="2"
-        android:translationY="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_wave_1" />
+        app:srcCompat="@drawable/ic_bg" />
 
     <TextView
         android:id="@+id/tv_score"
@@ -28,15 +37,18 @@
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_corners"
         android:backgroundTint="@color/primary_variant"
+        android:letterSpacing="0.1"
         android:padding="10dp"
-        android:text="Score: 10"
+        android:text="Score\n1099999"
+        android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="20pt"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/game_over_text_view"
+        app:layout_constraintVertical_bias="0.057" />
 
     <info.hoang8f.widget.FButton
         android:layout_width="75pt"
@@ -119,26 +131,40 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="176dp"
         android:layout_marginEnd="176dp"
-        android:text="Leaderboards"
         android:letterSpacing="0.2"
-        app:layout_constraintBottom_toTopOf="@id/leaderboardMediumButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="Leaderboards"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:typeface="normal"/>
+        android:translationZ="100dp"
+        android:typeface="normal"
+        app:layout_constraintBottom_toTopOf="@id/leaderboardMediumButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/game_over_text_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
         android:fontFamily="sans-serif-black"
         android:text="Game Over"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
         android:textColor="@color/primary_variant"
+        android:translationY="-50dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/waveViewWinLoss" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@color/primary"
+        app:layout_constraintBottom_toTopOf="@+id/waveViewWinLoss"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
