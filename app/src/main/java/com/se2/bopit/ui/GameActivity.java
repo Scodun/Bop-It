@@ -27,6 +27,7 @@ import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.models.User;
+import com.se2.bopit.ui.helpers.CustomToast;
 import com.se2.bopit.ui.helpers.WaveAnimator;
 import com.se2.bopit.ui.providers.GameEngineProvider;
 
@@ -87,6 +88,7 @@ public class GameActivity extends BaseActivity {
 
         engine = GameEngineProvider.getInstance().create(gameMode, gameEngineListener);
 
+        scoreView.setText(String.valueOf(0));
 
         cheatButton.setOnTouchListener((v, event) -> {
             if (engine.isMyTurn()) {
@@ -157,8 +159,10 @@ public class GameActivity extends BaseActivity {
         @Override
         public void onGameStart(MiniGame game, long time) {
             Log.d(TAG, "onGameStart");
-            cheatButton.setText(engine.isMyTurn() ? R.string.cheatButton : R.string.reportButton);
-            scoreView.setText(engine.isMyTurn() ? "YOU" : "other");
+            if(gameMode != GameMode.SINGLE_PLAYER) {
+                cheatButton.setText(engine.isMyTurn() ? R.string.cheatButton : R.string.reportButton);
+                CustomToast.showToast(engine.isMyTurn() ? "YOU" : "OTHER", getApplicationContext(),false);
+            }
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
                     .replace(R.id.fragment_container_view, (Fragment) game, null)

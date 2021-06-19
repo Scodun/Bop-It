@@ -265,7 +265,7 @@ public class WinLossActivity extends BaseActivity {
 
     private void showScore() {
         tvScore = findViewById(R.id.tv_score);
-        tvScore.setText("Score: " + score);
+        tvScore.setText("Score\n" + score);
     }
 
     private final View.OnClickListener onShare = v -> {

@@ -114,7 +114,7 @@ public class LobbyHostActivity extends BaseActivity {
             Runnable countdownRunnable = () ->
                 runOnUiThread(
                         () -> {
-                            CustomToast.showToast(String.valueOf(countdown.get()), context);
+                            CustomToast.showToast(String.valueOf(countdown.get()), context, true);
                             countdown.getAndDecrement();
                             if (countdown.get() <= 0)
                                 countdownFuture.cancel(false);
