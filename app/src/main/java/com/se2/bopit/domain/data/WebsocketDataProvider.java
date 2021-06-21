@@ -211,64 +211,31 @@ public class WebsocketDataProvider extends DataProviderStrategy {
         }
     }
 
-
-
-//    private final EndpointDiscoveryCallback endpointDiscoveryCallback =
-//            new EndpointDiscoveryCallback() {
-//                @Override
-//                public void onEndpointFound(String endpointId, DiscoveredEndpointInfo info) {
-//                    lobbyListener.onEndpointDiscovered(endpointId, info.getEndpointName());
-//                }
-//
-//                @Override
-//                public void onEndpointLost(String endpointId) {
-//                    lobbyListener.onStatusChange("Endpoint Lost");
-//                }
-//            };
-
     @Override
     public void connectToEndpoint(String id) {
+        Log.d(TAG, "join game " + id);
         sendSystemPayload(new NearbyPayload(INT_JOIN_GAME, id));
         lobbyListener.onStatusChange("Request Connection");
-
-//        Nearby.getConnectionsClient(context)
-//                .requestConnection(username, id, connectionLifecycleCallback)
-//                .addOnSuccessListener(
-//                        (Void unused) -> {
-//                            lobbyListener.onStatusChange("Request Connection");
-//                        })
-//                .addOnFailureListener(
-//                        (Exception e) -> {
-//                            lobbyListener.onError("Request Connection Error");
-//                        });
-//
+        hostEndpointId = id;
     }
 
     private void sendOnlinePlayers() {
         lobbyListener.onUserLobbyChange(connectedUsers);
         sendPayload(getConnectedUserIds(),
                 new NearbyPayload(NearbyPayload.USER_LOBBY_UPDATE, gson.toJson(connectedUsers)));
-
-        //Payload bytesPayload = Payload.fromBytes(gson.toJson(new NearbyPayload(0, gson.toJson(connectedUsers))).getBytes());
-        //Nearby.getConnectionsClient(context).sendPayload(getConnectedUserIds(), bytesPayload);
     }
 
     public void disconnect() {
         if (isHost) {
-            //Nearby.getConnectionsClient(context).stopAdvertising();
-            //Nearby.getConnectionsClient(context).stopAllEndpoints();
             connection.sendClose();
             isHost = false;
             connectedUsers.clear();
         } else if (hostEndpointId != null) {
-            //Nearby.getConnectionsClient(context).disconnectFromEndpoint(hostEndpointId);
             connection.sendClose();
             hostEndpointId = null;
         } else {
-            //Nearby.getConnectionsClient(context).stopDiscovery();
             connection.sendClose();
         }
-        sendOnlinePlayers();
     }
 
     @Override
@@ -296,7 +263,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
     public void sendReadyMessage() {
         if (isHost) {
             List<String> to = getConnectedUserIds();
-            if(!to.isEmpty()) {
+            if (!to.isEmpty()) {
                 sendPayload(to, wrapPayload(7));
             }
         }
@@ -353,7 +320,9 @@ public class WebsocketDataProvider extends DataProviderStrategy {
             OutgoingMessage msg = new OutgoingMessage();
             msg.to.addAll(to);
             msg.data = payload;
-            connection.sendMessage(gson.toJson(msg));
+            String json = gson.toJson(msg);
+            Log.d(TAG, "send message: " + json);
+            connection.sendMessage(json);
         } else {
             Log.d(TAG, "attempt to send via disconnected connection! to: "
                     + to + "; payload: " + payload);
@@ -363,7 +332,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void readyToStart(String userId) {
-        if(isHost) {
+        if (isHost) {
             Log.d(TAG, "Host readyToStart");
             gameEngineServer.readyToStart(userId);
         } else {
@@ -375,7 +344,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
 
     @Override
     public void startNewGame(GameRoundModel roundModel) {
-        if(isHost) {
+        if (isHost) {
             Log.d(TAG, "Broadcast startNewGame " + roundModel);
             gameEngineClient.startNewGame(roundModel);
             sendPayload(getConnectedUserIds(),
@@ -387,7 +356,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
 
     @Override
     public void sendGameResult(String userId, boolean result, ResponseModel responseModel) {
-        if(isHost) {
+        if (isHost) {
             Log.d(TAG, "Host sendGameResult: " + userId + ": " + result);
             gameEngineServer.sendGameResult(userId, result, responseModel);
         } else {
@@ -399,7 +368,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
 
     @Override
     public void notifyGameResult(boolean result, ResponseModel responseModel, User user) {
-        if(isHost) {
+        if (isHost) {
             Log.d(TAG, "Broadcast notifyGameResult: " + result);
             gameEngineClient.notifyGameResult(result, responseModel, user);
             sendPayload(getConnectedUserIds(),
@@ -411,11 +380,11 @@ public class WebsocketDataProvider extends DataProviderStrategy {
 
     @Override
     public void stopCurrentGame(String userId) {
-        if(isHost) {
+        if (isHost) {
             Log.d(TAG, "Host stopCurrentGame: " + userId);
             gameEngineServer.stopCurrentGame(userId);
         } else {
-            Log.d(TAG, "Client stopCurrentGame: " + userId);
+            Log.d(TAG, "Client stopCurrentGame: " + userId + " to: " + hostEndpointId);
             sendPayload(hostEndpointId,
                     wrapPayload(NearbyPayload.STOP_CURRENT_GAME, userId));
         }
@@ -423,7 +392,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
 
     @Override
     public void notifyGameOver() {
-        if(isHost) {
+        if (isHost) {
             Log.d(TAG, "Broadcast game over");
             sendPayload(getConnectedUserIds(),
                     wrapPayload(NearbyPayload.NOTIFY_GAME_OVER));
@@ -433,7 +402,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
 
     @Override
     public User[] getRoundResult() {
-        
+
         // TODO
         return new User[0];
     }
@@ -442,7 +411,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
     public void setClientCheated(String userId) {
         if (isHost) {
             gameEngineServer.setClientCheated(userId);
-        }else {
+        } else {
             sendPayload(hostEndpointId,
                     wrapPayload(NearbyPayload.SET_CLIENT_CHEATED, userId));
         }
@@ -452,7 +421,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
     public void detectCheating() {
         if (isHost) {
             gameEngineServer.detectCheating(userId);
-        }else {
+        } else {
             sendPayload(hostEndpointId,
                     wrapPayload(NearbyPayload.DETECT_CHEATING));
         }
@@ -466,7 +435,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
 
     @Override
     public void cheaterDetected(String cheaterId) {
-        if(isHost) {
+        if (isHost) {
             Log.d(TAG, "Broadcast cheater detected");
             sendPayload(getConnectedUserIds(),
                     wrapPayload(NearbyPayload.CHEATER_DETECTED, cheaterId));
