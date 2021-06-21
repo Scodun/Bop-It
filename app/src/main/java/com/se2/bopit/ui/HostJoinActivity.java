@@ -13,15 +13,20 @@ import com.se2.bopit.R;
 import org.apache.commons.lang3.StringUtils;
 
 public class HostJoinActivity extends BaseActivity {
+    public static final String NETWORK_MODE = "networkMode";
+
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_NAME = "name";
     private EditText userInput;
 
+    private String networkMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_host_join);
+
+        networkMode = getIntent().getStringExtra(NETWORK_MODE);
 
         userInput = findViewById(R.id.editTextUsername);
 
@@ -39,6 +44,7 @@ public class HostJoinActivity extends BaseActivity {
         Intent intent = new Intent(getBaseContext(), LobbyJoinActivity.class);
         intent.putExtra("isHost", false);
         intent.putExtra("username", userInput.getText().toString());
+        intent.putExtra(NETWORK_MODE, networkMode);
         startActivity(intent);
     }
 
@@ -46,6 +52,7 @@ public class HostJoinActivity extends BaseActivity {
         Intent intent = new Intent(getBaseContext(), LobbyHostActivity.class);
         intent.putExtra("isHost", true);
         intent.putExtra("username", userInput.getText().toString());
+        intent.putExtra(NETWORK_MODE, networkMode);
         startActivity(intent);
     }
 }
