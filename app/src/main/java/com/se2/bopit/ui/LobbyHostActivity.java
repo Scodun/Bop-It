@@ -11,7 +11,7 @@ import android.widget.ListView;
 import androidx.annotation.RequiresApi;
 
 import com.se2.bopit.R;
-import com.se2.bopit.data.WebsocketDataProvider;
+import com.se2.bopit.domain.data.WebsocketDataProvider;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.data.DataProviderContext;
 import com.se2.bopit.domain.data.NearbyDataProvider;

@@ -1,4 +1,4 @@
-package com.se2.bopit.data.websocket;
+package com.se2.bopit.domain.data.websocket;
 
 import com.se2.bopit.domain.models.NearbyPayload;
 

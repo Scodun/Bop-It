@@ -1,4 +1,4 @@
-package com.se2.bopit.data;
+package com.se2.bopit.domain.data;
 
 import android.content.Context;
 import android.os.Build;
@@ -8,13 +8,11 @@ import androidx.annotation.RequiresApi;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-import com.se2.bopit.data.websocket.IncomingMessage;
-import com.se2.bopit.data.websocket.OutgoingMessage;
+import com.se2.bopit.domain.data.websocket.IncomingMessage;
+import com.se2.bopit.domain.data.websocket.OutgoingMessage;
 import com.se2.bopit.domain.GameRoundModel;
 import com.se2.bopit.domain.responsemodel.ResponseModel;
-import com.se2.bopit.domain.data.DataProviderStrategy;
 import com.se2.bopit.domain.interfaces.NetworkContextListener;
-import com.se2.bopit.domain.interfaces.NetworkGameListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.NearbyPayload;
 import com.se2.bopit.domain.models.ReadyMessage;
