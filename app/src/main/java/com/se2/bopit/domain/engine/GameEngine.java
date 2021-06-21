@@ -22,6 +22,7 @@ import com.se2.bopit.ui.games.RightButtonCombination;
 import com.se2.bopit.ui.games.ShakePhoneMinigame;
 import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
 import com.se2.bopit.ui.games.SliderMinigame;
+import com.se2.bopit.ui.games.SpecialTextButtonMiniGame;
 import com.se2.bopit.ui.games.VolumeButtonMinigame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
@@ -48,6 +49,7 @@ public class GameEngine {
     private boolean isMyTurn;
     private long timeRemaining;
     private String currentUserId;
+    private MiniGame minigame;
 
     MiniGamesProvider miniGamesProvider;
     PlatformFeaturesProvider platformFeaturesProvider;
@@ -81,7 +83,7 @@ public class GameEngine {
         setMyTurn(getUserId().equals(round.getCurrentUserId()));
         setCurrentUserId(round.getCurrentUserId());
 
-        MiniGame minigame = miniGamesProvider.createMiniGame(round);
+        minigame = miniGamesProvider.createMiniGame(round);
         long time = minigame.getTime(DifficultyActivity.difficulty, score);
 
         timer = startCountDown(time);
@@ -176,6 +178,8 @@ public class GameEngine {
             MinigameAchievementCounters.setCounterVolumeButtonMinigame(MinigameAchievementCounters.getCounterVolumeButtonMinigame() + 1);
         } else if (minigame.getClass().equals(RightButtonCombination.class)) {
             MinigameAchievementCounters.setCounterRightButtonsMinigame(MinigameAchievementCounters.getCounterRightButtonsMinigame() + 1);
+        } else if (minigame.getClass().equals(SpecialTextButtonMiniGame.class)) {
+            MinigameAchievementCounters.setCounterSpecialTextButtonMinigame(MinigameAchievementCounters.getCounterSpecialTextButtonMinigame() + 1);
         }
     }
 
@@ -214,6 +218,8 @@ public class GameEngine {
     public void winMinigame() {
         getDataProvider().sendGameResult(getUserId(), true, null);
         setScore(getScore() + 1);
+        if(minigame != null)
+            setCounter(minigame);
         listener.onScoreUpdate(getScore());
     }
 

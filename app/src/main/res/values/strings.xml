@@ -70,5 +70,6 @@
     <string name="KEY_SCORE_DRAWINGMINIGAME">minigameScore7</string>
     <string name="KEY_SCORE_VOLUMEBUTTON">minigameScore8</string>
     <string name="KEY_SCORE_TEXTBASEDMINIGAME">minigameScore9</string>
+    <string name="KEY_SCORE_SPECIALTEXTMINIGAME">minigameScore10</string>
 
 </resources>
