@@ -109,6 +109,8 @@ public class WinLossActivity extends BaseActivity {
         int scoreVolumeButtonMinigame = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_VOLUMEBUTTON), 0);
         int scoreDrawingMinigame = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_DRAWINGMINIGAME), 0);
         int scoreTextBasedMinigame = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_TEXTBASEDMINIGAME), 0);
+        int scoreSpecialTextMinigame = customSharedPreferences.getInt(this.getString(R.string.KEY_SCORE_SPECIALTEXTMINIGAME), 0);
+
 
         SharedPreferences.Editor editor = customSharedPreferences.edit();
 
@@ -122,6 +124,7 @@ public class WinLossActivity extends BaseActivity {
         scoreVolumeButtonMinigame += MinigameAchievementCounters.getCounterVolumeButtonMinigame();
         scoreTextBasedMinigame += MinigameAchievementCounters.getCounterTextBasedMinigame();
         scoreRightButtonCombinationMinigame += MinigameAchievementCounters.getCounterRightButtonsMinigame();
+        scoreSpecialTextMinigame += MinigameAchievementCounters.getCounterSpecialTextButtonMinigame();
 
         editor.putInt(this.getString(R.string.KEY_SCORE_IMAGEBUTTONMINIGAME), scoreImageButtonMinigame);
         editor.putInt(this.getString(R.string.KEY_SCORE_COLORBUTTONMINIGAME), scoreColorButtonMinigame);
@@ -133,6 +136,7 @@ public class WinLossActivity extends BaseActivity {
         editor.putInt(this.getString(R.string.KEY_SCORE_DRAWINGMINIGAME), scoreDrawingMinigame);
         editor.putInt(this.getString(R.string.KEY_SCORE_TEXTBASEDMINIGAME), scoreTextBasedMinigame);
         editor.putInt(this.getString(R.string.KEY_SCORE_VOLUMEBUTTON), scoreVolumeButtonMinigame);
+        editor.putInt(this.getString(R.string.KEY_SCORE_SPECIALTEXTMINIGAME), scoreSpecialTextMinigame);
 
         MinigameAchievementCounters.resetCounter();
 

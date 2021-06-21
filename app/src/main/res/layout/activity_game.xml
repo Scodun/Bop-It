@@ -8,6 +8,20 @@
 
 
     <ImageView
+        android:id="@+id/fenceImage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:adjustViewBounds="true"
+        android:alpha="0.7"
+        android:scaleType="fitXY"
+        android:scaleX="1.2"
+        android:translationZ="19dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_grid" />
+
+    <ImageView
         android:id="@+id/waveView8"
         android:layout_width="0dp"
         android:layout_height="50dp"
@@ -16,6 +30,7 @@
         android:rotation="180"
         android:scaleType="fitXY"
         android:scaleX="2"
+        android:translationZ="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scoreLayout"
@@ -46,7 +61,7 @@
         android:layout_height="100dp"
         android:background="@color/blue"
         android:backgroundTint="@color/blue"
-        android:translationZ="0dp"
+        android:translationZ="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"

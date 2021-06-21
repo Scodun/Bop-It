@@ -217,6 +217,7 @@ public class MinigameAchievementsActivity extends BaseActivity implements Shared
         editor.putInt(this.getString(R.string.KEY_SCORE_SHAKEPHONEMINIGAME), 0);
         editor.putInt(this.getString(R.string.KEY_SCORE_SLIDERMINIGAME), 0);
         editor.putInt(this.getString(R.string.KEY_SCORE_TEXTBASEDMINIGAME), 0);
+        editor.putInt(this.getString(R.string.KEY_SCORE_SPECIALTEXTMINIGAME), 0);
 
         setVisibility();
 
