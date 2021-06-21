@@ -1,9 +1,9 @@
 package com.se2.bopit.domain.gamemodel;
 
-import com.se2.bopit.domain.responsemodel.ResponseModel;
 import com.se2.bopit.domain.interfaces.GameListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 
 public abstract class GameModel<M extends ResponseModel> implements MiniGame {
     protected transient GameListener listener;

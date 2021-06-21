@@ -15,7 +15,17 @@ import com.se2.bopit.domain.annotations.RequireSensor;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.domain.interfaces.MiniGamesProvider;
 import com.se2.bopit.exception.GameCreationException;
-import com.se2.bopit.ui.games.*;
+import com.se2.bopit.ui.games.ColorButtonMiniGame;
+import com.se2.bopit.ui.games.CoverLightSensorMiniGame;
+import com.se2.bopit.ui.games.DrawingMinigame;
+import com.se2.bopit.ui.games.ImageButtonMinigame;
+import com.se2.bopit.ui.games.PlacePhoneMiniGame;
+import com.se2.bopit.ui.games.RightButtonCombination;
+import com.se2.bopit.ui.games.ShakePhoneMinigame;
+import com.se2.bopit.ui.games.SimpleTextButtonMiniGame;
+import com.se2.bopit.ui.games.SpeechRecognitionMiniGame;
+import com.se2.bopit.ui.games.VolumeButtonMinigame;
+import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
 
 import java.lang.reflect.Constructor;
 import java.util.Arrays;
@@ -50,16 +60,16 @@ public class MiniGamesRegistry implements MiniGamesProvider {
 
     public final GameRules gameRules;
 
+    GameRuleItemModel lastGameType;
+
     protected MiniGamesRegistry(GameRules gameRules) {
         this.gameRules = gameRules;
         Log.d(TAG, "MiniGamesRegistry created");
     }
 
     public static MiniGamesRegistry getInstance() {
-        if (instance == null) {
-            instance = new MiniGamesRegistry(
-                    new GameRules(GAME_TYPES));
-        }
+        if (instance == null)
+            instance = new MiniGamesRegistry(new GameRules(GAME_TYPES));
         return instance;
     }
 
@@ -72,26 +82,25 @@ public class MiniGamesRegistry implements MiniGamesProvider {
 
         for (Class<?> type : GAME_TYPES) {
             RequireSensor requireSensor = type.getAnnotation(RequireSensor.class);
-            if (requireSensor != null) {
-                int sensorType = requireSensor.value();
-                boolean available = availableSensorTypes.computeIfAbsent(sensorType,
-                        s -> !sensorManager.getSensorList(s).isEmpty());
-                if (!available) {
-                    gameRules.disablePermanently(type);
-                    Log.d(TAG, "Sensor " + sensorType
-                            + " is not available => disabling game type " + type.getSimpleName());
-                }
+            if (requireSensor == null)
+                return;
+
+            int sensorType = requireSensor.value();
+            boolean available = availableSensorTypes.computeIfAbsent(sensorType,
+                    s -> !sensorManager.getSensorList(s).isEmpty());
+            if (!available) {
+                gameRules.disablePermanently(type);
+                Log.d(TAG, "Sensor " + sensorType
+                        + " is not available => disabling game type " + type.getSimpleName());
             }
         }
     }
-
-    GameRuleItemModel lastGameType;
 
     @Override
     public MiniGame createRandomMiniGame() {
         List<GameRuleItemModel> items = gameRules.getEnabledItems();
         int itemsSize = items.size();
-        boolean avoidRepeating = gameRules.avoidRepeatingGameTypes && itemsSize > 2;
+        boolean avoidRepeating = gameRules.isAvoidRepeatingGameTypes() && itemsSize > 1;
 
         if (itemsSize == 0) {
             // ignore invalid settings
@@ -112,33 +121,31 @@ public class MiniGamesRegistry implements MiniGamesProvider {
     @Override
     public MiniGame createMiniGame(GameRoundModel round) {
         try {
-            Class<?> cls = Class.forName("com.se2.bopit.ui.games." + round.gameType);
+            Class<?> cls = Class.forName("com.se2.bopit.ui.games." + round.getGameType());
             Object model;
-            if(round.modelType != null && round.modelJson != null) {
-                Class<?> modelType = Class.forName("com.se2.bopit.domain.gamemodel." + round.modelType);
+            if (round.getModelType() != null && round.getModelJson() != null) {
+                Class<?> modelType = Class.forName("com.se2.bopit.domain.gamemodel." + round.getModelType());
                 Gson gson = new Gson();
-                model = gson.fromJson(round.modelJson, modelType);
+                model = gson.fromJson(round.getModelJson(), modelType);
             } else {
                 model = null;
             }
 
             Constructor<?> constructor = null;
-            if(model != null) {
+            if (model != null) {
+                Object finalModel = model;
                 constructor = Arrays.stream(cls.getConstructors())
                         .filter(c -> c.getParameterTypes().length == 1
-                                && c.getParameterTypes()[0].isInstance(model))
+                                && c.getParameterTypes()[0].isInstance(finalModel))
                         .findFirst().orElse(null);
             }
-            if(constructor != null) {
+            if (constructor != null)
                 return (MiniGame) constructor.newInstance(model);
-            }
 
             // fallback with drawback - games may be not the same!!!
-            return (MiniGame) cls
-                    .getDeclaredConstructor()
-                    .newInstance();
+            return (MiniGame) cls.getDeclaredConstructor().newInstance();
         } catch (Exception ex) {
-            String msg = "Error creating minigame from model: " + round.gameType;
+            String msg = "Error creating minigame from model: " + round.getGameType();
             Log.e(TAG, msg, ex);
             throw new GameCreationException(msg, ex);
         }

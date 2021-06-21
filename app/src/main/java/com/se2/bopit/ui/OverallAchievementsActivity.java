@@ -9,12 +9,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.games.Games;
-import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
-
-import java.util.Objects;
 
 import info.hoang8f.widget.FButton;
 
@@ -26,10 +21,10 @@ public class OverallAchievementsActivity extends BaseActivity implements SharedP
 
     SharedPreferences customSharedPreferences;
 
-    ImageView
-            checkEasy,
-            checkMedium,
-            checkHard;
+    ImageView checkEasy;
+    ImageView checkMedium;
+    ImageView checkHard;
+
     FButton backButton;
     Button reset;
 
@@ -53,12 +48,11 @@ public class OverallAchievementsActivity extends BaseActivity implements SharedP
         setPreferences();
         checkIsTrue();
 
-        backButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, AchievementsSelectActivity.class));
-        });
+        backButton.setOnClickListener(v -> startActivity(new Intent(this, AchievementsSelectActivity.class)));
         reset.setOnClickListener(v -> resetPreferences());
     }
-    private void initializeViews(){
+
+    private void initializeViews() {
         checkEasy = findViewById(R.id.check1);
         checkMedium = findViewById(R.id.check2);
         checkHard = findViewById(R.id.check3);
@@ -74,31 +68,33 @@ public class OverallAchievementsActivity extends BaseActivity implements SharedP
         checkMedium.setVisibility(View.INVISIBLE);
         checkHard.setVisibility(View.INVISIBLE);
     }
+
     private void setPreferences() {
         easyAchievement.setText(String.valueOf(customSharedPreferences.getInt(KEY_SCORE_MINIGAMES_EASY, 0)));
         mediumAchievement.setText(String.valueOf(customSharedPreferences.getInt(KEY_SCORE_MINIGAMES_MEDIUM, 0)));
         hardAchievement.setText(String.valueOf(customSharedPreferences.getInt(KEY_SCORE_MINIGAMES_HARD, 0)));
 
-        checkEasyScore = customSharedPreferences.getInt(KEY_SCORE_MINIGAMES_EASY,0);
-        checkMediumScore = customSharedPreferences.getInt(KEY_SCORE_MINIGAMES_MEDIUM,0);
-        checkHardScore = customSharedPreferences.getInt(KEY_SCORE_MINIGAMES_HARD,0);
+        checkEasyScore = customSharedPreferences.getInt(KEY_SCORE_MINIGAMES_EASY, 0);
+        checkMediumScore = customSharedPreferences.getInt(KEY_SCORE_MINIGAMES_MEDIUM, 0);
+        checkHardScore = customSharedPreferences.getInt(KEY_SCORE_MINIGAMES_HARD, 0);
 
     }
 
-    private void checkIsTrue(){
-        if(checkEasyScore >=scoreOverall){
+    private void checkIsTrue() {
+        if (checkEasyScore >= scoreOverall) {
             checkEasy.setVisibility(View.VISIBLE);
             easyAchievement.setVisibility(View.INVISIBLE);
         }
-        if(checkMediumScore >=scoreOverall){
+        if (checkMediumScore >= scoreOverall) {
             checkMedium.setVisibility(View.VISIBLE);
             mediumAchievement.setVisibility(View.INVISIBLE);
         }
-        if(checkHardScore >=scoreOverall){
+        if (checkHardScore >= scoreOverall) {
             checkHard.setVisibility(View.VISIBLE);
             hardAchievement.setVisibility(View.INVISIBLE);
         }
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -117,14 +113,12 @@ public class OverallAchievementsActivity extends BaseActivity implements SharedP
         customSharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-    }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+        //ignore
     }
+
     private void resetPreferences() {
         customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = customSharedPreferences.edit();

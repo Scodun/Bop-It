@@ -5,15 +5,15 @@ import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
-import com.se2.bopit.domain.data.SinglePlayerGameEngineDataProvider;
-import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.data.DataProviderContext;
+import com.se2.bopit.domain.data.SinglePlayerGameEngineDataProvider;
+import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.engine.GameEngineServer;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
-import com.se2.bopit.domain.models.User;
 import com.se2.bopit.domain.interfaces.MiniGamesProvider;
 import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
+import com.se2.bopit.domain.models.User;
 import com.se2.bopit.platform.AndroidPlatformFeaturesProvider;
 
 import java.util.Collections;
@@ -23,8 +23,9 @@ public class GameEngineProvider {
     static final String TAG = GameEngineProvider.class.getSimpleName();
 
     static GameEngineProvider instance;
+
     public static GameEngineProvider getInstance() {
-        if(instance == null) {
+        if (instance == null) {
             instance = new GameEngineProvider();
         }
         return instance;
@@ -69,8 +70,8 @@ public class GameEngineProvider {
     }
 
     GameEngine createMultiPlayerClient(MiniGamesProvider gamesProvider,
-                                 PlatformFeaturesProvider platformFeaturesProvider,
-                                 GameEngineListener gameListener) {
+                                       PlatformFeaturesProvider platformFeaturesProvider,
+                                       GameEngineListener gameListener) {
         DataProviderContext context = DataProviderContext.getContext();
         return new GameEngine(gamesProvider, platformFeaturesProvider, gameListener, context.getDataProvider());
     }

@@ -6,8 +6,15 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
+
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.core.content.ContextCompat;
+
+import com.google.android.gms.auth.api.Auth;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.services.BackgroundSoundService;
@@ -36,10 +43,27 @@ public class SplashActivity extends BaseActivity {
 
         new WaveAnimator(this, waveView).animate(8000, true);
 
-        getPermissions();
         checkSensors();
 
-        startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
+        if (!BuildConfig.DEBUG) {
+            mGoogleSignInClient = GoogleSignIn.getClient(this,
+                    new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_GAMES_SIGN_IN).requestId().requestProfile().build());
+
+            ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
+                    new ActivityResultContracts.StartActivityForResult(),
+                    result -> {
+                        Auth.GoogleSignInApi.getSignInResultFromIntent(result.getData());
+                        loginDone = true;
+                        if (listPermissionsNeeded.isEmpty()) {
+                            Log.d(TAG, "Start on login");
+                            startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
+                            finish();
+                        }
+                    });
+
+            activityResultLauncher.launch(mGoogleSignInClient.getSignInIntent());
+        }
+        getPermissions();
     }
 
     @Override
@@ -80,7 +104,9 @@ public class SplashActivity extends BaseActivity {
         if (!listPermissionsNeeded.isEmpty()) {
             requestPermissions(listPermissionsNeeded.toArray
                     (new String[listPermissionsNeeded.size()]), 1);
+            Log.d(TAG, "Request new Permission");
         } else if ((loginDone || BuildConfig.DEBUG)) {
+            Log.d(TAG, "All Permissions set already");
             startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
             finish();
         }
@@ -98,6 +124,7 @@ public class SplashActivity extends BaseActivity {
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        Log.d(TAG, "New Permission granted");
 
         if (grantResults.length > 0 &&
                 grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -105,6 +132,7 @@ public class SplashActivity extends BaseActivity {
         }
 
         if (listPermissionsNeeded.isEmpty() && (loginDone || BuildConfig.DEBUG)) {
+
             startActivity(new Intent(SplashActivity.this, GamemodeSelectActivity.class));
             finish();
         }

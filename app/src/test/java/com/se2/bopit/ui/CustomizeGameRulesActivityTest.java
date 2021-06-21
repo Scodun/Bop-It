@@ -62,11 +62,11 @@ public class CustomizeGameRulesActivityTest {
 
     @Test
     public void revertToDefault() {
-        activity.model.avoidRepeatingGameTypes = true;
+        activity.model.setAvoidRepeatingGameTypes(true);
 
         activity.revertToDefault();
 
-        assertFalse(activity.model.avoidRepeatingGameTypes);
+        assertFalse(activity.model.isAvoidRepeatingGameTypes());
     }
 
 }

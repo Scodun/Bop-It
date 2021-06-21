@@ -13,7 +13,7 @@ public class GameRules {
     final Class<?>[] gameTypes;
     final Map<Class<?>, GameRuleItemModel> gameTypeModels;
 
-    public boolean avoidRepeatingGameTypes;
+    private boolean avoidRepeatingGameTypes = true;
 
     public GameRules(Class<?>... gameTypes) {
         this.gameTypes = gameTypes;
@@ -27,7 +27,7 @@ public class GameRules {
 
     @SuppressLint("NewApi")
     public void resetToDefault() {
-        avoidRepeatingGameTypes = false;
+        setAvoidRepeatingGameTypes(false);
         gameTypeModels.forEach((k, v) -> v.reset());
     }
 
@@ -49,4 +49,11 @@ public class GameRules {
                 .collect(Collectors.toList());
     }
 
+    public boolean isAvoidRepeatingGameTypes() {
+        return avoidRepeatingGameTypes;
+    }
+
+    public void setAvoidRepeatingGameTypes(boolean avoidRepeatingGameTypes) {
+        this.avoidRepeatingGameTypes = avoidRepeatingGameTypes;
+    }
 }

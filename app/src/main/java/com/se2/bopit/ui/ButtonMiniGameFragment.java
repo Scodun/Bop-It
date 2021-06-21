@@ -1,5 +1,6 @@
 package com.se2.bopit.ui;
 
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,14 +12,16 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 
 import com.se2.bopit.R;
 import com.se2.bopit.domain.ButtonColor;
+import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.gamemodel.ButtonMiniGameModel;
 import com.se2.bopit.domain.responsemodel.ButtonModel;
-import com.se2.bopit.domain.TextToSpeech;
 
+import java.util.Objects;
 import java.util.Random;
 
 import info.hoang8f.widget.FButton;
@@ -74,27 +77,27 @@ public abstract class ButtonMiniGameFragment extends MiniGameFragment<ButtonMini
     private int getTintFromButtonColor(ButtonColor buttonColor) {
         switch (buttonColor) {
             case RED:
-                return getResources().getColor(R.color.red);
+                return ContextCompat.getColor(this.requireContext(), R.color.red);
             case GREEN:
-                return getResources().getColor(R.color.green);
+                return ContextCompat.getColor(this.requireContext(), R.color.green);
             case BLUE:
-                return getResources().getColor(R.color.blue);
+                return ContextCompat.getColor(this.requireContext(), R.color.blue);
             case PURPLE:
-                return getResources().getColor(R.color.purple);
+                return ContextCompat.getColor(this.requireContext(), R.color.purple);
             case YELLOW:
-                return getResources().getColor(R.color.yellow);
+                return ContextCompat.getColor(this.requireContext(), R.color.yellow);
             case ORANGE:
-                return getResources().getColor(R.color.orange);
+                return ContextCompat.getColor(this.requireContext(), R.color.orange);
             case PINK:
-                return getResources().getColor(R.color.pink);
+                return ContextCompat.getColor(this.requireContext(), R.color.pink);
             case BLACK:
-                return getResources().getColor(R.color.black);
+                return ContextCompat.getColor(this.requireContext(), R.color.black);
             case RANDOM:
                 // Chooses a random Element from the Enum except the last which is Random so this will not run forever
                 return getTintFromButtonColor(ButtonColor.values()[new Random().nextInt(ButtonColor.values().length - 1)]);
             case DEFAULT:
             default:
-                return getResources().getColor(R.color.primary);
+                return ContextCompat.getColor(this.requireContext(), R.color.primary);
         }
     }
 }

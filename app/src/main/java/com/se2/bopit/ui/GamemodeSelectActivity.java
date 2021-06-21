@@ -2,7 +2,6 @@ package com.se2.bopit.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -23,17 +22,16 @@ import info.hoang8f.widget.FButton;
 public class GamemodeSelectActivity extends BaseActivity {
 
     private ActivityResultLauncher<Intent> activityResultLauncher;
-    private FButton
-            singleplayerButton,
-            localMultiplayerButton,
-            onlineMultiplayerButton;
-    private ImageButton
-            settingsButton,
-            achievementButton,
-            leaderboardButton;
-    private ConstraintLayout customRulesButton;
-    private static final int RC_LEADERBOARD_UI = 9004;
 
+    private FButton singleplayerButton;
+    private FButton localMultiplayerButton;
+    private FButton onlineMultiplayerButton;
+
+    private ImageButton settingsButton;
+    private ImageButton achievementButton;
+    private ImageButton leaderboardButton;
+
+    private ConstraintLayout customRulesButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,10 +57,10 @@ public class GamemodeSelectActivity extends BaseActivity {
     }
 
     private void initializeListeners() {
-        singleplayerButton.setOnClickListener(v -> {
+        singleplayerButton.setOnClickListener(v ->
             startActivity(new Intent(this, DifficultyActivity.class)
-                          .putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER));
-        });
+                    .putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER))
+        );
 
         localMultiplayerButton.setOnClickListener(v ->
             startActivity(new Intent(this, HostJoinActivity.class)
@@ -78,7 +76,7 @@ public class GamemodeSelectActivity extends BaseActivity {
 
         achievementButton.setOnClickListener(v -> startActivity(new Intent(this, AchievementsSelectActivity.class)));
 
-        leaderboardButton.setOnClickListener(v->  {
+        leaderboardButton.setOnClickListener(v -> {
             if (!BuildConfig.DEBUG && GoogleSignIn.getLastSignedInAccount(this) != null) {
                 Games.getLeaderboardsClient(this, Objects.requireNonNull(GoogleSignIn.getLastSignedInAccount(this)))
                         .getAllLeaderboardsIntent()

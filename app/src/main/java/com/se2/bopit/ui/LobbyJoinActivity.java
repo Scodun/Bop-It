@@ -10,10 +10,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.se2.bopit.R;
-import com.se2.bopit.domain.data.NearbyDataProvider;
 import com.se2.bopit.data.WebsocketDataProvider;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.data.DataProviderContext;
+import com.se2.bopit.domain.data.NearbyDataProvider;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.ui.helpers.CustomToast;
@@ -24,6 +24,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 
@@ -31,24 +32,24 @@ public class LobbyJoinActivity extends BaseActivity {
     static final String TAG = LobbyJoinActivity.class.getSimpleName();
 
     private DataProviderContext dataProvider;
-    private ListView openEndpointsList;
     private final ArrayList<String> endpointItems = new ArrayList<>();
     private final ArrayList<String> userItems = new ArrayList<>();
     private String endpointId;
-    private ListView lobbyUserList;
     private Context context;
-    private static int countdown;
     static ScheduledFuture<?> countdownFuture;
 
     private ArrayAdapter<String> endPointAdapter;
     private ArrayAdapter<String> userAdapter;
 
+    private final String USERNAME = "username";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lobby_join);
+        ListView lobbyUserList;
 
-        openEndpointsList = findViewById(R.id.openEndpointLists);
+        ListView openEndpointsList = findViewById(R.id.openEndpointLists);
         lobbyUserList = findViewById(R.id.userList);
         endPointAdapter = new ArrayAdapter<>(this,
                 android.R.layout.simple_list_item_1,
@@ -68,14 +69,13 @@ public class LobbyJoinActivity extends BaseActivity {
             case "nearby":
             default:
                 dataProvider = DataProviderContext.create(new NearbyDataProvider(
-                        this, networkListener, intent.getStringExtra("username")));
+                        this, networkListener, intent.getStringExtra(USERNAME)));
                 break;
             case "websocket":
                 dataProvider = DataProviderContext.create(new WebsocketDataProvider(
-                        this, networkListener, intent.getStringExtra("username")));
+                        this, networkListener, intent.getStringExtra(USERNAME)));
                 break;
         }
-
         dataProvider.startDiscovery();
     }
 
@@ -101,7 +101,7 @@ public class LobbyJoinActivity extends BaseActivity {
 
         @Override
         public void onEndpointConnected(String id, List<String> names) {
-
+            //Ingore
         }
 
         @Override
@@ -121,17 +121,17 @@ public class LobbyJoinActivity extends BaseActivity {
 
         @Override
         public void onReadyMessageReceived() {
-            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    switch (which){
-                        case DialogInterface.BUTTON_POSITIVE:
-                            dataProvider.sendReadyAnswer(true, getIntent().getStringExtra("username"));
-                            break;
-                        case DialogInterface.BUTTON_NEGATIVE:
-                            dataProvider.sendReadyAnswer(false, getIntent().getStringExtra("username"));
-                            break;
-                    }
+            DialogInterface.OnClickListener dialogClickListener = (dialog, which) -> {
+                switch (which) {
+                    case DialogInterface.BUTTON_POSITIVE:
+                        dataProvider.sendReadyAnswer(true, getIntent().getStringExtra(USERNAME));
+                        break;
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        dataProvider.sendReadyAnswer(false, getIntent().getStringExtra(USERNAME));
+                        break;
+                    default:
+                        Log.d(TAG, "Unknown Message Type");
+                        break;
                 }
             };
             AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -141,18 +141,18 @@ public class LobbyJoinActivity extends BaseActivity {
 
         @Override
         public void OnReadyAnswerReceived(boolean answer, String username) {
-
+            //Ingore
         }
 
         @Override
         public void onGameCountdownStart() {
-            LobbyJoinActivity.countdown = 3;
+            AtomicInteger countdown = new AtomicInteger(3);
             Runnable countdownRunnable = () -> {
                 runOnUiThread(
                         () -> {
-                            CustomToast.showToast(String.valueOf(LobbyJoinActivity.countdown), context);
-                            LobbyJoinActivity.countdown--;
-                            if (LobbyJoinActivity.countdown <= 0)
+                            CustomToast.showToast(String.valueOf(countdown.get()), context, true);
+                            countdown.getAndDecrement();
+                            if (countdown.get() <= 0)
                                 countdownFuture.cancel(false);
                         });
             };

@@ -14,11 +14,11 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        BaseActivity.isRunning = true;
-        if (BaseActivity.music == null) {
-            BaseActivity.music = new Intent(this, BackgroundSoundService.class);
+        BaseActivity.setIsRunning(true);
+        if (BaseActivity.getMusic() == null) {
+            BaseActivity.setMusic(new Intent(this, BackgroundSoundService.class));
             startService(BaseActivity.music);
-            BaseActivity.isRunning = true;
+            BaseActivity.setIsRunning(true);
         }
 
     }
@@ -27,7 +27,7 @@ public class BaseActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         //stop mediaplayer:
-        BaseActivity.isRunning = false;
+        BaseActivity.setIsRunning(false);
         new java.util.Timer().schedule(
                 new java.util.TimerTask() {
                     @Override
@@ -45,7 +45,25 @@ public class BaseActivity extends AppCompatActivity {
         super.onResume();
         if (!BaseActivity.isRunning) {
             startService(BaseActivity.music);
-            BaseActivity.isRunning = true;
+            BaseActivity.setIsRunning(true);
         }
     }
+
+
+    public static boolean isIsRunning() {
+        return isRunning;
+    }
+
+    public static void setIsRunning(boolean isRunning) {
+        BaseActivity.isRunning = isRunning;
+    }
+
+    public static Intent getMusic() {
+        return music;
+    }
+
+    public static void setMusic(Intent music) {
+        BaseActivity.music = music;
+    }
+
 }

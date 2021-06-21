@@ -43,7 +43,6 @@ public class WebsocketDataProvider extends DataProviderStrategy {
     static final int INT_LEFT_GAME = 103;
 
     private NetworkLobbyListener lobbyListener;
-    private NetworkGameListener gameListener;
     private NetworkContextListener contextListener;
     private final ArrayList<User> connectedUsers = new ArrayList<>();
     private boolean isHost = false;
@@ -61,19 +60,9 @@ public class WebsocketDataProvider extends DataProviderStrategy {
         Log.d(TAG, "created for username: " + username);
     }
 
-    public WebsocketDataProvider(Context context, NetworkGameListener networkGameListener, String username) {
-        this.gameListener = networkGameListener;
-        this.username = username;
-    }
-
     @Override
     public void setListener(NetworkLobbyListener listener) {
         this.lobbyListener = listener;
-    }
-
-    @Override
-    public void setListener(NetworkGameListener listener) {
-        this.gameListener = listener;
     }
 
     @Override
