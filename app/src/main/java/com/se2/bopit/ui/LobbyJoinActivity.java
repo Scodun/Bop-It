@@ -73,7 +73,7 @@ public class LobbyJoinActivity extends BaseActivity {
                 break;
             case "websocket":
                 dataProvider = DataProviderContext.create(new WebsocketDataProvider(
-                        this, networkListener, intent.getStringExtra(USERNAME)));
+                        networkListener, intent.getStringExtra(USERNAME)));
                 break;
         }
         dataProvider.startDiscovery();

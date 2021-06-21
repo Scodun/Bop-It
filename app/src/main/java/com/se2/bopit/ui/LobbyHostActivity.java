@@ -63,11 +63,12 @@ public class LobbyHostActivity extends BaseActivity {
         switch(networkMode) {
             case "nearby":
             default:
-                dataProvider = DataProviderContext.create(new NearbyDataProvider(this, networkListener, intent.getStringExtra("username")));
+                dataProvider = DataProviderContext.create(new NearbyDataProvider(
+                        this, networkListener, intent.getStringExtra("username")));
                 break;
             case "websocket":
                 dataProvider = DataProviderContext.create(new WebsocketDataProvider(
-                        this, networkListener, intent.getStringExtra("username")));
+                        networkListener, intent.getStringExtra("username")));
                 break;
         }
 

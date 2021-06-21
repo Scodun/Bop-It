@@ -52,7 +52,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
     Gson gson = new Gson();
     WebSocketConnection connection;
 
-    public WebsocketDataProvider(Context context, NetworkLobbyListener networkLobbyListener, String username) {
+    public WebsocketDataProvider(NetworkLobbyListener networkLobbyListener, String username) {
         this.lobbyListener = networkLobbyListener;
         this.username = username;
         Log.d(TAG, "created for username: " + username);
@@ -185,24 +185,20 @@ public class WebsocketDataProvider extends DataProviderStrategy {
                 lobbyListener.onStatusChange("Advertising start");
                 break;
             case INT_DISCOVER_GAMES: // discover
-                // TODO
                 type =  new TypeToken<Map<String,String>>() {}.getType();
                 Map<String,String> lobbies = unwrapPayload(payload, type);
                 lobbies.forEach((i, n) -> lobbyListener.onEndpointDiscovered(i, n));
                 break;
             case INT_JOIN_GAME:
-                // TODO
                 if(isHost) {
                     connectedUsers.add(new User(endpointId, payload.getPayload()));
                     sendOnlinePlayers();
                 }
                 break;
             case INT_LEFT_GAME:
-                // TODO
                 if(isHost) {
                     connectedUsers.removeIf(u -> u.getId().equals(endpointId));
                     sendOnlinePlayers();
-                    //lobbyListener.onStatusChange("Disconnected");
                 }
                 break;
 
