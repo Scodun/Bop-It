@@ -166,7 +166,8 @@ public class WebsocketDataProvider extends DataProviderStrategy {
                 gameEngineServer.stopCurrentGame(endpointId);
                 break;
             case NearbyPayload.NOTIFY_GAME_OVER:
-                gameEngineClient.stopCurrentGame();
+                type =  new TypeToken<List<User>>() {}.getType();
+                gameEngineClient.stopCurrentGame(unwrapPayload(payload, type));
                 break;
             case NearbyPayload.SET_CLIENT_CHEATED:
                 gameEngineServer.setClientCheated(endpointId);
@@ -389,10 +390,11 @@ public class WebsocketDataProvider extends DataProviderStrategy {
     @Override
     public void notifyGameOver() {
         if (isHost) {
+            DataProviderContext dpc = DataProviderContext.getContext();
             Log.d(TAG, "Broadcast game over");
             sendPayload(getConnectedUserIds(),
-                    wrapPayload(NearbyPayload.NOTIFY_GAME_OVER));
-            gameEngineClient.stopCurrentGame();
+                    wrapPayload(NearbyPayload.NOTIFY_GAME_OVER, dpc.users));
+            gameEngineClient.stopCurrentGame(dpc.getUsers());
         }
     }
 

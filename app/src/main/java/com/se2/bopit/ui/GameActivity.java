@@ -9,6 +9,7 @@ import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -27,12 +28,15 @@ import androidx.fragment.app.Fragment;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.SoundEffects;
+import com.se2.bopit.domain.data.DataProviderContext;
 import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
 import com.se2.bopit.ui.helpers.CustomToast;
 import com.se2.bopit.ui.helpers.WaveAnimator;
 import com.se2.bopit.ui.providers.GameEngineProvider;
+
+import java.util.ArrayList;
 
 
 public class GameActivity extends BaseActivity {
@@ -124,8 +128,12 @@ public class GameActivity extends BaseActivity {
                     new SoundEffects(getBaseContext(), 1);
                 }
                 Intent intent = new Intent(getBaseContext(), WinLossActivity.class);
+                DataProviderContext context =DataProviderContext.getContext();
                 intent.putExtra("score", score);
+                intent.putExtra("userId", engine.getUserId());
                 intent.putExtra(GAME_MODE,gameMode);
+                if(gameMode != GameMode.SINGLE_PLAYER)
+                    intent.putParcelableArrayListExtra("playerScores", (ArrayList<? extends Parcelable>) context.getUsers());
                 startActivity(intent);
             }
         }
@@ -201,14 +209,16 @@ public class GameActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         Log.d(TAG, "onBackPressed");
-        engine.stopCurrentGame();
+        DataProviderContext context = DataProviderContext.getContext();
+        engine.stopCurrentGame(context == null ? new ArrayList<>() : context.getUsers());
         super.onBackPressed();
     }
 
     @Override
     public void onStop() {
         Log.d(TAG, "onStop");
-        engine.stopCurrentGame();
+        DataProviderContext context = DataProviderContext.getContext();
+        engine.stopCurrentGame(context == null ? new ArrayList<>() : context.getUsers());
         super.onStop();
     }
 

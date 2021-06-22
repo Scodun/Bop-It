@@ -31,24 +31,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_bg" />
 
-    <TextView
-        android:id="@+id/tv_score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rounded_corners"
-        android:backgroundTint="@color/primary_variant"
-        android:letterSpacing="0.1"
-        android:padding="10dp"
-        android:text="Score\n1099999"
-        android:textAlignment="center"
-        android:textColor="@color/white"
-        android:textSize="20pt"
-        android:textStyle="bold"
-        android:translationY="-35dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/game_over_text_view" />
-
     <info.hoang8f.widget.FButton
         android:id="@+id/bu_return"
         android:layout_width="80pt"
@@ -70,17 +52,18 @@
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="12dp"
-        android:text="Play Again"
         android:drawableLeft="@drawable/ic_baseline_play_arrow_24"
         android:drawablePadding="0dp"
         android:paddingLeft="20dp"
         android:paddingRight="50dp"
+        android:text="Play Again"
         android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/bu_share"
+        app:layout_constraintTop_toBottomOf="@+id/scoreLayout"
+
+        app:layout_constraintVertical_bias="0.82"
         fbutton:cornerRadius="100dp"
         fbutton:fButtonColor="@color/primary"
-
-        app:layout_constraintBottom_toTopOf="@+id/bu_share"
-        app:layout_constraintTop_toBottomOf="@+id/tv_score"
         fbutton:layout_constraintEnd_toEndOf="parent"
         fbutton:layout_constraintStart_toStartOf="parent" />
 
@@ -112,6 +95,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         fbutton:cornerRadius="100dp" />
+
+    <LinearLayout
+        android:id="@+id/scoreLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:orientation="vertical"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/waveViewWinLoss" />
 
     <info.hoang8f.widget.FButton
         android:id="@+id/leaderboardMediumButton"
@@ -183,4 +179,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
