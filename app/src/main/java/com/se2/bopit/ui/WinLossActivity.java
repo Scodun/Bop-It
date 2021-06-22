@@ -320,7 +320,7 @@ public class WinLossActivity extends BaseActivity {
                 tv.setTextSize(25.0f);
                 tv.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
                 tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-                tv.setText(i++ +". " + user.getName());
+                tv.setText(i++ +". " + user.getName()+"\nScore: "+user.getScore());
                 scoreLayout.addView(tv);
                 Space spaceView = new Space(this);
                 spaceView.setMinimumHeight(10);
