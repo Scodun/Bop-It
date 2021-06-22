@@ -31,6 +31,7 @@ public class GamemodeSelectActivity extends BaseActivity {
     private ImageButton achievementButton;
     private ImageButton leaderboardButton;
 
+    private ConstraintLayout toRulesButton;
     private ConstraintLayout customRulesButton;
 
     @Override
@@ -54,6 +55,7 @@ public class GamemodeSelectActivity extends BaseActivity {
         customRulesButton = findViewById(R.id.customRulesButton);
         achievementButton = findViewById(R.id.achievments);
         leaderboardButton = findViewById(R.id.leaderboardsButton);
+        toRulesButton = findViewById(R.id.rulesButton);
     }
 
     private void initializeListeners() {
@@ -83,6 +85,9 @@ public class GamemodeSelectActivity extends BaseActivity {
                         .addOnSuccessListener(intent -> activityResultLauncher.launch(intent));
             }
         });
+
+        toRulesButton.setOnClickListener(v ->
+                startActivity(new Intent(this, RulesActivity.class)));
 
     }
 

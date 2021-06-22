@@ -18,6 +18,7 @@
         android:roundIcon="@drawable/logobopitmix"
         android:supportsRtl="true"
         android:theme="@style/Theme.BopIt">
+        <activity android:name=".ui.RulesActivity"/>
         <activity android:name=".ui.LobbyHostActivity" />
         <activity android:name=".ui.HostJoinActivity" />
         <activity android:name=".ui.LobbyJoinActivity" />
