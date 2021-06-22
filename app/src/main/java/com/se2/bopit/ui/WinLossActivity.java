@@ -3,11 +3,17 @@ package com.se2.bopit.ui;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -19,9 +25,13 @@ import com.google.android.gms.games.Games;
 import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.Difficulty;
+import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.MinigameAchievementCounters;
+import com.se2.bopit.domain.models.User;
 import com.se2.bopit.ui.helpers.WaveAnimator;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 import info.hoang8f.widget.FButton;
@@ -29,15 +39,20 @@ import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
 
+import static com.se2.bopit.ui.GameActivity.GAME_MODE;
+
 public class WinLossActivity extends BaseActivity {
     private Button buReturn;
     private Button buShare;
+    private Button buPlayAgain;
     private Button buLeaderboardEasy;
     private FButton buLeaderboardMedium;
     private FButton buLeaderboardHard;
-    private TextView tvScore;
+    private LinearLayout scoreLayout;
     private ActivityResultLauncher<Intent> intentActivityResultLauncher;
     private int score;
+    private ArrayList<User> playerScores;
+    private String userId;
 
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_SCORE = "highscore";
@@ -54,6 +69,7 @@ public class WinLossActivity extends BaseActivity {
     int counter100 = 100;
     int counter1000 = 1000;
     int counter10000 = 10000;
+    private GameMode gameMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +97,9 @@ public class WinLossActivity extends BaseActivity {
                 .setPosition(-50f, displayMetrics.widthPixels + 50f, -50f, -50f)
                 .streamFor(100, 2000L);
 
+        initializeFields();
         initializeButtons();
         initializeListeners();
-        initializeFields();
         initActivityLauncher();
         showScore();
         setPrefHighscore();
@@ -247,6 +263,10 @@ public class WinLossActivity extends BaseActivity {
     private void initializeFields() {
         Intent intent = getIntent();
         score = intent.getIntExtra("score", 0);
+        userId = intent.getStringExtra("userId");
+        gameMode = (GameMode) intent.getSerializableExtra(GAME_MODE);
+        if(gameMode != GameMode.SINGLE_PLAYER)
+            playerScores = intent.getParcelableArrayListExtra("playerScores");
     }
 
     private void initializeListeners() {
@@ -255,21 +275,58 @@ public class WinLossActivity extends BaseActivity {
         buLeaderboardEasy.setOnClickListener(onEasyLeaderboardSelect);
         buLeaderboardMedium.setOnClickListener(onMediumLeaderboardSelect);
         buLeaderboardHard.setOnClickListener(onHardLeaderboardSelect);
+        if(gameMode == GameMode.SINGLE_PLAYER)
+            buPlayAgain.setOnClickListener(onPlayAgainListener);
     }
 
     private void initializeButtons() {
         buReturn = findViewById(R.id.bu_return);
         buShare = findViewById(R.id.bu_share);
-        tvScore = findViewById(R.id.tv_score);
+        scoreLayout = findViewById(R.id.scoreLayout);
+        buPlayAgain = findViewById(R.id.bu_play_again);
         buLeaderboardEasy = findViewById(R.id.leaderboardEasyButton);
 
         buLeaderboardMedium = findViewById(R.id.leaderboardMediumButton);
         buLeaderboardHard = findViewById(R.id.leaderboardHardButton);
+
+
+        if(gameMode != GameMode.SINGLE_PLAYER)
+            buPlayAgain.setVisibility(View.INVISIBLE);
+    }
+
+    private TextView newScoreField(){
+        TextView tv = new TextView(this);
+        tv.setBackgroundResource(R.drawable.rounded_corners);
+        tv.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primary_variant)));
+        tv.setPadding(50,50,50, 50);
+        tv.setTextSize(50.0f);
+        tv.setTextColor(ContextCompat.getColor(this, R.color.white));
+        return tv;
     }
 
     private void showScore() {
-        tvScore = findViewById(R.id.tv_score);
-        tvScore.setText("Score\n" + score);
+        if(gameMode == GameMode.SINGLE_PLAYER) {
+            TextView tv = newScoreField();
+            tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            tv.setText("Score\n" + score);
+            scoreLayout.addView(tv);
+        }
+        else
+        {
+            int i=1;
+            Collections.sort(playerScores);
+            for (User user:playerScores) {
+                TextView tv = newScoreField();
+                tv.setTextSize(25.0f);
+                tv.setGravity(Gravity.CENTER_VERTICAL);
+                tv.setForegroundGravity(Gravity.CENTER_VERTICAL);
+                tv.setText("\n" + i++ +". " + user.getName() + "\n   Score:" + (userId.equals(user.getId())?score:user.getScore()));
+                scoreLayout.addView(tv);
+                Space spaceView = new Space(this);
+                spaceView.setMinimumHeight(10);
+                scoreLayout.addView(spaceView);
+            }
+        }
     }
 
     private final View.OnClickListener onShare = v -> {
@@ -307,6 +364,8 @@ public class WinLossActivity extends BaseActivity {
                     .addOnSuccessListener(intent -> intentActivityResultLauncher.launch(intent));
         }
     };
+
+    private final View.OnClickListener onPlayAgainListener = v -> startActivity(new Intent(this, GameActivity.class));
 
     private void initActivityLauncher() {
         intentActivityResultLauncher = registerForActivityResult(

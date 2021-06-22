@@ -9,11 +9,11 @@
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="80dp"
         android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backtoHome">
+        app:layout_constraintTop_toTopOf="parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -123,18 +123,17 @@
 
     <info.hoang8f.widget.FButton
         android:id="@+id/backtoHome"
-        android:layout_width="60dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="351dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="Back"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
         app:fButtonColor="@color/primary"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         fbutton:cornerRadius="100dp"

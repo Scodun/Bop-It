@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.se2.bopit.domain.GameRoundModel;
 import com.se2.bopit.domain.MinigameAchievementCounters;
+import com.se2.bopit.domain.data.DataProviderContext;
 import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
@@ -25,6 +26,8 @@ import com.se2.bopit.ui.games.SliderMinigame;
 import com.se2.bopit.ui.games.SpecialTextButtonMiniGame;
 import com.se2.bopit.ui.games.VolumeButtonMinigame;
 import com.se2.bopit.ui.games.WeirdTextButtonMiniGame;
+
+import java.util.List;
 
 /**
  * GameEngine Client used by UI on each device.
@@ -145,13 +148,16 @@ public class GameEngine {
     }
 
 
-    public void stopCurrentGame() {
+    public void stopCurrentGame(List<User> users) {
+        if(!users.isEmpty())
+            DataProviderContext.getContext().setUsers(users);
         Log.d(TAG, "stopCurrentGame");
         if (!lifecycleCancel) {
             lifecycleCancel = true;
             if (timer != null)
                 timer.cancel();
             getDataProvider().stopCurrentGame(getUserId());
+
             listener.onGameEnd(getScore());
         }
     }
