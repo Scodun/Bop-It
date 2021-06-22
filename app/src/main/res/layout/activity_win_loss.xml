@@ -44,11 +44,10 @@
         android:textColor="@color/white"
         android:textSize="20pt"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:translationY="-35dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/game_over_text_view"
-        app:layout_constraintVertical_bias="0.057" />
+        app:layout_constraintTop_toBottomOf="@+id/game_over_text_view" />
 
     <info.hoang8f.widget.FButton
         android:layout_width="75pt"
@@ -65,6 +64,23 @@
         app:fButtonColor="@color/primary"
         fbutton:cornerRadius="100dp"
         android:textColor="@color/white"/>
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/bu_play_again"
+        android:layout_width="0dp"
+        android:layout_height="30pt"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="12dp"
+        android:text="Play Again"
+        android:textColor="@color/white"
+        fbutton:cornerRadius="100dp"
+        fbutton:fButtonColor="@color/primary"
+
+        app:layout_constraintBottom_toTopOf="@+id/bu_share"
+        app:layout_constraintTop_toBottomOf="@+id/tv_score"
+        fbutton:layout_constraintEnd_toEndOf="parent"
+        fbutton:layout_constraintStart_toStartOf="parent" />
 
     <info.hoang8f.widget.FButton
         android:layout_width="75pt"
@@ -152,7 +168,7 @@
         android:text="Game Over"
         android:textAppearance="@style/TextAppearance.AppCompat.Display3"
         android:textColor="@color/primary_variant"
-        android:translationY="-50dp"
+        android:translationY="-70dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"

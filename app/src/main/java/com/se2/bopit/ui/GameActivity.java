@@ -125,6 +125,7 @@ public class GameActivity extends BaseActivity {
                 }
                 Intent intent = new Intent(getBaseContext(), WinLossActivity.class);
                 intent.putExtra("score", score);
+                intent.putExtra(GAME_MODE,gameMode);
                 startActivity(intent);
             }
         }

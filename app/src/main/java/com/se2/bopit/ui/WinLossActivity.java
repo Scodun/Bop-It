@@ -19,6 +19,7 @@ import com.google.android.gms.games.Games;
 import com.se2.bopit.BuildConfig;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.Difficulty;
+import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.MinigameAchievementCounters;
 import com.se2.bopit.ui.helpers.WaveAnimator;
 
@@ -29,9 +30,12 @@ import nl.dionsegijn.konfetti.KonfettiView;
 import nl.dionsegijn.konfetti.models.Shape;
 import nl.dionsegijn.konfetti.models.Size;
 
+import static com.se2.bopit.ui.GameActivity.GAME_MODE;
+
 public class WinLossActivity extends BaseActivity {
     private Button buReturn;
     private Button buShare;
+    private Button buPlayAgain;
     private Button buLeaderboardEasy;
     private FButton buLeaderboardMedium;
     private FButton buLeaderboardHard;
@@ -54,6 +58,7 @@ public class WinLossActivity extends BaseActivity {
     int counter100 = 100;
     int counter1000 = 1000;
     int counter10000 = 10000;
+    private GameMode gameMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,9 +86,9 @@ public class WinLossActivity extends BaseActivity {
                 .setPosition(-50f, displayMetrics.widthPixels + 50f, -50f, -50f)
                 .streamFor(100, 2000L);
 
+        initializeFields();
         initializeButtons();
         initializeListeners();
-        initializeFields();
         initActivityLauncher();
         showScore();
         setPrefHighscore();
@@ -247,6 +252,7 @@ public class WinLossActivity extends BaseActivity {
     private void initializeFields() {
         Intent intent = getIntent();
         score = intent.getIntExtra("score", 0);
+        gameMode = (GameMode) intent.getSerializableExtra(GAME_MODE);
     }
 
     private void initializeListeners() {
@@ -255,16 +261,23 @@ public class WinLossActivity extends BaseActivity {
         buLeaderboardEasy.setOnClickListener(onEasyLeaderboardSelect);
         buLeaderboardMedium.setOnClickListener(onMediumLeaderboardSelect);
         buLeaderboardHard.setOnClickListener(onHardLeaderboardSelect);
+        if(gameMode == GameMode.SINGLE_PLAYER)
+            buPlayAgain.setOnClickListener(onPlayAgainListener);
     }
 
     private void initializeButtons() {
         buReturn = findViewById(R.id.bu_return);
         buShare = findViewById(R.id.bu_share);
         tvScore = findViewById(R.id.tv_score);
+        buPlayAgain = findViewById(R.id.bu_play_again);
         buLeaderboardEasy = findViewById(R.id.leaderboardEasyButton);
 
         buLeaderboardMedium = findViewById(R.id.leaderboardMediumButton);
         buLeaderboardHard = findViewById(R.id.leaderboardHardButton);
+
+
+        if(gameMode != GameMode.SINGLE_PLAYER)
+            buPlayAgain.setVisibility(View.INVISIBLE);
     }
 
     private void showScore() {
@@ -307,6 +320,8 @@ public class WinLossActivity extends BaseActivity {
                     .addOnSuccessListener(intent -> intentActivityResultLauncher.launch(intent));
         }
     };
+
+    private final View.OnClickListener onPlayAgainListener = v -> startActivity(new Intent(this, GameActivity.class));
 
     private void initActivityLauncher() {
         intentActivityResultLauncher = registerForActivityResult(
