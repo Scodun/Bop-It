@@ -11,6 +11,9 @@ import android.widget.Toast;
 import com.se2.bopit.R;
 
 public class CustomToast {
+
+    private CustomToast(){}
+
     public static void showToast(String message, Context context, boolean isCountdown) {
 
         Toast toast = new Toast(context);
@@ -24,7 +27,6 @@ public class CustomToast {
         else {
             view = LayoutInflater.from(context)
                     .inflate(R.layout.toast_text_layout, null);
-            toast.setDuration(Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.BOTTOM, 0, 200);
         }
 
@@ -34,7 +36,9 @@ public class CustomToast {
         toast.setView(view);
         toast.show();
 
-        Handler handler = new Handler();
-        handler.postDelayed(toast::cancel, 500);
+        if(!isCountdown) {
+            Handler handler = new Handler();
+            handler.postDelayed(toast::cancel, 500);
+        }
     }
 }
