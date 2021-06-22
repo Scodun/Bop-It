@@ -50,20 +50,18 @@
         app:layout_constraintTop_toBottomOf="@+id/game_over_text_view" />
 
     <info.hoang8f.widget.FButton
-        android:layout_width="75pt"
-        android:layout_height="30pt"
-        android:text="Return to GameSelect"
         android:id="@+id/bu_return"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.061"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.959"
+        android:layout_width="80pt"
+        android:layout_height="30pt"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="24dp"
+        android:text="Return to GameSelect"
 
+        android:textColor="@color/white"
         app:fButtonColor="@color/primary"
-        fbutton:cornerRadius="100dp"
-        android:textColor="@color/white"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        fbutton:cornerRadius="100dp" />
 
     <info.hoang8f.widget.FButton
         android:id="@+id/bu_play_again"
@@ -73,6 +71,10 @@
         android:layout_marginEnd="50dp"
         android:layout_marginBottom="12dp"
         android:text="Play Again"
+        android:drawableLeft="@drawable/ic_baseline_play_arrow_24"
+        android:drawablePadding="0dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="50dp"
         android:textColor="@color/white"
         fbutton:cornerRadius="100dp"
         fbutton:fButtonColor="@color/primary"
@@ -83,21 +85,19 @@
         fbutton:layout_constraintStart_toStartOf="parent" />
 
     <info.hoang8f.widget.FButton
-        android:layout_width="75pt"
-        android:layout_height="30pt"
-        android:text="Share Score"
         android:id="@+id/bu_share"
+        android:layout_width="80pt"
+        android:layout_height="30pt"
 
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="24dp"
+        android:text="Share Score"
+
+        android:textColor="@color/white"
+        app:fButtonColor="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.938"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.959"
-
-        app:fButtonColor="@color/primary"
-        fbutton:cornerRadius="100dp"
-        android:textColor="@color/white"/>
+        fbutton:cornerRadius="100dp" />
 
     <info.hoang8f.widget.FButton
         android:id="@+id/leaderboardEasyButton"
