@@ -298,8 +298,9 @@ public class WinLossActivity extends BaseActivity {
         TextView tv = new TextView(this);
         tv.setBackgroundResource(R.drawable.rounded_corners);
         tv.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primary_variant)));
-        tv.setPadding(50,50,50, 50);
         tv.setTextSize(50.0f);
+        tv.setHeight(200);
+        tv.setPadding(0,-60,0,0);
         tv.setTextColor(ContextCompat.getColor(this, R.color.white));
         return tv;
     }
@@ -318,9 +319,9 @@ public class WinLossActivity extends BaseActivity {
             for (User user:playerScores) {
                 TextView tv = newScoreField();
                 tv.setTextSize(25.0f);
-                tv.setGravity(Gravity.CENTER_VERTICAL);
-                tv.setForegroundGravity(Gravity.CENTER_VERTICAL);
-                tv.setText("\n" + i++ +". " + user.getName() + "\n   Score:" + (userId.equals(user.getId())?score:user.getScore()));
+                tv.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
+                tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
+                tv.setText("\n" + i++ +". " + user.getName());
                 scoreLayout.addView(tv);
                 Space spaceView = new Space(this);
                 spaceView.setMinimumHeight(10);
