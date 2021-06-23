@@ -207,7 +207,8 @@ public class GameActivity extends BaseActivity {
     public void onBackPressed() {
         Log.d(TAG, "onBackPressed");
         DataProviderContext context = DataProviderContext.getContext();
-        engine.stopCurrentGame(context == null ? new ArrayList<>() : context.getUsers());
+        engine.stopCurrentGame(context == null || context.getUsers() == null
+                ? new ArrayList<>() : context.getUsers());
         super.onBackPressed();
     }
 
@@ -215,7 +216,8 @@ public class GameActivity extends BaseActivity {
     public void onStop() {
         Log.d(TAG, "onStop");
         DataProviderContext context = DataProviderContext.getContext();
-        engine.stopCurrentGame(context == null ? new ArrayList<>() : context.getUsers());
+        engine.stopCurrentGame(context == null || context.getUsers() == null
+                ? new ArrayList<>() : context.getUsers());
         super.onStop();
     }
 
