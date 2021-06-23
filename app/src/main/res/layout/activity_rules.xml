@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:translationZ="100dp"
     tools:context=".ui.RulesActivity">
 
 
@@ -19,6 +20,7 @@
         android:scaleX="1.4"
         android:scaleY="2"
         android:translationY="50dp"
+        android:translationZ="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,6 +36,7 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/white"
         android:textStyle="bold"
+        android:translationZ="150dp"
         android:typeface="normal"
         app:layout_constraintBottom_toBottomOf="@+id/waveViewRules"
         app:layout_constraintEnd_toEndOf="parent"
@@ -43,8 +46,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:layout_marginTop="100dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -55,7 +58,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/setting_header_size"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="100dp">
 
             <ImageView
                 android:id="@+id/waveRules1"
@@ -311,10 +315,10 @@
                 android:id="@+id/waveRules2"
                 android:layout_width="match_parent"
                 android:layout_height="20dp"
+                android:layout_marginVertical="10dp"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/wave_bg"
                 android:scaleType="fitXY"
-                android:layout_marginVertical="10dp"
                 app:srcCompat="@drawable/ic_wave_2" />
 
             <TextView
