@@ -152,9 +152,9 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     @Override
     public long getTime(Difficulty difficulty, int score) {
-        if(DifficultyActivity.difficulty == EASY)
+        if (DifficultyActivity.difficulty == EASY)
             return generateTime(7.5, 0.07, 1802, score);
-        else if(DifficultyActivity.difficulty == HARD)
+        else if (DifficultyActivity.difficulty == HARD)
             return generateTime(7.5, 0.07, 802, score);
         else
             return generateTime(7.5, 0.07, 1302, score);

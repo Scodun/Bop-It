@@ -57,7 +57,9 @@ public class MinigameAchievementCounters {
         return counterDrawingMinigame;
     }
 
-    public static int getCounterSpecialTextButtonMinigame() { return counterSpecialTextButtonMinigame; }
+    public static int getCounterSpecialTextButtonMinigame() {
+        return counterSpecialTextButtonMinigame;
+    }
 
     public static void resetCounter() {
         setCounterImageButtonMinigame(0);

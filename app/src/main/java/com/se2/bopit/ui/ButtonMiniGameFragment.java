@@ -1,6 +1,5 @@
 package com.se2.bopit.ui;
 
-import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
@@ -21,7 +20,6 @@ import com.se2.bopit.domain.TextToSpeech;
 import com.se2.bopit.domain.gamemodel.ButtonMiniGameModel;
 import com.se2.bopit.domain.responsemodel.ButtonModel;
 
-import java.util.Objects;
 import java.util.Random;
 
 import info.hoang8f.widget.FButton;

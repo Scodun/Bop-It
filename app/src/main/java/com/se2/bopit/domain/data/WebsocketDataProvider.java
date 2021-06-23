@@ -1,6 +1,5 @@
 package com.se2.bopit.domain.data;
 
-import android.content.Context;
 import android.os.Build;
 import android.util.Log;
 
@@ -8,15 +7,15 @@ import androidx.annotation.RequiresApi;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.se2.bopit.domain.GameRoundModel;
 import com.se2.bopit.domain.data.websocket.IncomingMessage;
 import com.se2.bopit.domain.data.websocket.OutgoingMessage;
-import com.se2.bopit.domain.GameRoundModel;
-import com.se2.bopit.domain.responsemodel.ResponseModel;
 import com.se2.bopit.domain.interfaces.NetworkContextListener;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.NearbyPayload;
 import com.se2.bopit.domain.models.ReadyMessage;
 import com.se2.bopit.domain.models.User;
+import com.se2.bopit.domain.responsemodel.ResponseModel;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -129,7 +128,8 @@ public class WebsocketDataProvider extends DataProviderStrategy {
 
         switch (payload.getType()) {
             case NearbyPayload.USER_LOBBY_UPDATE:
-                type = new TypeToken<List<User>>() {}.getType();
+                type = new TypeToken<List<User>>() {
+                }.getType();
                 List<User> users = unwrapPayload(payload, type);
                 Log.d(TAG, "lobby changed: " + users);
                 lobbyListener.onUserLobbyChange(new ArrayList<>(users));
@@ -138,7 +138,8 @@ public class WebsocketDataProvider extends DataProviderStrategy {
                 lobbyListener.onGameCountdownStart();
                 break;
             case NearbyPayload.GAME_START:
-                type =  new TypeToken<List<User>>() {}.getType();
+                type = new TypeToken<List<User>>() {
+                }.getType();
                 contextListener.onGameStart(unwrapPayload(payload, type));
                 lobbyListener.onGameStart();
                 break;
@@ -166,7 +167,8 @@ public class WebsocketDataProvider extends DataProviderStrategy {
                 gameEngineServer.stopCurrentGame(endpointId);
                 break;
             case NearbyPayload.NOTIFY_GAME_OVER:
-                type =  new TypeToken<List<User>>() {}.getType();
+                type = new TypeToken<List<User>>() {
+                }.getType();
                 gameEngineClient.stopCurrentGame(unwrapPayload(payload, type));
                 break;
             case NearbyPayload.SET_CLIENT_CHEATED:
@@ -179,25 +181,26 @@ public class WebsocketDataProvider extends DataProviderStrategy {
                 gameEngineClient.cheaterDetected(unwrapPayload(payload, String.class));
                 break;
 
-                // internal messages
+            // internal messages
             case INT_ADVERTISE_GAME: // create
                 connectedUsers.add(new User(userId, username));
                 sendOnlinePlayers();
                 lobbyListener.onStatusChange("Advertising start");
                 break;
             case INT_DISCOVER_GAMES: // discover
-                type =  new TypeToken<Map<String,String>>() {}.getType();
-                Map<String,String> lobbies = unwrapPayload(payload, type);
+                type = new TypeToken<Map<String, String>>() {
+                }.getType();
+                Map<String, String> lobbies = unwrapPayload(payload, type);
                 lobbies.forEach((i, n) -> lobbyListener.onEndpointDiscovered(i, n));
                 break;
             case INT_JOIN_GAME:
-                if(isHost) {
+                if (isHost) {
                     connectedUsers.add(new User(endpointId, payload.getPayload()));
                     sendOnlinePlayers();
                 }
                 break;
             case INT_LEFT_GAME:
-                if(isHost) {
+                if (isHost) {
                     connectedUsers.removeIf(u -> u.getId().equals(endpointId));
                     sendOnlinePlayers();
                 }
@@ -265,7 +268,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
             }
         }
     }
-    
+
     @Override
     public void sendReadyAnswer(boolean answer, String username) {
         if (!isHost) {
@@ -280,7 +283,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
         if (isHost) {
             List<String> users = new ArrayList<>();
             for (User connected : connectedUsers) {
-                if(!connected.getId().equals(userId))
+                if (!connected.getId().equals(userId))
                     users.add(connected.getId());
             }
             return users;
@@ -313,7 +316,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
     }
 
     void sendPayload(List<String> to, NearbyPayload payload) {
-        if(connection.isConnected()) {
+        if (connection.isConnected()) {
             OutgoingMessage msg = new OutgoingMessage();
             msg.to.addAll(to);
             msg.data = payload;

@@ -128,11 +128,11 @@ public class GameActivity extends BaseActivity {
                     new SoundEffects(getBaseContext(), 1);
                 }
                 Intent intent = new Intent(getBaseContext(), WinLossActivity.class);
-                DataProviderContext context =DataProviderContext.getContext();
+                DataProviderContext context = DataProviderContext.getContext();
                 intent.putExtra("score", score);
                 intent.putExtra("userId", engine.getUserId());
-                intent.putExtra(GAME_MODE,gameMode);
-                if(gameMode != GameMode.SINGLE_PLAYER)
+                intent.putExtra(GAME_MODE, gameMode);
+                if (gameMode != GameMode.SINGLE_PLAYER)
                     intent.putParcelableArrayListExtra("playerScores", (ArrayList<? extends Parcelable>) context.getUsers());
                 startActivity(intent);
             }
@@ -154,16 +154,14 @@ public class GameActivity extends BaseActivity {
         @Override
         public void onLifeUpdate(int life) {
             ImageView lifeToFade = null;
-            if(life == 2){
+            if (life == 2) {
                 lifeToFade = life1;
-            }
-            else if(life == 1){
+            } else if (life == 1) {
                 lifeToFade = life2;
-            }
-            else if(life == 0){
+            } else if (life == 0) {
                 lifeToFade = life3;
             }
-            if(lifeToFade != null) {
+            if (lifeToFade != null) {
                 ColorMatrix matrix = new ColorMatrix();
                 matrix.setSaturation(0);
                 ColorMatrixColorFilter cf = new ColorMatrixColorFilter(matrix);
@@ -175,17 +173,16 @@ public class GameActivity extends BaseActivity {
         @Override
         public void onGameStart(MiniGame game, long time) {
             Log.d(TAG, "onGameStart");
-            if(gameMode != GameMode.SINGLE_PLAYER) {
+            if (gameMode != GameMode.SINGLE_PLAYER) {
                 cheatButton.setText(engine.isMyTurn() ? R.string.cheatButton : R.string.reportButton);
-                CustomToast.showToast(engine.isMyTurn() ? "YOU" : "OTHER", getApplicationContext(),false);
-                if(engine.isMyTurn()){
+                CustomToast.showToast(engine.isMyTurn() ? "YOU" : "OTHER", getApplicationContext(), false);
+                if (engine.isMyTurn()) {
                     mesh.setAlpha(0f);
                     isSamePlayer = false;
                     ConstraintLayout.LayoutParams newLayoutParams = (ConstraintLayout.LayoutParams) mesh.getLayoutParams();
                     newLayoutParams.height = 0;
                     mesh.setLayoutParams(newLayoutParams);
-                }
-                else if(!isSamePlayer){
+                } else if (!isSamePlayer) {
                     animateMesh();
                     mesh.setAlpha(0.8f);
                     isSamePlayer = true;
@@ -222,7 +219,7 @@ public class GameActivity extends BaseActivity {
         super.onStop();
     }
 
-    private void animateMesh(){
+    private void animateMesh() {
         Activity context = this;
         Animation a = new Animation() {
 
@@ -235,7 +232,7 @@ public class GameActivity extends BaseActivity {
                 mesh.setLayoutParams(newLayoutParams);
             }
         };
-        a.setDuration((long) (1000)); // in ms
+        a.setDuration(1000); // in ms
 
         mesh.startAnimation(a);
     }

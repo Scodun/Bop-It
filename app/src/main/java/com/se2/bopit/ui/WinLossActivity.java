@@ -4,13 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Space;
@@ -87,7 +85,7 @@ public class WinLossActivity extends BaseActivity {
                         ContextCompat.getColor(this, R.color.blue),
                         ContextCompat.getColor(this, R.color.primary),
                         ContextCompat.getColor(this, R.color.primary_variant)
-                        )
+                )
                 .setDirection(0.0, 359.0)
                 .setSpeed(1f, 3f)
                 .setFadeOutEnabled(true)
@@ -265,7 +263,7 @@ public class WinLossActivity extends BaseActivity {
         score = intent.getIntExtra("score", 0);
         userId = intent.getStringExtra("userId");
         gameMode = (GameMode) intent.getSerializableExtra(GAME_MODE);
-        if(gameMode != GameMode.SINGLE_PLAYER)
+        if (gameMode != GameMode.SINGLE_PLAYER)
             playerScores = intent.getParcelableArrayListExtra("playerScores");
     }
 
@@ -275,7 +273,7 @@ public class WinLossActivity extends BaseActivity {
         buLeaderboardEasy.setOnClickListener(onEasyLeaderboardSelect);
         buLeaderboardMedium.setOnClickListener(onMediumLeaderboardSelect);
         buLeaderboardHard.setOnClickListener(onHardLeaderboardSelect);
-        if(gameMode == GameMode.SINGLE_PLAYER)
+        if (gameMode == GameMode.SINGLE_PLAYER)
             buPlayAgain.setOnClickListener(onPlayAgainListener);
     }
 
@@ -290,37 +288,35 @@ public class WinLossActivity extends BaseActivity {
         buLeaderboardHard = findViewById(R.id.leaderboardHardButton);
 
 
-        if(gameMode != GameMode.SINGLE_PLAYER)
+        if (gameMode != GameMode.SINGLE_PLAYER)
             buPlayAgain.setVisibility(View.INVISIBLE);
     }
 
-    private TextView newScoreField(){
+    private TextView newScoreField() {
         TextView tv = new TextView(this);
         tv.setBackgroundResource(R.drawable.rounded_corners);
         tv.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primary_variant)));
         tv.setTextSize(50.0f);
-        tv.setPadding(10,10,10,10);
+        tv.setPadding(10, 10, 10, 10);
         tv.setTextColor(ContextCompat.getColor(this, R.color.white));
         return tv;
     }
 
     private void showScore() {
-        if(gameMode == GameMode.SINGLE_PLAYER) {
+        if (gameMode == GameMode.SINGLE_PLAYER) {
             TextView tv = newScoreField();
             tv.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
             tv.setText("Score\n" + score);
             scoreLayout.addView(tv);
-        }
-        else
-        {
-            int i=1;
+        } else {
+            int i = 1;
             Collections.sort(playerScores);
-            for (User user:playerScores) {
+            for (User user : playerScores) {
                 TextView tv = newScoreField();
                 tv.setTextSize(25.0f);
                 tv.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
                 tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-                tv.setText(i++ +". " + user.getName()+"\nScore: "+user.getScore());
+                tv.setText(i++ + ". " + user.getName() + "\nScore: " + user.getScore());
                 scoreLayout.addView(tv);
                 Space spaceView = new Space(this);
                 spaceView.setMinimumHeight(10);

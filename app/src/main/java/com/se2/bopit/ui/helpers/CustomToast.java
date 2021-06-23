@@ -12,19 +12,19 @@ import com.se2.bopit.R;
 
 public class CustomToast {
 
-    private CustomToast(){}
+    private CustomToast() {
+    }
 
     public static void showToast(String message, Context context, boolean isCountdown) {
 
         Toast toast = new Toast(context);
         View view = null;
 
-        if(isCountdown) {
+        if (isCountdown) {
             view = LayoutInflater.from(context)
                     .inflate(R.layout.toast_countdown_layout, null);
             toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-        }
-        else {
+        } else {
             view = LayoutInflater.from(context)
                     .inflate(R.layout.toast_text_layout, null);
             toast.setGravity(Gravity.BOTTOM, 0, 200);
@@ -36,7 +36,7 @@ public class CustomToast {
         toast.setView(view);
         toast.show();
 
-        if(!isCountdown) {
+        if (!isCountdown) {
             Handler handler = new Handler();
             handler.postDelayed(toast::cancel, 500);
         }

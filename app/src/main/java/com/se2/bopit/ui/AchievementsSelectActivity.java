@@ -68,10 +68,4 @@ public class AchievementsSelectActivity extends BaseActivity {
         }
     };
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        this.finishAffinity();
-    }
-
 }
