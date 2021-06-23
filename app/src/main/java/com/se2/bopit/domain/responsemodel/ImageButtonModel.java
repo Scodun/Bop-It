@@ -4,12 +4,27 @@ import com.se2.bopit.domain.ButtonImage;
 
 public class ImageButtonModel extends ResponseModel {
 
-    public ButtonImage image;
-    public String label;
+    private ButtonImage image;
+    private String label;
 
     public ImageButtonModel(ButtonImage buttonImage) {
-        this.image = buttonImage;
-        this.label = image.name().toUpperCase();
+        this.setImage(buttonImage);
+        this.setLabel(getImage().name().toUpperCase());
     }
 
+    public ButtonImage getImage() {
+        return image;
+    }
+
+    public void setImage(ButtonImage image) {
+        this.image = image;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
+    }
 }

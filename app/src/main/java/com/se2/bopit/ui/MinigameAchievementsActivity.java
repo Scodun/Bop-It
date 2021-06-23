@@ -66,9 +66,7 @@ public class MinigameAchievementsActivity extends BaseActivity implements Shared
         setPrefValues();
         checkAchievement();
 
-        backButton.setOnClickListener(v -> {
-            startActivity(new Intent(this, AchievementsSelectActivity.class));
-        });
+        backButton.setOnClickListener(v -> startActivity(new Intent(this, AchievementsSelectActivity.class)));
     }
 
     private void initializeViews() {
@@ -193,11 +191,6 @@ public class MinigameAchievementsActivity extends BaseActivity implements Shared
     public void onDestroy() {
         super.onDestroy();
         customSharedPreferences.unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 
     @Override

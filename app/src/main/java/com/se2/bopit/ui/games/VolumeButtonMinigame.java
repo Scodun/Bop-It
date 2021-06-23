@@ -55,7 +55,7 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
 
         gifImageView = view.findViewById(R.id.gifImageView);
 
-        text = gameModel.challenge;
+        text = gameModel.getChallenge();
         textView = view.findViewById(R.id.VolumeButtonMessage);
         textView.setText(text);
         new TextToSpeech().sayText("Volume" + text.split(" ")[2], this.getContext());
@@ -88,7 +88,7 @@ public class VolumeButtonMinigame extends Fragment implements MiniGame {
      * @return the KeyEvent which is needed to accomplish the challenge
      */
     public int getKeyEvent() {
-        switch (gameModel.correctResponse.volumeButton) {
+        switch (gameModel.getCorrectResponse().getVolumeButton()) {
             case DOWN:
                 return KeyEvent.KEYCODE_VOLUME_DOWN;
             case UP:

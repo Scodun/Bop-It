@@ -26,12 +26,12 @@ public class VolumeButtonModelTest {
 
     @Test
     public void labelTest() {
-        assertEquals("DOWN", volumeButtonModel.label);
+        assertEquals("DOWN", volumeButtonModel.getLabel());
     }
 
     @Test
     public void volumeButtonTest() {
         volumeButtonModel.setVolumeButton(volumeButton);
-        assertEquals("UP", volumeButtonModel.label);
+        assertEquals("UP", volumeButtonModel.getLabel());
     }
 }

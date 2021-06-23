@@ -33,13 +33,13 @@ public class ImageButtonMinigameModel extends MultipleChoiceGameModel<ImageButto
         List<ImageButtonModel> wrongAnswers = possibleAnswers.subList(1, possibleAnswers.size());
 
         return new ImageButtonMinigameModel(
-                String.format("Select the %s", correctResponse.label),
+                String.format("Select the %s", correctResponse.getLabel()),
                 correctResponse,
                 wrongAnswers
         );
     }
 
     public String getChallenge() {
-        return challenge;
+        return super.getChallenge();
     }
 }

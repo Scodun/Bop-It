@@ -5,9 +5,9 @@ import android.os.Parcelable;
 
 import java.io.Serializable;
 
-public class User implements Serializable, Parcelable, Comparable {
+public class User implements Serializable, Parcelable, Comparable<User> {
 
-    private static int STARTING_LIVES = 3;
+    private static int startingLives = 3;
 
     private final String id;
     private final String name;
@@ -26,7 +26,7 @@ public class User implements Serializable, Parcelable, Comparable {
         this.id = id;
         this.name = name;
         this.ready = ready;
-        lives = STARTING_LIVES;
+        lives = startingLives;
     }
 
     public void incrementScore() {
@@ -74,11 +74,11 @@ public class User implements Serializable, Parcelable, Comparable {
     }
 
     public static int getStartingLives() {
-        return STARTING_LIVES;
+        return startingLives;
     }
 
     public static void setStartingLives(int startingLives) {
-        STARTING_LIVES = startingLives;
+        User.startingLives = startingLives;
     }
 
     @Override
@@ -112,8 +112,8 @@ public class User implements Serializable, Parcelable, Comparable {
     };
 
     @Override
-    public int compareTo(Object obj) {
-        return ((User) obj).getScore() - this.score;
+    public int compareTo(User user) {
+        return user.getScore() - this.score;
     }
 
     @Override
@@ -127,4 +127,5 @@ public class User implements Serializable, Parcelable, Comparable {
     public int hashCode() {
         return this.getId().hashCode();
     }
+
 }

@@ -14,7 +14,7 @@ public class ButtonModelTest {
         ButtonModel model = new ButtonModel(ButtonColor.BLUE);
         assertEquals(ButtonColor.BLUE, model.color);
         assertEquals("BLUE", model.label);
-        assertFalse(model.isCorrect);
+        assertFalse(model.isCorrect());
     }
 
     @Test
@@ -22,18 +22,18 @@ public class ButtonModelTest {
         ButtonModel model = new ButtonModel("test");
         assertEquals("test", model.label);
         assertEquals(ButtonColor.DEFAULT, model.color);
-        assertFalse(model.isCorrect);
+        assertFalse(model.isCorrect());
     }
 
     @Test
     public void testCopyConstructor() {
         ButtonModel src = new ButtonModel(ButtonColor.RANDOM, "anything");
-        src.isCorrect = true;
+        src.setCorrect(true);
         ButtonModel copy = new ButtonModel(src);
         assertNotSame(copy, src);
         assertEquals(ButtonColor.RANDOM, copy.color);
         assertEquals("anything", copy.label);
-        assertFalse(copy.isCorrect);
+        assertFalse(copy.isCorrect());
     }
 
 }

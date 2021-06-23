@@ -41,7 +41,7 @@ public class LobbyJoinActivity extends BaseActivity {
     private ArrayAdapter<String> endPointAdapter;
     private ArrayAdapter<String> userAdapter;
 
-    private final String USERNAME = "username";
+    private static final String USERNAME = "username";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,14 +66,14 @@ public class LobbyJoinActivity extends BaseActivity {
         Intent intent = getIntent();
         String networkMode = intent.getStringExtra(HostJoinActivity.NETWORK_MODE);
         switch (networkMode) {
+            case "websocket":
+                dataProvider = DataProviderContext.create(new WebsocketDataProvider(
+                        networkListener, intent.getStringExtra(USERNAME)));
+                break;
             case "nearby":
             default:
                 dataProvider = DataProviderContext.create(new NearbyDataProvider(
                         this, networkListener, intent.getStringExtra(USERNAME)));
-                break;
-            case "websocket":
-                dataProvider = DataProviderContext.create(new WebsocketDataProvider(
-                        networkListener, intent.getStringExtra(USERNAME)));
                 break;
         }
         dataProvider.startDiscovery();
@@ -140,14 +140,14 @@ public class LobbyJoinActivity extends BaseActivity {
         }
 
         @Override
-        public void OnReadyAnswerReceived(boolean answer, String username) {
+        public void onReadyAnswerReceived(boolean answer, String username) {
             //Ingore
         }
 
         @Override
         public void onGameCountdownStart() {
             AtomicInteger countdown = new AtomicInteger(3);
-            Runnable countdownRunnable = () -> {
+            Runnable countdownRunnable = () ->
                 runOnUiThread(
                         () -> {
                             CustomToast.showToast(String.valueOf(countdown.get()), context, true);
@@ -155,7 +155,6 @@ public class LobbyJoinActivity extends BaseActivity {
                             if (countdown.get() <= 0)
                                 countdownFuture.cancel(false);
                         });
-            };
             ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
             countdownFuture = executor.scheduleAtFixedRate(countdownRunnable, 0, 1, TimeUnit.SECONDS);
         }

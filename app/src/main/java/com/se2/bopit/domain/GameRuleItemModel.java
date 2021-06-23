@@ -8,31 +8,27 @@ public class GameRuleItemModel {
 
     public final Class<?> type;
     public final String name;
-    public boolean enabled;
+    private boolean enabled;
 
-    /**
-     * if {@code false} then the game is not safe to use at all (e.g. missing hardware)
-     * and thus, must be treated as unavailable.
-     */
-    public boolean available = true; // by default all are available
+    private boolean available = true; // by default all are available
 
     public GameRuleItemModel(Class<?> type) {
         this.type = type;
         this.name = extractTypeName(type);
-        this.enabled = isEnabledByDefault();
+        this.setEnabled(isEnabledByDefault());
     }
 
     public void reset() {
-        this.enabled = available && isEnabledByDefault();
+        this.setEnabled(isAvailable() && isEnabledByDefault());
     }
 
     public void disablePermanently() {
-        available = false;
-        enabled = false;
+        setAvailable(false);
+        setEnabled(false);
     }
 
     boolean isEnabledByDefault() {
-        if (!available)
+        if (!isAvailable())
             return false;
         MiniGameType miniGameType = type.getAnnotation(MiniGameType.class);
         return miniGameType != null ? miniGameType.enableByDefault() : MiniGameType.DEFAULT_ENABLED;
@@ -93,7 +89,27 @@ public class GameRuleItemModel {
         return "GameRuleItemModel{" +
                 "type=" + type +
                 ", name='" + name + '\'' +
-                ", enabled=" + enabled +
+                ", enabled=" + isEnabled() +
                 '}';
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    /**
+     * if {@code false} then the game is not safe to use at all (e.g. missing hardware)
+     * and thus, must be treated as unavailable.
+     */
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
     }
 }

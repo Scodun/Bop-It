@@ -61,14 +61,14 @@ public class LobbyHostActivity extends BaseActivity {
         Intent intent = getIntent();
         String networkMode = intent.getStringExtra(HostJoinActivity.NETWORK_MODE);
         switch (networkMode) {
+            case "websocket":
+                dataProvider = DataProviderContext.create(new WebsocketDataProvider(
+                        networkListener, intent.getStringExtra("username")));
+                break;
             case "nearby":
             default:
                 dataProvider = DataProviderContext.create(new NearbyDataProvider(
                         this, networkListener, intent.getStringExtra("username")));
-                break;
-            case "websocket":
-                dataProvider = DataProviderContext.create(new WebsocketDataProvider(
-                        networkListener, intent.getStringExtra("username")));
                 break;
         }
 
@@ -142,7 +142,7 @@ public class LobbyHostActivity extends BaseActivity {
         }
 
         @Override
-        public void OnReadyAnswerReceived(boolean answer, String username) {
+        public void onReadyAnswerReceived(boolean answer, String username) {
             for (User usr : userItems) {
                 if (usr.getName().equals(username)) {
                     usr.setReady(answer);

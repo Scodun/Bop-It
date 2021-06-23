@@ -62,7 +62,7 @@ public class ImageButtonMinigameTest {
 
     @Test
     public void rightButtonIsImageButton2() {
-        rightImage.image = ButtonImage.DOG;
+        rightImage.setImage(ButtonImage.DOG);
         gameModelTest = new ImageButtonMinigameModel("Select the DOG", rightImage, wrongAnswers);
 
         imageButtonMinigame.imageButtonMinigameModel = gameModelTest;
@@ -71,7 +71,7 @@ public class ImageButtonMinigameTest {
 
     @Test
     public void rightButtonIsImageButton3() {
-        rightImage.image = ButtonImage.ELEPHANT;
+        rightImage.setImage(ButtonImage.ELEPHANT);
         gameModelTest = new ImageButtonMinigameModel("Select the ELEPHANT", rightImage, wrongAnswers);
 
         imageButtonMinigame.imageButtonMinigameModel = gameModelTest;

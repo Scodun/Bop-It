@@ -4,16 +4,28 @@ import com.se2.bopit.domain.VolumeButton;
 
 public class VolumeButtonModel extends ResponseModel {
 
-    public VolumeButton volumeButton;
-    public String label;
+    private VolumeButton volumeButton;
+    private String label;
 
     public VolumeButtonModel(VolumeButton volumeButton) {
-        this.volumeButton = volumeButton;
-        this.label = volumeButton.name().toUpperCase();
+        this.setVolumeButton(volumeButton);
+        this.setLabel(volumeButton.name().toUpperCase());
     }
 
     public void setVolumeButton(VolumeButton volumeButton) {
         this.volumeButton = volumeButton;
-        this.label = volumeButton.name().toUpperCase();
+        this.setLabel(volumeButton.name().toUpperCase());
+    }
+
+    public VolumeButton getVolumeButton() {
+        return volumeButton;
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public void setLabel(String label) {
+        this.label = label;
     }
 }

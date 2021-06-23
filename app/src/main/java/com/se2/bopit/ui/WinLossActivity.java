@@ -50,7 +50,6 @@ public class WinLossActivity extends BaseActivity {
     private ActivityResultLauncher<Intent> intentActivityResultLauncher;
     private int score;
     private ArrayList<User> playerScores;
-    private String userId;
 
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_SCORE = "highscore";
@@ -154,7 +153,7 @@ public class WinLossActivity extends BaseActivity {
 
         MinigameAchievementCounters.resetCounter();
 
-        switch (DifficultyActivity.difficulty) {
+        switch (DifficultyActivity.getDifficulty()) {
             case EASY:
                 easyScoreHandler(scoreEasy, editor);
                 break;
@@ -184,11 +183,11 @@ public class WinLossActivity extends BaseActivity {
             }
         }
 
-        if (score > lastHighscoreEasy && DifficultyActivity.difficulty == Difficulty.EASY) {
+        if (score > lastHighscoreEasy && DifficultyActivity.getDifficulty() == Difficulty.EASY) {
             editor.putInt(PREF_KEY_SCORE, score);
-        } else if (score > lastHighscoreMedium && DifficultyActivity.difficulty == Difficulty.MEDIUM) {
+        } else if (score > lastHighscoreMedium && DifficultyActivity.getDifficulty() == Difficulty.MEDIUM) {
             editor.putInt(PREF_KEY_SCORE_MEDIUM, score);
-        } else if (score > lastHighscoreHard && DifficultyActivity.difficulty == Difficulty.HARD) {
+        } else if (score > lastHighscoreHard && DifficultyActivity.getDifficulty() == Difficulty.HARD) {
             editor.putInt(PREF_KEY_SCORE_HARD, score);
         }
         editor.apply();
@@ -261,7 +260,6 @@ public class WinLossActivity extends BaseActivity {
     private void initializeFields() {
         Intent intent = getIntent();
         score = intent.getIntExtra("score", 0);
-        userId = intent.getStringExtra("userId");
         gameMode = (GameMode) intent.getSerializableExtra(GAME_MODE);
         if (gameMode != GameMode.SINGLE_PLAYER)
             playerScores = intent.getParcelableArrayListExtra("playerScores");

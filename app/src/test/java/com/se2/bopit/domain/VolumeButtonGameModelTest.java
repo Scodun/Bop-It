@@ -21,20 +21,19 @@ public class VolumeButtonGameModelTest {
 
     VolumeButtonModel wrong;
     VolumeButtonModel right;
-    VolumeButtonModel wrongCheck;
     VolumeButtonModel rightCheck;
 
     List<VolumeButtonModel> volumeButtonModels;
     List<VolumeButtonModel> volumeButtonModelsCheck;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         volumeButtonModels = new ArrayList<>();
         volumeButtonModelsCheck = new ArrayList<>();
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         volumeButtonModels = null;
     }
 
@@ -56,22 +55,22 @@ public class VolumeButtonGameModelTest {
 
         String challengeCheck = gameModel.getChallenge();
 
-        assertEquals(challengeCheck, gameModel.challenge);
+        assertEquals(challengeCheck, gameModel.getChallenge());
     }
 
     @Test
     public void shuffleResponses() {
         gameModel = VolumeButtonGameModel.createRandomModel();
-        volumeButtonModels = gameModel.responses;
-        right = gameModel.correctResponse;
+        volumeButtonModels = gameModel.getResponses();
+        right = gameModel.getCorrectResponse();
         volumeButtonModels.remove(right);
 
         do {
             gameModelCheck = VolumeButtonGameModel.createRandomModel();
-            volumeButtonModelsCheck = gameModelCheck.responses;
-            rightCheck = gameModelCheck.correctResponse;
+            volumeButtonModelsCheck = gameModelCheck.getResponses();
+            rightCheck = gameModelCheck.getCorrectResponse();
             volumeButtonModelsCheck.remove(rightCheck);
-        } while (right.label.equals(rightCheck.label));
+        } while (right.getLabel().equals(rightCheck.getLabel()));
 
         assertNotEquals(volumeButtonModels, volumeButtonModelsCheck);
     }

@@ -40,14 +40,14 @@ public class GameRulesTest {
 
     @Test
     public void disablePermanently() {
-        gameRules.getItems().forEach(i -> assertTrue(i.available));
+        gameRules.getItems().forEach(i -> assertTrue(i.isAvailable()));
         gameRules.disablePermanently(CoverLightSensorMiniGame.class);
         gameRules.getItems().forEach(i -> {
             if (i.type == CoverLightSensorMiniGame.class) {
-                assertFalse(i.available);
-                assertFalse(i.enabled);
+                assertFalse(i.isAvailable());
+                assertFalse(i.isEnabled());
             } else {
-                assertTrue(i.available);
+                assertTrue(i.isAvailable());
             }
         });
     }

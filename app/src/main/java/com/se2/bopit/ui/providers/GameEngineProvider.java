@@ -53,16 +53,16 @@ public class GameEngineProvider {
             case MULTI_PLAYER_CLIENT:
                 return createMultiPlayerClient(gamesProvider, platformFeaturesProvider, gameListener);
             default:
-                throw new RuntimeException("Not implemented!");
+                Log.d(TAG, "Gamemode not supported, use Singleplayer");
+                return createSinglePlayer(gamesProvider, platformFeaturesProvider, gameListener);
         }
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     GameEngine createMultiPlayerHost(MiniGamesProvider gamesProvider, PlatformFeaturesProvider platformFeaturesProvider, GameEngineListener gameListener) {
         DataProviderContext context = DataProviderContext.getContext();
         GameEngine client = new GameEngine(gamesProvider, platformFeaturesProvider, gameListener, context.getDataProvider());
-        GameEngineServer server = new GameEngineServer(gamesProvider, platformFeaturesProvider,
+        new GameEngineServer(gamesProvider, platformFeaturesProvider,
                 context.getUsers().stream()
                         .collect(Collectors.toMap(User::getId, u -> u)),
                 context.getDataProvider());
@@ -82,7 +82,7 @@ public class GameEngineProvider {
         SinglePlayerGameEngineDataProvider dataProvider = new SinglePlayerGameEngineDataProvider();
         GameEngine client = new GameEngine(gamesProvider, platformFeaturesProvider, gameListener, dataProvider);
         String singleUserId = dataProvider.getUserId();
-        GameEngineServer server = new GameEngineServer(gamesProvider, platformFeaturesProvider,
+        new GameEngineServer(gamesProvider, platformFeaturesProvider,
                 Collections.singletonMap(singleUserId, new User(singleUserId, singleUserId)), dataProvider);
         return client;
     }

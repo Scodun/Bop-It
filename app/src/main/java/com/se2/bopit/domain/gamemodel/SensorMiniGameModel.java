@@ -10,7 +10,7 @@ public abstract class SensorMiniGameModel extends ActionGameModel<SensorResponse
         implements SensorEventModelListener {
     public final int sensorType;
 
-    protected transient Context context;
+    protected Context context;
 
     protected SensorMiniGameModel(SensorResponseModel expectedResponseModel) {
         super(expectedResponseModel);

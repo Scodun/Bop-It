@@ -74,8 +74,8 @@ public class CustomizeGameRulesActivity extends BaseActivity {
             SwitchCompat sw = createSwitchControl(template);
 
             sw.setText(item.name);
-            if (item.available) {
-                sw.setChecked(item.enabled);
+            if (item.isAvailable()) {
+                sw.setChecked(item.isEnabled());
             } else {
                 sw.setChecked(false);
                 sw.setEnabled(false);
@@ -86,7 +86,7 @@ public class CustomizeGameRulesActivity extends BaseActivity {
             sw.setFontFeatureSettings(template.getFontFeatureSettings());
             sw.setFontVariationSettings(template.getFontVariationSettings());
 
-            sw.setOnClickListener(v -> item.enabled = sw.isChecked());
+            sw.setOnClickListener(v -> item.setEnabled(sw.isChecked()));
 
             uiModelsMap.put(sw, item);
         }
@@ -114,6 +114,6 @@ public class CustomizeGameRulesActivity extends BaseActivity {
 
     void applyModel() {
         switchAvoidRepeatingTypes.setSelected(model.isAvoidRepeatingGameTypes());
-        uiModelsMap.forEach((k, v) -> k.setChecked(v.enabled));
+        uiModelsMap.forEach((k, v) -> k.setChecked(v.isEnabled()));
     }
 }

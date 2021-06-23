@@ -17,13 +17,13 @@ public class GameRuleItemModelTest {
     @Test
     public void reset() {
         GameRuleItemModel item = new GameRuleItemModel(SimpleTextButtonMiniGame.class);
-        assertTrue(item.enabled);
+        assertTrue(item.isEnabled());
 
-        item.enabled = false;
-        assertFalse(item.enabled);
+        item.setEnabled(false);
+        assertFalse(item.isEnabled());
 
         item.reset();
-        assertTrue(item.enabled);
+        assertTrue(item.isEnabled());
     }
 
     @Test
@@ -77,17 +77,17 @@ public class GameRuleItemModelTest {
     @Test
     public void disablePermanently() {
         GameRuleItemModel item = new GameRuleItemModel(SimpleTextButtonMiniGame.class);
-        assertTrue(item.available);
+        assertTrue(item.isAvailable());
         assertTrue(item.isEnabledByDefault());
 
         item.disablePermanently();
 
-        assertFalse(item.available);
+        assertFalse(item.isAvailable());
         assertFalse(item.isEnabledByDefault());
 
         // even after reset
         item.reset();
-        assertFalse(item.available);
+        assertFalse(item.isAvailable());
         assertFalse(item.isEnabledByDefault());
     }
 

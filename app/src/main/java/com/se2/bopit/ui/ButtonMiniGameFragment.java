@@ -35,12 +35,12 @@ public abstract class ButtonMiniGameFragment extends MiniGameFragment<ButtonMini
         View view = inflater.inflate(R.layout.fragment_button_component, container, false);
 
         TextView messageText = view.findViewById(R.id.messageText);
-        messageText.setText(gameModel.challenge);
-        new TextToSpeech().sayText(gameModel.challenge.split(" ")[1], this.getContext());
+        messageText.setText(gameModel.getChallenge());
+        new TextToSpeech().sayText(gameModel.getChallenge().split(" ")[1], this.getContext());
 
         LinearLayout layout = view.findViewById(R.id.buttonsRegion);
 
-        for (ButtonModel model : gameModel.responses) {
+        for (ButtonModel model : gameModel.getResponses()) {
             layout.addView(applyButtonModel(model,
                     inflater.inflate(R.layout.button_template, layout, false)));
         }
