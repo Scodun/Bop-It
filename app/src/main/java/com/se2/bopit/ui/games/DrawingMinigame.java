@@ -69,9 +69,9 @@ public class DrawingMinigame extends MiniGameFragment<DrawingGameModel> {
 
     @Override
     public long getTime(Difficulty difficulty, int score) {
-        if(DifficultyActivity.difficulty == EASY)
+        if (DifficultyActivity.difficulty == EASY)
             return generateTime(8, 0.01, 2000, score);
-        else if(DifficultyActivity.difficulty == HARD)
+        else if (DifficultyActivity.difficulty == HARD)
             return generateTime(8, 0.01, 1000, score);
         else
             return generateTime(8, 0.01, 1500, score);

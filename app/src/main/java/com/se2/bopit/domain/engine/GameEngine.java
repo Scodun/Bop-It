@@ -149,7 +149,7 @@ public class GameEngine {
 
 
     public void stopCurrentGame(List<User> users) {
-        if(!users.isEmpty())
+        if (!users.isEmpty())
             DataProviderContext.getContext().setUsers(users);
         Log.d(TAG, "stopCurrentGame");
         if (!lifecycleCancel) {
@@ -224,7 +224,7 @@ public class GameEngine {
     public void winMinigame() {
         getDataProvider().sendGameResult(getUserId(), true, null);
         setScore(getScore() + 1);
-        if(minigame != null)
+        if (minigame != null)
             setCounter(minigame);
         listener.onScoreUpdate(getScore());
     }

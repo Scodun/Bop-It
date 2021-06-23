@@ -27,27 +27,27 @@ public class RulesActivity extends BaseActivity {
     }
 
     private void initializeView() {
-        ivBullet1=findViewById(R.id.iconBullet1);
+        ivBullet1 = findViewById(R.id.iconBullet1);
         ivBullet1.setImageResource(R.drawable.ic_bullet);
-        ivBullet2=findViewById(R.id.iconBullet2);
+        ivBullet2 = findViewById(R.id.iconBullet2);
         ivBullet2.setImageResource(R.drawable.ic_bullet);
-        ivBullet3=findViewById(R.id.iconBullet3);
+        ivBullet3 = findViewById(R.id.iconBullet3);
         ivBullet3.setImageResource(R.drawable.ic_bullet);
-        ivBullet4=findViewById(R.id.iconBullet4);
+        ivBullet4 = findViewById(R.id.iconBullet4);
         ivBullet4.setImageResource(R.drawable.ic_bullet);
-        ivBullet5=findViewById(R.id.iconBullet5);
+        ivBullet5 = findViewById(R.id.iconBullet5);
         ivBullet5.setImageResource(R.drawable.ic_bullet);
-        ivBullet6=findViewById(R.id.iconBullet6);
+        ivBullet6 = findViewById(R.id.iconBullet6);
         ivBullet6.setImageResource(R.drawable.ic_bullet);
-        ivBullet7=findViewById(R.id.iconBullet7);
+        ivBullet7 = findViewById(R.id.iconBullet7);
         ivBullet7.setImageResource(R.drawable.ic_bullet);
-        ivBullet8=findViewById(R.id.iconBullet8);
+        ivBullet8 = findViewById(R.id.iconBullet8);
         ivBullet8.setImageResource(R.drawable.ic_bullet);
-        ivBullet9=findViewById(R.id.iconBullet9);
+        ivBullet9 = findViewById(R.id.iconBullet9);
         ivBullet9.setImageResource(R.drawable.ic_bullet);
-        ivBullet10=findViewById(R.id.iconBullet10);
+        ivBullet10 = findViewById(R.id.iconBullet10);
         ivBullet10.setImageResource(R.drawable.ic_bullet);
-        ivBullet11=findViewById(R.id.iconBullet11);
+        ivBullet11 = findViewById(R.id.iconBullet11);
         ivBullet11.setImageResource(R.drawable.ic_bullet);
     }
 

@@ -37,9 +37,9 @@ public class SimpleTextButtonMiniGame extends ButtonMiniGameFragment {
 
     @Override
     public long getTime(Difficulty difficulty, int score) {
-        if(DifficultyActivity.difficulty == EASY)
+        if (DifficultyActivity.difficulty == EASY)
             return generateTime(6.9, 0.07, 1601, score);
-        else if(DifficultyActivity.difficulty == HARD)
+        else if (DifficultyActivity.difficulty == HARD)
             return generateTime(6.9, 0.07, 801, score);
         else
             return generateTime(6.9, 0.07, 1201, score);

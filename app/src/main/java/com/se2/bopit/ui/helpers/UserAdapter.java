@@ -14,7 +14,6 @@ import androidx.annotation.Nullable;
 import com.se2.bopit.R;
 import com.se2.bopit.domain.models.User;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class UserAdapter extends ArrayAdapter<User> {
@@ -46,8 +45,8 @@ public class UserAdapter extends ArrayAdapter<User> {
         LayoutInflater inflater = LayoutInflater.from(mContext);
         View newView = inflater.inflate(mResource, parent, false);
 
-        TextView usernameTV = (TextView) newView.findViewById(R.id.userNameTV);
-        ImageView readyIV = (ImageView) newView.findViewById(R.id.readySign);
+        TextView usernameTV = newView.findViewById(R.id.userNameTV);
+        ImageView readyIV = newView.findViewById(R.id.readySign);
 
         usernameTV.setText(username);
 

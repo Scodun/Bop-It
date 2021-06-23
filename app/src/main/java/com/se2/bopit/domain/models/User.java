@@ -113,18 +113,18 @@ public class User implements Serializable, Parcelable, Comparable {
 
     @Override
     public int compareTo(Object obj) {
-        return ((User)obj).getScore()-this.score;
+        return ((User) obj).getScore() - this.score;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof User)
+        if (obj instanceof User)
             return ((User) obj).getId().equals(this.id);
         return false;
     }
 
     @Override
-    public int hashCode(){
+    public int hashCode() {
         return this.getId().hashCode();
     }
 }

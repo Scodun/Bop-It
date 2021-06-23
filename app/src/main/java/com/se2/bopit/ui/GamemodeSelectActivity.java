@@ -60,17 +60,17 @@ public class GamemodeSelectActivity extends BaseActivity {
 
     private void initializeListeners() {
         singleplayerButton.setOnClickListener(v ->
-            startActivity(new Intent(this, DifficultyActivity.class)
-                    .putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER))
+                startActivity(new Intent(this, DifficultyActivity.class)
+                        .putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER))
         );
 
         localMultiplayerButton.setOnClickListener(v ->
-            startActivity(new Intent(this, HostJoinActivity.class)
-                    .putExtra(HostJoinActivity.NETWORK_MODE, "nearby")));
+                startActivity(new Intent(this, HostJoinActivity.class)
+                        .putExtra(HostJoinActivity.NETWORK_MODE, "nearby")));
 
         onlineMultiplayerButton.setOnClickListener(v ->
-            startActivity(new Intent(this, HostJoinActivity.class)
-                    .putExtra(HostJoinActivity.NETWORK_MODE, "websocket")));
+                startActivity(new Intent(this, HostJoinActivity.class)
+                        .putExtra(HostJoinActivity.NETWORK_MODE, "websocket")));
 
         settingsButton.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
 
