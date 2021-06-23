@@ -7,4 +7,6 @@
     <dimen name="setting_title_size">16sp</dimen>
     <dimen name="setting_size">24sp</dimen>
     <dimen name="setting_padding_head">10dp</dimen>
+    <!-- Rules dimen. -->
+    <dimen name="rules_text">20dp</dimen>
 </resources>

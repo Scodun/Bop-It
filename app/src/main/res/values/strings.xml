@@ -29,6 +29,7 @@
     <!-- Button Preferences -->
     <string name="saveButton">Save</string>
     <string name="resetButton">Reset</string>
+    <string name="rulesButton">Rules</string>
 
     <string name="up">UP</string>
     <string name="left">LEFT</string>
@@ -41,6 +42,7 @@
     <string name="persHighscore">0</string>
 
     <string name="challenge_cover_light_sensor">Cover light sensor!</string>
+
 
 
     <!-- Button Cheating -->
@@ -72,4 +74,24 @@
     <string name="KEY_SCORE_TEXTBASEDMINIGAME">minigameScore9</string>
     <string name="KEY_SCORE_SPECIALTEXTMINIGAME">minigameScore10</string>
 
+    <!-- Rules -->
+    <string name="rulesTitle">Rules and Imprint</string>
+    <string name="rulesSubtitle">Rules</string>
+    <string name="imprintSubtitle">Imprint</string>
+    <string name="back">Back</string>
+    <string name="rules4">Every player has 3 lives.</string>
+    <string name="rules5">In multiplayer mode, the next player is selected at random.</string>
+    <string name="rules6">When it is your turn, you have to complete the given task in the minigame in the given time.</string>
+    <string name="rules7">Failure to do so causes the player to lose a life.</string>
+    <string name="rules8">Holding down the cheat button will stop the time, releasing it will keep it running.</string>
+    <string name="rules9">Cheating can be done an infinite number of times.</string>
+    <string name="rules10">By pressing the report button, the current player can be reported as a cheater.
+        If the player did not cheat, the person reporting the cheat loses a life. If the cheating was detected, the cheater loses the game.</string>
+    <string name="rules1">Single player, multiplayer local and multiplayer online can be selected.</string>
+    <string name="rules2">In single player you can choose the difficulties easy, medium and hard.</string>
+    <string name="rules3">There are 12 minigames, that can be selected.</string>
+    <string name="rules11">Google play achievements are available.</string>
+    <string name="imprint1">Bop-It! is a student project in SE2 @ AAU. </string>
+    <string name="imprint2">Developers: Burgstaller Raphael, Ismailov Ramiz,
+    Knapp Markus, Polzer Michael, Volkmer Merlin, van der Rijst Claudia</string>
 </resources>
