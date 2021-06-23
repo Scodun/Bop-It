@@ -381,15 +381,6 @@
         fbutton:shadowEnabled="true"
         fbutton:shadowHeight="5dp" />
 
-    <Button
-        android:id="@+id/resetButtonAchieve"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="15dp"
-        android:text="Reset"
-        app:layout_constraintStart_toEndOf="@+id/backtoHome"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/waveView2"

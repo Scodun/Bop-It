@@ -140,22 +140,6 @@
         fbutton:shadowEnabled="true"
         fbutton:shadowHeight="5dp" />
 
-    <Button
-        android:id="@+id/resetButtonAchieve"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="154dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="170dp"
-        android:layout_marginBottom="264dp"
-        android:text="Reset"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout4"
-        app:layout_constraintVertical_bias="1.0" />
-
     <ImageView
         android:id="@+id/waveView2"
         android:layout_width="match_parent"
@@ -169,7 +153,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/resetButtonAchieve"
+        app:layout_constraintTop_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.826"
         app:srcCompat="@drawable/ic_wave_overall" />

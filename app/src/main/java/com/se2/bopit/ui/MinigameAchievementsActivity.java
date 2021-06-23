@@ -31,7 +31,6 @@ public class MinigameAchievementsActivity extends BaseActivity implements Shared
     ImageView checkVolumeButton;
 
     FButton backButton;
-    Button reset;
 
     TextView imageButtonAchievement;
     TextView colorButtonAchievement;
@@ -71,7 +70,6 @@ public class MinigameAchievementsActivity extends BaseActivity implements Shared
         backButton.setOnClickListener(v -> {
             startActivity(new Intent(this, AchievementsSelectActivity.class));
         });
-        reset.setOnClickListener(v -> resetPreferences());
     }
 
     private void initializeViews() {
@@ -96,7 +94,6 @@ public class MinigameAchievementsActivity extends BaseActivity implements Shared
         checkRightButtons = findViewById(R.id.checkRightButtonCombination);
         checkSlider = findViewById(R.id.checkSliderMinigame);
         backButton = findViewById(R.id.backtoHome);
-        reset = findViewById(R.id.resetButtonAchieve);
 
         setVisibility();
     }
@@ -202,38 +199,6 @@ public class MinigameAchievementsActivity extends BaseActivity implements Shared
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-    }
-
-    private void resetPreferences() {
-        customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = customSharedPreferences.edit();
-        editor.putInt(this.getString(R.string.KEY_SCORE_IMAGEBUTTONMINIGAME), 0);
-        editor.putInt(this.getString(R.string.KEY_SCORE_RIGHTBUTTONCOMBINATION), 0);
-        editor.putInt(this.getString(R.string.KEY_SCORE_VOLUMEBUTTON), 0);
-        editor.putInt(this.getString(R.string.KEY_SCORE_PLACEPHONEMINIGAME), 0);
-        editor.putInt(this.getString(R.string.KEY_SCORE_DRAWINGMINIGAME), 0);
-        editor.putInt(this.getString(R.string.KEY_SCORE_COVERLIGHTSENSORMINIGAME), 0);
-        editor.putInt(this.getString(R.string.KEY_SCORE_COLORBUTTONMINIGAME), 0);
-        editor.putInt(this.getString(R.string.KEY_SCORE_SHAKEPHONEMINIGAME), 0);
-        editor.putInt(this.getString(R.string.KEY_SCORE_SLIDERMINIGAME), 0);
-        editor.putInt(this.getString(R.string.KEY_SCORE_TEXTBASEDMINIGAME), 0);
-        editor.putInt(this.getString(R.string.KEY_SCORE_SPECIALTEXTMINIGAME), 0);
-
-        setVisibility();
-
-        textBasedAchievement.setVisibility(View.VISIBLE);
-        sliderAchievement.setVisibility(View.VISIBLE);
-        colorButtonAchievement.setVisibility(View.VISIBLE);
-        imageButtonAchievement.setVisibility(View.VISIBLE);
-        volumeButtonAchievement.setVisibility(View.VISIBLE);
-        drawingAchievement.setVisibility(View.VISIBLE);
-        coverLightSensorAchievement.setVisibility(View.VISIBLE);
-        shakePhoneAchievement.setVisibility(View.VISIBLE);
-        placePhoneAchievement.setVisibility(View.VISIBLE);
-        rightButtonCombinationAchievement.setVisibility(View.VISIBLE);
-
-        editor.apply();
-        setPrefValues();
     }
 
     @Override
