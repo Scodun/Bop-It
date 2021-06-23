@@ -299,8 +299,7 @@ public class WinLossActivity extends BaseActivity {
         tv.setBackgroundResource(R.drawable.rounded_corners);
         tv.setBackgroundTintList(ColorStateList.valueOf(ContextCompat.getColor(this, R.color.primary_variant)));
         tv.setTextSize(50.0f);
-        tv.setHeight(200);
-        tv.setPadding(0,-60,0,0);
+        tv.setPadding(10,10,10,10);
         tv.setTextColor(ContextCompat.getColor(this, R.color.white));
         return tv;
     }
@@ -321,7 +320,7 @@ public class WinLossActivity extends BaseActivity {
                 tv.setTextSize(25.0f);
                 tv.setTextAlignment(View.TEXT_ALIGNMENT_GRAVITY);
                 tv.setGravity(Gravity.CENTER_VERTICAL | Gravity.CENTER_HORIZONTAL);
-                tv.setText("\n" + i++ +". " + user.getName());
+                tv.setText(i++ +". " + user.getName()+"\nScore: "+user.getScore());
                 scoreLayout.addView(tv);
                 Space spaceView = new Space(this);
                 spaceView.setMinimumHeight(10);
