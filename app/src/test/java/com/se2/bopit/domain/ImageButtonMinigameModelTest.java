@@ -58,22 +58,22 @@ public class ImageButtonMinigameModelTest {
 
         String challengeCheck = imageButtonMinigameModel.getChallenge();
 
-        assertEquals(challengeCheck, imageButtonMinigameModel.challenge);
+        assertEquals(challengeCheck, imageButtonMinigameModel.getChallenge());
     }
 
     @Test
     public void shuffleResponses() {
         imageButtonMinigameModel = ImageButtonMinigameModel.createRandomModel();
-        wrongAnswers = imageButtonMinigameModel.responses;
-        rightImage = imageButtonMinigameModel.correctResponse;
+        wrongAnswers = imageButtonMinigameModel.getResponses();
+        rightImage = imageButtonMinigameModel.getCorrectResponse();
         wrongAnswers.remove(rightImage);
 
         do {
             imageButtonMinigameModelCheck = ImageButtonMinigameModel.createRandomModel();
-            wrongAnswersCheck = imageButtonMinigameModelCheck.responses;
-            rightImageCheck = imageButtonMinigameModelCheck.correctResponse;
+            wrongAnswersCheck = imageButtonMinigameModelCheck.getResponses();
+            rightImageCheck = imageButtonMinigameModelCheck.getCorrectResponse();
             wrongAnswersCheck.remove(rightImageCheck);
-        } while (rightImage.label.equals(rightImageCheck.label));
+        } while (rightImage.getLabel().equals(rightImageCheck.getLabel()));
 
         assertNotEquals(wrongAnswers, wrongAnswersCheck);
     }

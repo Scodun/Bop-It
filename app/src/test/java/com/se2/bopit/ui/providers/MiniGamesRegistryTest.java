@@ -81,6 +81,6 @@ public class MiniGamesRegistryTest {
 
         assertFalse(registry.availableSensorTypes.get(Sensor.TYPE_LIGHT));
         assertTrue(registry.gameRules.getItems().stream()
-                .anyMatch(i -> i.type == CoverLightSensorMiniGame.class && !i.available));
+                .anyMatch(i -> i.type == CoverLightSensorMiniGame.class && !i.isAvailable()));
     }
 }

@@ -26,12 +26,12 @@ public class RightButtonCombinationModelTest {
     List<RightButtonModel> wrongAnswers;
 
     @Before
-    public void setUp() throws Exception {
+    public void setUp() {
         wrongAnswers = new ArrayList<>();
     }
 
     @After
-    public void tearDown() throws Exception {
+    public void tearDown() {
         wrongAnswers = null;
     }
 
@@ -56,7 +56,7 @@ public class RightButtonCombinationModelTest {
 
         String challengeCheck = rightButtonCombinationModel.getChallenge();
 
-        assertEquals(challengeCheck, rightButtonCombinationModel.challenge);
+        assertEquals(challengeCheck, rightButtonCombinationModel.getChallenge());
     }
 
 }

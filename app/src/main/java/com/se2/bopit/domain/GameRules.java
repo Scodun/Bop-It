@@ -35,7 +35,7 @@ public class GameRules {
         GameRuleItemModel model = gameTypeModels.get(type);
         if (model != null) {
             model.disablePermanently();
-        } // TODO maybe else throw exception!
+        }
     }
 
     public List<GameRuleItemModel> getItems() {
@@ -45,7 +45,7 @@ public class GameRules {
     @SuppressLint("NewApi")
     public List<GameRuleItemModel> getEnabledItems() {
         return gameTypeModels.values().stream()
-                .filter(i -> i.enabled)
+                .filter(i -> i.isEnabled())
                 .collect(Collectors.toList());
     }
 

@@ -42,9 +42,9 @@ public class ColorButtonMiniGame extends ButtonMiniGameFragment {
 
     @Override
     public long getTime(Difficulty difficulty, int score) {
-        if (DifficultyActivity.difficulty == EASY)
+        if (DifficultyActivity.getDifficulty() == EASY)
             return generateTime(6.9, 0.07, 1600, score);
-        else if (DifficultyActivity.difficulty == HARD)
+        else if (DifficultyActivity.getDifficulty() == HARD)
             return generateTime(6.9, 0.07, 800, score);
         else
             return generateTime(6.9, 0.07, 1200, score);

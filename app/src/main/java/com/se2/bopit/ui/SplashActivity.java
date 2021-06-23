@@ -28,7 +28,7 @@ import java.util.List;
 public class SplashActivity extends BaseActivity {
     private static final String TAG = SplashActivity.class.getSimpleName();
 
-    private ImageView waveView;
+
     private GoogleSignInClient mGoogleSignInClient;
     private List<String> listPermissionsNeeded;
     private boolean loginDone = false;
@@ -37,7 +37,7 @@ public class SplashActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        waveView = findViewById(R.id.waveView);
+        ImageView waveView = findViewById(R.id.waveView);
 
         startService(new Intent(this, BackgroundSoundService.class));
 
@@ -120,6 +120,7 @@ public class SplashActivity extends BaseActivity {
         Log.d(TAG, "done checking available sensors");
     }
 
+    @Deprecated
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions,
                                            int[] grantResults) {

@@ -6,6 +6,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OutgoingMessage {
-    public List<String> to = new ArrayList<>();
-    public NearbyPayload data;
+    private List<String> to = new ArrayList<>();
+    private NearbyPayload data;
+
+    public List<String> getTo() {
+        return to;
+    }
+
+    public void setTo(List<String> to) {
+        this.to = to;
+    }
+
+    public NearbyPayload getData() {
+        return data;
+    }
+
+    public void setData(NearbyPayload data) {
+        this.data = data;
+    }
 }

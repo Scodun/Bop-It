@@ -28,9 +28,9 @@ public interface MiniGame {
     GameModel<? extends ResponseModel> getModel();
 
     default long getTime(Difficulty difficulty, int score) {
-        if (DifficultyActivity.difficulty == EASY)
+        if (DifficultyActivity.getDifficulty() == EASY)
             return generateTime(7, 0.08, 3000, score);
-        else if (DifficultyActivity.difficulty == HARD)
+        else if (DifficultyActivity.getDifficulty() == HARD)
             return generateTime(6.9, 0.07, 1000, score);
         else
             return generateTime(6.9, 0.07, 2000, score);

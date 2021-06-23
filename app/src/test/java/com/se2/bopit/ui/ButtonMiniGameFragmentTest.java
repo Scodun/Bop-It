@@ -2,8 +2,6 @@ package com.se2.bopit.ui;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.view.LayoutInflater;
-import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.vectordrawable.graphics.drawable.VectorDrawableCompat;
@@ -15,7 +13,6 @@ import com.se2.bopit.domain.responsemodel.ButtonModel;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -25,7 +22,6 @@ import info.hoang8f.widget.FButton;
 
 import static org.junit.Assert.assertSame;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
@@ -72,24 +68,13 @@ public class ButtonMiniGameFragmentTest {
     }
 
 
-    @Ignore("TBD, or consider skipping it")
-    @Test
-    public void onCreateView() {
-
-        LayoutInflater inflaterMock = mock(LayoutInflater.class);
-        View viewMock = mock(View.class);
-        doReturn(viewMock).when(inflaterMock).inflate(anyInt(), any(), anyBoolean());
-
-        miniGame.onCreateView(inflaterMock, null, null);
-    }
-
     @Test
     public void applyButtonModel() {
         FButton buttonMock = mock(FButton.class);
         VectorDrawableCompat buttonDrawable = mock(VectorDrawableCompat.class);
         doReturn(buttonDrawable).when(buttonMock).getBackground();
 
-        ButtonModel model = miniGame.gameModel.responses.get(0);
+        ButtonModel model = miniGame.gameModel.getResponses().get(0);
 
         miniGame.applyButtonModel(model, buttonMock);
 
@@ -104,11 +89,11 @@ public class ButtonMiniGameFragmentTest {
         VectorDrawableCompat buttonDrawable = mock(VectorDrawableCompat.class);
         doReturn(buttonDrawable).when(buttonMock).getBackground();
 
-        for (ButtonModel model : miniGame.gameModel.responses) {
+        for (ButtonModel model : miniGame.gameModel.getResponses()) {
             miniGame.setButtonColor(model, buttonMock);
         }
 
-        verify(buttonDrawable, times(miniGame.gameModel.responses.size())).setTint(anyInt());
+        verify(buttonDrawable, times(miniGame.gameModel.getResponses().size())).setTint(anyInt());
     }
 
     @Test

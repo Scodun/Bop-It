@@ -32,13 +32,13 @@ import java.util.stream.Collectors;
  */
 public class GameEngineServer {
     static final String TAG = GameEngineServer.class.getSimpleName();
-    private final int CHANCE_TO_REPEAT = 5;
+
 
     final Map<String, User> users;
 
     final Set<String> usersReady = new HashSet<>();
 
-    public GameEngineDataProvider dataProvider;
+    private GameEngineDataProvider dataProvider;
 
     int round = 1;
     GameRoundModel currentRound;
@@ -62,7 +62,7 @@ public class GameEngineServer {
         this.miniGamesProvider = miniGamesProvider;
         this.platformFeaturesProvider = platformFeaturesProvider;
         this.users = new HashMap<>(users);
-        this.dataProvider = dataProvider;
+        this.setDataProvider(dataProvider);
         dataProvider.setGameEngineServer(this);
         Log.d(TAG, "init");
     }
@@ -88,13 +88,12 @@ public class GameEngineServer {
     @RequiresApi(api = Build.VERSION_CODES.N)
     public void startNewGame() {
         Log.d(TAG, "startNewGame round #" + round + "...");
-        // GameRoundModel lastRound = currentRound;
 
         nextPlayer = selectNextRoundUser();
 
         if (nextPlayer == null) {
             Log.d(TAG, "No active users left -> game over after " + round + " round");
-            dataProvider.notifyGameOver();
+            getDataProvider().notifyGameOver();
             return;
         }
 
@@ -120,7 +119,7 @@ public class GameEngineServer {
         lastPlayer = nextPlayer;
 
         Log.d(TAG, "sending currentRound to data provider: " + currentRound);
-        dataProvider.startNewGame(currentRound);
+        getDataProvider().startNewGame(currentRound);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -135,7 +134,8 @@ public class GameEngineServer {
         if (pool.isEmpty())
             return null;
 
-        if (currentRound != null && new Random().nextInt(100) < CHANCE_TO_REPEAT && users.get(currentRound.getCurrentUserId()).getLives() > 0)
+        int chanceToRepeat = 5;
+        if (currentRound != null && new Random().nextInt(100) < chanceToRepeat && users.get(currentRound.getCurrentUserId()).getLives() > 0)
             return users.get(currentRound.getCurrentUserId());
 
         Collections.shuffle(pool);
@@ -153,20 +153,20 @@ public class GameEngineServer {
         User user = users.get(userId);
         if (user != null) {
             if (result) {
-                Log.d(TAG, "User " + userId + " won the round #" + (currentRound != null ? currentRound.getRound() : "null"));
+                Log.d(TAG, userId + " won the round #" + (currentRound != null ? currentRound.getRound() : "null"));
                 user.incrementScore();
             } else {
-                Log.d(TAG, "User " + userId + " lost the round #" + (currentRound != null ? currentRound.getRound() : "null"));
+                Log.d(TAG, userId + " lost the round #" + (currentRound != null ? currentRound.getRound() : "null"));
                 user.loseLife();
             }
-            dataProvider.notifyGameResult(result, responseModel, user);
+            getDataProvider().notifyGameResult(result, responseModel, user);
         }
     }
 
     public void stopCurrentGame(String userId) {
         Log.d(TAG, "Stop current game: " + userId);
         if (users.remove(userId) != null && currentRound != null)
-            Log.d(TAG, "User " + userId + " left after round #" + currentRound.getRound());
+            Log.d(TAG,  userId + " left after round #" + currentRound.getRound());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -189,20 +189,26 @@ public class GameEngineServer {
             nextPlayer.loseAllLives();
             users.remove(nextPlayer.getId());
             usersReady.remove(nextPlayer.getId());
-            dataProvider.cheaterDetected(nextPlayer.getId());
+            getDataProvider().cheaterDetected(nextPlayer.getId());
         } else {
             User reporter = users.get(reporterUserId);
             reporter.loseLife();
             if (reporter.getLives() == 0) {
                 usersReady.remove(reporterUserId);
                 users.remove(reporterUserId);
-                //TODO send to all cheating detection failed player lost all lifes
-                //TODO stop game for this player
             }
         }
 
         if (users.size() <= 1)
-            dataProvider.notifyGameOver();
+            getDataProvider().notifyGameOver();
 
+    }
+
+    public GameEngineDataProvider getDataProvider() {
+        return dataProvider;
+    }
+
+    public void setDataProvider(GameEngineDataProvider dataProvider) {
+        this.dataProvider = dataProvider;
     }
 }

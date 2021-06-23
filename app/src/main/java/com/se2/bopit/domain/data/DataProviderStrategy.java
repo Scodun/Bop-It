@@ -23,8 +23,6 @@ public abstract class DataProviderStrategy implements GameEngineDataProvider {
 
     public abstract void startGameCountdown();
 
-    public abstract void disconnect();
-
     public abstract void sendReadyMessage();
 
     public abstract void sendReadyAnswer(boolean answer, String username);

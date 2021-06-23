@@ -25,5 +25,5 @@ public interface NetworkLobbyListener {
 
     void onReadyMessageReceived();
 
-    void OnReadyAnswerReceived(boolean answer, String username);
+    void onReadyAnswerReceived(boolean answer, String username);
 }

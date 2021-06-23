@@ -206,7 +206,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
                         break;
                     case 8:
                         ReadyMessage msg = gson.fromJson(po.getPayload(), ReadyMessage.class);
-                        lobbyListener.OnReadyAnswerReceived(msg.answer, msg.username);
+                        lobbyListener.onReadyAnswerReceived(msg.isAnswer(), msg.getUsername());
                         break;
 
                     case NearbyPayload.READY_TO_START:
@@ -454,8 +454,6 @@ public class NearbyDataProvider extends DataProviderStrategy {
 
     @Override
     public User[] getRoundResult() {
-
-        // TODO
         return new User[0];
     }
 

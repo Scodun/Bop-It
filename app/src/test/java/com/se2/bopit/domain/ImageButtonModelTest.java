@@ -24,6 +24,6 @@ public class ImageButtonModelTest {
 
     @Test
     public void labelTest() {
-        assertEquals("CAT", imageButtonModel.label);
+        assertEquals("CAT", imageButtonModel.getLabel());
     }
 }

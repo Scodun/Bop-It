@@ -15,7 +15,11 @@ public class DifficultyActivity extends BaseActivity {
     FButton hard;
     FButton back;
 
-    public static Difficulty difficulty = Difficulty.MEDIUM;
+    private static Difficulty difficulty = Difficulty.MEDIUM;
+
+    public static Difficulty getDifficulty() {
+        return difficulty;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +29,9 @@ public class DifficultyActivity extends BaseActivity {
         initializeButtons();
         initializeOnClickListeners();
 
-        back.setOnClickListener(v -> {
-            startActivity(new Intent(this, GamemodeSelectActivity.class).putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER));
-        });
+        back.setOnClickListener(v ->
+            startActivity(new Intent(this, GamemodeSelectActivity.class).putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER))
+        );
 
 
     }
