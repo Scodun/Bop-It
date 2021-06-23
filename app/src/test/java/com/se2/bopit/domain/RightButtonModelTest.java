@@ -24,6 +24,6 @@ public class RightButtonModelTest {
 
     @Test
     public void labelTest() {
-        assertEquals("RIGHT", rightButtonModel.label);
+        assertEquals("RIGHT", rightButtonModel.getLabel());
     }
 }

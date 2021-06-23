@@ -40,9 +40,6 @@ public class GameEngine {
     private GameEngineDataProvider dataProvider;
     private String userId;
 
-    private static final String EASY = "easy";
-    private static final String MEDIUM = "medium";
-
     private int score = 0;
     private boolean isOverTime = false;
     private boolean miniGameLost = false;
@@ -87,7 +84,7 @@ public class GameEngine {
         setCurrentUserId(round.getCurrentUserId());
 
         minigame = miniGamesProvider.createMiniGame(round);
-        long time = minigame.getTime(DifficultyActivity.difficulty, score);
+        long time = minigame.getTime(DifficultyActivity.getDifficulty(), score);
 
         timer = startCountDown(time);
         if (this.listener != null)

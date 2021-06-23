@@ -32,7 +32,7 @@ import io.crossbar.autobahn.websocket.types.ConnectionResponse;
 public class WebsocketDataProvider extends DataProviderStrategy {
     static final String TAG = WebsocketDataProvider.class.getSimpleName();
 
-    static String HOST = "se2-demo.aau.at:53205";
+    static String host = "se2-demo.aau.at:53205";
 
     static final int INT_ADVERTISE_GAME = 100;
     static final int INT_DISCOVER_GAMES = 101;
@@ -45,7 +45,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
     private boolean isHost = false;
     private String hostEndpointId = null;
     private final String userId = UUID.randomUUID().toString();
-    private final String wsUri = "ws://" + HOST + "/game/" + userId;
+    private final String wsUri = "ws://" + host + "/game/" + userId;
     private final String username;
 
     Gson gson = new Gson();
@@ -92,7 +92,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
                 public void onMessage(String message) {
                     Log.d(TAG, "onMessage: " + message);
                     IncomingMessage incoming = gson.fromJson(message, IncomingMessage.class);
-                    onPayloadReceived(incoming.from, incoming.data);
+                    onPayloadReceived(incoming.getFrom(), incoming.getData());
                 }
             });
 
@@ -105,9 +105,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
     @Override
     public void startAdvertising() {
         isHost = true;
-        connect(() -> {
-            sendSystemPayload(new NearbyPayload(INT_ADVERTISE_GAME, username));
-        });
+        connect(() -> sendSystemPayload(new NearbyPayload(INT_ADVERTISE_GAME, username)));
     }
 
     @Override
@@ -148,7 +146,7 @@ public class WebsocketDataProvider extends DataProviderStrategy {
                 break;
             case 8:
                 ReadyMessage msg = unwrapPayload(payload, ReadyMessage.class);
-                lobbyListener.OnReadyAnswerReceived(msg.answer, msg.username);
+                lobbyListener.onReadyAnswerReceived(msg.isAnswer(), msg.getUsername());
                 break;
 
             case NearbyPayload.READY_TO_START:
@@ -273,8 +271,8 @@ public class WebsocketDataProvider extends DataProviderStrategy {
     public void sendReadyAnswer(boolean answer, String username) {
         if (!isHost) {
             ReadyMessage ready = new ReadyMessage();
-            ready.answer = answer;
-            ready.username = username;
+            ready.setAnswer(answer);
+            ready.setUsername(username);
             sendPayload(hostEndpointId, wrapPayload(8, ready));
         }
     }
@@ -318,8 +316,8 @@ public class WebsocketDataProvider extends DataProviderStrategy {
     void sendPayload(List<String> to, NearbyPayload payload) {
         if (connection.isConnected()) {
             OutgoingMessage msg = new OutgoingMessage();
-            msg.to.addAll(to);
-            msg.data = payload;
+            msg.getTo().addAll(to);
+            msg.setData(payload);
             String json = gson.toJson(msg);
             Log.d(TAG, "send message: " + json);
             connection.sendMessage(json);
@@ -403,8 +401,6 @@ public class WebsocketDataProvider extends DataProviderStrategy {
 
     @Override
     public User[] getRoundResult() {
-
-        // TODO
         return new User[0];
     }
 

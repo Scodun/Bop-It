@@ -32,13 +32,13 @@ public class VolumeButtonGameModel extends MultipleChoiceGameModel<VolumeButtonM
         List<VolumeButtonModel> wrongResponses = possibleAnswers.subList(1, possibleAnswers.size());
 
         return new VolumeButtonGameModel(
-                String.format("Press volume %s", correctResponse.label),
+                String.format("Press volume %s", correctResponse.getLabel()),
                 correctResponse,
                 wrongResponses);
 
     }
 
     public String getChallenge() {
-        return challenge;
+        return super.getChallenge();
     }
 }

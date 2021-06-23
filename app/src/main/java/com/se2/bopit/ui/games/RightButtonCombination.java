@@ -50,7 +50,7 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
         initializeButtons();
 
-        text = rightButtonCombinationModel.challenge;
+        text = rightButtonCombinationModel.getChallenge();
         textView = getView().findViewById(R.id.textView2);
         textView.setText(text);
         new TextToSpeech().sayText(text.split(" ")[0], this.getContext());
@@ -66,7 +66,7 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     public final View.OnClickListener clickHandler = firstClickedButton -> {
 
-        if (text.equals(rightButtonCombinationModel.challenge)) {
+        if (text.equals(rightButtonCombinationModel.getChallenge())) {
             firstClick = firstClickedButton.getId() == findButton();
             count++;
             checkFirstClick();
@@ -139,9 +139,9 @@ public class RightButtonCombination extends Fragment implements MiniGame {
      */
     RightButton chooseRightButton() {
         if (count == 0) {
-            return rightButtonCombinationModel.correctResponse.rightButton;
+            return rightButtonCombinationModel.getCorrectResponse().getRightButton();
         } else {
-            return rightButtonCombinationModel.secondCorrectResponse.rightButton;
+            return rightButtonCombinationModel.getSecondCorrectResponse().getRightButton();
         }
     }
 
@@ -152,9 +152,9 @@ public class RightButtonCombination extends Fragment implements MiniGame {
 
     @Override
     public long getTime(Difficulty difficulty, int score) {
-        if (DifficultyActivity.difficulty == EASY)
+        if (DifficultyActivity.getDifficulty() == EASY)
             return generateTime(7.5, 0.07, 1802, score);
-        else if (DifficultyActivity.difficulty == HARD)
+        else if (DifficultyActivity.getDifficulty() == HARD)
             return generateTime(7.5, 0.07, 802, score);
         else
             return generateTime(7.5, 0.07, 1302, score);

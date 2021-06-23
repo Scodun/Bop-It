@@ -64,7 +64,7 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
             layout.addView(imageButton);
         }
 
-        text = imageButtonMinigameModel.challenge;
+        text = imageButtonMinigameModel.getChallenge();
         textView = view.findViewById(R.id.textView);
         textView.setText(text);
         new TextToSpeech().sayText(text.split(" ")[2], this.getContext());
@@ -121,7 +121,7 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
      * @return id of an ImageButton
      */
     public int findRightButton() {
-        switch (imageButtonMinigameModel.correctResponse.image) {
+        switch (imageButtonMinigameModel.getCorrectResponse().getImage()) {
             case CAT:
                 return R.id.imageButton;
             case DOG:
@@ -141,9 +141,9 @@ public class ImageButtonMinigame extends Fragment implements MiniGame {
 
     @Override
     public long getTime(Difficulty difficulty, int score) {
-        if (DifficultyActivity.difficulty == EASY)
+        if (DifficultyActivity.getDifficulty() == EASY)
             return generateTime(6.9, 0.07, 1600, score);
-        else if (DifficultyActivity.difficulty == HARD)
+        else if (DifficultyActivity.getDifficulty() == HARD)
             return generateTime(6.9, 0.07, 800, score);
         else
             return generateTime(6.9, 0.07, 1200, score);

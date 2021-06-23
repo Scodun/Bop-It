@@ -15,11 +15,13 @@ jobs:
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
+          emulator-build: 6110076
           script: ./gradlew connectedAndroidTest
       - name: run jacoco tests
         uses: reactivecircus/android-emulator-runner@v2
         with:
           api-level: 29
+          emulator-build: 6110076
           script: ./gradlew clean jacocoTestReport
       - name: set up JDK 11
         uses: actions/setup-java@v1

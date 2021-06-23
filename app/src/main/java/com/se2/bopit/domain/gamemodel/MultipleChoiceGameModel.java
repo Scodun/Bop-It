@@ -8,11 +8,11 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class MultipleChoiceGameModel<M extends ResponseModel> extends GameModel<M> {
-    public String challenge;
+    private String challenge;
 
-    public transient M correctResponse;
+    private M correctResponse;
 
-    public List<M> responses;
+    private List<M> responses;
 
 
     @SafeVarargs
@@ -21,18 +21,18 @@ public abstract class MultipleChoiceGameModel<M extends ResponseModel> extends G
     }
 
     protected MultipleChoiceGameModel(String challenge, M correctResponse, List<M> wrongResponses) {
-        this.challenge = challenge;
-        this.correctResponse = correctResponse;
-        this.responses = new ArrayList<>();
-        responses.addAll(wrongResponses);
-        correctResponse.isCorrect = true;
-        responses.add(correctResponse);
-        Collections.shuffle(responses);
+        this.setChallenge(challenge);
+        this.setCorrectResponse(correctResponse);
+        this.setResponses(new ArrayList<>());
+        getResponses().addAll(wrongResponses);
+        correctResponse.setCorrect(true);
+        getResponses().add(correctResponse);
+        Collections.shuffle(getResponses());
     }
 
     @Override
     public boolean checkResponse(M response) {
-        return response.isCorrect;
+        return response.isCorrect();
     }
 
     @Override
@@ -42,5 +42,29 @@ public abstract class MultipleChoiceGameModel<M extends ResponseModel> extends G
             listener.onGameResult(result);
         }
         return result;
+    }
+
+    public String getChallenge() {
+        return challenge;
+    }
+
+    public void setChallenge(String challenge) {
+        this.challenge = challenge;
+    }
+
+    public M getCorrectResponse() {
+        return correctResponse;
+    }
+
+    public void setCorrectResponse(M correctResponse) {
+        this.correctResponse = correctResponse;
+    }
+
+    public List<M> getResponses() {
+        return responses;
+    }
+
+    public void setResponses(List<M> responses) {
+        this.responses = responses;
     }
 }

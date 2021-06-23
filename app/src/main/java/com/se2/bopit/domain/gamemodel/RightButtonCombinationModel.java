@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 
 public class RightButtonCombinationModel extends MultipleChoiceGameModel<RightButtonModel> {
 
-    public transient RightButtonModel secondCorrectResponse;
+    private RightButtonModel secondCorrectResponse;
 
     public RightButtonCombinationModel(String challenge, RightButtonModel correctResponse,
                                        RightButtonModel secondCorrectResponse, List<RightButtonModel> wrongAnswers) {
         super(challenge, correctResponse, wrongAnswers);
-        this.secondCorrectResponse = secondCorrectResponse;
+        this.setSecondCorrectResponse(secondCorrectResponse);
     }
 
     /**
@@ -47,7 +47,7 @@ public class RightButtonCombinationModel extends MultipleChoiceGameModel<RightBu
             }
         }
         return new RightButtonCombinationModel(
-                firstCorrectResponse.label + " " + secondCorrectResponse.label,
+                firstCorrectResponse.getLabel() + " " + secondCorrectResponse.getLabel(),
                 firstCorrectResponse,
                 secondCorrectResponse,
                 wrongResponses
@@ -55,6 +55,14 @@ public class RightButtonCombinationModel extends MultipleChoiceGameModel<RightBu
     }
 
     public String getChallenge() {
-        return challenge;
+        return super.getChallenge();
+    }
+
+    public RightButtonModel getSecondCorrectResponse() {
+        return secondCorrectResponse;
+    }
+
+    public void setSecondCorrectResponse(RightButtonModel secondCorrectResponse) {
+        this.secondCorrectResponse = secondCorrectResponse;
     }
 }

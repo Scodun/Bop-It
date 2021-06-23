@@ -47,12 +47,12 @@ public class MultipleChoiceGameModelTest {
 
     @Test
     public void shouldSetCorrectFlag() {
-        assertTrue(gameModel.responses.stream()
+        assertTrue(gameModel.getResponses().stream()
                 .filter(m -> m == correct)
-                .allMatch(m -> m.isCorrect));
-        assertTrue(gameModel.responses.stream()
+                .allMatch(m -> m.isCorrect()));
+        assertTrue(gameModel.getResponses().stream()
                 .filter(m -> m.label.startsWith("wrong"))
-                .noneMatch(m -> m.isCorrect));
+                .noneMatch(m -> m.isCorrect()));
     }
 
     @Test
@@ -64,7 +64,7 @@ public class MultipleChoiceGameModelTest {
         MultipleChoiceGameModel<ButtonModel> gm = new ButtonMiniGameModel("test2",
                 correct,
                 new LinkedList<>(original));
-        LinkedList<ButtonModel> wrongs = new LinkedList<>(gm.responses);
+        LinkedList<ButtonModel> wrongs = new LinkedList<>(gm.getResponses());
         wrongs.remove(correct);
         assertNotEquals(original, wrongs);
     }

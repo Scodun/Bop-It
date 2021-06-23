@@ -6,9 +6,9 @@ import com.se2.bopit.domain.interfaces.PlatformFeaturesProvider;
 import com.se2.bopit.domain.responsemodel.ResponseModel;
 
 public abstract class GameModel<M extends ResponseModel> implements MiniGame {
-    protected transient GameListener listener;
+    protected GameListener listener;
 
-    protected transient PlatformFeaturesProvider platformFeaturesProvider;
+    protected PlatformFeaturesProvider platformFeaturesProvider;
 
     public abstract boolean checkResponse(M response);
 
