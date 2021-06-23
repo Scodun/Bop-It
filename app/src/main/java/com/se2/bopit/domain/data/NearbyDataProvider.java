@@ -225,7 +225,7 @@ public class NearbyDataProvider extends DataProviderStrategy {
                         gameEngineServer.stopCurrentGame(endpointId);
                         break;
                     case NearbyPayload.NOTIFY_GAME_OVER:
-                        gameEngineClient.stopCurrentGame();
+                        gameEngineClient.stopCurrentGame(gson.fromJson(po.getPayload(), type));
                         break;
                     case NearbyPayload.SET_CLIENT_CHEATED:
                         gameEngineServer.setClientCheated(endpointId);
@@ -444,10 +444,11 @@ public class NearbyDataProvider extends DataProviderStrategy {
     @Override
     public void notifyGameOver() {
         if (isHost) {
+            DataProviderContext dpc = DataProviderContext.getContext();
             Log.d(TAG, "Broadcast game over");
             getConnectionsClient().sendPayload(getConnectedUserIds(),
-                    wrapPayload(NearbyPayload.NOTIFY_GAME_OVER));
-            gameEngineClient.stopCurrentGame();
+                    wrapPayload(NearbyPayload.NOTIFY_GAME_OVER, dpc.getUsers()));
+            gameEngineClient.stopCurrentGame(dpc.getUsers());
         }
     }
 

@@ -6,65 +6,81 @@
     android:layout_height="match_parent"
     xmlns:fbutton="http://schemas.android.com/apk/res-auto"
     tools:context=".ui.WinLossActivity">
-    <ImageView
-        android:id="@+id/waveViewWinLoss"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:adjustViewBounds="true"
-        android:contentDescription="@string/wave_bg"
-        android:rotation="180"
-        android:scaleType="fitXY"
-        android:scaleY="2"
-        android:translationY="50dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_wave_1" />
 
-    <TextView
-        android:id="@+id/tv_score"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Score: 10"
-        android:textSize="20pt"
+    <nl.dionsegijn.konfetti.KonfettiView
+        android:id="@+id/viewKonfetti"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:translationZ="2000dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/waveViewWinLoss"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="124dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/wave_bg"
+        android:scaleType="fitXY"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_bg" />
+
     <info.hoang8f.widget.FButton
-        android:layout_width="75pt"
-        android:layout_height="30pt"
-        android:text="Return to GameSelect"
         android:id="@+id/bu_return"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.061"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.959"
+        android:layout_width="80pt"
+        android:layout_height="30pt"
+        android:layout_marginStart="10dp"
+        android:layout_marginBottom="24dp"
+        android:text="Return to GameSelect"
 
+        android:textColor="@color/white"
         app:fButtonColor="@color/primary"
-        fbutton:cornerRadius="100dp"
-        android:textColor="@color/white"/>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        fbutton:cornerRadius="100dp" />
 
     <info.hoang8f.widget.FButton
-        android:layout_width="75pt"
+        android:id="@+id/bu_play_again"
+        android:layout_width="0dp"
         android:layout_height="30pt"
-        android:text="Share Score"
-        android:id="@+id/bu_share"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="12dp"
+        android:drawableLeft="@drawable/ic_baseline_play_arrow_24"
+        android:drawablePadding="0dp"
+        android:paddingLeft="20dp"
+        android:paddingRight="50dp"
+        android:text="Play Again"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/bu_share"
+        app:layout_constraintTop_toBottomOf="@+id/scoreLayout"
 
+        app:layout_constraintVertical_bias="0.82"
+        fbutton:cornerRadius="100dp"
+        fbutton:fButtonColor="@color/primary"
+        fbutton:layout_constraintEnd_toEndOf="parent"
+        fbutton:layout_constraintStart_toStartOf="parent" />
+
+    <info.hoang8f.widget.FButton
+        android:id="@+id/bu_share"
+        android:layout_width="80pt"
+        android:layout_height="30pt"
+
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="24dp"
+        android:text="Share Score"
+
+        android:textColor="@color/white"
+        app:fButtonColor="@color/primary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.938"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.959"
-
-        app:fButtonColor="@color/primary"
-        fbutton:cornerRadius="100dp"
-        android:textColor="@color/white"/>
+        fbutton:cornerRadius="100dp" />
 
     <info.hoang8f.widget.FButton
         android:id="@+id/leaderboardEasyButton"
@@ -79,6 +95,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         fbutton:cornerRadius="100dp" />
+
+    <LinearLayout
+        android:id="@+id/scoreLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:orientation="vertical"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/waveViewWinLoss" />
 
     <info.hoang8f.widget.FButton
         android:id="@+id/leaderboardMediumButton"
@@ -114,14 +143,41 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="176dp"
         android:layout_marginEnd="176dp"
-        android:text="Leaderboards"
         android:letterSpacing="0.2"
-        app:layout_constraintBottom_toTopOf="@id/leaderboardMediumButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        android:text="Leaderboards"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
         android:textColor="@color/white"
         android:textStyle="bold"
-        android:typeface="normal"/>
+        android:translationZ="100dp"
+        android:typeface="normal"
+        app:layout_constraintBottom_toTopOf="@id/leaderboardMediumButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/game_over_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:fontFamily="sans-serif-black"
+        android:text="Game Over"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display3"
+        android:textColor="@color/primary_variant"
+        android:translationY="-70dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/waveViewWinLoss" />
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="@color/primary"
+        app:layout_constraintBottom_toTopOf="@+id/waveViewWinLoss"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

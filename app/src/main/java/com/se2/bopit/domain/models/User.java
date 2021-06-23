@@ -1,8 +1,11 @@
 package com.se2.bopit.domain.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.io.Serializable;
 
-public class User implements Serializable {
+public class User implements Serializable, Parcelable, Comparable {
 
     private static int STARTING_LIVES = 3;
 
@@ -76,5 +79,52 @@ public class User implements Serializable {
 
     public static void setStartingLives(int startingLives) {
         STARTING_LIVES = startingLives;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(name);
+        dest.writeInt(score);
+    }
+
+    public User(Parcel in) {
+        id = in.readString();
+        name = in.readString();
+        score = in.readInt();
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
+
+    @Override
+    public int compareTo(Object obj) {
+        return ((User) obj).getScore() - this.score;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof User)
+            return ((User) obj).getId().equals(this.id);
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.getId().hashCode();
     }
 }

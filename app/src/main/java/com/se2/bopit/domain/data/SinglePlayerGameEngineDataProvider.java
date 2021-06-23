@@ -12,6 +12,8 @@ import com.se2.bopit.domain.interfaces.GameEngineDataProvider;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.domain.responsemodel.ResponseModel;
 
+import java.util.ArrayList;
+
 public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvider {
 
     static final String TAG = SinglePlayerGameEngineDataProvider.class.getSimpleName();
@@ -54,7 +56,7 @@ public class SinglePlayerGameEngineDataProvider implements GameEngineDataProvide
     @Override
     public void notifyGameOver() {
         Log.d(TAG, "notifyGameOver");
-        client.stopCurrentGame();
+        client.stopCurrentGame(new ArrayList<>());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)

@@ -14,6 +14,7 @@ import com.se2.bopit.R;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.data.DataProviderContext;
 import com.se2.bopit.domain.data.NearbyDataProvider;
+import com.se2.bopit.domain.data.WebsocketDataProvider;
 import com.se2.bopit.domain.interfaces.NetworkLobbyListener;
 import com.se2.bopit.domain.models.User;
 import com.se2.bopit.ui.helpers.CustomToast;
@@ -58,7 +59,19 @@ public class LobbyHostActivity extends BaseActivity {
 
         //Set dataprovider, currently one one available
         Intent intent = getIntent();
-        dataProvider = DataProviderContext.create(new NearbyDataProvider(this, networkListener, intent.getStringExtra("username")));
+        String networkMode = intent.getStringExtra(HostJoinActivity.NETWORK_MODE);
+        switch (networkMode) {
+            case "nearby":
+            default:
+                dataProvider = DataProviderContext.create(new NearbyDataProvider(
+                        this, networkListener, intent.getStringExtra("username")));
+                break;
+            case "websocket":
+                dataProvider = DataProviderContext.create(new WebsocketDataProvider(
+                        networkListener, intent.getStringExtra("username")));
+                break;
+        }
+
         dataProvider.startAdvertising();
     }
 
@@ -112,13 +125,13 @@ public class LobbyHostActivity extends BaseActivity {
             AtomicInteger countdown = new AtomicInteger(3);
 
             Runnable countdownRunnable = () ->
-                runOnUiThread(
-                        () -> {
-                            CustomToast.showToast(String.valueOf(countdown.get()), context);
-                            countdown.getAndDecrement();
-                            if (countdown.get() <= 0)
-                                countdownFuture.cancel(false);
-                        });
+                    runOnUiThread(
+                            () -> {
+                                CustomToast.showToast(String.valueOf(countdown.get()), context, true);
+                                countdown.getAndDecrement();
+                                if (countdown.get() <= 0)
+                                    countdownFuture.cancel(false);
+                            });
             ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
             setCountdownFuture(executor.scheduleAtFixedRate(countdownRunnable, 0, 1, TimeUnit.SECONDS));
         }

@@ -1,30 +1,42 @@
 package com.se2.bopit.ui;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.Transformation;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 
 import com.se2.bopit.R;
 import com.se2.bopit.domain.GameMode;
 import com.se2.bopit.domain.SoundEffects;
+import com.se2.bopit.domain.data.DataProviderContext;
 import com.se2.bopit.domain.engine.GameEngine;
 import com.se2.bopit.domain.interfaces.GameEngineListener;
 import com.se2.bopit.domain.interfaces.MiniGame;
-import com.se2.bopit.domain.models.User;
+import com.se2.bopit.ui.helpers.CustomToast;
 import com.se2.bopit.ui.helpers.WaveAnimator;
 import com.se2.bopit.ui.providers.GameEngineProvider;
+
+import java.util.ArrayList;
 
 
 public class GameActivity extends BaseActivity {
@@ -35,7 +47,10 @@ public class GameActivity extends BaseActivity {
     //views
     ProgressBar timeBar;
     TextView scoreView;
-    TextView lifeView;
+    ImageView life1;
+    ImageView life2;
+    ImageView life3;
+    ImageView mesh;
     GameEngine engine;
     boolean gameEnd = false;
     Button cheatButton;
@@ -45,6 +60,8 @@ public class GameActivity extends BaseActivity {
     // shared preferences
     private static final String MYPREF = "myCustomSharedPref";
     private static final String PREF_KEY_EFFECT = "effect";
+
+    private boolean isSamePlayer = false;
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @SuppressLint("ClickableViewAccessibility")
@@ -58,7 +75,10 @@ public class GameActivity extends BaseActivity {
         timeBar = findViewById(R.id.timeBar);
         scoreView = findViewById(R.id.scoreView);
         cheatButton = findViewById(R.id.cheatButton);
-        lifeView = findViewById(R.id.lifeView);
+        life1 = findViewById(R.id.life1);
+        life2 = findViewById(R.id.life2);
+        life3 = findViewById(R.id.life3);
+        mesh = findViewById(R.id.fenceImage);
 
         //start game Engine and register listeners
         Intent intent = getIntent();
@@ -79,24 +99,21 @@ public class GameActivity extends BaseActivity {
 
         engine = GameEngineProvider.getInstance().create(gameMode, gameEngineListener);
 
+        scoreView.setText(String.valueOf(0));
 
-        cheatButton.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (engine.isMyTurn()) {
-                    if (event.getAction() == MotionEvent.ACTION_DOWN) {
-                        engine.pauseCountDown();
-                    } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                        engine.resumeCountDown();
-                    }
-                } else {
-                    engine.reportCheat();
+        cheatButton.setOnTouchListener((v, event) -> {
+            if (engine.isMyTurn()) {
+                if (event.getAction() == MotionEvent.ACTION_DOWN) {
+                    engine.pauseCountDown();
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    engine.resumeCountDown();
                 }
-                return false;
+            } else {
+                engine.reportCheat();
             }
+            return false;
         });
 
-        lifeView.setText("Lives " + User.getStartingLives());
 
         engine.startNewGame();
     }
@@ -111,7 +128,12 @@ public class GameActivity extends BaseActivity {
                     new SoundEffects(getBaseContext(), 1);
                 }
                 Intent intent = new Intent(getBaseContext(), WinLossActivity.class);
+                DataProviderContext context = DataProviderContext.getContext();
                 intent.putExtra("score", score);
+                intent.putExtra("userId", engine.getUserId());
+                intent.putExtra(GAME_MODE, gameMode);
+                if (gameMode != GameMode.SINGLE_PLAYER)
+                    intent.putParcelableArrayListExtra("playerScores", (ArrayList<? extends Parcelable>) context.getUsers());
                 startActivity(intent);
             }
         }
@@ -131,14 +153,41 @@ public class GameActivity extends BaseActivity {
 
         @Override
         public void onLifeUpdate(int life) {
-            lifeView.setText("Lives " + life);
+            ImageView lifeToFade = null;
+            if (life == 2) {
+                lifeToFade = life1;
+            } else if (life == 1) {
+                lifeToFade = life2;
+            } else if (life == 0) {
+                lifeToFade = life3;
+            }
+            if (lifeToFade != null) {
+                ColorMatrix matrix = new ColorMatrix();
+                matrix.setSaturation(0);
+                ColorMatrixColorFilter cf = new ColorMatrixColorFilter(matrix);
+                lifeToFade.setColorFilter(cf);
+                lifeToFade.setImageAlpha(128);
+            }
         }
 
         @Override
         public void onGameStart(MiniGame game, long time) {
             Log.d(TAG, "onGameStart");
-            cheatButton.setText(engine.isMyTurn() ? R.string.cheatButton : R.string.reportButton);
-            scoreView.setText(engine.isMyTurn() ? "YOU" : "other");
+            if (gameMode != GameMode.SINGLE_PLAYER) {
+                cheatButton.setText(engine.isMyTurn() ? R.string.cheatButton : R.string.reportButton);
+                CustomToast.showToast(engine.isMyTurn() ? "YOU" : "OTHER", getApplicationContext(), false);
+                if (engine.isMyTurn()) {
+                    mesh.setAlpha(0f);
+                    isSamePlayer = false;
+                    ConstraintLayout.LayoutParams newLayoutParams = (ConstraintLayout.LayoutParams) mesh.getLayoutParams();
+                    newLayoutParams.height = 0;
+                    mesh.setLayoutParams(newLayoutParams);
+                } else if (!isSamePlayer) {
+                    animateMesh();
+                    mesh.setAlpha(0.8f);
+                    isSamePlayer = true;
+                }
+            }
             getSupportFragmentManager().beginTransaction()
                     .setReorderingAllowed(true)
                     .replace(R.id.fragment_container_view, (Fragment) game, null)
@@ -157,15 +206,35 @@ public class GameActivity extends BaseActivity {
     @Override
     public void onBackPressed() {
         Log.d(TAG, "onBackPressed");
-        engine.stopCurrentGame();
+        DataProviderContext context = DataProviderContext.getContext();
+        engine.stopCurrentGame(context == null ? new ArrayList<>() : context.getUsers());
         super.onBackPressed();
     }
 
     @Override
     public void onStop() {
         Log.d(TAG, "onStop");
-        engine.stopCurrentGame();
+        DataProviderContext context = DataProviderContext.getContext();
+        engine.stopCurrentGame(context == null ? new ArrayList<>() : context.getUsers());
         super.onStop();
+    }
+
+    private void animateMesh() {
+        Activity context = this;
+        Animation a = new Animation() {
+
+            @Override
+            protected void applyTransformation(float interpolatedTime, Transformation t) {
+                ConstraintLayout.LayoutParams newLayoutParams = (ConstraintLayout.LayoutParams) mesh.getLayoutParams();
+                DisplayMetrics metrics = new DisplayMetrics();
+                context.getWindowManager().getDefaultDisplay().getMetrics(metrics);
+                newLayoutParams.height = (int) ((interpolatedTime) * metrics.heightPixels);
+                mesh.setLayoutParams(newLayoutParams);
+            }
+        };
+        a.setDuration(1000); // in ms
+
+        mesh.startAnimation(a);
     }
 
 }

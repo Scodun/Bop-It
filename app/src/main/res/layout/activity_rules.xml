@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.RulesActivity">
+
+
+    <ImageView
+        android:id="@+id/waveViewRules"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="4dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/wave_bg"
+        android:rotation="180"
+        android:scaleType="fitXY"
+        android:scaleX="1.4"
+        android:scaleY="2"
+        android:translationY="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_wave_1" />
+
+    <TextView
+        android:id="@+id/textViewRulesTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:text="@string/rulesTitle"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:typeface="normal"
+        app:layout_constraintBottom_toBottomOf="@+id/waveViewRules"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/waveViewRules"
+        app:layout_constraintVertical_bias="0.142" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewRulesTitle">
+
+        <LinearLayout
+            android:id="@+id/linearRules"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/setting_header_size"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/waveRules1"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/wave_bg"
+                android:scaleType="fitXY"
+                app:srcCompat="@drawable/ic_wave_2" />
+
+            <TextView
+                android:id="@+id/textViewSubtitleRules"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/rulesSubtitle"
+                android:textColor="@color/primary"
+                android:textSize="@dimen/setting_size"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iconBullet1"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    tools:src="@drawable/ic_bullet" />
+
+                <TextView
+                    android:id="@+id/textViewRules1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iconBullet1"
+                    android:text="@string/rules1"
+                    android:textSize="@dimen/rules_text" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iconBullet2"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    tools:src="@drawable/ic_bullet" />
+
+                <TextView
+                    android:id="@+id/textViewRules2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iconBullet2"
+                    android:text="@string/rules2"
+                    android:textSize="@dimen/rules_text" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iconBullet3"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    tools:src="@drawable/ic_bullet" />
+
+                <TextView
+                    android:id="@+id/textViewRules3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iconBullet3"
+                    android:text="@string/rules3"
+                    android:textSize="@dimen/rules_text" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iconBullet4"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    tools:src="@drawable/ic_bullet" />
+
+                <TextView
+                    android:id="@+id/textViewRules4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iconBullet4"
+                    android:text="@string/rules4"
+                    android:textSize="@dimen/rules_text" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iconBullet5"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    tools:src="@drawable/ic_bullet" />
+
+                <TextView
+                    android:id="@+id/textViewRules5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iconBullet5"
+                    android:text="@string/rules5"
+                    android:textSize="@dimen/rules_text" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iconBullet6"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    tools:src="@drawable/ic_bullet" />
+
+                <TextView
+                    android:id="@+id/textViewRules6"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iconBullet6"
+                    android:text="@string/rules6"
+                    android:textSize="@dimen/rules_text" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iconBullet7"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    tools:src="@drawable/ic_bullet" />
+
+                <TextView
+                    android:id="@+id/textViewRules7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iconBullet7"
+                    android:text="@string/rules7"
+                    android:textSize="@dimen/rules_text" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iconBullet8"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    tools:src="@drawable/ic_bullet" />
+
+                <TextView
+                    android:id="@+id/textViewRules8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iconBullet8"
+                    android:text="@string/rules8"
+                    android:textSize="@dimen/rules_text" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iconBullet9"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    tools:src="@drawable/ic_bullet" />
+
+                <TextView
+                    android:id="@+id/textViewRules9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iconBullet9"
+                    android:text="@string/rules9"
+                    android:textSize="@dimen/rules_text" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iconBullet10"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    tools:src="@drawable/ic_bullet" />
+
+                <TextView
+                    android:id="@+id/textViewRules10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iconBullet10"
+                    android:text="@string/rules10"
+                    android:textSize="@dimen/rules_text" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/iconBullet11"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginRight="16dp"
+                    tools:src="@drawable/ic_bullet" />
+
+                <TextView
+                    android:id="@+id/textViewRules11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/iconBullet11"
+                    android:text="@string/rules11"
+                    android:textSize="@dimen/rules_text" />
+            </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/waveRules2"
+                android:layout_width="match_parent"
+                android:layout_height="20dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/wave_bg"
+                android:scaleType="fitXY"
+                android:layout_marginVertical="10dp"
+                app:srcCompat="@drawable/ic_wave_2" />
+
+            <TextView
+                android:id="@+id/textViewSubtitleImprint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/imprintSubtitle"
+                android:textColor="@color/primary"
+                android:textSize="@dimen/setting_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewImprint1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/imprint1"
+                android:textSize="@dimen/rules_text" />
+
+            <TextView
+                android:id="@+id/textViewImprint2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/imprint2"
+                android:textSize="@dimen/rules_text" />
+        </LinearLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -15,6 +15,7 @@ public class MinigameAchievementCounters {
     private static int counterSliderMinigame = 0;
     private static int counterVolumeButtonMinigame = 0;
     private static int counterDrawingMinigame = 0;
+    private static int counterSpecialTextButtonMinigame = 0;
 
     public static int getImageButtonMinigameCounter() {
         return getCounterImageButtonMinigame();
@@ -56,6 +57,10 @@ public class MinigameAchievementCounters {
         return counterDrawingMinigame;
     }
 
+    public static int getCounterSpecialTextButtonMinigame() {
+        return counterSpecialTextButtonMinigame;
+    }
+
     public static void resetCounter() {
         setCounterImageButtonMinigame(0);
         setCounterColorButtonMinigame(0);
@@ -67,6 +72,7 @@ public class MinigameAchievementCounters {
         setCounterSliderMinigame(0);
         setCounterVolumeButtonMinigame(0);
         setCounterDrawingMinigame(0);
+        setCounterSpecialTextButtonMinigame(0);
     }
 
     public static int getCounterImageButtonMinigame() {
@@ -111,5 +117,9 @@ public class MinigameAchievementCounters {
 
     public static void setCounterDrawingMinigame(int counterDrawingMinigame) {
         MinigameAchievementCounters.counterDrawingMinigame = counterDrawingMinigame;
+    }
+
+    public static void setCounterSpecialTextButtonMinigame(int counterSpecialTextButtonMinigame) {
+        MinigameAchievementCounters.counterSpecialTextButtonMinigame = counterSpecialTextButtonMinigame;
     }
 }

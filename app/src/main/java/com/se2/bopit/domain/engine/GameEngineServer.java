@@ -131,10 +131,11 @@ public class GameEngineServer {
 
         usersReady.clear();
 
+
         if (pool.isEmpty())
             return null;
 
-        if (new Random().nextInt(100) < CHANCE_TO_REPEAT && users.get(currentRound.getCurrentUserId()).getLives() > 0)
+        if (currentRound != null && new Random().nextInt(100) < CHANCE_TO_REPEAT && users.get(currentRound.getCurrentUserId()).getLives() > 0)
             return users.get(currentRound.getCurrentUserId());
 
         Collections.shuffle(pool);
@@ -150,14 +151,16 @@ public class GameEngineServer {
 
     public void sendGameResult(String userId, boolean result, ResponseModel responseModel) {
         User user = users.get(userId);
-        if (result) {
-            Log.d(TAG, "User " + userId + " won the round #" + (currentRound != null ? currentRound.getRound() : "null"));
-            user.incrementScore();
-        } else {
-            Log.d(TAG, "User " + userId + " lost the round #" + (currentRound != null ? currentRound.getRound() : "null"));
-            user.loseLife();
+        if (user != null) {
+            if (result) {
+                Log.d(TAG, "User " + userId + " won the round #" + (currentRound != null ? currentRound.getRound() : "null"));
+                user.incrementScore();
+            } else {
+                Log.d(TAG, "User " + userId + " lost the round #" + (currentRound != null ? currentRound.getRound() : "null"));
+                user.loseLife();
+            }
+            dataProvider.notifyGameResult(result, responseModel, user);
         }
-        dataProvider.notifyGameResult(result, responseModel, user);
     }
 
     public void stopCurrentGame(String userId) {

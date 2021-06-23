@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,7 +25,6 @@ public class OverallAchievementsActivity extends BaseActivity implements SharedP
     ImageView checkHard;
 
     FButton backButton;
-    Button reset;
 
     TextView easyAchievement;
     TextView mediumAchievement;
@@ -49,7 +47,6 @@ public class OverallAchievementsActivity extends BaseActivity implements SharedP
         checkIsTrue();
 
         backButton.setOnClickListener(v -> startActivity(new Intent(this, AchievementsSelectActivity.class)));
-        reset.setOnClickListener(v -> resetPreferences());
     }
 
     private void initializeViews() {
@@ -61,8 +58,6 @@ public class OverallAchievementsActivity extends BaseActivity implements SharedP
         easyAchievement = findViewById(R.id.easyAchievement);
         mediumAchievement = findViewById(R.id.mediumAchievement);
         hardAchievement = findViewById(R.id.hardAchievement);
-
-        reset = findViewById(R.id.resetButtonAchieve);
 
         checkEasy.setVisibility(View.INVISIBLE);
         checkMedium.setVisibility(View.INVISIBLE);
@@ -117,24 +112,5 @@ public class OverallAchievementsActivity extends BaseActivity implements SharedP
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         //ignore
-    }
-
-    private void resetPreferences() {
-        customSharedPreferences = getSharedPreferences(MYPREF, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = customSharedPreferences.edit();
-        editor.putInt(KEY_SCORE_MINIGAMES_EASY, 0);
-        editor.putInt(KEY_SCORE_MINIGAMES_MEDIUM, 0);
-        editor.putInt(KEY_SCORE_MINIGAMES_HARD, 0);
-
-        checkEasy.setVisibility(View.INVISIBLE);
-        checkMedium.setVisibility(View.INVISIBLE);
-        checkHard.setVisibility(View.INVISIBLE);
-
-        easyAchievement.setVisibility(View.VISIBLE);
-        mediumAchievement.setVisibility(View.VISIBLE);
-        hardAchievement.setVisibility(View.VISIBLE);
-
-        editor.apply();
-        setPreferences();
     }
 }

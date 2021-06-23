@@ -1,398 +1,391 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                                    xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
                                                    android:layout_height="match_parent"
                                                    xmlns:fbutton="http://schemas.android.com/apk/res-auto">
 
-    <LinearLayout
-        android:id="@+id/linearLayout4"
+    <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
-        android:layout_height="575dp"
-        android:layout_marginTop="20dp"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/backtoHome">
+        android:layout_height="match_parent"
+        android:layout_marginTop="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".20"
-            android:background="@color/primary">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/ColorButtonScore"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
-                android:text="0" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:background="@color/white">
 
-            <ImageView
-                android:id="@+id/checkColorButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="39dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/ColorButtonMinigame"
-                fbutton:srcCompat="@drawable/ic_check" />
+                <TextView
+                    android:id="@+id/SliderMinigameScore"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="40dp"
+                    android:text="0" />
 
-            <TextView
-                android:id="@+id/ColorButtonMinigame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Complete 100 ColorButton Minigames"
-                android:textColor="@color/secondary_variant"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/checkSliderMinigame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="93dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/SliderMinigame"
+                    fbutton:srcCompat="@drawable/ic_check" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".20"
-            android:background="@color/white">
+                <TextView
+                    android:id="@+id/SliderMinigame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Complete 100 Slider Minigames"
+                    android:textColor="@color/secondary_variant"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/CoverLightSensorScore"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
-                android:text="0" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:background="@color/primary">
 
-            <ImageView
-                android:id="@+id/checkCoverLightSensor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="40dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/CoverLightSensorMinigame"
-                fbutton:srcCompat="@drawable/ic_check" />
+                <TextView
+                    android:id="@+id/ColorButtonScore"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="40dp"
+                    android:text="0" />
 
-            <TextView
-                android:id="@+id/CoverLightSensorMinigame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Complete 100 LightSensor Minigames"
-                android:textColor="@color/secondary_variant"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/checkColorButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="39dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/ColorButtonMinigame"
+                    fbutton:srcCompat="@drawable/ic_check" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".20"
-            android:background="@color/primary">
+                <TextView
+                    android:id="@+id/ColorButtonMinigame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Complete 100 ColorButton Minigames"
+                    android:textColor="@color/secondary_variant"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/DrawingMinigameScore"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
-                android:text="0" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:background="@color/white">
 
-            <ImageView
-                android:id="@+id/checkDrawingMinigame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="71dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/DrawingMinigame"
-                fbutton:srcCompat="@drawable/ic_check" />
+                <TextView
+                    android:id="@+id/CoverLightSensorScore"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="40dp"
+                    android:text="0" />
 
-            <TextView
-                android:id="@+id/DrawingMinigame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Complete 100 Drawing Minigames"
-                android:textColor="@color/secondary_variant"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/checkCoverLightSensor"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/CoverLightSensorMinigame"
+                    fbutton:srcCompat="@drawable/ic_check" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".20"
-            android:background="@color/white">
+                <TextView
+                    android:id="@+id/CoverLightSensorMinigame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Complete 100 LightSensor Minigames"
+                    android:textColor="@color/secondary_variant"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/ImagebuttonScore"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
-                android:text="0" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:background="@color/white">
 
-            <ImageView
-                android:id="@+id/checkImageButtons"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="33dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/ImageButtonMinigame"
-                fbutton:srcCompat="@drawable/ic_check" />
+                <TextView
+                    android:id="@+id/TextbasedScore"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="40dp"
+                    android:text="0" />
 
-            <TextView
-                android:id="@+id/ImageButtonMinigame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Complete 100 ImageButton Minigames"
-                android:textColor="@color/secondary_variant"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/checkTextBasedMinigame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/TextBasedMinigame"
+                    fbutton:srcCompat="@drawable/ic_check" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".20"
-            android:background="@color/primary">
+                <TextView
+                    android:id="@+id/TextBasedMinigame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Complete 100 TextBased Minigames"
+                    android:textColor="@color/secondary_variant"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/PlacePhoneScore"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
-                android:text="0" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:background="@color/primary">
 
-            <ImageView
-                android:id="@+id/checkPlacePhone"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="42dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/PlacePhoneMinigame"
-                fbutton:srcCompat="@drawable/ic_check" />
+                <TextView
+                    android:id="@+id/PlacePhoneScore"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="40dp"
+                    android:text="0" />
 
-            <TextView
-                android:id="@+id/PlacePhoneMinigame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Complete 100 PlacePhone Minigames"
-                android:textColor="@color/secondary_variant"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/checkPlacePhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="42dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/PlacePhoneMinigame"
+                    fbutton:srcCompat="@drawable/ic_check" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".20"
-            android:background="@color/white">
+                <TextView
+                    android:id="@+id/PlacePhoneMinigame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Complete 100 PlacePhone Minigames"
+                    android:textColor="@color/secondary_variant"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/RightButtonCombinationScore"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
-                android:text="0" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:background="@color/white">
 
-            <ImageView
-                android:id="@+id/checkRightButtonCombination"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="33dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/RightButtonCombination"
-                fbutton:srcCompat="@drawable/ic_check" />
+                <TextView
+                    android:id="@+id/RightButtonCombinationScore"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="40dp"
+                    android:text="0" />
 
-            <TextView
-                android:id="@+id/RightButtonCombination"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Complete 100 RightButtons Minigames"
-                android:textColor="@color/secondary_variant"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/checkRightButtonCombination"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="33dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/RightButtonCombination"
+                    fbutton:srcCompat="@drawable/ic_check" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".20"
-            android:background="@color/primary">
+                <TextView
+                    android:id="@+id/RightButtonCombination"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Complete 100 RightButtons Minigames"
+                    android:textColor="@color/secondary_variant"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/ShakePhoneScore"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
-                android:text="0" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:background="@color/primary">
 
-            <ImageView
-                android:id="@+id/checkShakePhoneMinigame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="39dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/ShakePhoneMinigame"
-                fbutton:srcCompat="@drawable/ic_check" />
+                <TextView
+                    android:id="@+id/ShakePhoneScore"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="40dp"
+                    android:text="0" />
 
-            <TextView
-                android:id="@+id/ShakePhoneMinigame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Complete 100 ShakePhone Minigames"
-                android:textColor="@color/secondary_variant"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/checkShakePhoneMinigame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="39dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/ShakePhoneMinigame"
+                    fbutton:srcCompat="@drawable/ic_check" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".20"
-            android:background="@color/white">
+                <TextView
+                    android:id="@+id/ShakePhoneMinigame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Complete 100 ShakePhone Minigames"
+                    android:textColor="@color/secondary_variant"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/SliderMinigameScore"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
-                android:text="0" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:background="@color/primary">
 
-            <ImageView
-                android:id="@+id/checkSliderMinigame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="93dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/SliderMinigame"
-                fbutton:srcCompat="@drawable/ic_check" />
+                <TextView
+                    android:id="@+id/DrawingMinigameScore"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="40dp"
+                    android:text="0" />
 
-            <TextView
-                android:id="@+id/SliderMinigame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Complete 100 Slider Minigames"
-                android:textColor="@color/secondary_variant"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/checkDrawingMinigame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="71dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/DrawingMinigame"
+                    fbutton:srcCompat="@drawable/ic_check" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".20"
-            android:background="@color/primary">
+                <TextView
+                    android:id="@+id/DrawingMinigame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Complete 100 Drawing Minigames"
+                    android:textColor="@color/secondary_variant"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/VolumeButtonScore"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
-                android:text="0" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:background="@color/primary">
 
-            <ImageView
-                android:id="@+id/checkVolumeButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="25dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/VolumeButtonMinigame"
-                fbutton:srcCompat="@drawable/ic_check" />
+                <TextView
+                    android:id="@+id/VolumeButtonScore"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="40dp"
+                    android:text="0" />
 
-            <TextView
-                android:id="@+id/VolumeButtonMinigame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Complete 100 VolumeButton Minigames"
-                android:textColor="@color/secondary_variant"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/checkVolumeButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/VolumeButtonMinigame"
+                    fbutton:srcCompat="@drawable/ic_check" />
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_weight=".20"
-            android:background="@color/white">
+                <TextView
+                    android:id="@+id/VolumeButtonMinigame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Complete 100 VolumeButton Minigames"
+                    android:textColor="@color/secondary_variant"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
 
-            <TextView
-                android:id="@+id/TextbasedScore"
-                android:layout_width="30dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginTop="40dp"
-                android:text="0" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight=".20"
+                android:background="@color/white">
 
-            <ImageView
-                android:id="@+id/checkTextBasedMinigame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="55dp"
-                android:layout_marginTop="10dp"
-                android:layout_toRightOf="@id/TextBasedMinigame"
-                fbutton:srcCompat="@drawable/ic_check" />
+                <TextView
+                    android:id="@+id/ImagebuttonScore"
+                    android:layout_width="30dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="40dp"
+                    android:text="0" />
 
-            <TextView
-                android:id="@+id/TextBasedMinigame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="Complete 100 TextBased Minigames"
-                android:textColor="@color/secondary_variant"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-        </RelativeLayout>
+                <ImageView
+                    android:id="@+id/checkImageButtons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="33dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@id/ImageButtonMinigame"
+                    fbutton:srcCompat="@drawable/ic_check" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/ImageButtonMinigame"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="Complete 100 ImageButton Minigames"
+                    android:textColor="@color/secondary_variant"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
 
     <info.hoang8f.widget.FButton
         android:id="@+id/backtoHome"
-        android:layout_width="60dp"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="351dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
         android:text="Back"
         android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
         app:fButtonColor="@color/primary"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/scrollView2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         fbutton:cornerRadius="100dp"
         fbutton:shadowEnabled="true"
         fbutton:shadowHeight="5dp" />
 
-    <Button
-        android:id="@+id/resetButtonAchieve"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="10dp"
-        android:text="Reset"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
-        app:layout_constraintStart_toEndOf="@+id/backtoHome"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/waveView2"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="0dp"
         android:adjustViewBounds="true"
         android:contentDescription="@string/wave_bg"
         android:scaleType="fitXY"
@@ -402,8 +395,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.9"
         app:srcCompat="@drawable/ic_wave_minigames" />
 
 

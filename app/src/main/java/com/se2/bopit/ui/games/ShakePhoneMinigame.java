@@ -95,9 +95,9 @@ public class ShakePhoneMinigame extends Fragment implements MiniGame {
 
     @Override
     public long getTime(Difficulty difficulty, int score) {
-        if(DifficultyActivity.difficulty == EASY)
+        if (DifficultyActivity.difficulty == EASY)
             return generateTime(7.6, 0.06, 1400, score);
-        else if(DifficultyActivity.difficulty == HARD)
+        else if (DifficultyActivity.difficulty == HARD)
             return generateTime(7.6, 0.06, 600, score);
         else
             return generateTime(7.6, 0.06, 1000, score);

@@ -308,6 +308,4 @@
             fbutton:shadowEnabled="true"
             fbutton:shadowHeight="5dp"/>
     </RelativeLayout>
-
-
 </LinearLayout>

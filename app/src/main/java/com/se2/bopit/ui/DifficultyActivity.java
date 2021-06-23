@@ -56,11 +56,6 @@ public class DifficultyActivity extends BaseActivity {
         });
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        this.finishAffinity();
-    }
 
     public static void setDifficulty(Difficulty difficulty) {
         DifficultyActivity.difficulty = difficulty;

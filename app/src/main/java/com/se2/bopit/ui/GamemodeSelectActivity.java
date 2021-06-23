@@ -31,6 +31,7 @@ public class GamemodeSelectActivity extends BaseActivity {
     private ImageButton achievementButton;
     private ImageButton leaderboardButton;
 
+    private ConstraintLayout toRulesButton;
     private ConstraintLayout customRulesButton;
 
     @Override
@@ -54,18 +55,22 @@ public class GamemodeSelectActivity extends BaseActivity {
         customRulesButton = findViewById(R.id.customRulesButton);
         achievementButton = findViewById(R.id.achievments);
         leaderboardButton = findViewById(R.id.leaderboardsButton);
+        toRulesButton = findViewById(R.id.rulesButton);
     }
 
     private void initializeListeners() {
         singleplayerButton.setOnClickListener(v ->
-            startActivity(new Intent(this, DifficultyActivity.class)
-                    .putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER))
+                startActivity(new Intent(this, DifficultyActivity.class)
+                        .putExtra(GameActivity.GAME_MODE, GameMode.SINGLE_PLAYER))
         );
 
-        localMultiplayerButton.setOnClickListener(v -> {
-        });
+        localMultiplayerButton.setOnClickListener(v ->
+                startActivity(new Intent(this, HostJoinActivity.class)
+                        .putExtra(HostJoinActivity.NETWORK_MODE, "nearby")));
 
-        onlineMultiplayerButton.setOnClickListener(v -> startActivity(new Intent(this, HostJoinActivity.class)));
+        onlineMultiplayerButton.setOnClickListener(v ->
+                startActivity(new Intent(this, HostJoinActivity.class)
+                        .putExtra(HostJoinActivity.NETWORK_MODE, "websocket")));
 
         settingsButton.setOnClickListener(v -> startActivity(new Intent(this, SettingsActivity.class)));
 
@@ -80,6 +85,9 @@ public class GamemodeSelectActivity extends BaseActivity {
                         .addOnSuccessListener(intent -> activityResultLauncher.launch(intent));
             }
         });
+
+        toRulesButton.setOnClickListener(v ->
+                startActivity(new Intent(this, RulesActivity.class)));
 
     }
 
